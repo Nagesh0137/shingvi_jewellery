@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All VIP Numbers - Premium Phone Numbers</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    
+</head>
+<body>
+    <div class="container my-4">
+      <div class="row g-3">
+        
+        <!-- Card 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm border-0 text-dark">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="badge bg-warning text-dark">Save ₹2586</span>
+                <span class="text-muted small">07:21:57 Left</span>
+              </div>
+              <h5 class="card-title fw-bold">626 22 627 22</h5>
+              <p class="mb-1 text-decoration-line-through">₹15,015</p>
+              <p class="mb-2 fw-semibold text-success">₹12,429</p>
+              <button class="btn btn-warning w-100">Book Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm border-0 text-dark">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="badge bg-warning text-dark">Save ₹2459</span>
+                <span class="text-muted small">05:26:36 Left</span>
+              </div>
+              <h5 class="card-title fw-bold">826 88888 49</h5>
+              <p class="mb-1 text-decoration-line-through">₹14,253</p>
+              <p class="mb-2 fw-semibold text-success">₹11,794</p>
+              <button class="btn btn-primary w-100">Book Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm border-0 text-dark">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="badge bg-warning text-dark">Save ₹1951</span>
+                <span class="text-muted small">08:27:16 Left</span>
+              </div>
+              <h5 class="card-title fw-bold">91 33333 512</h5>
+              <p class="mb-1 text-decoration-line-through">₹11,205</p>
+              <p class="mb-2 fw-semibold text-success">₹9,254</p>
+              <button class="btn btn-outline-secondary w-100">Pre-Book</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add more cards below following the same structure -->
+
+      </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Favorites functionality
+        let favorites = new Set();
+        
+        function toggleFavorite(button) {
+            const id = button.getAttribute('data-id');
+            const icon = button.querySelector('i');
+            
+            if (favorites.has(id)) {
+                favorites.delete(id);
+                icon.className = 'bi bi-heart';
+                button.classList.remove('active');
+            } else {
+                favorites.add(id);
+                icon.className = 'bi bi-heart-fill';
+                button.classList.add('active');
+            }
+        }
+        
+        // Add click handlers to all buttons
+        document.querySelectorAll('.btn-gradient').forEach(button => {
+            button.addEventListener('click', function() {
+                // Add ripple effect
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.marginLeft = '-10px';
+                ripple.style.marginTop = '-10px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Smooth scroll for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add staggered animation to cards
+            const cards = document.querySelectorAll('.card-loading');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

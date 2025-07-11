@@ -1,0 +1,32 @@
+ .heading {
+     background: linear-gradient(45deg, #000000 0%, #504C7F 20%, #E51C76 60%, #E91761 60%, #d77045 62%, #ffad26 62%, #ffad26 63%, #d77045 63%, #d77045 64%, #ffad26 64%, #ffad26 65%, #F40B31 65%, white 80%);
+     border-left: 5px solid #FFC241;
+     color: white;
+     /* Text color */
+     font-weight: bold;
+     padding: 6px 10px 3px 10px;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+     /* Optional: Add shadow for depth */
+ }
+
+ .heading button,
+ .heading label,
+ .heading a {
+     float: right;
+     margin-top: -7px;
+     border-radius: 0px;
+     background-color: black;
+     /* Black background for buttons, links, and labels */
+     color: white;
+     /* White text */
+     padding: 5px 10px;
+     border: 1px solid white;
+     text-decoration: none;
+ }
+
+ .heading button:hover,
+ .heading a:hover {
+     background-color: white;
+     color: black;
+     border: 1px solid black;
+ }
