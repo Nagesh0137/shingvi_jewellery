@@ -827,4 +827,6 @@ class User extends CI_Controller
 		$this->load->view("user/cart_page");
 		$this->footer();
 	}
+
+	
 }

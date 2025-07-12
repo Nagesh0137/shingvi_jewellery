@@ -2,60 +2,98 @@
         <!-- main start -->
         <main id="main">
             <!-- cart start -->
-            <section class="cart-area section-pt">
-                <form method="post" action="javascript:void(0)">
-                    <div class="container">
+            <section class="cart-area section-ptb">
+                <div class="container">
+                    <!-- Cart Header -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="cart-header text-center" data-animate="animate__fadeIn">
+                                <h1 class="font-32 heading-color heading-weight mb-3">Shopping Cart</h1>
+                                <p class="body-color font-16">Review your selected jewelry pieces before checkout</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="post" action="javascript:void(0)">
                         <div class="row row-mtm">
-                            <div class="cart-itemview">
-                                <div class="cart-title d-flex align-items-center justify-content-between peb-30 beb" data-animate="animate__fadeIn">
-                                    <h6 class="font-18">Shopping cart</h6>
-                                    <span class="cart-count"><span class="cart-counter">2</span> Items</span>
-                                </div>
-                                <div class="cart-table">
-                                    <div class="cart-table-heading d-none d-md-block ptb-30 beb" data-animate="animate__fadeIn">
-                                        <div class="row">
-                                            <div class="col-md-5 heading-color heading-weight">Product</div>
-                                            <div class="col-md-3 heading-color heading-weight">Qty</div>
-                                            <div class="col-md-2 heading-color heading-weight">Total</div>
-                                            <div class="col-md-2 heading-color heading-weight text-end">Option</div>
-                                        </div>
+                            <!-- Cart Items Section -->
+                            <div class="col-12 col-lg-8" data-animate="animate__fadeIn">
+                                <div class="cart-itemview">
+                                    <div class="cart-title d-flex align-items-center justify-content-between peb-30 beb">
+                                        <h6 class="font-20 heading-color heading-weight">Your Items</h6>
+                                        <span class="cart-count">
+                                            <span class="cart-counter heading-color heading-weight">4</span> 
+                                            <span class="body-color">Items</span>
+                                        </span>
                                     </div>
-                                    <div class="cart-table-data">
-                                        <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn">
-                                            <div class="row row-mtm30">
-                                                <div class="col-12 col-md-5">
-                                                    <div class="d-md-none heading-color heading-weight meb-11">Product</div>
-                                                    <div class="cart-item-content d-flex flex-wrap">
-                                                        <div class="cart-item-image width-88">
-                                                            <a href="product.html" class="d-block br-hidden"><img src="assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="cart-1"></a>
-                                                        </div>
-                                                        <div class="cart-item-info width-calc-88 psl-15">
-                                                            <a href="product.html" class="dominant-link heading-weight">Gleam band</a>
-                                                            <span class="d-block mst-8">16cm / Aliceblue</span>
-                                                            <span class="d-block mst-8 heading-color heading-weight">$79.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 col-sm-4 col-md-3">
-                                                    <div class="d-md-none heading-color heading-weight meb-11">Qty</div>
-                                                    <div class="js-qty-wrapper">
-                                                        <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
-                                                            <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                                            <input type="number" name="gleam-band-s-red" class="js-qty-num p-0 text-center border-0" value="1" min="1">
-                                                            <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3 col-sm-4 col-md-2">
-                                                    <div class="d-md-none heading-color heading-weight meb-9">Total</div>
-                                                    <div class="cart-total-price heading-color heading-weight">$79.00</div>
-                                                </div>
-                                                <div class="col-3 col-sm-4 col-md-2 text-end">
-                                                    <div class="d-md-none heading-color heading-weight meb-11">Option</div>
-                                                    <button type="submit" class="cart-remove text-danger icon-16" aria-label="Remove item"><i class="ri-delete-bin-line d-block lh-1"></i></button>
-                                                </div>
+                                    <div class="cart-table">
+                                        <div class="cart-table-heading d-none d-md-block ptb-30 beb">
+                                            <div class="row">
+                                                <div class="col-md-6 heading-color heading-weight">Product</div>
+                                                <div class="col-md-2 heading-color heading-weight">Price</div>
+                                                <div class="col-md-2 heading-color heading-weight">Qty</div>
+                                                <div class="col-md-1 heading-color heading-weight">Total</div>
+                                                <div class="col-md-1 heading-color heading-weight text-end">Remove</div>
                                             </div>
                                         </div>
+                                        <div class="cart-table-data">
+                                            <!-- Cart Item 1: Diamond Ring -->
+                                            <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn">
+                                                <div class="row row-mtm30 align-items-center">
+                                                    <div class="col-12 col-md-6">
+                                                        <div class="d-md-none heading-color heading-weight meb-11">Product</div>
+                                                        <div class="cart-item-content d-flex flex-wrap">
+                                                            <div class="cart-item-image width-100">
+                                                                <a href="<?=base_url()?>user/product_details" class="d-block border-radius overflow-hidden">
+                                                                    <img src="<?=base_url()?>u_assets/assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="Diamond Engagement Ring">
+                                                                </a>
+                                                            </div>
+                                                            <div class="cart-item-info width-calc-100 psl-20">
+                                                                <a href="<?=base_url()?>user/product_details" class="dominant-link heading-weight font-16 mb-2 d-block">Diamond Engagement Ring</a>
+                                                                <div class="product-attributes">
+                                                                    <span class="d-block mst-5 body-color">Size: 7</span>
+                                                                    <span class="d-block mst-5 body-color">Material: 18K White Gold</span>
+                                                                    <span class="d-block mst-5 body-color">Stone: 1.5 Carat Diamond</span>
+                                                                </div>
+                                                                <div class="product-rating mst-10 d-flex align-items-center">
+                                                                    <div class="rating-stars">
+                                                                        <i class="ri-star-fill text-warning"></i>
+                                                                        <i class="ri-star-fill text-warning"></i>
+                                                                        <i class="ri-star-fill text-warning"></i>
+                                                                        <i class="ri-star-fill text-warning"></i>
+                                                                        <i class="ri-star-fill text-warning"></i>
+                                                                    </div>
+                                                                    <span class="font-12 body-secondary-color msl-8">(127 reviews)</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-sm-3 col-md-2">
+                                                        <div class="d-md-none heading-color heading-weight meb-11">Price</div>
+                                                        <div class="cart-item-price heading-color heading-weight font-16">₹85,000</div>
+                                                    </div>
+                                                    <div class="col-6 col-sm-3 col-md-2">
+                                                        <div class="d-md-none heading-color heading-weight meb-11">Qty</div>
+                                                        <div class="js-qty-wrapper">
+                                                            <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
+                                                                <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
+                                                                <input type="number" name="diamond-ring-qty" class="js-qty-num p-0 text-center border-0" value="1" min="1">
+                                                                <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-sm-3 col-md-1">
+                                                        <div class="d-md-none heading-color heading-weight meb-9">Total</div>
+                                                        <div class="cart-total-price heading-color heading-weight font-16">₹85,000</div>
+                                                    </div>
+                                                    <div class="col-6 col-sm-3 col-md-1 text-end">
+                                                        <div class="d-md-none heading-color heading-weight meb-11">Remove</div>
+                                                        <button type="submit" class="cart-remove text-danger icon-20 border-0 bg-transparent" aria-label="Remove item" title="Remove from cart">
+                                                            <i class="ri-delete-bin-line d-block lh-1"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn">
                                             <div class="row row-mtm30">
                                                 <div class="col-12 col-md-5">

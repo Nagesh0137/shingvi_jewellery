@@ -22,6 +22,11 @@ class My_model extends CI_model
 			return false;
 		}
 	}
+	public function select_where_login($tname, $cond)
+	{
+		$this->db->where($cond);
+		return $this->db->get($tname)->result_array();
+	}
 	public function insert($tname, $data)
 	{
 		$this->db->insert($tname, $data);
