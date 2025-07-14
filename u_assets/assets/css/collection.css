@@ -533,7 +533,7 @@ label.cust-checkbox-label.disabled input.cust-checkbox ~ span.cust-check {
     .single-product .single-product-wrap .product-image .product-action a span.product-icon,
     .single-product .single-product-wrap .product-content .pro-content .pro-content-action .product-action a span.product-icon {
         height: 40px;
-        background-color: var(--body-bgcolor);
+        background-color: darkgray;
         border-radius: var(--border-radius);
         -webkit-transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out;
         transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out;

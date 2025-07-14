@@ -99,6 +99,13 @@ class My_model extends CI_model
 	{
 		$this->db->query($query)->result_array();
 	}
+	public function select_where_order($table, $where, $order_column, $order_type)
+	{
+		$this->db->where($where);
+		$this->db->order_by($order_column, $order_type);
+		$query = $this->db->get($table);
+		return $query->result_array();
+	}
 
 
 }

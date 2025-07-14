@@ -6,7 +6,7 @@
         </div>
         <!-- preloader end -->
         <!-- newsletter-modal start -->
-        <div class="newsletter-modal modal fade" id="newslettermodal">
+        <!-- <div class="newsletter-modal modal fade" id="newslettermodal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content body-bg border-0 br-hidden">
                     <div class="modal-body p-0">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- newsletter-modal end -->
         <!-- header start -->
         <header id="header" class="main-header">
@@ -188,24 +188,36 @@
                     <div class="container-fluid">
                         <div class="row align-items-center header-area">
                             <!-- header-logo start -->
-                            <div class="col-6 col-xl-2 header-element header-logo">
-                                <div class="header-theme-logo">
-                                    <a href="<?=base_url()?>user/index" class="d-inline-block theme-logo">
-                                        <img src="<?=base_url()?>uploads/<?=$company_det[0]['company_logo']?>" class="width-96 width-xl-144 img-fluid" alt="logo">
+                            <style>
+                              @media (max-width: 767.98px) {
+                                .theme-logo img {
+                                  width: 70px !important;
+                                  height: auto;
+                              }
+                          }
+                      </style>
+
+                      <div class="col-6 col-xl-2 header-element header-logo">
+                          <div class="header-theme-logo">
+                            <a href="<?=base_url()?>user/index" class="d-inline-block theme-logo">
+                              <img src="<?=base_url()?>uploads/<?=$company_det[0]['company_logo']?>" 
+                              class="width-96 width-xl-144 img-fluid" 
+                              alt="logo">
+                          </a>
+                      </div>
+                  </div>
+
+                  <!-- header-logo end -->
+                  <!-- header-menu start -->
+                  <div class="col-xl-6 d-none d-xl-block header-element header-menu">
+                    <div class="mainmenu-content">
+                        <div class="main-wrap">
+                            <ul class="menu-ul d-flex flex-wrap">
+                                <li class="menu-li">
+                                    <a href="<?=base_url()?>user/index" class="menu-link font-16 d-flex align-items-center plr-15">
+                                        <span class="menu-title text-uppercase heading-weight">Home</span>
+                                        <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
                                     </a>
-                                </div>
-                            </div>
-                            <!-- header-logo end -->
-                            <!-- header-menu start -->
-                            <div class="col-xl-6 d-none d-xl-block header-element header-menu">
-                                <div class="mainmenu-content">
-                                    <div class="main-wrap">
-                                        <ul class="menu-ul d-flex flex-wrap">
-                                            <li class="menu-li">
-                                                <a href="<?=base_url()?>user/index" class="menu-link font-16 d-flex align-items-center plr-15">
-                                                    <span class="menu-title text-uppercase heading-weight">Home</span>
-                                                    <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
-                                                </a>
                                                 <!-- <div class="menu-dropdown collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
                                                     <div class="container ptb-30 text-center">
                                                         <div class="row">

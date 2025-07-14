@@ -827,19 +827,19 @@ function admin_name($cid)
 }
 ?>
 <?php
-function nl2br2($string)
-{
-  $string = str_replace(array('\r\n', '\r', '\n'), "<br />", $string);
-  $string = ltrim($string, "'");
-  $string = rtrim($string, "'");
-  return $string;
-}
-function br2nl2($text)
-{
-  $breaks = array("<br />", "<br>", "<br/>");
-  $text = str_ireplace($breaks, "\r\n", $text);
-  return $text;
-}
+// function nl2br2($string)
+// {
+//   $string = str_replace(array('\r\n', '\r', '\n'), "<br />", $string);
+//   $string = ltrim($string, "'");
+//   $string = rtrim($string, "'");
+//   return $string;
+// }
+// function br2nl2($text)
+// {
+//   $breaks = array("<br />", "<br>", "<br/>");
+//   $text = str_ireplace($breaks, "\r\n", $text);
+//   return $text;
+// }
 function escape_output($string)
 {
   $newString = str_replace('\r\n', '<br/>', $string);
@@ -882,6 +882,16 @@ if (!function_exists('check_phonepe_payment_status')) {
     curl_close($ch);
 
     return json_decode($result, true);
+  }
+}
+function print_qty($qty)
+{
+  if ($qty == "") {
+    echo "<span style='color:blue;'>Available</span>";
+  } else if ($qty == 0) {
+    echo "<big style='color:red;'>$qty Qty</big>";
+  } else {
+    echo "$qty Qty";
   }
 }
 

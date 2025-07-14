@@ -1,0 +1,1 @@
+$("#auth-review-carousel").owlCarousel({items:1,loop:true,margin:16,nav:!1,dots:!0,autoplay: true,autoplayTimeout: 1500,autoplayHoverPause: true});

@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'User';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = TRUE;
 $route['Index']="Website/index";
 $route['About']="Website/about";
 $route['Products']="Website/products";
@@ -75,6 +75,19 @@ $route['Team']='Website/team';
 $route['Mission-Vision']='Website/mis_vis';
 $route['Client-Stories']='Website/client_stories';
 $route['Enquire/(:id)']='Website/enquire/id';
+
+// Policy Routes
+$route['exchange-policy'] = 'Rohan/exchange_policy';
+$route['buyback-policy'] = 'Rohan/buyback';
+$route['gold-scheme-policy'] = 'Rohan/gold_scheme_policy';
+$route['shipping-policy'] = 'Rohan/shipping_policy';
+$route['cancellation-policy'] = 'Rohan/cancellation_policy';
+$route['disclaimer-policy'] = 'Rohan/disclaimer_policy';
+$route['privacy-policy'] = 'Rohan/privacy_policy';
+$route['terms-of-use'] = 'Rohan/terms_of_use';
+$route['insurance-policy'] = 'Rohan/insurance_policy';
+$route['return-policy'] = 'Rohan/return_policy';
+
 // Numbers CRUD Routes
 $route['admin/bulk_mark_sold/(:any)'] = 'admin/bulk_mark_sold/$1';
 $route['admin/bulk_mark_available/(:any)'] = 'admin/bulk_mark_available/$1';
