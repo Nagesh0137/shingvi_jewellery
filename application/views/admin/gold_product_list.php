@@ -3,7 +3,7 @@
 		<div class="col-12">
 			<div class="page-title-box d-sm-flex align-items-center justify-content-between form-heading p-2 mb-4"
 				style="margin-top:-10px">
-				<h4 class="mb-sm-0 font-size-18">Silver Product List</h4>
+				<h4 class="mb-sm-0 font-size-18">Gold Product List</h4>
 			</div>
 		</div>
 	</div>

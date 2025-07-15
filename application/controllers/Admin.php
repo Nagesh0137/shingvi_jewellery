@@ -481,6 +481,16 @@ class Admin extends CI_Controller
 
 	public function watermark_image($target = "uploads/about-1606974153-75741.jpg", $wtrmrk_file = "image/logo3.png")
 	{
+		// Check if GD extension is loaded
+		if (!extension_loaded('gd')) {
+			die("Error: GD extension is not loaded. Please enable GD extension in php.ini");
+		}
+
+		// Check if required GD functions are available
+		if (!function_exists('imagecreatefromjpeg')) {
+			die("Error: GD image functions are not available. Please ensure GD extension is properly configured.");
+		}
+
 		// Validate file existence
 		if (!file_exists($target)) {
 			die("Error: Target image file does not exist.");
@@ -673,7 +683,11 @@ class Admin extends CI_Controller
 		// print_r($_POST);
 		// exit;
 
-		$_POST['ring_size'] = implode(',', $_POST['ring_size']);
+		if (isset($_POST['ring_size'])) {
+			$_POST['ring_size'] = implode(',', $_POST['ring_size']);
+		} else {
+			$_POST['ring_size'] = '';
+		}
 		$details = $this->My_model->select_where("product_gold", ['status' => 'active', 'product_id' => $_POST['product_id'], 'cat_id' => $_POST['cat_id']]);
 
 		if (!empty($details) && count($details) > 0) {
@@ -2775,4 +2789,106 @@ class Admin extends CI_Controller
 		}
 	}
 	//rate_diamond end
+
+
+	// product_filter_add
+	public function product_filter_add()
+	{
+		$data['category'] = $this->My_model->select_where('category', array('status' => 'active'));
+		$this->ov('product_filter_add', $data);
+	}
+	public function prod_filter_name_fetch()
+	{
+		echo json_encode($this->My_model->select_where("filter_name", ['cat_id' => $_POST['cat_id'], 'group_id' => $_POST['group_id'], 'filter_tit_id' => $_POST['tit_id'], 'status' => 'active']));
+	}
+	public function product_filter_add_search()
+	{
+		$data['cat_id'] = $_GET['cat_id'];
+		$data['group_id'] = $_GET['group_id'];
+		$data['filter_tit_id'] = $_GET['filter_tit_id'];
+		$data['filter_name_id'] = $_GET['filter_name_id'];
+		$data['category_name'] = $this->db->query("SELECT * from category WHERE category_id='" . $_GET['cat_id'] . "'")->result_array()[0];
+		$data['group_name'] = $this->db->query("SELECT * from product_group WHERE product_group_id='" . $_GET['group_id'] . "'")->result_array()[0];
+		$data['filter_title'] = $this->db->query("SELECT * from filter_title WHERE filter_title_id='" . $_GET['filter_tit_id'] . "'")->result_array()[0];
+		$data['filter_name'] = $this->db->query("SELECT * from filter_name WHERE filter_name_id='" . $_GET['filter_name_id'] . "'")->result_array()[0];
+		$data['prod'] = $this->db->query("SELECT * from product_gold WHERE product_gold.cat_id='" . $_GET['cat_id'] . "'AND product_gold.group_id='" . $_GET['group_id'] . "' AND product_gold.status='active'")->result_array();
+		$data['category'] = $this->My_model->select_where('category', array('status' => 'active'));
+		$this->ov('product_filter_add', $data);
+	}
+	public function apply_filter_on_product()
+	{
+		$ff = $this->My_model->select_where("product_filter", $_POST);
+		if (isset($ff[0])) {
+			$this->My_model->delthis("product_filter", $_POST);
+			$data['status'] = "removed";
+		} else {
+			$_POST['status'] = 'active';
+			$_POST['entry_by'] = $_SESSION['admin_id'];
+			$_POST['entry_time'] = time();
+			$this->My_model->insert('product_filter', $_POST);
+			$data['status'] = "added";
+		}
+		echo json_encode($data);
+
+	}
+	// ajax
+	public function filte_title_fetch()
+	{
+		echo json_encode($this->My_model->select_where("filter_title", ['cat_id' => $_POST['cat_id'], 'group_id' => $_POST['group_id'], 'status' => 'active']));
+	}
+	// product_filter_add_end
+
+	// custom_jwellery
+	public function custom_jwellery()
+	{
+		$data['custom_jwellery'] = $this->My_model->select_where("custom_jwellery", ['status' => 'pending']);
+		$this->ov("custom_jwellery", $data);
+	}
+	public function custom_jwellery_view($id = "")
+	{
+		if (($id != "")) {
+			$data['custom_jwellery'] = $this->My_model->select_where("custom_jwellery", ['custom_jwellery_id' => $id]);
+			$this->ov("custom_jwellery_view", $data);
+		}
+	}
+	public function custom_jwellery_progress($id)
+	{
+		$upd = $this->My_model->update("custom_jwellery", ['custom_jwellery_id' => $id], ['status' => 'progress']);
+		$this->ci_flashdata('success', 'Successfully In Progress Order ...', "yes");
+		redirect('admin/custom_jwellery', 'refresh');
+	}
+	public function custom_jwellery_cancel($id)
+	{
+		$upd = $this->My_model->update("custom_jwellery", ['custom_jwellery_id' => $id], ['status' => 'cancel']);
+		$this->ci_flashdata('success', 'Successfully Cancel Custom Jwellery ...', "yes");
+		redirect('admin/custom_jwellery', 'refresh');
+	}
+	public function custom_jwellery_progress_list()
+	{
+		$data['custom_jwellery'] = $this->My_model->select_where("custom_jwellery", ['status' => 'progress']);
+		$this->ov("custom_jwellery_progress", $data);
+		$this->footer();
+	}
+	public function custom_jwellery_progress_confirm($id)
+	{
+		$upd = $this->My_model->update("custom_jwellery", ['custom_jwellery_id' => $id], ['status' => 'confirm']);
+		$this->ci_flashdata('success', 'Successfully In Confirm Order ...', "yes");
+		redirect('admin/custom_jwellery_progress_list', 'refresh');
+	}
+	public function custom_jwellery_progress_cancel($id)
+	{
+		$upd = $this->My_model->update("custom_jwellery", ['custom_jwellery_id' => $id], ['status' => 'cancel']);
+		$this->ci_flashdata('success', 'Successfully Cancel Custom Jwellery ...', "yes");
+		redirect('admin/custom_jwellery_progress_list', 'refresh');
+	}
+	public function custom_jwellery_confirm_list()
+	{
+		$data['custom_jwellery'] = $this->My_model->select_where("custom_jwellery", ['status' => 'confirm']);
+		$this->ov("custom_jwellery_confirm", $data);
+	}
+	public function custom_jwellery_cancel_list()
+	{
+		$data['custom_jwellery'] = $this->My_model->select_where("custom_jwellery", ['status' => 'cancel']);
+		$this->ov("custom_jwellery_cancel", $data);
+	}
 }

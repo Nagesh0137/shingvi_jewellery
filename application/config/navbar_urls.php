@@ -29,6 +29,13 @@ $config['navbar'] = array(
         )
     ),
     array(
+        'title' => 'Products filter',
+        'icon' => 'iconoir-database-tag',
+        'href' => 'admin/product_filter_add',
+        'method' => 'product_filter_add',
+
+    ),
+    array(
         'title' => 'Rates',
         'icon' => 'iconoir-database-tag',
         'href' => '#',
@@ -37,6 +44,35 @@ $config['navbar'] = array(
             array('title' => 'Silver Rate', 'url' => 'admin/rate_silver', 'method' => 'rate_silver'),
             array('title' => 'Diamond Rate', 'url' => 'admin/rate_diamond', 'method' => 'rate_diamond'),
 
+        )
+    ),
+    array(
+        'title' => 'Custom Jewellery',
+        'icon' => 'iconoir-database-tag',
+        'href' => '#',
+        'submenu' => array(
+            array('title' => 'Order Pending', 'url' => 'admin/custom_jwellery', 'method' => 'custom_jwellery'),
+            array('title' => 'Order Progress', 'url' => 'admin/custom_jwellery_progress_list', 'method' => 'custom_jwellery_progress_list'),
+            array('title' => 'Order Confirm', 'url' => 'admin/custom_jwellery_confirm_list', 'method' => 'custom_jwellery_confirm_list'),
+            array('title' => 'Order Cancel', 'url' => 'admin/custom_jwellery_cancel_list', 'method' => 'custom_jwellery_cancel_list'),
+        )
+    ),
+    array(
+        'title' => 'Web Details',
+        'icon' => 'iconoir-database-tag',
+        'href' => '#',
+        'submenu' => array(
+            array('title' => 'Slider', 'url' => 'admin/slider', 'method' => 'slider'),
+            array('title' => 'banner', 'url' => 'admin/banner', 'method' => 'banner'),
+            array('title' => 'testimonial', 'url' => 'admin/testimonial', 'method' => 'testimonial'),
+            array('title' => 'blog', 'url' => 'admin/blog', 'method' => 'blog'),
+            array('title' => 'Contact Details', 'url' => 'admin/contact_details', 'method' => 'contact_details'),
+            array('title' => 'Branch Details', 'url' => 'admin/branch_details', 'method' => 'branch_details'),
+            array('title' => 'About Details', 'url' => 'admin/about_details', 'method' => 'about_details'),
+            array('title' => 'Owner Desk Details', 'url' => 'admin/owner_desk_details', 'method' => 'owner_desk_details'),
+            array('title' => 'History Details', 'url' => 'admin/history_details', 'method' => 'history_details'),
+            array('title' => 'FAQ', 'url' => 'admin/faq_section', 'method' => 'faq_section'),
+            array('title' => 'Delivery Cycle', 'url' => 'admin/delivery_cycle', 'method' => 'delivery_cycle'),
         )
     ),
 

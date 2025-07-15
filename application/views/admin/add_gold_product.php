@@ -128,10 +128,10 @@
 										<input type="file" name="sizeChart" id="chartImage" class="form-control"
 											accept="image/*">
 									</div>
-									<div class="col-md-6 mt-3 " style="display:none" id="chartSizeDiv">
+									<div class="col-md-6 mt-3" style="display:none" id="chartSizeDiv">
 										<label class="form-label">select Ring Size </label>
 
-										<select id="ring-size" name="ring_size[]" class="form-select" multiple required>
+										<select name="ring_size[]" class="form-select select2" multiple>
 											<option value="" disable>Choose</option>
 											<option value="1">1</option>
 											<option value="2">2</option>
@@ -166,12 +166,12 @@
 										</select>
 									</div>
 									<script>
-										$(document).ready(function () {
-											$('#ring-size').select2({
-												placeholder: 'Choose ring sizes',
-												allowClear: true
-											});
-										});
+										// $(document).ready(function () {
+										// 	$('').select2({
+										// 		placeholder: 'Choose ring sizes',
+										// 		allowClear: true
+										// 	});
+										// });
 									</script>
 
 									<script>
