@@ -24,6 +24,8 @@
         <link rel="stylesheet" type="text/css" href="<?=base_url()?>u_assets/assets/css/blog3.css">
         <!-- style css -->
         <link rel="stylesheet" type="text/css" href="<?=base_url()?>u_assets/assets/css/style3.css">
+        <link rel="stylesheet" type="text/css" href="<?=base_url()?>u_assets/assets/css/product.css">
+        
         <link rel="stylesheet" type="text/css" href="<?=base_url()?>u_assets/assets/css/collection.css">
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     </head>

@@ -1,5 +1,9 @@
 
         <main id="main">
+           <!--  <?php 
+                                                    print_r($products[0]);
+
+            ?> -->
             <!-- product-detail start -->
             <section class="product-detail section-pt">
                 <!-- product prev-next start -->
@@ -21,36 +25,19 @@
                                         <div class="product-img-big slider-big-v position-relative br-hidden">
                                             <div class="swiper" id="slider-big-v">
                                                 <div class="swiper-wrapper product-swiper-wrapper">
+                                                    <?php 
+                                                        foreach($products[0]['imgs'] as $row){
+                                                    ?>
                                                     <div class="swiper-slide product-swiper-slide">
                                                         <div class="product-item-img position-relative">
-                                                            <a href="<?=base_url()?>u_assets/assets/image/product/p-1.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                            <img src="<?=base_url()?>u_assets/assets/image/product/p-1.jpg" data-zoom="assets/image/product/p-1.jpg" class="w-100 img-fluid zoom" alt="p-1">
+                                                            <a href="<?=base_url()?>uploads/<?=$row?>" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
+                                                            <img src="<?=base_url()?>uploads/<?=$row?>" data-zoom="assets/image/product/p-1.jpg" class="w-100 img-fluid zoom" alt="p-1">
                                                         </div>
                                                     </div>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img position-relative">
-                                                            <a href="<?=base_url()?>u_assets/assets/image/product/p-2.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                            <img src="<?=base_url()?>u_assets/assets/image/product/p-2.jpg" data-zoom="assets/image/product/p-2.jpg" class="w-100 img-fluid zoom" alt="p-2">
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img position-relative">
-                                                            <a href="<?=base_url()?>u_assets/assets/image/product/p-3.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                            <img src="<?=base_url()?>u_assets/assets/image/product/p-3.jpg" data-zoom="assets/image/product/p-3.jpg" class="w-100 img-fluid zoom" alt="p-3">
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img position-relative">
-                                                            <a href="<?=base_url()?>u_assets/assets/image/product/p-4.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                            <img src="<?=base_url()?>u_assets/assets/image/product/p-4.jpg" data-zoom="assets/image/product/p-4.jpg" class="w-100 img-fluid zoom" alt="p-4">
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img position-relative">
-                                                            <a href="<?=base_url()?>u_assets/assets/image/product/p-5.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                            <img src="<?=base_url()?>u_assets/assets/image/product/p-5.jpg" data-zoom="assets/image/product/p-5.jpg" class="w-100 img-fluid zoom" alt="p-5">
-                                                        </div>
-                                                    </div>
+                                                    
+                                                    <?php } ?>
+                                                    
+                                                    
                                                 </div>
                                             </div>
                                             <div class="swiper-buttons">
@@ -65,41 +52,21 @@
                                         <div class="product-img-small slider-small-v">
                                             <div class="swiper" id="slider-small-v">
                                                 <div class="swiper-wrapper">
+                                                    <?php 
+                                                        foreach($products[0]['imgs'] as $row){
+                                                    ?>
                                                     <div class="swiper-slide product-swiper-slide">
                                                         <div class="product-item-img br-hidden">
                                                             <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                                <img src="<?=base_url()?>u_assets/assets/image/product/p-1.jpg" class="w-100 img-fluid" alt="p-1">
+                                                                <img src="<?=base_url()?>uploads/<?=$row?>" class="w-100 img-fluid" alt="p-1">
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img br-hidden">
-                                                            <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                                <img src="<?=base_url()?>u_assets/assets/image/product/p-2.jpg" class="w-100 img-fluid" alt="p-2">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img br-hidden">
-                                                            <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                                <img src="<?=base_url()?>u_assets/assets/image/product/p-3.jpg" class="w-100 img-fluid" alt="p-3">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img br-hidden">
-                                                            <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                                <img src="<?=base_url()?>u_assets/assets/image/product/p-4.jpg" class="w-100 img-fluid" alt="p-4">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img br-hidden">
-                                                            <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                                <img src="<?=base_url()?>u_assets/assets/image/product/p-5.jpg" class="w-100 img-fluid" alt="p-5">
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                                                    <?php } ?>
+                                                    
+                                                    
+                                                    
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -114,22 +81,38 @@
                             <div class="product-detail-info psl-xxl-10">
                                 <div class="product-info" data-animate="animate__fadeIn">
                                     <div class="product-sku">
-                                        <span class="font-14 text-uppercase">SKU-RT89GT</span>
+                                        <span class="font-14 text-uppercase"><?=$products[0]['category_name']?></span>
                                     </div>
                                 </div>
                                 <div class="product-info mst-5" data-animate="animate__fadeIn">
                                     <div class="product-title">
-                                        <h2 class="font-24">Gleam band</h2>
+                                        <h2 class="font-24"><?=$products[0]['product_name']?></h2>
                                     </div>
                                 </div>
                                 <div class="product-info mst-15" data-animate="animate__fadeIn">
+                                    <?php
+                                    if($products[0]['discount_amount'] > 0){
+                                        $original_price = $products[0]['original_price'];
+                                        $discounted_price = $products[0]['discounted_price'];
+                                        $discount_percent = round((($original_price - $discounted_price) / $original_price) * 100);
+                                    ?>
                                     <div class="product-price">
                                         <div class="price-box font-20">
-                                            <span class="new-price dominant-color heading-weight">$79.00</span>
-                                            <span class="old-price heading-weight"><span class="mer-3">~</span><span class="text-decoration-line-through">$89.00</span></span>
-                                            <span class="discount-price secondary-color">-11% off</span>
+                                            <span class="new-price dominant-color heading-weight"> <?=$products[0]['formatted_discounted_price']?></span>
+                                            <span class="old-price heading-weight"><span class="mer-3">~</span><span class="text-decoration-line-through"> <?=$products[0]['formatted_original_price']?></span></span>
+                                            <span class="discount-price secondary-color">-<?=$discount_percent?>% off</span>
                                         </div>
                                     </div>
+                                    <?php }else{
+                                        ?>
+                                        <div class="product-price">
+                                        <div class="price-box font-20">
+                                            <span class="new-price dominant-color heading-weight"> <?=$products[0]['formatted_discounted_price']?></span>
+                                           
+                                        </div>
+                                    </div>
+                                        <?php
+                                    } ?>
                                 </div>
                                 <div class="product-info mst-20" data-animate="animate__fadeIn">
                                     <div class="product-ratting">
@@ -159,14 +142,10 @@
                                 </div>
                                 <div class="product-info mst-15" data-animate="animate__fadeIn">
                                     <div class="product-availability">
-                                        <span class="d-inline-block text-success"><span class="heading-color heading-weight mer-10">Availability:</span>In stock</span>
+                                        <span class="d-inline-block text-success"><span class="heading-color heading-weight mer-10">Availability:</span><?=$products[0]['product_qty']?> stock</span>
                                     </div>
                                 </div>
-                                <div class="product-info mst-15" data-animate="animate__fadeIn">
-                                    <div class="product-stock">
-                                        <span class="d-inline-block stock-fill text-success ptb-10 plr-15 bg-success heading-weight border-success border-radius">Hurry up! only <span class="available-stock">66</span> products left in stock!</span>
-                                    </div>
-                                </div>
+                                
                                 <div class="product-info mst-15" data-animate="animate__fadeIn">
                                     <div class="product-sold">
                                         <span class="text-danger"><i class="ri-fire-line icon-16 mer-4 blinking"></i><span class="heading-weight"><span class="product-sold-count"></span> products sold in last <span class="product-hours-count"></span> hours</span></span>
@@ -180,87 +159,46 @@
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     </div>
                                 </div>
-                                <div class="product-info mst-15" data-animate="animate__fadeIn">
-                                    <div class="product-timer text-danger ptb-10 plr-15 bg-danger border-danger border-radius countdown" data-time="2027/12/31 00:00:00">
-                                        <div class="ul-mt10 justify-content-between">
-                                            <div class="product-timer-text"><i class="ri-timer-line d-inline-block icon-16 mer-4 blinking"></i><span class="heading-weight">Hurry up! sales end soon!</span></div>
-                                            <div class="product-timer-countdown">
-                                                <ul class="ul-mt10">
-                                                    <li>
-                                                        <span><span class="day heading-weight"></span>d</span>
-                                                    </li>
-                                                    <li>
-                                                        <span><span class="hrs heading-weight"></span>h</span>
-                                                    </li>
-                                                    <li>
-                                                        <span><span class="min heading-weight"></span>m</span>
-                                                    </li>
-                                                    <li>
-                                                        <span><span class="sec heading-weight"></span>s</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="product-info mst-25" data-animate="animate__fadeIn">
                                     <div class="product-variant">
                                         <div class="product-variant-option">
-                                            <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span>16cm<a href="#size-modal" data-bs-toggle="modal" class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size guide</a></span>
+                                             <?php 
+                                                        if(!empty($products[0]['ring_size']))
+                                                        {
+                                                            ?>
+                                            <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span>16cm  <a href="#size-modal" data-bs-toggle="modal" class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size guide</a>
+                                            </span>
                                             <div class="product-option-block size">
                                                 <ul class="ul-mt5">
+                                                    <?php 
+                                                        if(!empty($products[0]['ring_size']))
+                                                        {
+                                                            $sizes = explode(',',$products[0]['ring_size']);
+
+                                                    foreach($sizes as $sz){    
+                                                    ?>
                                                     <li>
                                                         <label class="cust-checkbox-label">
                                                             <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="16cm" checked>
-                                                            <span class="d-block cust-check border-full border-radius">16cm</span>
+                                                            <span class="d-block cust-check border-full border-radius"><?=$sz?></span>
                                                         </label>
                                                     </li>
-                                                    <li>
-                                                        <label class="cust-checkbox-label disabled">
-                                                            <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="18cm">
-                                                            <span class="d-block cust-check border-full border-radius">18cm</span>
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label class="cust-checkbox-label">
-                                                            <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="20cm">
-                                                            <span class="d-block cust-check border-full border-radius">20cm</span>
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label class="cust-checkbox-label">
-                                                            <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="22cm">
-                                                            <span class="d-block cust-check border-full border-radius">22cm</span>
-                                                        </label>
-                                                    </li>
+                                                    <?php 
+                                                    } }
+                                                    ?>
+                                                    
                                                 </ul>
                                             </div>
+                                        <?php }
+                                        else{
+                                            ?>
+                                            <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span>Not Available
+                                            </span>
+                                            <?php
+                                        }?>
                                         </div>
-                                        <div class="product-variant-option mst-20">
-                                            <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Color:</span>Aliceblue</span>
-                                            <div class="product-option-block color">
-                                                <ul class="ul-mt10">
-                                                    <li>
-                                                        <label class="cust-checkbox-label">
-                                                            <input type="radio" name="pro-gleam-band-color" class="cust-checkbox" value="aliceblue" checked>
-                                                            <img src="<?=base_url()?>u_assets/assets/image/product/variant-product1.jpg" class="img-fluid" alt="variant-product1">
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label class="cust-checkbox-label disabled">
-                                                            <input type="radio" name="pro-gleam-band-color" class="cust-checkbox" value="antiquewhite">
-                                                            <img src="<?=base_url()?>u_assets/assets/image/product/variant-product2.jpg" class="img-fluid" alt="variant-product2">
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label class="cust-checkbox-label">
-                                                            <input type="radio" name="pro-gleam-band-color" class="cust-checkbox" value="azure">
-                                                            <img src="<?=base_url()?>u_assets/assets/image/product/variant-product3.jpg" class="img-fluid" alt="variant-product3">
-                                                        </label>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="product-info mst-25" data-animate="animate__fadeIn">
@@ -279,7 +217,7 @@
                                             <div class="col-12 col-sm-6">
                                                 <button type="submit" class="w-100 btn-style quaternary-btn add-to-cart">
                                                     <span class="product-icon">
-                                                        <span class="product-bag-icon">Pre order</span>
+                                                        <span class="product-bag-icon">Add to Cart</span>
                                                         <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
                                                         <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
                                                     </span>
@@ -291,19 +229,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="product-info mst-15" data-animate="animate__fadeIn">
-                                    <div class="product-preorder ptb-15 plr-15 br-hidden">
-                                        <span class="d-block text-danger">Preorder now and get extra <span class="text-decoration-underline heading-weight">10% OFF</span></span>
-                                    </div>
-                                </div>
+                                
                                 <div class="product-info mst-15" data-animate="animate__fadeIn">
                                     <div class="ul-row">
                                         <div class="product-wishlist">
                                             <a href="javascript:void(0)" class="add-to-wishlist heading-color"><i class="ri-heart-line icon-16 mer-4"></i>Wishlist</a>
                                         </div>
-                                        <div class="product-compare">
-                                            <a href="product-comparison.html" class="add-to-compare heading-color"><i class="ri-stack-line icon-16 mer-4"></i>Compare</a>
-                                        </div>
+                                        
                                         <div class="product-ask">
                                             <a href="#question-modal" data-bs-toggle="modal" class="ask-question heading-color"><i class="ri-edit-box-line icon-16 mer-4"></i>Ask a question</a>
                                         </div>
@@ -312,16 +244,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="product-info mst-15" data-animate="animate__fadeIn">
-                                    <div class="product-offer">
-                                        <p class="heading-color"><i class="ri-discount-percent-line icon-16 mer-4"></i>Offers available for you <a href="#offers-modal" data-bs-toggle="modal" class="text-uppercase heading-weight text-decoration-underline">View details</a></p>
-                                    </div>
-                                </div>
-                                <div class="product-info mst-10" data-animate="animate__fadeIn">
-                                    <div class="product-pickup">
-                                        <p class="heading-color"><i class="ri-shopping-bag-2-line icon-16 mer-4"></i>Choose pickup and save time! Opt for our convenient pickup option and get your favorite items faster than ever. Simply select <span class="heading-weight">pickup</span> at checkout. Click here to know more about pickup <a href="#pickup-modal" data-bs-toggle="modal" class="text-uppercase heading-weight text-decoration-underline">View information</a></p>
-                                    </div>
-                                </div>
+                                
+                                
                                 <div class="product-info mst-20" data-animate="animate__fadeIn">
                                     <div class="product-border bst"></div>
                                 </div>
@@ -330,25 +254,8 @@
                                         <span class="d-inline-block"><i class="ri-check-line heading-color icon-16 mer-4"></i>Your order will reach you within 5-7 business days</span>
                                     </div>
                                 </div>
-                                <div class="product-info mst-10" data-animate="animate__fadeIn">
-                                    <div class="product-return">
-                                        <span class="d-inline-block"><i class="ri-check-line heading-color icon-16 mer-4"></i>We accept returns within 30 days of purchase</span>
-                                    </div>
-                                </div>
-                                <div class="product-info mst-20" data-animate="animate__fadeIn">
-                                    <div class="product-payment">
-                                        <ul class="payment-ul">
-                                            <li class="payment-li ul-mt5">
-                                                <a href="javascript:void(0)" class="d-block"><img src="<?=base_url()?>u_assets/assets/image/other/paying-american.png" class="width-40 img-fluid border-radius" alt="paying-american"></a>
-                                                <a href="javascript:void(0)" class="d-block"><img src="<?=base_url()?>u_assets/assets/image/other/paying-club.png" class="width-40 img-fluid border-radius" alt="paying-club"></a>
-                                                <a href="javascript:void(0)" class="d-block"><img src="<?=base_url()?>u_assets/assets/image/other/paying-discover.png" class="width-40 img-fluid border-radius" alt="paying-discover"></a>
-                                                <a href="javascript:void(0)" class="d-block"><img src="<?=base_url()?>u_assets/assets/image/other/paying-maestro.png" class="width-40 img-fluid border-radius" alt="paying-maestro"></a>
-                                                <a href="javascript:void(0)" class="d-block"><img src="<?=base_url()?>u_assets/assets/image/other/paying-paypal.png" class="width-40 img-fluid border-radius" alt="paying-paypal"></a>
-                                                <a href="javascript:void(0)" class="d-block"><img src="<?=base_url()?>u_assets/assets/image/other/paying-visa.png" class="width-40 img-fluid border-radius" alt="paying-visa"></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                
+                                
                             </div>
                             <!-- product-detail-info end -->
                         </div>
@@ -536,29 +443,7 @@
                     </div>
                 </div>
                 <!-- share-modal end -->
-                <!-- offers-modal start -->
-                <div class="offers-modal modal fade" id="offers-modal" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content body-bg border-0 br-hidden">
-                            <div class="modal-body ptb-30 plr-15 plr-sm-30">
-                                <div class="pickup-modal-header d-flex align-items-center justify-content-between meb-30">
-                                    <h6 class="font-18">Offers for you</h6>
-                                    <button type="button" class="body-secondary-color icon-16" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-large-line d-block lh-1"></i></button>
-                                </div>
-                                <div class="row row-mtm15 pickup-modal-content">
-                                    <div class="col-12">
-                                        <div class="ul-mtm-15">
-                                            <span><a href="collection.html">👉 Get up to<span class="heading-weight"> 50% off</span> on selected products! Limited time offer!</a></span>
-                                            <span><a href="collection.html">👉 Buy<span class="heading-weight"> 2</span> and Get<span class="heading-weight"> 15% off</span> on all products!, Use code<span class="heading-weight"> "BUY2SAVE"</span></a></span>
-                                            <span><a href="collection.html">👉 Get<span class="heading-weight"> 11% off</span> your first order!, Use code<span class="heading-weight"> "11%OFF"</span></a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- offers-modal end -->
+              
                 <!-- pickup-modal start -->
                 <div class="pickup-modal modal fade" id="pickup-modal" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-centered">
@@ -664,11 +549,11 @@
                                 <tbody>
                                     <tr>
                                         <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Vendor</th>
-                                        <td class="ptb-10 plr-15 border-full"><a href="index.html" class="body-dominant-color text-decoration-underline">Veppo</a></td>
+                                        <td class="ptb-10 plr-15 border-full"><a href="<?=base_url()?>" class="body-dominant-color text-decoration-underline">Shingavi</a></td>
                                     </tr>
                                     <tr>
                                         <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Type</th>
-                                        <td class="ptb-10 plr-15 border-full"><a href="collection.html" class="body-dominant-color text-decoration-underline">Collection name</a></td>
+                                        <td class="ptb-10 plr-15 border-full"><a  class="body-dominant-color text-decoration-underline">Collection name</a></td>
                                     </tr>
                                     <tr>
                                         <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Size</th>
@@ -889,22 +774,7 @@
             </section>
             <!-- product-detail-review end -->
             <!-- product-detail-video start -->
-            <div class="product-detail-video section-pt">
-                <div class="container">
-                    <div class="product-video" data-animate="animate__fadeIn">
-                        <div class="video position-relative">
-                            <div class="video-loader position-absolute w-100 h-100 z-1">
-                                <span class="h-100 d-flex justify-content-center"><svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="var(--heading-font-color)" stroke-width="1" cx="33" cy="33" r="30"></circle></svg></span>
-                            </div>
-                            <div class="video-img banner-img position-relative br-hidden">
-                                <button type="button" class="video-btn position-absolute top-50 start-50 translate-middle z-1" data-video-id="0Aja_yP93PY" aria-label="Video button"><span class="banner-video-icon secondary-color icon-16 width-80 height-80 d-flex align-items-center justify-content-center extra-bg rounded-circle"><i class="ri-play-large-fill d-block lh-1"></i></span></button>
-                                <img src="<?=base_url()?>u_assets/assets/image/product/video.jpg" class="w-100 img-fluid" alt="video">
-                            </div>
-                            <div class="video-frame position-absolute top-0 start-0 w-100 h-100 br-hidden"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <!-- product-detail-video end -->
             <!-- related-product start -->
             <section class="related-area section-ptb">
@@ -918,19 +788,34 @@
                         <div class="collection-wrap">
                             <div class="related-slider swiper" id="related-slider">
                                 <div class="swiper-wrapper">
+                                    <?php 
+                                        foreach($relatedProducts as $row)
+                                        {
+                                    ?>
                                     <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
                                         <div class="single-product w-100">
                                             <div class="row single-product-wrap">
                                                 <div class="product-image">
-                                                    <a href="product.html" class="pro-img">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-1.jpg" class="w-100 img-fluid img1" alt="p-1">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-2.jpg" class="w-100 img-fluid img2" alt="p-2">
+                                                    <a class="pro-img">
+                                                        
+                                                        <img src="<?=base_url()?>uploads/<?=$row['imgs'][0]?>" class="w-100 img-fluid img1" alt="p-1">
+                                                        <?php 
+                                                            if(count($row['imgs'])>1)
+                                                            {
+                                                        ?>
+                                                        <img src="<?=base_url()?>uploads/<?=$row['imgs'][1]?>" class="w-100 img-fluid img2" alt="p-2">
+                                                        <?php }else{
+                                                            ?>
+                                                            <img src="<?=base_url()?>uploads/<?=$row['imgs'][0]?>" class="w-100 img-fluid img2" alt="p-1">
+                                                            <?php
+                                                        } ?>
+                                                      
                                                     </a>
                                                     <div class="product-action">
-                                                        <a href="wishlist.html" class="wishlist">
+                                                        <a class="wishlist">
                                                             <span class="product-icon">Wishlist</span>
                                                         </a>
-                                                        <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
+                                                        <a onclick="openModal('<?=$row['prod_gold_id']?>')"  class="quick-view">
                                                             <span class="product-icon">Quickview</span>
                                                         </a>
                                                     </div>
@@ -939,13 +824,19 @@
                                                     <div class="pro-content">
                                                         <div class="pro-content-action">
                                                             <div class="product-title">
-                                                                <span class="d-block meb-8">Ring / Shine</span>
-                                                                <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Gleam band</a></span>
+                                                                <span class="d-block meb-8"><?=$row['product_group_name']?></span>
+                                                                <span class="d-block heading-weight"><a class="d-block w-100 dominant-link text-truncate"><?=$row['product_name']?></a></span>
                                                             </div>
                                                             <div class="pro-price-action">
                                                                 <div class="price-box heading-weight">
-                                                                    <span class="new-price dominant-color">$79.00</span>
-                                                                    <span class="old-price text-decoration-line-through">$89.00</span>
+                                                                    <span class="new-price dominant-color"><?=$row['formatted_discounted_price']?></span>
+                                                                    <span class="old-price text-decoration-line-through">
+                                                                        <?php
+                                                                            if($row['discount_amount'] > 0){
+                                                                                echo $row['formatted_original_price'];
+                                                                            }
+                                                                            ?>
+                                                                    </span>
                                                                 </div>
                                                                 <div class="product-action">
                                                                     <a href="javascript:void(0)" class="add-to-cart">
@@ -961,12 +852,15 @@
                                                         </div>
                                                         <div class="product-price">
                                                             <div class="price-box heading-weight">
-                                                                <span class="new-price dominant-color">$79.00</span>
-                                                                <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$89.00</span></span>
+                                                                <span class="new-price dominant-color"><?=$row['formatted_discounted_price']?></span>
+                                                                <?php
+                                                                            if($row['discount_amount'] > 0){
+                                                                                ?>
+                                                                <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through"><?=$row['formatted_original_price']?></span></span><?php } ?>
                                                             </div>
                                                         </div>
                                                         <div class="product-description">
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry It is a long established fact that a will be distracted by the readable of at</p>
+                                                            <p><?=$row['product_details']?></p>
                                                         </div>
                                                         <div class="product-action">
                                                             <a href="javascript:void(0)" class="add-to-cart">
@@ -981,16 +875,16 @@
                                                                 <span class="product-icon"><i class="ri-heart-line d-block icon-16 lh-1"></i></span>
                                                                 <span class="tooltip-text">wishlist</span>
                                                             </a>
-                                                            <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
+                                                            <a onclick="openModal('<?=$row['prod_gold_id']?>')"  class="quick-view">
                                                                 <span class="product-icon"><i class="ri-eye-line d-block icon-16 lh-1"></i></span>
                                                                 <span class="tooltip-text">quickview</span>
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="pro-sku-variant">
+                                                    <!-- <div class="pro-sku-variant">
                                                         <div class="product-sku-variant">
                                                             <div class="pro-sku">
-                                                                <span class="heading-color text-uppercase heading-weight">SKU:<span class="dominant-color msl-4">RT89GT</span></span>
+                                                                <span class="heading-color text-uppercase heading-weight"><span class="dominant-color msl-4"><?=$row['category_name']?></span></span>
                                                             </div>
                                                             <div class="pro-select-variant">
                                                                 <span class="heading-color text-uppercase heading-weight">Size:</span>
@@ -1001,454 +895,17 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
-                                        <div class="single-product w-100">
-                                            <div class="row single-product-wrap">
-                                                <div class="product-image">
-                                                    <a href="product.html" class="pro-img">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-3.jpg" class="w-100 img-fluid img1" alt="p-3">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-4.jpg" class="w-100 img-fluid img2" alt="p-4">
-                                                        <span class="product-label product-label-new product-label-left">New</span>
-                                                    </a>
-                                                    <div class="product-action">
-                                                        <a href="wishlist.html" class="wishlist">
-                                                            <span class="product-icon">Wishlist</span>
-                                                        </a>
-                                                        <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                            <span class="product-icon">Quickview</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <div class="pro-content">
-                                                        <div class="pro-content-action">
-                                                            <div class="product-title">
-                                                                <span class="d-block meb-8">Ring / Chic</span>
-                                                                <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Luxe loop</a></span>
-                                                            </div>
-                                                            <div class="pro-price-action">
-                                                                <div class="price-box heading-weight">
-                                                                    <span class="new-price dominant-color">$49.00</span>
-                                                                    <span class="old-price text-decoration-line-through">$59.00</span>
-                                                                </div>
-                                                                <div class="product-action">
-                                                                    <a href="javascript:void(0)" class="add-to-cart">
-                                                                        <span class="product-icon">
-                                                                            <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                            <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                            <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                        </span>
-                                                                        <span class="tooltip-text">add to cart</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="price-box heading-weight">
-                                                                <span class="new-price dominant-color">$49.00</span>
-                                                                <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$59.00</span></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-description">
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry It is a long established fact that a will be distracted by the readable of at</p>
-                                                        </div>
-                                                        <div class="product-action">
-                                                            <a href="javascript:void(0)" class="add-to-cart">
-                                                                <span class="product-icon">
-                                                                    <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                    <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                    <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                </span>
-                                                                <span class="tooltip-text">add to cart</span>
-                                                            </a>
-                                                            <a href="javascript:void(0)" class="add-to-wishlist">
-                                                                <span class="product-icon"><i class="ri-heart-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">wishlist</span>
-                                                            </a>
-                                                            <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                                <span class="product-icon"><i class="ri-eye-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">quickview</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-sku-variant">
-                                                        <div class="product-sku-variant">
-                                                            <div class="pro-sku">
-                                                                <span class="heading-color text-uppercase heading-weight">SKU:<span class="dominant-color msl-4">RT89GT</span></span>
-                                                            </div>
-                                                            <div class="pro-select-variant">
-                                                                <span class="heading-color text-uppercase heading-weight">Size:</span>
-                                                                <select id="luxe-loop-size" name="luxe-loop-size" class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0">
-                                                                    <option value="16cm" selected>16cm</option>
-                                                                    <option value="18cm">18cm</option>
-                                                                    <option value="20cm">20cm</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
-                                        <div class="single-product w-100">
-                                            <div class="row single-product-wrap">
-                                                <div class="product-image">
-                                                    <a href="product.html" class="pro-img">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-5.jpg" class="w-100 img-fluid img1" alt="p-5">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-6.jpg" class="w-100 img-fluid img2" alt="p-6">
-                                                    </a>
-                                                    <div class="product-action">
-                                                        <a href="wishlist.html" class="wishlist">
-                                                            <span class="product-icon">Wishlist</span>
-                                                        </a>
-                                                        <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                            <span class="product-icon">Quickview</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <div class="pro-content">
-                                                        <div class="pro-content-action">
-                                                            <div class="product-title">
-                                                                <span class="d-block meb-8">Ears / Glow</span>
-                                                                <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Opal stud</a></span>
-                                                            </div>
-                                                            <div class="pro-price-action">
-                                                                <div class="price-box heading-weight">
-                                                                    <span class="new-price dominant-color">$69.00</span>
-                                                                    <span class="old-price text-decoration-line-through">$79.00</span>
-                                                                </div>
-                                                                <div class="product-action">
-                                                                    <a href="javascript:void(0)" class="add-to-cart">
-                                                                        <span class="product-icon">
-                                                                            <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                            <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                            <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                        </span>
-                                                                        <span class="tooltip-text">add to cart</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="price-box heading-weight">
-                                                                <span class="new-price dominant-color">$69.00</span>
-                                                                <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$79.00</span></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-description">
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry It is a long established fact that a will be distracted by the readable of at</p>
-                                                        </div>
-                                                        <div class="product-action">
-                                                            <a href="javascript:void(0)" class="add-to-cart">
-                                                                <span class="product-icon">
-                                                                    <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                    <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                    <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                </span>
-                                                                <span class="tooltip-text">add to cart</span>
-                                                            </a>
-                                                            <a href="javascript:void(0)" class="add-to-wishlist">
-                                                                <span class="product-icon"><i class="ri-heart-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">wishlist</span>
-                                                            </a>
-                                                            <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                                <span class="product-icon"><i class="ri-eye-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">quickview</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-sku-variant">
-                                                        <div class="product-sku-variant">
-                                                            <div class="pro-sku">
-                                                                <span class="heading-color text-uppercase heading-weight">SKU:<span class="dominant-color msl-4">RT89GT</span></span>
-                                                            </div>
-                                                            <div class="pro-select-variant">
-                                                                <span class="heading-color text-uppercase heading-weight">Size:</span>
-                                                                <select id="opal-stud-size" name="opal-stud-size" class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0">
-                                                                    <option value="16cm" selected>16cm</option>
-                                                                    <option value="18cm">18cm</option>
-                                                                    <option value="20cm">20cm</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
-                                        <div class="single-product w-100">
-                                            <div class="row single-product-wrap">
-                                                <div class="product-image">
-                                                    <a href="product.html" class="pro-img">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-7.jpg" class="w-100 img-fluid img1" alt="p-7">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-8.jpg" class="w-100 img-fluid img2" alt="p-8">
-                                                        <span class="product-label product-label-discount product-label-left">-5% off</span>
-                                                    </a>
-                                                    <div class="product-action">
-                                                        <a href="wishlist.html" class="wishlist">
-                                                            <span class="product-icon">Wishlist</span>
-                                                        </a>
-                                                        <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                            <span class="product-icon">Quickview</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <div class="pro-content">
-                                                        <div class="pro-content-action">
-                                                            <div class="product-title">
-                                                                <span class="d-block meb-8">Ears / Bold</span>
-                                                                <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Ruby hoop</a></span>
-                                                            </div>
-                                                            <div class="pro-price-action">
-                                                                <div class="price-box heading-weight">
-                                                                    <span class="new-price dominant-color">$49.00</span>
-                                                                    <span class="old-price text-decoration-line-through">$54.00</span>
-                                                                </div>
-                                                                <div class="product-action">
-                                                                    <a href="javascript:void(0)" class="add-to-cart">
-                                                                        <span class="product-icon">
-                                                                            <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                            <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                            <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                        </span>
-                                                                        <span class="tooltip-text">add to cart</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="price-box heading-weight">
-                                                                <span class="new-price dominant-color">$49.00</span>
-                                                                <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$54.00</span></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-description">
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry It is a long established fact that a will be distracted by the readable of at</p>
-                                                        </div>
-                                                        <div class="product-action">
-                                                            <a href="javascript:void(0)" class="add-to-cart">
-                                                                <span class="product-icon">
-                                                                    <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                    <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                    <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                </span>
-                                                                <span class="tooltip-text">add to cart</span>
-                                                            </a>
-                                                            <a href="javascript:void(0)" class="add-to-wishlist">
-                                                                <span class="product-icon"><i class="ri-heart-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">wishlist</span>
-                                                            </a>
-                                                            <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                                <span class="product-icon"><i class="ri-eye-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">quickview</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-sku-variant">
-                                                        <div class="product-sku-variant">
-                                                            <div class="pro-sku">
-                                                                <span class="heading-color text-uppercase heading-weight">SKU:<span class="dominant-color msl-4">RT89GT</span></span>
-                                                            </div>
-                                                            <div class="pro-select-variant">
-                                                                <span class="heading-color text-uppercase heading-weight">Size:</span>
-                                                                <select id="ruby-hoop-size" name="ruby-hoop-size" class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0">
-                                                                    <option value="16cm" selected>16cm</option>
-                                                                    <option value="18cm">18cm</option>
-                                                                    <option value="20cm">20cm</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
-                                        <div class="single-product w-100">
-                                            <div class="row single-product-wrap">
-                                                <div class="product-image">
-                                                    <a href="product.html" class="pro-img">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-9.jpg" class="w-100 img-fluid img1" alt="p-9">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-10.jpg" class="w-100 img-fluid img2" alt="p-10">
-                                                    </a>
-                                                    <div class="product-action">
-                                                        <a href="wishlist.html" class="wishlist">
-                                                            <span class="product-icon">Wishlist</span>
-                                                        </a>
-                                                        <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                            <span class="product-icon">Quickview</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <div class="pro-content">
-                                                        <div class="pro-content-action">
-                                                            <div class="product-title">
-                                                                <span class="d-block meb-8">Neck / Soft</span>
-                                                                <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Pearl link</a></span>
-                                                            </div>
-                                                            <div class="pro-price-action">
-                                                                <div class="price-box heading-weight">
-                                                                    <span class="new-price dominant-color">$89.00</span>
-                                                                    <span class="old-price text-decoration-line-through">$99.00</span>
-                                                                </div>
-                                                                <div class="product-action">
-                                                                    <a href="javascript:void(0)" class="add-to-cart">
-                                                                        <span class="product-icon">
-                                                                            <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                            <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                            <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                        </span>
-                                                                        <span class="tooltip-text">add to cart</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="price-box heading-weight">
-                                                                <span class="new-price dominant-color">$89.00</span>
-                                                                <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$99.00</span></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-description">
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry It is a long established fact that a will be distracted by the readable of at</p>
-                                                        </div>
-                                                        <div class="product-action">
-                                                            <a href="javascript:void(0)" class="add-to-cart">
-                                                                <span class="product-icon">
-                                                                    <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                    <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                    <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                </span>
-                                                                <span class="tooltip-text">add to cart</span>
-                                                            </a>
-                                                            <a href="javascript:void(0)" class="add-to-wishlist">
-                                                                <span class="product-icon"><i class="ri-heart-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">wishlist</span>
-                                                            </a>
-                                                            <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                                <span class="product-icon"><i class="ri-eye-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">quickview</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-sku-variant">
-                                                        <div class="product-sku-variant">
-                                                            <div class="pro-sku">
-                                                                <span class="heading-color text-uppercase heading-weight">SKU:<span class="dominant-color msl-4">RT89GT</span></span>
-                                                            </div>
-                                                            <div class="pro-select-variant">
-                                                                <span class="heading-color text-uppercase heading-weight">Size:</span>
-                                                                <select id="pearl-link-size" name="pearl-link-size" class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0">
-                                                                    <option value="16cm" selected>16cm</option>
-                                                                    <option value="18cm">18cm</option>
-                                                                    <option value="20cm">20cm</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
-                                        <div class="single-product w-100">
-                                            <div class="row single-product-wrap">
-                                                <div class="product-image">
-                                                    <a href="product.html" class="pro-img">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-11.jpg" class="w-100 img-fluid img1" alt="p-11">
-                                                        <img src="<?=base_url()?>u_assets/assets/image/index/product/p-12.jpg" class="w-100 img-fluid img2" alt="p-12">
-                                                        <span class="product-label product-label-sale product-label-left">Sale</span>
-                                                    </a>
-                                                    <div class="product-action">
-                                                        <a href="wishlist.html" class="wishlist">
-                                                            <span class="product-icon">Wishlist</span>
-                                                        </a>
-                                                        <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                            <span class="product-icon">Quickview</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <div class="pro-content">
-                                                        <div class="pro-content-action">
-                                                            <div class="product-title">
-                                                                <span class="d-block meb-8">Wrist / Rich</span>
-                                                                <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Gold bead</a></span>
-                                                            </div>
-                                                            <div class="pro-price-action">
-                                                                <div class="price-box heading-weight">
-                                                                    <span class="new-price dominant-color">$79.00</span>
-                                                                    <span class="old-price text-decoration-line-through">$84.00</span>
-                                                                </div>
-                                                                <div class="product-action">
-                                                                    <a href="javascript:void(0)" class="add-to-cart">
-                                                                        <span class="product-icon">
-                                                                            <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                            <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                            <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                        </span>
-                                                                        <span class="tooltip-text">add to cart</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-price">
-                                                            <div class="price-box heading-weight">
-                                                                <span class="new-price dominant-color">$79.00</span>
-                                                                <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$84.00</span></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-description">
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry It is a long established fact that a will be distracted by the readable of at</p>
-                                                        </div>
-                                                        <div class="product-action">
-                                                            <a href="javascript:void(0)" class="add-to-cart">
-                                                                <span class="product-icon">
-                                                                    <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                    <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                    <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                                </span>
-                                                                <span class="tooltip-text">add to cart</span>
-                                                            </a>
-                                                            <a href="javascript:void(0)" class="add-to-wishlist">
-                                                                <span class="product-icon"><i class="ri-heart-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">wishlist</span>
-                                                            </a>
-                                                            <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
-                                                                <span class="product-icon"><i class="ri-eye-line d-block icon-16 lh-1"></i></span>
-                                                                <span class="tooltip-text">quickview</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-sku-variant">
-                                                        <div class="product-sku-variant">
-                                                            <div class="pro-sku">
-                                                                <span class="heading-color text-uppercase heading-weight">SKU:<span class="dominant-color msl-4">RT89GT</span></span>
-                                                            </div>
-                                                            <div class="pro-select-variant">
-                                                                <span class="heading-color text-uppercase heading-weight">Size:</span>
-                                                                <select id="gold-bead-size" name="gold-bead-size" class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0">
-                                                                    <option value="16cm" selected>16cm</option>
-                                                                    <option value="18cm">18cm</option>
-                                                                    <option value="20cm">20cm</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <?php } ?>
+                                    
+                                    
+                                    
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="swiper-buttons">

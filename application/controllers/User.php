@@ -557,6 +557,7 @@ class User extends CI_Controller
 			$row['price'] = $price;
 			$row['rating'] = (int) $row['rating'];
 
+
 			// Apply min and max amount filter
 			$valid = true;
 			if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
@@ -575,11 +576,144 @@ class User extends CI_Controller
 		$this->ov("products", $data);
 	}
 
-	public function product_details()
+	public function product_details($id)
 	{
 		$this->head();
 		$this->nav();
-		$this->load->view("user/product_details");
+		$products = $this->db->query(
+			"
+        SELECT * FROM category, product_gold
+        WHERE product_gold.cat_id = category.category_id
+        AND product_gold.status = 'active'
+        AND product_gold.prod_gold_id='".$id."'
+        ORDER BY product_gold.prod_gold_id DESC")->result_array();
+
+		$relatedProducts = $this->db->query(
+			"
+        SELECT * FROM category, product_group,product_gold
+        WHERE product_gold.cat_id = category.category_id
+        AND product_gold.group_id = product_group.product_group_id
+        AND product_gold.group_id = '".$products[0]['group_id']."'
+        AND product_gold.status = 'active'
+        ORDER BY product_gold.prod_gold_id DESC LIMIT 10")->result_array();
+
+		// Get categories and product groups
+		$data['category'] = $this->My_model->select_where("category", ['category_id' => $products[0]['category_id'], 'status' => 'active']);
+
+
+		// Filtered products result
+		$filtered_products = [];
+		$filtered_relatedProducts = [];
+
+		foreach ($products as $key => $row) {
+			// Fetch filters
+			$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+			$ft = '';
+			$ff = '';
+			foreach ($fil as $frow) {
+				if (strpos($ft, $frow['filter_title']) === false) {
+					$ft .= "ftitle" . $frow['filter_title'] . " ";
+				}
+				$ff .= "fname" . $frow['filter_name'] . " ";
+			}
+
+			$row['ft'] = $ft;
+			$row['ff'] = $ff;
+			$row['cart'] = "No";
+
+			// Calculate product price
+			$price = 0;
+			if ($row['cat_id'] == 5) {
+				$price = $this->goldprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 6) {
+				$price = $this->silverprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+				$price = $this->golddiamondprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+				$price = $this->silverdiamondprice($row['prod_gold_id']);
+			}
+
+			$row['price'] = $price;
+			$row['rating'] = (int) $row['rating'];
+			// $row['total_discount_amt'] = 2000;
+			if ($row['total_discount_amt'] > 0) {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = $row['total_discount_amt'];
+				$row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
+			} else {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = 0;
+				$row['discounted_price'] = 0;
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+			}
+			$row['imgs'] = explode('||', $row['product_image']);
+
+			
+				$filtered_products[] = $row;
+			
+
+		}
+		foreach ($relatedProducts as $key => $row) {
+			// Fetch filters
+			$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+			$ft = '';
+			$ff = '';
+			foreach ($fil as $frow) {
+				if (strpos($ft, $frow['filter_title']) === false) {
+					$ft .= "ftitle" . $frow['filter_title'] . " ";
+				}
+				$ff .= "fname" . $frow['filter_name'] . " ";
+			}
+
+			$row['ft'] = $ft;
+			$row['ff'] = $ff;
+			$row['cart'] = "No";
+
+			// Calculate product price
+			$price = 0;
+			if ($row['cat_id'] == 5) {
+				$price = $this->goldprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 6) {
+				$price = $this->silverprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+				$price = $this->golddiamondprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+				$price = $this->silverdiamondprice($row['prod_gold_id']);
+			}
+
+			$row['price'] = $price;
+			$row['rating'] = (int) $row['rating'];
+			// $row['total_discount_amt'] = 2000;
+			if ($row['total_discount_amt'] > 0) {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = $row['total_discount_amt'];
+				$row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
+			} else {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = 0;
+				$row['discounted_price'] = 0;
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+			}
+			$row['imgs'] = explode('||', $row['product_image']);
+
+			
+				$filtered_relatedProducts[] = $row;
+			
+
+		}
+
+		$data['products'] = $filtered_products;
+		$data['relatedProducts'] = $filtered_relatedProducts;
+		// echo "<pre>";
+		// print_r($filtered_relatedProducts);
+		// echo "</pre>";
+		$this->load->view("user/product_details",$data);
 		$this->footer();
 	}
 	public function quick_view()

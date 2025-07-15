@@ -1152,5 +1152,272 @@
 </body>
 
 <!-- Mirrored from spacingtech.com/html/veppo/template/index3.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Jul 2025 11:38:16 GMT -->
+<script>
+function openModal(pid) {
+    $.ajax({
+        url: '<?= base_url("user/quick_view") ?>',
+        method: 'POST',
+        data: { product_id: pid },
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            if (data && data.length > 0) {
+                const product = data[0];
 
+                // Set product title
+                $('#product-title').text(product.product_name);
+                 let bigSliderHtml = '';
+                let smallSliderHtml = '';
+
+                if (product.imgs && product.imgs.length > 0) {
+                    product.imgs.forEach(function(img) {
+                        const imgUrl = '<?= base_url("uploads/") ?>' + img;
+
+                        bigSliderHtml += `
+                            <div class="swiper-slide">
+                                <img src="${imgUrl}" class="w-100 img-fluid" alt="${product.product_name}">
+                            </div>`;
+
+                        smallSliderHtml += `
+                            <div class="swiper-slide">
+                                <img src="${imgUrl}" class="w-100 img-fluid border-radius" alt="${product.product_name}">
+                            </div>`;
+                    });
+                }
+
+                $('#quickview-slider-big .swiper-wrapper').html(bigSliderHtml);
+                $('#quickview-slider-small .swiper-wrapper').html(smallSliderHtml);
+
+
+                $('#available-stock').text(product.product_qty);
+                $('#formatted_discounted_price').text(product.formatted_discounted_price);
+                $('#formatted_original_price').text(product.formatted_original_price);
+                // --- Ring Size Logic Start ---
+                const sizesContainer = $('#sizes');
+                sizesContainer.empty(); // Clear existing sizes
+
+                if (product.ring_size) {
+                    const sizes = product.ring_size.split(',');
+                    sizes.forEach((size, index) => {
+                        const checked = index === 0 ? 'checked' : '';
+                        sizesContainer.append(`
+                            <li>
+                                <label class="cust-checkbox-label">
+                                    <input type="radio" name="quick-ring-size" class="cust-checkbox" value="${size}" ${checked}>
+                                    <span class="d-block cust-check border-full border-radius">${size}</span>
+                                </label>
+                            </li>
+                        `);
+                    });
+                } else {
+                    sizesContainer.append(`
+                        <li><span class="text-muted">No sizes available</span></li>
+                    `);
+                }
+                // --- Ring Size Logic End ---
+
+                // Show modal
+                $('#quickview-modal').modal('show');
+            }
+        },
+        error: function() {
+            alert('Something went wrong while fetching product info.');
+        }
+    });
+}
+</script>
+<div class="quickview-modal modal fade" id="quickview-modal" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content body-bg border-0 br-hidden">
+            <div class="modal-body ptb-30 plr-15 plr-sm-30">
+                <div class="quickview-modal-header d-flex align-items-center justify-content-between meb-30">
+                    <h6 class="font-18">Quickview</h6>
+                    <button type="button" class="body-secondary-color icon-16" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-large-line d-block lh-1"></i></button>
+                </div>
+                <div class="row row-mtm quickview-modal-content">
+                    <div class="col-12 col-md-6">
+                        <!-- quickview-detail-slider start -->
+                        <div class="quickview-detail-slider">
+                            <div class="row ul-mt15">
+                                <div class="col-12">
+                                    <!-- quickview-img-big start -->
+                                    <div class="quickview-img-big quickview-slider-big position-relative br-hidden">
+                                        <div class="swiper" id="quickview-slider-big">
+                                            <div class="swiper-wrapper">
+                                               
+                                            </div>
+                                            <div class="swiper-buttons">
+                                                <button type="button" class="swiper-prev swiper-prev-quickview-big secondary-btn icon-16 width-32 height-32 position-absolute top-50 translate-middle-y z-1 rounded-circle" aria-label="Arrow previous"><i class="ri-arrow-left-line d-block lh-1"></i></button>
+                                                <button type="button" class="swiper-next swiper-next-quickview-big secondary-btn icon-16 width-32 height-32 position-absolute top-50 translate-middle-y z-1 rounded-circle" aria-label="Arrow next"><i class="ri-arrow-right-line d-block lh-1"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- quickview-img-big end -->
+                                </div>
+                                <div class="col-12">
+                                    <!-- quickview-img-small start -->
+                                    <div class="quickview-img-small quickview-slider-small">
+                                        <div class="swiper" id="quickview-slider-small">
+                                            <div class="swiper-wrapper">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- quickview-img-small end -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- quickview-detail-slider end -->
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <!-- quickview-info start -->
+                        <div class="quickview-info p-md-relative height-md-100">
+                            <div class="quickview-detail-info p-md-absolute top-0 bottom-0 start-0 psl-md-3 per-md-30">
+                                <div class="quick-info" data-animate="animate__fadeIn">
+                                    <div class="product-sku">
+                                        <span class="font-14 text-uppercase">SKU-RT89GT</span>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-5" data-animate="animate__fadeIn">
+                                    <div class="product-title">
+                                        <h2 class="font-20" id="product-title"></h2>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-10" data-animate="animate__fadeIn">
+                                    <div class="product-price">
+                                        <div class="price-box font-18">
+                                            <span id="formatted_discounted_price" class="new-price dominant-color heading-weight"></span>
+                                            <span class="old-price heading-weight"><span class="mer-3">~</span>
+                                            <span id="formatted_original_price"  class="text-decoration-line-through"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-15" data-animate="animate__fadeIn">
+                                    <div class="product-ratting">
+                                        <div class="pro-review-write">
+                                            <div class="pro-review">
+                                                <span class="review-ratting">
+                                                    <span class="review-star icon-16">
+                                                        <i class="ri-star-fill"></i>
+                                                        <i class="ri-star-fill"></i>
+                                                        <i class="ri-star-fill"></i>
+                                                        <i class="ri-star-fill"></i>
+                                                        <i class="ri-star-line"></i>
+                                                    </span>
+                                                    <span class="review-caption">2 reviews</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-15" data-animate="animate__fadeIn">
+                                    <div class="product-view">
+                                        <span class="heading-color"><i class="ri-eye-line icon-16 mer-4 blinking"></i><span class="product-live-visitor"></span> people are viewing this product right now</span>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-10" data-animate="animate__fadeIn">
+                                    <div class="product-availability">
+                                        <span class="d-inline-block text-success"><span class="heading-color heading-weight mer-10">Availability:</span>In stock</span>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-10" data-animate="animate__fadeIn">
+                                    <div class="product-stock">
+                                        <span class="d-inline-block stock-fill text-success ptb-10 plr-15 bg-success heading-weight border-success border-radius">Hurry up! only <span class="available-stock" id="available-stock">66</span> products left in stock!</span>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-10" data-animate="animate__fadeIn">
+                                    <div class="product-sold">
+                                        <span class="text-danger"><i class="ri-fire-line icon-16 mer-4 blinking"></i><span class="heading-weight"><span class="product-sold-count"></span> products sold in last <span class="product-hours-count"></span> hours</span></span>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-20" data-animate="animate__fadeIn">
+                                    <div class="product-border bst"></div>
+                                </div>
+                                <div class="quick-info mst-15" data-animate="animate__fadeIn">
+                                    <div class="product-desc">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="quick-info mst-20" data-animate="animate__fadeIn">
+                                    <div class="product-variant">
+                                        <div class="product-variant-option">
+                                            <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span></span>
+                                            <div class="product-option-block size">
+                                                <ul class="ul-mt5" id="sizes">
+                                                    <li>
+                                                        <label class="cust-checkbox-label">
+                                                            <input type="radio" name="quick-gleam-band-size" class="cust-checkbox" value="16cm" checked>
+                                                            <span class="d-block cust-check border-full border-radius">16cm</span>
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-20" data-animate="animate__fadeIn">
+                                    <div class="product-quantity d-flex flex-wrap align-items-center">
+                                        <span class="heading-color heading-weight mer-10">Quantity:</span>
+                                        <div class="js-qty-wrapper">
+                                            <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
+                                                <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
+                                                <input type="number" name="quick-gleam-band-16cm-aliceblue" class="js-qty-num p-0 text-center border-0" value="1" min="1">
+                                                <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-button mst-15">
+                                        <div class="row btn-row15">
+                                            <div class="col-12">
+                                                <button type="submit" class="w-100 btn-style quaternary-btn add-to-cart">
+                                                    <span class="product-icon">
+                                                        <span class="product-bag-icon">Add to cart</span>
+                                                        <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
+                                                        <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="col-12">
+                                                <a class="w-100 btn-style secondary-btn">Buy now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-15" data-animate="animate__fadeIn">
+                                    <div class="ul-row">
+                                        <div class="product-wishlist">
+                                            <a class="add-to-wishlist heading-color"><i class="ri-heart-line icon-16 mer-4"></i>Wishlist</a>
+                                        </div>
+                                        <div class="product-compare">
+                                            <a class="add-to-compare heading-color"><i class="ri-stack-line icon-16 mer-4"></i>Compare</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-20" data-animate="animate__fadeIn">
+                                    <div class="product-border bst"></div>
+                                </div>
+                                <div class="quick-info mst-20" data-animate="animate__fadeIn">
+                                    <div class="product-delivery">
+                                        <span class="d-inline-block"><i class="ri-check-line heading-color icon-16 mer-4"></i>Your order will reach you within 5-7 business days</span>
+                                    </div>
+                                </div>
+                                <div class="quick-info mst-10" data-animate="animate__fadeIn">
+                                    <div class="product-return">
+                                        <span class="d-inline-block"><i class="ri-check-line heading-color icon-16 mer-4"></i>We accept returns within 30 days of purchase</span>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                        <!-- quickview-info end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </html>

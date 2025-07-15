@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?= base_url() ?>assets/images/favicon.ico">
+    <link rel="shortcut icon" href="<?= base_url() ?>uploads/<?= $company_det[0]['company_logo'] ?>">
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
