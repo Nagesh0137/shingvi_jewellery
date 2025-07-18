@@ -392,20 +392,7 @@
                 $(".bg-shop").addClass("opacity-0 invisible").removeClass("opacity-50 visible");
             });
             // add to cart functionality
-            $document.on("click", ".add-to-cart", function(event) {
-                event.preventDefault();
-                var $this = $(this);
-                $this.addClass("loading active disabled");
-                setTimeout(function() {
-                    $this.removeClass("loading");
-                    $this.addClass("done");
-                    setTimeout(function() {
-                        $this.removeClass("done active disabled");
-                        miniCart();
-                        $this.parents(".quickview-modal").find(".quickview-modal-header button").click();
-                    }, 500);
-                }, 500);
-            });
+          
             // function to show the mini cart
             function miniCart() {
                 $("#cart-drawer").removeClass("invisible").addClass("active visible");
@@ -434,11 +421,20 @@
         wishList: function() {
             $document.on("click", ".add-to-wishlist", function() {
                 var $this = $(this);
+                var $icon = $this.find("i");
+
                 $this.addClass("active disabled");
+
                 setTimeout(function() {
-                    $this.find("i").removeClass("ri-heart-line").addClass("ri-heart-fill");
+                    if ($icon.hasClass("ri-heart-fill")) {
+                        // If already added, remove it (toggle off)
+                        $icon.removeClass("ri-heart-fill").addClass("ri-heart-line");
+                    } else {
+                        // If not added, add to wishlist (toggle on)
+                        $icon.removeClass("ri-heart-line").addClass("ri-heart-fill");
+                    }
+
                     $this.removeClass("active disabled");
-                    $this.attr("href", "wishlist.html");
                 }, 500);
             });
         },

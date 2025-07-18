@@ -68,14 +68,65 @@
                                                     
                                                 </a>
                                                 <div class="product-action">
-                                                    <a href="<?=base_url()?>user/wishlist" class="wishlist">
-                                                        <span class="product-icon">Wishlist</span>
+                                                     <?php 
+                                                                if(isset($_SESSION['user_id']))
+                                                                {
+                                                                    $wt = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id'],'prod_id'=>$row['prod_gold_id']]);
+                                                                    ?>
+                                                    <a class="add-to-wishlist" onclick="addToWishlist('<?=$row['prod_gold_id']?>')" class="wishlist">
+                                                        <span class="product-icon">
+                                                            <i id="add-to-wishlist<?=$row['prod_gold_id']?>" class="<?php if(isset($wt[0])){ echo "ri-heart-fill";}else{echo 'ri-heart-line';} ?> d-block icon-16 lh-1"></i>
+                                                        </span>
                                                     </a>
+                                                                    <?php
+                                                                }
+                                                                else{
+                                                                    ?>
+                                                    <a class="add-to-wishlist" onclick="addToWishlist('<?=$row['prod_gold_id']?>')" class="wishlist">
+                                                        <span class="product-icon">
+                                                            <i id="add-to-wishlist<?=$row['prod_gold_id']?>" class="<?php if(isset($_SESSION['wishlist'][$row['prod_gold_id']])){ echo "ri-heart-fill";}else{echo 'ri-heart-line';} ?> d-block icon-16 lh-1"></i>
+                                                        </span>
+                                                    </a>
+                                                                    <?php
+                                                                }
+                                                                    ?>
+                                                                
+
+                                                    
+
+
                                                     <a onclick="openModal('<?=$row['prod_gold_id']?>')" >
                                                         <span class="product-icon">Quickview</span>
                                                     </a>
                                                 </div>
                                             </div>
+<script>
+function addToWishlist(prodId) {
+    $.ajax({
+        url: '<?= base_url() ?>user/add_in_wishlist',
+        type: 'POST',
+        data: { prod_id: prodId },
+        dataType: 'json',
+        success: function(response) {
+            console.log(response);
+
+            // Target the <i> tag using its ID
+            var icon = $('#add-to-wishlist' + prodId);
+
+            if (response.status === 'added') {
+                icon.removeClass('ri-heart-line').addClass('ri-heart-fill');
+            } else if (response.status === 'removed') {
+                icon.removeClass('ri-heart-fill').addClass('ri-heart-line');
+            }
+
+            $('#wishlistCount').html(response.cnt);
+            $('#wishlistCountmv').html(response.cnt);
+        }
+    });
+}
+</script>
+
+
                                             <div class="product-content">
                                                                    
 
@@ -109,7 +160,7 @@
                                                                     }
                                                                     ?>
                                                             <div class="product-action">
-                                                                <a class="add-to-cart">
+                                                                <a class="add-to-cart" onclick="addToCart('<?=$row['prod_gold_id']?>')">
                                                                     <span class="product-icon">
                                                                         <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
                                                                         <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
@@ -122,26 +173,68 @@
                                                     </div>
                                                     <div class="product-price">
                                                         <div class="price-box heading-weight">
-                                                            <span class="new-price dominant-color">$79.00</span>
-                                                            <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$89.00</span></span>
+                                                            <span class="new-price dominant-color"><?=$row['formatted_discounted_price']?></span>
+                                                            <?php
+                                                                if ($row['total_discount_amt'] > 0) {
+                                                            ?>
+                                                            <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through"><?=$row['formatted_original_price']?></span></span>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                     <div class="product-description">
-                                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry It is a long established fact that a will be distracted by the readable of at</p>
+                                                        <p><?=$row['product_details']?></p>
                                                     </div>
                                                     <div class="product-action">
-                                                        <a class="add-to-cart">
+                                                        <?php 
+                                                            if(isset($_SESSION['user_id']))
+                                                            {
+                                                        ?>
+                                                        <a class="add-to-cart" onclick="addToCart('<?=$row['prod_gold_id']?>')">
                                                             <span class="product-icon">
-                                                                <span class="product-bag-icon icon-16"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
+                                                                <span class="product-bag-icon icon-16">
+                                                                    <i  class="ri-shopping-bag-3-line d-block lh-1 "></i>
+                                                                </span>
                                                                 <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
                                                                 <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
                                                             </span>
                                                             <span class="tooltip-text">add to cart</span>
                                                         </a>
-                                                        <a class="add-to-wishlist">
-                                                            <span class="product-icon"><i class="ri-heart-line d-block icon-16 lh-1"></i></span>
+                                                        <?php
+                                                        }else{
+                                                            ?>
+                                                        <a class="add-to-cart" onclick="addToCart('<?=$row['prod_gold_id']?>')">
+                                                            <span class="product-icon">
+                                                                <span class="product-bag-icon icon-16">
+                                                                    <i  class="ri-shopping-bag-3-line d-block lh-1 "></i>
+                                                                </span>
+                                                                <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
+                                                                <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
+                                                            </span>
+                                                            <span class="tooltip-text">add to cart</span>
+                                                        </a>   
+                                                            <?php
+                                                        } 
+                                                                if(isset($_SESSION['user_id']))
+                                                                {
+                                                                    $wt = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id'],'prod_id'=>$row['prod_gold_id']]);
+                                                                    ?>
+                                                        <a class="add-to-wishlist" onclick="addToWishlist('<?=$row['prod_gold_id']?>')"> 
+                                                            <span  class="product-icon"><i id="add-to-wishlist<?=$row['prod_gold_id']?>" class="<?php if(isset($wt[0])){ echo "ri-heart-fill";}else{echo 'ri-heart-line';} ?> d-block icon-16 lh-1"></i></span>
                                                             <span class="tooltip-text">wishlist</span>
                                                         </a>
+                                                                    <?php
+                                                                }else{
+                                                                    ?>
+                                                        <a class="add-to-wishlist" onclick="addToWishlist('<?=$row['prod_gold_id']?>')"> 
+                                                            <span  class="product-icon"><i id="add-to-wishlist<?=$row['prod_gold_id']?>" class="<?php if(isset($_SESSION['wishlist'][$row['prod_gold_id']])){ echo "ri-heart-fill";}else{echo 'ri-heart-line';} ?> d-block icon-16 lh-1"></i></span>
+                                                            <span class="tooltip-text">wishlist</span>
+                                                        </a>
+                                                                    <?php
+                                                                }
+                                                                    ?>
+                                                                
+
+                                                        
                                                         <a class="quick-view">
                                                             <span class="product-icon"><i onclick="openModal('<?=$row['prod_gold_id']?>')"  class="ri-eye-line d-block icon-16 lh-1"></i></span>
                                                             <span class="tooltip-text">quickview</span>
@@ -150,16 +243,32 @@
                                                 </div>
                                                 <div class="pro-sku-variant">
                                                     <div class="product-sku-variant">
-                                                        <div class="pro-sku">
+                                                        <div class="pro-sku font-14">
                                                             <span class="heading-color text-uppercase heading-weight">SKU:<span class="dominant-color msl-4">RT89GT</span></span>
                                                         </div>
-                                                        <div class="pro-select-variant">
-                                                            <span class="heading-color text-uppercase heading-weight">Size:</span>
-                                                            <select id="gleam-band-size" name="gleam-band-size" class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0">
-                                                                <option value="16cm" selected>16cm</option>
-                                                                <option value="18cm">18cm</option>
-                                                                <option value="20cm">20cm</option>
+                                                        <div class="pro-select-variant font-14">
+                                                            <span class="heading-color text-uppercase heading-weight font-14">Size:</span>
+                                                             <?php 
+                                                            if(!empty($row['ring_size']))
+                                                            {
+                                                                $sizes = explode(',',$row['ring_size']);
+                                                                 $i=0;
+                                                                ?>
+                                                            <select id="gleam-band-size" name="gleam-band-size" class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0 font-14">
+                                                                <?php 
+                                                                foreach($sizes as $sz){ 
+                                                                    $i++;
+                                                                ?>
+                                                                <option  value="<?=$sz?>" <?=($i == 1)? 'selected':'';?> ><?=$sz?></option>
+                                                                <?php } ?>
                                                             </select>
+                                                        <?php } else{
+                                                            ?>
+                                                            <select id="gleam-band-size" name="gleam-band-size" class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0 font-14">
+                                                                <option value="NA" selected>NA</option>
+                                                            </select>
+                                                            <?php
+                                                        } ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,4 +321,63 @@
         
 
 
+<script>
+    // Function to show the mini cart
+    function miniCart() {
+        $("#cart-drawer").removeClass("invisible").addClass("active visible");
+        $(".bg-shop").removeClass("opacity-0 invisible").addClass("opacity-50 visible");
+    }
+
+    function addToCart(pId) {
+        event.preventDefault();
+
+        var selectedSize = document.getElementById("gleam-band-size").value;
+
+        if (selectedSize === "") {
+            alert("Please select a size before adding to cart.");
+            return;
+        }
+          $.ajax({
+            url: '<?= base_url("user/addToCart") ?>',
+            type: 'POST',
+            data: { prod_id: pId },
+            dataType: 'json',
+            success: function (res) {
+                console.log(res);
+                if(res.status == 'success')
+                {
+                        var $this = $(this);
+                        $this.addClass("loading active disabled");
+
+                        // Simulate button animation
+                        setTimeout(function () {
+                            $this.removeClass("loading").addClass("done");
+
+                            setTimeout(function () {
+                                $this.removeClass("done active disabled");
+
+                                // Call miniCart function
+                                miniCart();
+
+                                // Close quickview modal
+                                $this.parents(".quickview-modal").find(".quickview-modal-header button").click();
+
+                                // ✅ Load cart drawer content via AJAX
+                                $("#cart-drawer").load("<?= base_url('user/load_cart_drawer') ?>?pId=" + encodeURIComponent(pId) + "&size=" + encodeURIComponent(selectedSize));
+
+                            }, 500);
+                        }, 500);
+                }
+            },
+            error: function () {
+                alert("Error occurred. Try again.");
+            }
+        });
+
+        console.log("Product ID:", pId);
+        console.log("Selected Size:", selectedSize);
+
+
+    }
+</script>
 

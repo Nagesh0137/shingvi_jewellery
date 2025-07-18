@@ -156,7 +156,7 @@
                                 </div>
                                 <div class="product-info mst-20" data-animate="animate__fadeIn">
                                     <div class="product-desc">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <p><?=$products[0]['product_details']?></p>
                                     </div>
                                 </div>
                                 
@@ -166,21 +166,25 @@
                                              <?php 
                                                         if(!empty($products[0]['ring_size']))
                                                         {
+                                                            $sizes = explode(',',$products[0]['ring_size']);
                                                             ?>
-                                            <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span>16cm  <a href="#size-modal" data-bs-toggle="modal" class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size guide</a>
+                                            <span class="d-inline-block meb-11">
+                                                <span class="heading-color heading-weight mer-10">Size:</span>
+                                                <span id="display-size"> <?=$sizes[0]?></span>  
+                                                <a href="#size-modal" data-bs-toggle="modal" class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size guide</a>
                                             </span>
                                             <div class="product-option-block size">
                                                 <ul class="ul-mt5">
                                                     <?php 
                                                         if(!empty($products[0]['ring_size']))
                                                         {
-                                                            $sizes = explode(',',$products[0]['ring_size']);
-
-                                                    foreach($sizes as $sz){    
+                                                            $i=0;
+                                                    foreach($sizes as $sz){ 
+                                                    $i++;   
                                                     ?>
                                                     <li>
                                                         <label class="cust-checkbox-label">
-                                                            <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="16cm" checked>
+                                                            <input type="radio" name="selected_size" id="selected_size" class="cust-checkbox" value="<?=$sz?>" <?=($i == 1) ? 'checked':'';?>>
                                                             <span class="d-block cust-check border-full border-radius"><?=$sz?></span>
                                                         </label>
                                                     </li>
@@ -193,21 +197,36 @@
                                         <?php }
                                         else{
                                             ?>
+                                            <div class="product-option-block size">
+                                                <ul class="ul-mt5">
+                                                    <li>
+                                                        <label class="cust-checkbox-label">
+                                            <input type="radio" name="selected_size" id="selected_size" class="cust-checkbox" value="NA" checked>
                                             <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span>Not Available
                                             </span>
+                                        </label>
+                                    </li>
+                                        </ul>
+                                    </div>
                                             <?php
                                         }?>
                                         </div>
                                         
                                     </div>
                                 </div>
+                                <script>
+   
+</script>
+
+
+
                                 <div class="product-info mst-25" data-animate="animate__fadeIn">
                                     <div class="product-quantity d-flex flex-wrap align-items-center">
                                         <span class="heading-color heading-weight mer-10">Quantity:</span>
                                         <div class="js-qty-wrapper">
                                             <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
                                                 <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                                <input type="number" name="gleam-band-16cm-aliceblue" class="js-qty-num p-0 text-center border-0" value="1" min="1">
+                                                <input type="number" name="selected_qty" id="selected_qty" class="js-qty-num p-0 text-center border-0" value="1" min="1">
                                                 <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
                                             </div>
                                         </div>
@@ -224,7 +243,14 @@
                                                 </button>
                                             </div>
                                             <div class="col-12 col-sm-6">
-                                                <a href="checkout.html" class="w-100 btn-style secondary-btn">Buy now</a>
+                                                <?php 
+                                                if(isset($_SESSION['user_id']))
+                                                {
+                                                ?>
+                                                <a onclick="openAddressModal('<?=$products[0]['prod_gold_id']?>')" class="w-100 btn-style secondary-btn">Buy now</a>
+                                                <?php }else{ ?>
+                                                <a onclick="openAddressModal('<?=$products[0]['prod_gold_id']?>')" class="w-100 btn-style secondary-btn">Buy now</a>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
@@ -237,7 +263,7 @@
                                         </div>
                                         
                                         <div class="product-ask">
-                                            <a href="#question-modal" data-bs-toggle="modal" class="ask-question heading-color"><i class="ri-edit-box-line icon-16 mer-4"></i>Ask a question</a>
+                                            <a href="#buy-now-modal" data-bs-toggle="modal" class="ask-question heading-color"><i class="ri-edit-box-line icon-16 mer-4"></i>Ask a question</a>
                                         </div>
                                         <div class="product-share">
                                             <a href="#share-modal" data-bs-toggle="modal" class="share heading-color"><i class="ri-share-line icon-16 mer-4"></i>Share</a>
@@ -362,45 +388,189 @@
                     </div>
                 </div>
                 <!-- size-modal end -->
-                <!-- question-modal start -->
-                <div class="question-modal modal fade" id="question-modal" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content body-bg border-0 br-hidden">
-                            <div class="modal-body ptb-30 plr-15 plr-sm-30">
-                                <form method="post" action="javascript:void(0)">
-                                    <div class="question-modal-header d-flex align-items-center justify-content-between meb-30">
-                                        <h6 class="font-18">Ask a question?</h6>
-                                        <button type="button" class="body-secondary-color icon-16" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-large-line d-block lh-1"></i></button>
-                                    </div>
-                                    <div class="question-modal-form">
-                                        <div class="row field-row">
-                                            <div class="col-12 field-col">
-                                                <label for="name" class="field-label">Name</label>
-                                                <input type="text" id="name" name="name" class="w-100" placeholder="Full name" autocomplete="name" required>
-                                            </div>
-                                            <div class="col-12 field-col">
-                                                <label for="email" class="field-label">Email</label>
-                                                <input type="email" id="email" name="email" class="w-100" placeholder="Email" autocomplete="email" required>
-                                            </div>
-                                            <div class="col-12 field-col">
-                                                <label for="phone" class="field-label">Phone number</label>
-                                                <input type="text" id="phone" name="phone" class="w-100" placeholder="Phone number" autocomplete="tel" required>
-                                            </div>
-                                            <div class="col-12 field-col">
-                                                <label for="message" class="field-label">Message</label>
-                                                <textarea rows="5" id="message" name="message" class="w-100" placeholder="Message" autocomplete="off" required></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="question-form-btn mst-20 mst-sm-30">
-                                            <button type="submit" class="w-100 btn-style secondary-btn question-form-submit">Submit now</button>
-                                        </div>
-                                    </div>
-                                </form>
+
+
+
+                <!-- Address Modal -->
+                <div class="address-modal modal fade justify-content-center" id="address-modal" data-bs-backdrop="static" style="height: 100vh;top:0;overflow: hidden;margin: 0;padding: 0;border-radius: 0px !important;"  >
+                    <div style="overflow-y: auto;border-radius: 0px !important;" class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered my-0 justify-content-center" >
+                        <div class="modal-content body-bg border-0 br-hidden" style=";height: 100vh; border-radius: 16px 16px 0 0; overflow-y: auto;border-radius: 0px !important;">
+                            <div class="modal-body plr-15 plr-sm-30" id="address-modal-body" style="border-radius: 0px !important;">
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- question-modal end -->
+                <!-- buy-now-modal start --> 
+                <!-- Buy Now Modal -->
+
+                
+                <script>
+                let receivedOtp = '';
+                let enteredMobile = '';
+                let user_status = '';
+                let errorMsg = '';
+                let userDet = '';
+                let productDet = '';
+$(document).on('click', '.question-form-submit:first', function () {
+    const mobile = $('#phone').val().trim();
+
+    // Validate mobile: 10 digits and starts with 7, 8, or 9
+        document.getElementById('errMsg').innerHTML = '';
+
+    const regex = /^[789]\d{9}$/;
+    if (!regex.test(mobile)) {
+        document.getElementById('errMsg').innerHTML = 'Enter a valid 10-digit mobile number starting with 7, 8, or 9.';
+        // alert("Enter a valid 10-digit mobile number starting with 7, 8, or 9.");
+        return;
+    }
+
+    // Save entered mobile
+    enteredMobile = mobile;
+    let productId = document.getElementById('product_id').value;
+    // Send OTP via AJAX
+    $.ajax({
+        url: '<?= base_url("user/buy_product_otp") ?>',
+        type: 'POST',
+        data: { mobile_number: mobile,pId:productId },
+        dataType: 'json',
+        success: function (res) {
+            console.log(res);
+            if (res.status === 'success') {
+                receivedOtp = res.otp;
+                productDet = res.product_details[0];
+                if(res.user_status == 'existing')
+                {
+                    userDet = res.data[0];
+                }else{
+                    userDet = '';
+                }
+                user_status = res.user_status;
+                document.getElementById('errMsg').innerHTML = ' ';
+                $('#dummyOtp').html(receivedOtp);
+                // Show OTP field and Verify button
+                $('#otp').closest('.field-col').removeClass('d-none');
+                $('.question-form-btn').eq(0).addClass('d-none'); // Hide "Send OTP"
+                $('.question-form-btn').eq(1).removeClass('d-none'); // Show "Verify"
+            } else {
+                // alert(res.msg || "Something went wrong.");
+                 document.getElementById('errMsg').innerHTML = res.msg || "Something went wrong.";
+
+            }
+        },
+        error: function () {
+            // alert("Failed to send OTP. Try again.");
+        document.getElementById('errMsg').innerHTML = 'Failed to send OTP. Try again.';
+
+        }
+    });
+});
+
+// Verify OTP
+$(document).on('submit', '#otpForm', function (e) {
+    e.preventDefault();
+    const inputOtp = $('#otp').val().trim();
+    console.log(inputOtp,receivedOtp);
+    if (inputOtp == receivedOtp) {
+            $.ajax({
+                url: '<?= base_url("user/setUserLogin") ?>',
+                type: 'POST',
+                data: { user_id: userDet.customers_id },
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                    if (res.status === 'success') {
+                        console.log('User Sessiom Set');
+                    } else {
+                        console("Failed To Set User In Session");
+                    }
+                },
+              
+            });
+
+        document.getElementById('errMsg').innerHTML = ' ';
+        $('.user_status').val(user_status);
+
+            $('#uname').val(userDet.name);
+            $('#uemail').val(userDet.email);
+            $('.customers_id').val(userDet.customers_id);
+            $('#uaddress').val(userDet.address);
+            $('#pincode').val(userDet.pincode);
+            console.log('productDet',productDet);
+        // OTP matched
+            openAddressModal(productDet.prod_gold_id);
+
+    } else {
+        // alert("Wrong OTP. Please try again.");
+        document.getElementById('errMsg').innerHTML = 'Wrong OTP. Please try again.';
+
+    }
+});
+
+// function openAddressModal(pId)
+// {
+//     let productDet = '';
+//     $('.product_id').val(pId);
+//       $.ajax({
+//         url: '<?= base_url("user/getproductDetails") ?>',
+//         type: 'POST',
+//         data: { pId: pId },
+//         dataType: 'json',
+//         success: function (res) {
+//             console.log(res);
+//             if(res.status == 'success')
+//             {
+//                 productDet = res.product_details[0];
+
+//                 $('#final_amount_after_discount').html(productDet.formatted_discounted_price);
+
+//                 var userDet = res.data[0];
+//                 $('#uname').val(userDet.firstname + ' '+ userDet.lastname);
+//                 $('#uemail').val(userDet.email);
+//                 $('.user_status').val('existing');
+//                 $('#uaddress').val(userDet.address);
+//                 $('#pincode').val(userDet.pincode);
+//                 $('.customers_id').val(userDet.customers_id);
+//                 console.log('productDet - directLogin',productDet,'productDet.formatted_discounted_price',productDet.formatted_discounted_price);
+//                 $('#address-modal').modal('show');
+
+//            }else{
+//             alert("Something went Wrong Please Try again");
+//            }
+//         },
+//         error: function () {
+
+//         }
+//     });
+// }
+
+ function updateSelectedSize() {
+
+        const selected = document.querySelector('input[name="selected_size"]:checked');
+        if (selected) {
+            const size = selected.value;
+            selected_Size_to_Buy = selected.value;
+            console.log("Selected Size:", size);
+            document.getElementById('display-size').innerText = size;
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+        let selected_Size_to_Buy = '';
+        updateSelectedSize();
+        // Add change listener to all radios
+        const radios = document.querySelectorAll('input[name="selected_size"]');
+        radios.forEach(radio => {
+            radio.addEventListener('change', updateSelectedSize);
+        });
+    });
+
+
+
+
+
+                </script>
+                <!-- buy-now-modal end -->
                 <!-- share-modal start -->
                 <div class="share-modal modal fade" id="share-modal" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-centered">

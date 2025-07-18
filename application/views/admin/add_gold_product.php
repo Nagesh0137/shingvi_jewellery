@@ -31,26 +31,12 @@
 							</div>
 							<div class="col-md-3 mt-2">
 								<label class="form-label"> Group </label>
-								<select name="group_id" class="form-select" onchange="getSelectedGroup(this)"
+								<select name="group_id" class="form-select"
 									id="group_id" required>
 									<option value=""> Group List </option>
 								</select>
 							</div>
-							<script>
-								function getSelectedGroup(selectElement) {
-									const selectedText = selectElement.options[selectElement.selectedIndex].text;
-									const chartDiv = document.getElementById('chartUploadDiv');
-									const chartSizeDiv = document.getElementById('chartSizeDiv');
-
-									if (selectedText === 'FINGER RING') {
-										chartDiv.style.display = 'block';
-										chartSizeDiv.style.display = 'block';
-									} else {
-										chartDiv.style.display = 'none';
-										chartSizeDiv.style.display = 'none';
-									}
-								}
-							</script>
+							
 							<div class="col-md-3 d-none">
 								<label class="form-label">Filter Title</label>
 								<select name="filter_title" class="form-select" onchange="filtername(this)"
@@ -128,42 +114,17 @@
 										<input type="file" name="sizeChart" id="chartImage" class="form-control"
 											accept="image/*">
 									</div>
-									<div class="col-md-6 mt-3" style="display:none" id="chartSizeDiv">
-										<label class="form-label">select Ring Size </label>
+									<div class="col-md-12 mt-3" id="chartSizeDiv">
+										<label class="form-label">Enter Size's </label>
 
-										<select name="ring_size[]" class="form-select select2" multiple>
-											<option value="" disable>Choose</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-											<option value="11">11</option>
-											<option value="12">12</option>
-											<option value="13">13</option>
-											<option value="14">14</option>
-											<option value="15">15</option>
-											<option value="16">16</option>
-											<option value="17">17</option>
-											<option value="18">18</option>
-											<option value="19">19</option>
-											<option value="20">20</option>
-											<option value="21">21</option>
-											<option value="22">22</option>
-											<option value="23">23</option>
-											<option value="24">24</option>
-											<option value="25">25</option>
-											<option value="26">26</option>
-											<option value="27">27</option>
-											<option value="28">28</option>
-											<option value="29">29</option>
-											<option value="30">30</option>
-										</select>
+										<input type="text" name="ring_size" class="form-control" placeholder="16.40 MM , 12 INCH , Height 4cm - Width 1cm, 45 * 55 MM" />
+										
+									</div>
+									<div class="col-md-12 mt-3" id="chartSizeDiv">
+										<label class="form-label">Size Guide Image <a target="_blank" href="<?=base_url()?>uploads/sizes/sz1.png"> (Sample Image 1</a>,<a target="_blank" href="<?=base_url()?>uploads/sizes/sz2.png"> Sample Image 2</a>,<a target="_blank" href="<?=base_url()?>uploads/sizes/sz3.png"> Sample Image 3)</a> </label>
+
+										<input type="file" accept="image/*" name="size_guide" class="form-control" placeholder="16.40 MM , 12 INCH , Height 4cm - Width 1cm, 45 * 55 MM" />
+										
 									</div>
 									<script>
 										// $(document).ready(function () {

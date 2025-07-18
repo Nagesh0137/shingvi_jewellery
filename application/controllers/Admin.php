@@ -683,11 +683,17 @@ class Admin extends CI_Controller
 		// print_r($_POST);
 		// exit;
 
-		if (isset($_POST['ring_size'])) {
-			$_POST['ring_size'] = implode(',', $_POST['ring_size']);
-		} else {
-			$_POST['ring_size'] = '';
+		if (isset($_FILES['size_guide'])) {
+			if (!empty($_FILES['size_guide']['name'])) {
+				$img_name = $_FILES['size_guide']['name'];
+				$img_temp = $_FILES['size_guide']['tmp_name'];
+				$path = "uploads/";
+				$_POST['size_guide'] = $this->upload_img($img_name, $img_temp, $path);
+			} else {
+				$_POST['size_guide'] = '';
+			}
 		}
+
 		$details = $this->My_model->select_where("product_gold", ['status' => 'active', 'product_id' => $_POST['product_id'], 'cat_id' => $_POST['cat_id']]);
 
 		if (!empty($details) && count($details) > 0) {
@@ -722,7 +728,7 @@ class Admin extends CI_Controller
 			$data['fixed_gst_amt'] = $_POST['fixed_gst_amt'];
 			$data['age_category'] = $_POST['age_category'];
 			$data['ring_size'] = $_POST['ring_size'];
-
+			$data['size_guide'] = $_POST['size_guide'];
 
 			if ($_POST['billing_type'] == 'manual') {
 				$data['total_discount_amt'] = $_POST['manual_total_discount_amt'];
@@ -1487,6 +1493,20 @@ class Admin extends CI_Controller
 		// 	exit;
 		$this->ov('silver_product_list_update', $data);
 	}
+	function float_rate_check($val){
+			$a=explode('.', $val);
+			if(isset($a[1])) {
+				if ($a[1]>100) {
+				return  $c=$a[0]+1;
+				}
+				else{
+				return  $c=$a[0];
+				}
+			}
+			else{
+				return  $c=$a[0];
+			}
+			}
 	public function silver_product_list_update_del_other()
 	{
 		$other_id = $_POST['other_id'];

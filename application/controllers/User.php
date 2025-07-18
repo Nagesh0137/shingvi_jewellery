@@ -19,6 +19,7 @@ class User extends CI_Controller
 		// array_multisort(array_column($members, 'member_name'), SORT_ASC, $members);
 		$this->load->helper('form');
 		$this->load->helper('url');
+		$this->load->helper('menu');
 		$this->load->helper('helper1');
 		$this->load->helper('helper');
 		$this->load->library('encryption');
@@ -557,6 +558,21 @@ class User extends CI_Controller
 			$row['price'] = $price;
 			$row['rating'] = (int) $row['rating'];
 
+			// $row['total_discount_amt'] = 2000;
+			if ($row['total_discount_amt'] > 0) {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = $row['total_discount_amt'];
+				$row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
+			} else {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = 0;
+				$row['discounted_price'] = 0;
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+			}
+			$row['imgs'] = explode('||', $row['product_image']);
 
 			// Apply min and max amount filter
 			$valid = true;
@@ -575,7 +591,264 @@ class User extends CI_Controller
 		$data['products'] = $filtered_products;
 		$this->ov("products", $data);
 	}
+public function add_in_wishlist()
+{
+    $prod_id = $this->input->post('prod_id');
+    
+    if(isset($_SESSION['user_id'])) {
+    	$w = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id'],'prod_id'=>$prod_id]);
+    	if(isset($w[0]))
+    	{
+    		$this->db->query("DELETE FROM user_wishlist WHERE user_id='".$_SESSION['user_id']."' AND prod_id='".$prod_id."' ");
+		    $res['status'] = 'removed';
+    	}
+    	else{
+	    	$wishlist['prod_id'] = $prod_id;
+	    	$wishlist['user_id'] = $_SESSION['user_id'];
+	    	$wishlist['entry_time'] = time();
+	    	$d = $this->My_model->insert("user_wishlist",$wishlist);
+	    	if($d)
+	    	{
+	        	$res['status'] = 'added';
+	    	}else{
+		        $res['status'] = 'removed';
+	    	}
 
+	    }
+	    $wt = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id']]);
+    	$cnt = count($wt);
+        echo json_encode(['status' => 'logged_in','res'=>$res,'cnt'=>$cnt]);
+        return;
+    }
+
+
+    if (!isset($_SESSION['wishlist'][$prod_id])) {
+        $res['status'] = 'added';
+    	$_SESSION['wishlist'][$prod_id] = 1;
+
+    } else {
+        $res['status'] = 'removed';
+        unset($_SESSION['wishlist'][$prod_id]);
+    }
+
+    if(isset($_SESSION['wishlist']))
+    {
+    	$cnt = count($_SESSION['wishlist']);
+    }else{
+    	$cnt = 0;
+    }
+
+    echo json_encode(['res'=>$res,'cnt'=>$cnt,'sess'=>$_SESSION]);
+}
+
+	public function addToCart()
+	{
+		if(isset($_SESSION['user_id']))
+		{
+			$ucart = $this->My_model->select_where("user_cart",['user_id'=>$_SESSION['user_id'],$_POST['prod_id'],'status'=>'active']);
+			if(isset($ucart[0]))
+			{
+				$rmCart = $this->db->query("DELETE FROM user_cart WHERE user_id = '".$_SESSION['user_id']."' AND prod_id='".$_POST['prod_id']."' ");
+				echo json_encode(['status'=>'success','msg'=>'Removed From Cart']);
+			}else{
+
+				$cart['prod_id'] = $_POST['prod_id'];
+				$cart['user_id'] = $_SESSION['user_id'];
+				$cart['status'] = 'active';
+				$cart['entry_time'] = time();
+				$c = $this->My_model->insert("user_cart",$cart);
+				if($c)
+				{
+					echo json_encode(['status'=>'success','msg'=>'Added To Cart']);
+				}else{
+					echo json_encode(['status'=>'failed','msg'=>'Failed To Add in Cart..!']);
+				}
+			}
+		}else{
+			$_SESSION['cart'][$_POST['prod_id']] = 1;
+		}
+	}
+
+	public function load_cart_drawer()
+	{
+		$data['product_details'] = getProductDetails($_GET['pId']);
+		$data['size'] = $_GET['size'];
+		$products = [];
+
+		if($_SESSION['user_id'])
+		{
+			$data['ucart'] = $this->My_model->select_where("user_cart",['user_id'=>$_SESSION['user_id'],'status'=>'active']);
+			if(isset($data['ucart'][0]))
+			{
+				$msg = 'Yes';
+				foreach($data['ucart'] as $key => $row)
+				 {
+				 	$products[$key] = getProductDetails($row['prod_id']);
+				 }
+			}else{
+				$msg = 'No';
+			}
+		}else{
+			if(isset($_SESSION['cart']))
+			{
+				$i=0;
+				 foreach($_SESSION['cart'] as $key => $row)
+				 {
+				 	$products[$i] = getProductDetails($key);
+				 	$i++;
+				 }
+					$msg = 'Yes';
+
+			}else{
+				$msg = 'No';
+			}
+		}
+			$data['cart'] = $products;
+		$this->load->view('user/add_to_cart_modal_form',$data);
+	}
+
+	public function buy_now($id)
+	{
+
+		$this->head();
+		$this->nav();
+		$products = $this->db->query(
+			"
+        SELECT * FROM category, product_gold
+        WHERE product_gold.cat_id = category.category_id
+        AND product_gold.status = 'active'
+        AND product_gold.prod_gold_id='".$id."'
+        ORDER BY product_gold.prod_gold_id DESC")->result_array();
+
+		$relatedProducts = $this->db->query(
+			"
+        SELECT * FROM category, product_group,product_gold
+        WHERE product_gold.cat_id = category.category_id
+        AND product_gold.group_id = product_group.product_group_id
+        AND product_gold.group_id = '".$products[0]['group_id']."'
+        AND product_gold.status = 'active'
+        ORDER BY product_gold.prod_gold_id DESC LIMIT 10")->result_array();
+
+		// Get categories and product groups
+		$data['category'] = $this->My_model->select_where("category", ['category_id' => $products[0]['category_id'], 'status' => 'active']);
+
+
+		// Filtered products result
+		$filtered_products = [];
+		$filtered_relatedProducts = [];
+
+		foreach ($products as $key => $row) {
+			// Fetch filters
+			$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+			$ft = '';
+			$ff = '';
+			foreach ($fil as $frow) {
+				if (strpos($ft, $frow['filter_title']) === false) {
+					$ft .= "ftitle" . $frow['filter_title'] . " ";
+				}
+				$ff .= "fname" . $frow['filter_name'] . " ";
+			}
+
+			$row['ft'] = $ft;
+			$row['ff'] = $ff;
+			$row['cart'] = "No";
+
+			// Calculate product price
+			$price = 0;
+			if ($row['cat_id'] == 5) {
+				$price = $this->goldprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 6) {
+				$price = $this->silverprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+				$price = $this->golddiamondprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+				$price = $this->silverdiamondprice($row['prod_gold_id']);
+			}
+
+			$row['price'] = $price;
+			$row['rating'] = (int) $row['rating'];
+			// $row['total_discount_amt'] = 2000;
+			if ($row['total_discount_amt'] > 0) {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = $row['total_discount_amt'];
+				$row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
+			} else {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = 0;
+				$row['discounted_price'] = 0;
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+			}
+			$row['imgs'] = explode('||', $row['product_image']);
+
+			
+				$filtered_products[] = $row;
+			
+
+		}
+		foreach ($relatedProducts as $key => $row) {
+			// Fetch filters
+			$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+			$ft = '';
+			$ff = '';
+			foreach ($fil as $frow) {
+				if (strpos($ft, $frow['filter_title']) === false) {
+					$ft .= "ftitle" . $frow['filter_title'] . " ";
+				}
+				$ff .= "fname" . $frow['filter_name'] . " ";
+			}
+
+			$row['ft'] = $ft;
+			$row['ff'] = $ff;
+			$row['cart'] = "No";
+
+			// Calculate product price
+			$price = 0;
+			if ($row['cat_id'] == 5) {
+				$price = $this->goldprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 6) {
+				$price = $this->silverprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+				$price = $this->golddiamondprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+				$price = $this->silverdiamondprice($row['prod_gold_id']);
+			}
+
+			$row['price'] = $price;
+			$row['rating'] = (int) $row['rating'];
+			// $row['total_discount_amt'] = 2000;
+			if ($row['total_discount_amt'] > 0) {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = $row['total_discount_amt'];
+				$row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
+			} else {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = 0;
+				$row['discounted_price'] = 0;
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+			}
+			$row['imgs'] = explode('||', $row['product_image']);
+
+			
+				$filtered_relatedProducts[] = $row;
+			
+
+		}
+
+		$data['products'] = $filtered_products;
+		$data['relatedProducts'] = $filtered_relatedProducts;
+		// echo "<pre>";
+		// print_r($filtered_relatedProducts);
+		// echo "</pre>";
+		$this->load->view("user/product_details",$data);
+		$this->footer();
+	
+	}
 	public function product_details($id)
 	{
 		$this->head();
@@ -1248,7 +1521,187 @@ class User extends CI_Controller
 
 	public function wishlist()
 	{
-		$this->ov("wishlist");
+		$data['order_charges'] = $this->My_model->select_where('order_charges', ['status' => 'active']);
+
+
+		if(!isset($_SESSION['user_id']))
+		{
+
+		}else{
+			$data['products'] = '';
+			$wishlist = $_SESSION['wishlist'] ?? [];
+			$ageQ = '';
+				if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
+					$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
+				}
+
+				if (isset($_GET['g_id'])) {
+					$ageQ .= "AND product_gold.group_id = '" . $_GET['g_id'] . "'";
+				}
+
+				if (!isset($_GET['cat_id'])) {
+					if (isset($_GET['label'])) {
+						if ($_GET['label'] != 'Gift') {
+							// $_GET['cat_id'] = 5;
+						}
+					} else {
+						$_GET['cat_id'] = 5;
+					}
+				}
+				
+				if (isset($_GET['g_id'])) {
+					$gId = "AND product_group.product_group_id = '" . $_GET['g_id'] . "'";
+					$pgId = "AND product_gold.group_id = '" . $_GET['g_id'] . "'";
+				} else {
+					$gId = " ";
+					$pgId = " ";
+				}
+
+			$filtered_products = [];
+
+			foreach($wishlist as $pId => $row)
+			{
+				$products = $this->db->query(
+				"
+	        SELECT * FROM category, product_gold
+	        WHERE product_gold.cat_id = category.category_id 
+	        AND product_gold.prod_gold_id = '".$pId."'
+	        AND product_gold.status = 'active'
+	         $ageQ $pgId
+	        ORDER BY product_gold.prod_gold_id DESC
+	        ")->result_array();
+
+			// Get categories and product groups
+			$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'], 'status' => 'active']);
+
+
+			
+
+			// Filtered products result
+
+			foreach ($products as $row) {
+				$data['product_group'] = $this->db->query("
+			        SELECT category.*, product_group.*, product_group.product_group_id 
+			        FROM category, product_gold, product_group 
+			        WHERE category.category_id = product_gold.cat_id 
+			        AND product_gold.status = 'active' 
+			        AND product_group.status = 'active' 
+			        AND product_gold.prod_gold_id = '".$pId."'
+			        AND category.category_id = '" . $_GET['cat_id'] . "'
+			        AND product_gold.group_id = product_group.product_group_id 
+			        " . $gId . "
+			        GROUP BY product_group.product_group_id
+			    ")->result_array();
+
+				// Fetch filters
+				$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+				$ft = '';
+				$ff = '';
+				foreach ($fil as $frow) {
+					if (strpos($ft, $frow['filter_title']) === false) {
+						$ft .= "ftitle" . $frow['filter_title'] . " ";
+					}
+					$ff .= "fname" . $frow['filter_name'] . " ";
+				}
+
+				$row['ft'] = $ft;
+				$row['ff'] = $ff;
+				$row['cart'] = "No";
+
+				// Calculate product price
+				$price = 0;
+				if ($row['cat_id'] == 5) {
+					$price = $this->goldprice($row['prod_gold_id']);
+				} elseif ($row['cat_id'] == 6) {
+					$price = $this->silverprice($row['prod_gold_id']);
+				} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+					$price = $this->golddiamondprice($row['prod_gold_id']);
+				} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+					$price = $this->silverdiamondprice($row['prod_gold_id']);
+				}
+
+				$row['price'] = $price;
+				$row['rating'] = (int) $row['rating'];
+			
+
+			// $row['total_discount_amt'] = 2000;
+			if ($row['total_discount_amt'] > 0) {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = $row['total_discount_amt'];
+				$row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
+			} else {
+				$row['original_price'] = $row['price'];
+				$row['discount_amount'] = 0;
+				$row['discounted_price'] = $row['price'];
+				$row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
+				$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+			}
+			$row['imgs'] = explode('||', $row['product_image']);
+
+				// Apply min and max amount filter
+				$valid = true;
+				if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
+					$valid = false;
+				}
+				if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
+					$valid = false;
+				}
+
+				if ($valid) {
+					$filtered_products[] = $row;
+				}
+			}
+
+				$data['products'] = $filtered_products;
+
+			}
+
+
+			// Get products
+			
+	}
+		// print_r($filtered_products);
+		$this->ov("wishlist",$data);
+
+	}
+
+	public function manage_wishlist()
+	{
+		$data['order_charges'] = $this->My_model->select_where('order_charges', ['status' => 'active']);
+		
+		if(isset($_SESSION['wishlist'][$_POST['prod_id']]) && $_POST['manageQty'] == 'add')
+		{
+			$_SESSION['wishlist'][$_POST['prod_id']] = $_SESSION['wishlist'][$_POST['prod_id']] + 1; 
+			$msg = 'added';
+			$price = number_format1(floatval($_POST['price']) * floatval($_SESSION['wishlist'][$_POST['prod_id']]));
+
+		}else{
+			if($_SESSION['wishlist'][$_POST['prod_id']] == 1 && $_POST['manageQty'] == 'remove')
+			{
+				$price = number_format1(floatval($_POST['price']) * floatval($_SESSION['wishlist'][$_POST['prod_id']]));
+
+				unset($_SESSION['wishlist'][$_POST['prod_id']]);
+				if(isset($_SESSION['wishlist']) && count($_SESSION['wishlist']) >= 1)
+				{
+					$msg = 'deleted';
+				}else{
+					$price = 0;
+					$msg = 'no products';
+				}
+				echo json_encode(['msg'=>$msg,'price'=>$price]);
+				return;
+
+			}else{
+				$_SESSION['wishlist'][$_POST['prod_id']] = $_SESSION['wishlist'][$_POST['prod_id']] - 1; 
+				$msg = 'removed';
+				$price = number_format1(floatval($_POST['price']) * floatval($_SESSION['wishlist'][$_POST['prod_id']]));
+
+			}
+		}
+
+		echo json_encode(['post'=>$_SESSION['wishlist'][$_POST['prod_id']],'msg'=>$msg,'status'=>'success','session'=>$_SESSION['wishlist'],'price'=>$price]);
 	}
 	// cart-page
 	public function cart_page()
@@ -1271,5 +1724,422 @@ class User extends CI_Controller
 		$data['pages_details'] = $this->My_model->select_where("pages_details", ['status' => 'active', 'pages_name_id' => $id]);
 		$this->ov("policies", $data);
 	}
+
+
+	// Buy Now Process - 16 July 2025
+	public function buy_product_otp() {
+		if(isset($_POST['mobile_number'])) {
+            header('Content-Type: application/json');
+            $mobile_number = $_POST['mobile_number'];
+    
+            $otp = rand(1000, 9999);
+            $msg = "OTP to login " . $otp . " is your Shingavi Jewellers code and is valid for 10 minutes. Do not share the OTP with anyone. @www.shingavijewellers.com";
+            // $msg = "Dear Customer, your OTP for completing your purchase is " . $otp . ". This code is valid for 10 minutes. Please do not share it with anyone. @www.shingavijewellers.com";
+            // send_massage($mobile_number, $msg, '1707170030888899461');
+            $existingUser = $this->My_model->select_where("customers",['status'=>'active','mobile'=>$_POST['mobile_number']]);
+            if(isset($existingUser[0]))
+            {
+            	$user_status = 'existing';
+            	$_SESSION['user_id'] = $existingUser[0]['customers_id'];
+            }else{
+            	$user_status = 'new';
+            	$user['mobile'] = $mobile_number;
+            	$user['status'] = 'active';
+            	$user['reg_time'] = time();
+            	$userId = $this->My_model->insert("customers",$user);
+            	$_SESSION['user_id'] = $userId;
+            	$existingUser = $this->My_model->select_where("customers",['status'=>'active','mobile'=>$_POST['mobile_number']]);
+
+            }
+            $data['mobile_number'] = $mobile_number;
+			$data['otp'] = $otp;
+			$data['otp_entry_time'] = time();
+			$data['status'] = 'active';
+			$this->My_model->insert("otp_tbl", $data);
+			$product_details = getProductDetails($_POST['pId']);
+
+            echo json_encode(['status' => 'success','otp'=>$otp,'data'=>$existingUser,'user_status'=>$user_status,'product_details'=>$product_details]);
+        }
+        else {
+            echo json_encode(['status' => 'failed', 'msg' => 'Mobile Number Not Found']);
+        }
+    }
+    public function getUserAddress()
+    {
+
+	 	$data['user_address'] = $this->My_model->select_where("customer_address",['customers_id'=>$_SESSION['user_id'],'status'=>'active']);
+	 	echo json_encode(['status'=>'success','user_address'=>$data['user_address']]);
+    }
+    public function getproductDetails()
+    {
+        // $existingUser = $this->My_model->select_where("customers",['status'=>'active','customers_id'=>$_SESSION['user_id']]);
+        $product_details = getProductDetails($_POST['pId']);
+        if(isset($product_details[0]))
+        {
+        	echo json_encode(['status'=>'success','product_details'=>$product_details]);
+        }else{
+        	echo json_encode(['status'=>'failed']);
+        }
+
+    }
+    public function setUserLogin()
+    {
+    	$_SESSION['user_id'] = $_POST['user_id'];
+    	if(isset($_SESSION['user_id']))
+    	{
+    		echo json_encode(['status'=>'success']);
+    	}else{
+    		echo json_encode(['status'=>'failed']);
+    	}
+    }
+
+    public function load_address_form()
+{
+	 $data['product_id'] = $_GET['pId'];
+	 $data['size'] = $_GET['size'] ?? 'NA';
+	 $data['qty'] = $_GET['qty'];
+	 // unset($_SESSION['user_id']);
+	 // exit;
+	$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['status' => 'active']);
+
+  	 if(isset($_SESSION['user_id']))
+  	 {
+	 	$data['user'] = $this->My_model->select_where("customers",['status'=>'active','customers_id'=>$_SESSION['user_id']]);
+	 	$data['user_address'] = $this->My_model->select_where("customer_address",['customers_id'=>$_SESSION['user_id'],'status'=>'active','default_address'=>'yes']);
+	 	$data['user_all_address'] = $this->My_model->select_where("customer_address",['customers_id'=>$_SESSION['user_id'],'status'=>'active']);
+	 	
+	 	if($data['user'][0]['name']!='')
+	 	{
+	 		$data['userStatus'] = 'Old';
+	 	}else{
+	 		$data['userStatus'] = 'New';
+	 	}
+
+	 	if(isset($data['user_address'][0]) && $data['user_address'][0]['address']!='')
+	 	{
+	 		$data['userAddressStatus'] = 'Old';
+	 	}else{
+	 		$data['userAddressStatus'] = 'New';
+	 	}
+
+	 }
+     $data['product_details'] = getProductDetails($_GET['pId']);
+     $this->load->view('user/address_modal_form',$data);
+}
+	public function use_this_address()
+	{
+		if($_POST['customer_address_id'])
+		{
+			$this->My_model->update("customer_address",['customers_id'=>$_SESSION['user_id'],'status'=>'active'],['default_address'=>' ']);
+			$data = $this->My_model->update("customer_address",['customers_id'=>$_SESSION['user_id'],'status'=>'active','customer_address_id'=>$_POST['customer_address_id']],['default_address'=>'yes']);
+			if($data)
+			{
+				echo json_encode(['status'=>'success']);
+			}else{
+				echo json_encode(['status'=>'failed']);
+			}
+		}
+	}
+	public function save_new_address()
+	{
+		if($_POST['user_status'] == 'Old')
+		{
+			$this->My_model->update("customer_address",['customers_id'=>$_SESSION['user_id'],'status'=>'active'],['default_address'=>' ']);
+			unset($_POST['user_status']);
+			unset($_POST['product_id']);
+			$_POST['status'] = 'active';
+			$_POST['entry_time'] = time();
+			$_POST['entry_by'] = 'user';
+			$_POST['default_address'] = 'yes';
+			$data = $this->My_model->insert("customer_address",$_POST);
+		}else{
+			unset($_POST['user_status']);
+			$data = $this->My_model->insert("customer_address",$_POST);
+		}
+		if($data)
+		{
+			echo json_encode(['status'=>'success']);
+		}else{
+			echo json_encode(['status'=>'failed']);
+		}
+	}
+    public function save_buy_now()
+    {
+		$order_charges = $this->My_model->select_where('order_charges', ['status' => 'active']);
+
+    	$data['user_det'] = $this->My_model->select_where("customers",['customers_id'=>$_POST['customers_id'],'status'=>'active']);
+    	$data['address'] = $this->My_model->select_where("customer_address",['customers_id'=>$_POST['customers_id'],'default_address'=>'yes','status'=>'active']);
+     $data['product_details'] = getProductDetails($_POST['product_id']);
+     $subtotal = 0;
+     $order_charges_det = [];
+     foreach($data['product_details'] as $row)
+     {
+     	$order_det['original_price'] = $row['original_price'];
+     	$order_det['discount_amount'] = $row['discount_amount'];
+     	$order_det['final_amount_after_discount'] = $row['final_amount_after_discount'];  
+     	$order_det['caret'] = $row['caret'];
+     	$order_det['purity'] = $row['purity'];
+     	$order_det['product_id'] = $row['product_id'];
+     	$order_det['billing_type'] = $row['billing_type'];
+     	$order_det['gold_rate'] = $row['gold_rate'];
+     	$order_det['silver_rate'] = $row['silver_rate'];
+     	$order_det['cross_weight'] = $row['cross_weight'];
+     	$order_det['other_weight'] = $row['other_weight'];
+     	$order_det['net_weight'] = $row['net_weight'];
+     	$order_det['labour_char'] = $row['labour_char'];
+     	$order_det['wastage_per'] = $row['wastage_per'];
+     	$order_det['other_amt'] = $row['other_amt'];
+     	$order_det['gst_per'] = $row['gst_per'];
+     	$order_det['fixed_amount'] = $row['fixed_amount'];
+     	$order_det['fixed_gst_per'] = $row['fixed_gst_per'];
+     	$order_det['fixed_gst_amt'] = $row['fixed_gst_amt'];
+     	$order_det['fixed_total_amt'] = $row['fixed_total_amt'];
+     	$order_det['total_discount_amt'] = $row['total_discount_amt'];
+     	$order_det['category_name'] = $row['category_name'];
+     	$order_det['group_id'] = $row['group_id'];
+     	$order_det['fixed_total_amt'] = $row['fixed_total_amt'];
+     	 $subtotal = $subtotal + floatval($row['discounted_price'] * $_POST['qty']);
+	 }
+     	 $sttl =  $subtotal;
+     	 $totalOrderCharges = 0;
+     	 $total = 0;	 
+     foreach ($order_charges as $key => $order_charges1) 
+	    {
+	    	$order_charges_det[$key]['charges_id'] = $order_charges1['charges_id'];
+	    	$order_charges_det[$key]['charges_label'] = $order_charges1['charges_label'];
+	    	$order_charges_det[$key]['percent'] = $order_charges1['percent'];
+	    	$order_charges_det[$key]['rate'] = 0;
+
+	        if((float)$order_charges1['percent']!=0)
+	        {
+	            $order_charges1['rate']=($sttl*(float)$order_charges1['percent'])/100;
+	    		$order_charges_det[$key]['rate'] = $order_charges1['rate'];
+
+	        }
+	        $totalOrderCharges+=$order_charges1['rate'];
+	    }
+     	 	$total = $subtotal + $totalOrderCharges;	
+
+
+	    $order['customers_id'] = $_POST['customers_id'];
+	    $order['c_mobile'] = $data['user_det'][0]['mobile'];
+	    $order['c_name'] = $data['user_det'][0]['name'];
+	    $order['c_email'] = $data['user_det'][0]['email'];
+	    $order['payment_type'] = $_POST['payment_type'];
+	    $order['cust_address'] = $data['address'][0]['address'];
+	    $order['cust_pincode'] = $data['address'][0]['pincode'];
+	    $order['cust_city'] = $data['address'][0]['city'];
+	    $order['order_charges'] = $totalOrderCharges;
+	    $order['sub_total_amount'] = round($subtotal);
+	    $order['total_amount'] = round($total);
+	    $order['order_date'] = date('Y-m-d');
+	    $order['order_time'] = time();
+	    $order['status'] = 'active';
+	    $order['entry_time'] = time();
+	    $order['order_status'] = 'pending';
+	    $order['pay_status'] = 'pending';
+	    $order['paid_amount'] = 0;
+	    $order_det['prod_gold_id'] = $_POST['product_id'];
+	    $order_det['customers_id'] = $_POST['customers_id'];
+	    $order_det['size'] = $_POST['size'];
+	    $order_det['qty'] = $_POST['qty'];
+	    $order_det['subtotal'] = $order_det['fixed_total_amt'] * $_POST['qty'];
+	    $order_det['status'] = 'active';
+	    $order_det['entry_time'] = time();
+    	
+
+    	$ord = $this->My_model->insert("order_tbl",$order);
+	    $order_det['order_tbl_id'] = $ord;
+    	$ordDet = $this->My_model->insert("ordered_product",$order_det);
+
+    	foreach($order_charges_det as $row)
+    	{
+    		$row['order_tbl_id'] = $ord;
+    		$row['status'] = 'active';
+    		$row['entry_time'] = time();
+    		$this->My_model->insert("order_charges_det",$row);
+    	}
+
+
+    	if($_POST['payment_type'] == 'Online')
+    	{
+			$response1 = createCashfreeOrder('CUST_'.$ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'],number_format((float)$total, 2, '.', ''), base_url());
+            $data['response'] = json_decode($response1, true);
+	        $orderId = $data['response']['order_id'];
+	        $this->My_model->update("order_tbl", ['order_tbl_id' => $ord], ['orderId' => $orderId]);
+	        $response = getCashfreeOrderDetails($orderId);
+    		$order_data['response'] = json_decode($response, true);
+    		$order_data['bill_id'] = $ord;
+    		$this->createOrder($ord);
+    		redirect('user/createOrder/'.$ord, 'refresh');
+}
+    	else{
+	    	if($ord)
+	    	{
+	    		$this->setToastMessage('Order Placed successfully...', 'success');
+				redirect(base_url() . 'user/product_details/'.$_POST['product_id'], 'refresh');
+	    	}else{
+	    		$this->setToastMessage('Failed to Place Order...', 'danger');
+				redirect(base_url() . 'user/product_details/'.$_POST['product_id'], 'refresh');
+	    	}
+    	}
+    }
+    	public function orderDetails()
+	{
+
+        $curl = curl_init();
+        
+        curl_setopt_array($curl, [
+          CURLOPT_URL => "https://api.cashfree.com/pg/orders/".$_POST['order_id'],
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => [
+            "x-api-version: 2023-08-01",
+            "x-client-id: 24376169216c7a5e7beae86f59167342",
+            "x-client-secret: dd6712b4f88c7d6195586b59fe5cd0e898adb89c"
+          ],
+        ]);
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        
+        curl_close($curl);
+        
+        if ($err) {
+          echo "cURL Error #:" . $err;
+        } else {
+          echo json_encode($response);
+        }
+}
+	public function PaymentSuccess()
+	{
+    	extract($_GET);
+    	$billDet = $this->My_model->select_where("order_tbl",['order_tbl_id'=>$bill])[0];
+        $res = getCashfreeOrderDetails($billDet['orderId']);
+	    $data['response'] = json_decode($res, true);
+	    $data['bill'] = $billDet;
+	        $this->My_model->update("order_tbl",['order_tbl_id'=>$bill],['order_status'=>'confirm','pay_status'=>'paid','paid_amount'=>$data['response']['order_amount'],'pay_date_time'=>time()]);
+	     $this->ov("PaymentSuccess",$data);
+	    
+	}
+	public function PaymentFailed()
+	{
+    	extract($_GET);
+    	$billDet = $this->My_model->select_where("order_tbl",['order_tbl_id'=>$bill])[0];
+        $res = getCashfreeOrderDetails($billDet['orderId']);
+	    $data['response'] = json_decode($res, true);
+	    $data['bill'] = $billDet;
+	    $data['bill_id'] = $bill;
+	        $this->My_model->update("order_tbl",['order_tbl_id'=>$bill],['pay_failed_date_time'=>time()]);
+	     $this->ov("PaymentFailed",$data);
+	    
+	}
+    public function createOrder($bill_id)
+	{
+
+	    header("Content-Type: text/html; charset=UTF-8");
+	    $bill = $this->My_model->select_where("order_tbl",['order_tbl_id'=>$bill_id])[0];
+		if(!empty($bill['orderId']))
+		{
+		    $res = getCashfreeOrderDetails($bill['orderId']);
+    	    $data['response'] = json_decode($res, true);
+    	    $data['bill'] = $bill_id;  
+    	    $this->load->view("user/cashfree",$data);
+		}else{
+		   
+		    $response1 = createCashfreeOrder('CUST_'.$bill_id, $bill['c_name'], $bill['c_email'], '91'.$bill['c_mobile'],number_format((float)$bill['total_amount'], 2, '.', ''), base_url());
+            $data['response'] = json_decode($response1, true);
+            // echo round($bill['total_amount'],2);
+            $orderId = $data['response']['order_id'];
+            $this->My_model->update("order_tbl", ['order_tbl_id' => $bill_id], ['orderId' => $orderId]);
+            $this->load->view("user/cashfree",$data);
+		}
+$this->load->view("user/cashfree",$data);
+
+	}
+
+    public function send_otp_to_add_mobile()
+	{
+		
+			$otp = rand(1111, 9999);
+			$_POST['mobile_number'] = '919075461110';
+			// $this->send_otp($_POST['mobile_number'],$otp);
+			$msg = "OTP to login '".$otp."' is your Shingavi Jewellers code and is valid for 10 minutes. Do not share the OTP with anyone. @www.shingavijewellers.com";
+			// OTP to login {#var#} is your Shingavi Jewellers code and is valid for 10 minutes. Do not share the OTP with anyone. @www.shingavijewellers.com
+			send_massage($_POST['mobile_number'], $msg, '1707170030888899461');
+			
+			$_SESSION['otp'][$_POST['mobile_number']] = $otp;
+			echo json_encode(['status' => 'otp_sended']);
+		 
+	}
+
+	public function test_send_otp()
+{
+    // --- STEP 1: Set mobile number, OTP and template ID ---
+    $mobile2 = '9075461110'; // Test 10-digit mobile number
+    $otp = rand(100000, 999999); // Generate OTP
+    $msg = "OTP to login '".$otp."' is your Shingavi Jewellers code and is valid for 10 minutes. Do not share the OTP with anyone. @www.shingavijewellers.com"; // Message to send
+    $template_id = '1707170030888899461'; // Replace with actual DLT template ID
+
+    // --- STEP 2: Validate and format mobile number ---
+    if ($mobile2 != "") {
+        if (strlen($mobile2) == 10)
+            $mobile = '91' . $mobile2;
+        elseif (strlen($mobile2) == 12)
+            $mobile = $mobile2;
+        else
+            $mobile = "";
+    } else {
+        $mobile = '';
+    }
+
+    // --- STEP 3: Send OTP if mobile is valid ---
+    if ($mobile != "") {
+        $encoded_msg = urlencode($msg);
+
+        $api_url = 'http://smsindia.techmartonline.com/api/sendhttp.php?authkey=83421AhlMv82TL6114c74bP1';
+        $api_url .= '&mobiles=' . $mobile;
+        $api_url .= '&message=' . $encoded_msg;
+        $api_url .= '&country=91&route=4&DLT_TE_ID=' . $template_id . '&response=json&sender=SHGJPL';
+
+        // Initialize cURL
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Cookie: PHPSESSID=91k324u6bdpvt9kr8jgoonbjk6'
+            ),
+        ));
+
+        // Execute and close
+        $response = curl_exec($curl);
+        print_r($response);
+        if (curl_errno($curl)) {
+            echo 'Curl Error: ' . curl_error($curl);
+        } else {
+            echo "OTP Sent Successfully<br>";
+            echo "Mobile: $mobile2<br>";
+            echo "OTP: $otp<br>";
+            echo "Response: $response";
+        }
+        curl_close($curl);
+    } else {
+        echo "Invalid mobile number format.";
+    }
+}
+
+
+
 }
 

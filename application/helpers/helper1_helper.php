@@ -22,7 +22,44 @@ function getTimeBasedGreeting()
     return "Good Night";
   }
 }
+function send_massage($mobile2,$msg,$teplate_id)
+{
+  if($mobile2!="")
+  {
+    if(strlen($mobile2)==10)
+      $mobile='91'.$mobile2;
+    elseif(strlen($mobile2)==12)
+      $mobile=$mobile2;
+    else
+      $mobile="";
+  }
+  else
+    $mobile='';
 
+  if($mobile!="")
+  {
+    $msg=urlencode($msg);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'http://smsindia.techmartonline.com/api/sendhttp.php?authkey=83421AhlMv82TL6114c74bP1&mobiles=91,'.$mobile.'&message='.$msg.'&country=91&route=4&DLT_TE_ID='.$teplate_id.'&response=json&sender=SHGJPL',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'GET',
+      CURLOPT_HTTPHEADER => array(
+        'Cookie: PHPSESSID=91k324u6bdpvt9kr8jgoonbjk6'
+      ),
+    ));
+
+    $response = curl_exec($curl);
+    // echo $response;
+    curl_close($curl);
+    // $response;
+  }
+}
 
 
 if (!function_exists('decrypt_url_part')) {

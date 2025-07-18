@@ -814,312 +814,49 @@
 <!-- search-modal end -->
 <!-- cart-drawer start -->
 <div class="cart-drawer position-fixed top-0 bottom-0 body-bg z-index-5 invisible box-shadow" id="cart-drawer">
-    <form method="post" action="javascript:void(0)" class="drawer-contents d-flex flex-column">
-        <div class="drawer-fixed-header ptb-10 plr-15 beb">
-            <div class="drawer-header d-flex align-items-center justify-content-between">
-                <h6 class="font-18">Cart</h6>
-                <div class="drawer-close">
-                    <button type="button" class="drawer-close-btn body-secondary-color icon-16" aria-label="Close"><i class="ri-close-large-line d-block lh-1"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="pst-10 plr-15 text-center">
-            <div class="extra-color font-14 ptb-6 plr-15 dominant-bg">First order? Get 11% Off with code <span class="heading-weight blinking">11%OFF</span>.</div>
-        </div>
-        <div class="drawer-cart-empty d-none h-100 ptb-30 plr-15">
-            <div class="drawer-scrollable h-100 d-flex flex-column align-items-center justify-content-center text-center">
-                <span class="secondary-color icon-32 meb-23"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                <h2 class="font-24">Your cart is currently empty</h2>
-                <a href="collection.html" class="link-secondary-color mst-20">Continue shopping</a>
-            </div>
-        </div>
-        <div class="drawer-inner h-100 d-flex flex-column justify-content-between overflow-hidden">
-            <div class="drawer-scrollable h-100 overflow-auto">
-                <div class="cart-drawer-table plr-15">
-                    <div class="cart-drawer-info ptb-15 bst">
-                        <div class="cart-drawer-content d-flex flex-wrap">
-                            <div class="cart-drawer-image width-88">
-                                <a href="product.html" class="d-block br-hidden"><img src="<?= base_url() ?>u_assets/assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="cart-1"></a>
-                            </div>
-                            <div class="cart-drawer-info width-calc-88 psl-15">
-                                <div class="cart-drawer-detail">
-                                    <a href="product.html" class="dominant-link heading-weight">Gleam band</a>
-                                    <span class="d-block mst-7">16cm / Aliceblue</span>
-                                </div>
-                                <div class="heading-color heading-weight mst-7">$79.00</div>
-                                <div class="cart-drawer-qty-remove d-flex align-items-end justify-content-between mst-16">
-                                    <div class="js-qty-wrapper">
-                                        <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
-                                            <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                            <input type="number" name="gleam-band-16cm-aliceblue" class="js-qty-num p-0 text-center border-0" value="1" min="1">
-                                            <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="cart-drawer-remove text-danger icon-16" aria-label="Remove item"><i class="ri-delete-bin-line d-block lh-1"></i></button>
-                                </div>
-                                <div class="text-danger font-14 mst-6"><i class="ri-error-warning-line mer-4"></i>Hurry! Only <span class="heading-weight">15</span> in stock.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cart-drawer-info ptb-15 bst">
-                        <div class="cart-drawer-content d-flex flex-wrap">
-                            <div class="cart-drawer-image width-88">
-                                <a href="product.html" class="d-block br-hidden"><img src="<?= base_url() ?>u_assets/assets/image/cart/cart-2.jpg" class="w-100 img-fluid" alt="cart-2"></a>
-                            </div>
-                            <div class="cart-drawer-info width-calc-88 psl-15">
-                                <div class="cart-drawer-detail">
-                                    <a href="product.html" class="dominant-link heading-weight">Luxe loop</a>
-                                    <span class="d-block mst-7">20cm / Azure</span>
-                                </div>
-                                <div class="heading-color heading-weight mst-7">$49.00</div>
-                                <div class="cart-drawer-qty-remove d-flex align-items-end justify-content-between mst-16">
-                                    <div class="js-qty-wrapper">
-                                        <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
-                                            <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                            <input type="number" name="luxe-loop-20cm-azure" class="js-qty-num p-0 text-center border-0" value="1" min="1">
-                                            <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="cart-drawer-remove text-danger icon-16" aria-label="Remove item"><i class="ri-delete-bin-line d-block lh-1"></i></button>
-                                </div>
-                                <div class="text-danger font-14 mst-6"><i class="ri-error-warning-line mer-4"></i>Hurry! Only <span class="heading-weight">9</span> in stock.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cart-drawer-info ptb-15 bst">
-                        <div class="cart-drawer-content d-flex flex-wrap">
-                            <div class="cart-drawer-image width-88">
-                                <a href="product.html" class="d-block br-hidden"><img src="<?= base_url() ?>u_assets/assets/image/cart/cart-3.jpg" class="w-100 img-fluid" alt="cart-3"></a>
-                            </div>
-                            <div class="cart-drawer-info width-calc-88 psl-15">
-                                <div class="cart-drawer-detail">
-                                    <a href="product.html" class="dominant-link heading-weight">Opal stud</a>
-                                    <span class="d-block mst-7">22cm / Aliceblue</span>
-                                </div>
-                                <div class="heading-color heading-weight mst-7">$69.00</div>
-                                <div class="cart-drawer-qty-remove d-flex align-items-end justify-content-between mst-16">
-                                    <div class="js-qty-wrapper">
-                                        <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
-                                            <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                            <input type="number" name="opal-stud-22cm-aliceblue" class="js-qty-num p-0 text-center border-0" value="1" min="1">
-                                            <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="cart-drawer-remove text-danger icon-16" aria-label="Remove item"><i class="ri-delete-bin-line d-block lh-1"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cart-drawer-info ptb-15 bst">
-                        <div class="cart-drawer-content d-flex flex-wrap">
-                            <div class="cart-drawer-image width-88">
-                                <a href="product.html" class="d-block br-hidden"><img src="<?= base_url() ?>u_assets/assets/image/cart/cart-4.jpg" class="w-100 img-fluid" alt="cart-4"></a>
-                            </div>
-                            <div class="cart-drawer-info width-calc-88 psl-15">
-                                <div class="cart-drawer-detail">
-                                    <a href="product.html" class="dominant-link heading-weight">Ruby hoop</a>
-                                    <span class="d-block mst-7">Petite / Azure</span>
-                                </div>
-                                <div class="heading-color heading-weight mst-7">$49.00</div>
-                                <div class="cart-drawer-qty-remove d-flex align-items-end justify-content-between mst-16">
-                                    <div class="js-qty-wrapper">
-                                        <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
-                                            <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                            <input type="number" name="ruby-hoop-mat-petite-azure" class="js-qty-num p-0 text-center border-0" value="1" min="1">
-                                            <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="cart-drawer-remove text-danger icon-16" aria-label="Remove item"><i class="ri-delete-bin-line d-block lh-1"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="drawer-recommended-product ptb-15 plr-15 bst">
-                    <div class="d-flex flex-wrap align-items-center justify-content-between">
-                        <div class="heading-color"><i class="ri-thumb-up-line icon-16 mer-4"></i>Recommended for you</div>
-                        <div class="swiper-buttons lh-1">
-                            <div class="swiper-buttons-wrap">
-                                <button type="button" class="swiper-prev swiper-prev-drawer-recommended-product dominant-link icon-16" aria-label="Arrow previous"><i class="ri-arrow-left-line d-block lh-1"></i></button>
-                                <button type="button" class="swiper-next swiper-next-drawer-recommended-product dominant-link icon-16" aria-label="Arrow next"><i class="ri-arrow-right-line d-block lh-1"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="drawer-recommended-product-wrap pst-15">
-                        <div class="drawer-recommended-product-slider swiper" id="drawer-recommended-product-slider">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="drawer-recommended-product">
-                                        <div class="row drawer-recommended-single-product-wrap">
-                                            <div class="product-image">
-                                                <a href="product.html" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-1.jpg" class="w-100 img-fluid" alt="p-1"></a>
-                                            </div>
-                                            <div class="product-content">
-                                                <div class="pro-content">
-                                                    <div class="product-title">
-                                                        <span class="d-block font-14"><a href="product.html" class="d-block w-100 text-truncate">Gleam band</a></span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box font-14 heading-weight">
-                                                            <span class="new-price dominant-color">$79.00</span>
-                                                            <span class="old-price text-decoration-line-through">$89.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="drawer-recommended-product">
-                                        <div class="row drawer-recommended-single-product-wrap">
-                                            <div class="product-image">
-                                                <a href="product.html" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-3.jpg" class="w-100 img-fluid" alt="p-3"></a>
-                                            </div>
-                                            <div class="product-content">
-                                                <div class="pro-content">
-                                                    <div class="product-title">
-                                                        <span class="d-block font-14"><a href="product.html" class="d-block w-100 text-truncate">Luxe loop</a></span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box font-14 heading-weight">
-                                                            <span class="new-price dominant-color">$49.00</span>
-                                                            <span class="old-price text-decoration-line-through">$59.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="drawer-recommended-product">
-                                        <div class="row drawer-recommended-single-product-wrap">
-                                            <div class="product-image">
-                                                <a href="product.html" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-5.jpg" class="w-100 img-fluid" alt="p-5"></a>
-                                            </div>
-                                            <div class="product-content">
-                                                <div class="pro-content">
-                                                    <div class="product-title">
-                                                        <span class="d-block font-14"><a href="product.html" class="d-block w-100 text-truncate">Opal stud</a></span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box font-14 heading-weight">
-                                                            <span class="new-price dominant-color">$69.00</span>
-                                                            <span class="old-price text-decoration-line-through">$79.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="drawer-recommended-product">
-                                        <div class="row drawer-recommended-single-product-wrap">
-                                            <div class="product-image">
-                                                <a href="product.html" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-7.jpg" class="w-100 img-fluid" alt="p-7"></a>
-                                            </div>
-                                            <div class="product-content">
-                                                <div class="pro-content">
-                                                    <div class="product-title">
-                                                        <span class="d-block font-14"><a href="product.html" class="d-block w-100 text-truncate">Ruby hoop</a></span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box font-14 heading-weight">
-                                                            <span class="new-price dominant-color">$49.00</span>
-                                                            <span class="old-price text-decoration-line-through">$54.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="drawer-instruction ptb-15 plr-15 bst">
-                    <a href="#collapse-drawer-note" class="d-flex flex-wrap align-items-center justify-content-between" data-bs-toggle="collapse" aria-expanded="true">
-                        <span class="drawer-instruction-title width-calc-16"><i class="ri-edit-line icon-16 mer-4"></i>Type a note for the seller</span>
-                        <span class="drawer-instruction-icon width-16 icon-16"><i class="ri-arrow-down-s-line"></i></span>
-                    </a>
-                    <div class="collapse show" id="collapse-drawer-note">
-                        <div class="pst-15">
-                            <textarea rows="3" id="drawernote" name="drawernote" class="w-100" placeholder="Write your message..." autocomplete="off"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="drawer-instruction ptb-15 plr-15 bst">
-                    <a href="#collapse-drawer-discount" class="d-flex flex-wrap align-items-center justify-content-between" data-bs-toggle="collapse" aria-expanded="true">
-                        <span class="drawer-instruction-title width-calc-16"><i class="ri-discount-percent-line icon-16 mer-4"></i>Have a code? Apply here</span>
-                        <span class="drawer-instruction-icon width-16 icon-16"><i class="ri-arrow-down-s-line"></i></span>
-                    </a>
-                    <div class="collapse show" id="collapse-drawer-discount">
-                        <div class="pst-15">
-                            <div class="d-flex flex-wrap extra-bg border-full br-hidden">
-                                <input type="text" id="drawerdiscount" name="drawerdiscount" class="width-calc-40 h-auto border-0 rounded-0" placeholder="Type your code here" autocomplete="off" required>
-                                <button type="button" class="width-40 icon-16 dominant-link drawer-dis-btn" aria-label="Discount code button"><i class="ri-arrow-right-up-line"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="drawer-footer ptb-15 plr-15 bst">
-                <div class="drawer-total d-flex justify-content-between">
-                    <span>Subtotal</span>
-                    <span class="heading-color heading-weight">$246.00</span>
-                </div>
-                <div class="font-12 mst-8">Shipping, taxes, and discount codes calculated at checkout</div>
-                <div class="drawer-cart-checkout mst-12">
-                    <div class="drawer-cart-box meb-11">
-                        <label class="cust-checkbox-label checkbox-agree">
-                            <input type="checkbox" id="drawer-terms" name="drawer-terms" class="cust-checkbox checkboxbtn">
-                            <span class="d-block cust-check"></span>
-                            <span class="login-read">I have agree with the <a href="terms-condition.html" class="body-secondary-color text-decoration-underline">terms & conditions</a>.</span>
-                        </label>
-                    </div>
-                    <div class="row btn-row15">
-                        <div class="col-sm-6 col-12">
-                            <a href="<?= base_url() ?>user/cart_page" class="w-100 btn-style quaternary-btn">View cart</a>
-                        </div>
-                        <div class="col-sm-6 col-12">
-                            <a href="<?= base_url() ?>user/checkout" class="w-100 btn-style secondary-btn hide-btn opacity-50 disabled pe-none">Checkout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+    
 </div>
 <!-- cart-drawer end -->
 <!-- bottom-menu start -->
 <div class="bottom-menu d-md-none position-sticky bottom-0 extra-bg z-1 box-shadow">
     <div class="bottom-menu-element d-flex flex-wrap align-items-center">
         <div class="col">
-            <a href="index.html" class="d-flex flex-column align-items-center ptb-10 text-center">
+            <a href="<?=base_url()?>user" class="d-flex flex-column align-items-center ptb-10 text-center">
                 <span class="bottom-menu-icon heading-color icon-16"><i class="ri-home-8-line d-block lh-1"></i></span>
                 <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Home</span>
             </a>
         </div>
         <div class="col">
-            <a href="account.html" class="d-flex flex-column align-items-center ptb-10 text-center">
+            <a href="<?=base_url()?>user/profile" class="d-flex flex-column align-items-center ptb-10 text-center">
                 <span class="bottom-menu-icon heading-color icon-16"><i class="ri-user-3-line d-block lh-1"></i></span>
                 <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Account</span>
             </a>
         </div>
         <div class="col">
-            <a href="collection.html" class="d-flex flex-column align-items-center ptb-10 text-center">
+            <a href="<?=base_url()?>user/products" class="d-flex flex-column align-items-center ptb-10 text-center">
                 <span class="bottom-menu-icon heading-color icon-16"><i class="ri-layout-grid-line d-block lh-1"></i></span>
                 <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Shop</span>
             </a>
         </div>
         <div class="col">
-            <a href="wishlist.html" class="d-flex flex-column align-items-center ptb-10 text-center">
+            <a href="<?=base_url()?>user/wishlist" class="d-flex flex-column align-items-center ptb-10 text-center">
                 <span class="bottom-menu-icon-wrap position-relative per-7">
                     <span class="d-block bottom-menu-icon heading-color icon-16"><i class="ri-heart-line d-block lh-1"></i></span>
-                    <span class="bottom-menu-counter wishlist-counter extra-color font-10 position-absolute end-0 dominant-bg d-flex align-items-center justify-content-center rounded-circle">4</span>
+                    <span id="wishlistCountmv" class="bottom-menu-counter wishlist-counter extra-color font-10 position-absolute end-0 dominant-bg d-flex align-items-center justify-content-center rounded-circle">
+                        <?php 
+                        if(isset($_SESSION['user_id']))
+                        {
+                            $wt = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id']]);
+                            echo count($wt);
+                        }else{
+                             if(isset($_SESSION['wishlist'])){
+                                    echo count($_SESSION['wishlist']);
+                              }else{
+                                echo 0;
+                              }
+                        } 
+                    ?>
+                    </span>
                 </span>
                 <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Wishlist</span>
             </a>
@@ -1192,6 +929,11 @@ function openModal(pid) {
                 $('#available-stock').text(product.product_qty);
                 $('#formatted_discounted_price').text(product.formatted_discounted_price);
                 $('#formatted_original_price').text(product.formatted_original_price);
+                $('#product-desc').text(product.product_details);
+                // $('#buy_now_btn').attr('href', '<?= base_url("user/buy_now/") ?>' + product.prod_gold_id);
+                // Set onclick attribute for Buy Now
+                $('#buy_now_btn').attr('onclick', `openAddressModal('${product.prod_gold_id}')`);
+
                 // --- Ring Size Logic Start ---
                 const sizesContainer = $('#sizes');
                 sizesContainer.empty(); // Clear existing sizes
@@ -1203,7 +945,7 @@ function openModal(pid) {
                         sizesContainer.append(`
                             <li>
                                 <label class="cust-checkbox-label">
-                                    <input type="radio" name="quick-ring-size" class="cust-checkbox" value="${size}" ${checked}>
+                                    <input type="radio" name="selected_size" class="cust-checkbox" value="${size}" ${checked}>
                                     <span class="d-block cust-check border-full border-radius">${size}</span>
                                 </label>
                             </li>
@@ -1211,12 +953,14 @@ function openModal(pid) {
                     });
                 } else {
                     sizesContainer.append(`
+                        <input  type="hidden" name="selected_size" id="selected_size" class="cust-checkbox" value="NA" checked>
                         <li><span class="text-muted">No sizes available</span></li>
                     `);
                 }
                 // --- Ring Size Logic End ---
 
                 // Show modal
+                attachSizeListeners();
                 $('#quickview-modal').modal('show');
             }
         },
@@ -1225,7 +969,68 @@ function openModal(pid) {
         }
     });
 }
+
+function openAddressModal(pId) {
+       $('#quickview-modal').modal('hide');
+
+    // Wait for quickview modal to fully hide before showing the address modal
+    $('#quickview-modal').on('hidden.bs.modal', function () {
+        // Remove this event after it's triggered to prevent multiple calls
+        $(this).off('hidden.bs.modal');
+    let productDet = '';
+    $('.product_id').val(pId);
+
+    // Step 1: Load the HTML content
+    let selected_qty = document.getElementById('selected_qty').value;
+    
+    var url = '?pId=' + encodeURIComponent(pId) + 
+          '&size=' + encodeURIComponent(selected_Size_to_Buy) + 
+          '&qty=' + encodeURIComponent(selected_qty);
+
+
+    $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>'+url, function () {
+        // Step 2: After the form is loaded, run AJAX for data
+        $.ajax({
+            url: '<?= base_url("user/getproductDetails") ?>',
+            type: 'POST',
+            data: { pId: pId },
+            dataType: 'json',
+            success: function (res) {
+                console.log(res);
+                if (res.status == 'success') {
+                    productDet = res.product_details[0];
+                    // var userDet = res.data[0];
+                    
+            console.log("selected_Size_to_Buy",selected_Size_to_Buy,'selected_qty',selected_qty);
+
+                    $('#address-modal').modal('show');
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+            },
+            error: function () {
+                alert("Error occurred. Try again.");
+            }
+        });
+
+    });
+});
+}
+
 </script>
+
+<div class="address-modal modal fade justify-content-center" id="address-modal" data-bs-backdrop="static" style="height: 100vh;top:0;overflow: hidden;margin: 0;padding: 0;border-radius: 0px !important;"  >
+                    <div style="overflow-y: auto;border-radius: 0px !important;" class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered my-0 justify-content-center" >
+                        <div class="modal-content body-bg border-0 br-hidden" style=";height: 100vh; border-radius: 16px 16px 0 0; overflow-y: auto;border-radius: 0px !important;">
+                            <div class="modal-body plr-15 plr-sm-30" id="address-modal-body" style="border-radius: 0px !important;">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+<!-- Quick View Modal -->
 <div class="quickview-modal modal fade" id="quickview-modal" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content body-bg border-0 br-hidden">
@@ -1336,14 +1141,14 @@ function openModal(pid) {
                                 </div>
                                 <div class="quick-info mst-15" data-animate="animate__fadeIn">
                                     <div class="product-desc">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <p id="product-desc"></p>
                                     </div>
                                 </div>
                                 
                                 <div class="quick-info mst-20" data-animate="animate__fadeIn">
                                     <div class="product-variant">
                                         <div class="product-variant-option">
-                                            <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span></span>
+                                            <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span>  <span id="display-size" class="d-block cust-check border-full border-radius"></span></span>
                                             <div class="product-option-block size">
                                                 <ul class="ul-mt5" id="sizes">
                                                     <li>
@@ -1364,7 +1169,7 @@ function openModal(pid) {
                                         <div class="js-qty-wrapper">
                                             <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
                                                 <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                                <input type="number" name="quick-gleam-band-16cm-aliceblue" class="js-qty-num p-0 text-center border-0" value="1" min="1">
+                                                <input type="number" name="selected_qty" id="selected_qty" class="js-qty-num p-0 text-center border-0" value="1" min="1">
                                                 <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
                                             </div>
                                         </div>
@@ -1372,30 +1177,21 @@ function openModal(pid) {
                                     <div class="product-button mst-15">
                                         <div class="row btn-row15">
                                             <div class="col-12">
-                                                <button type="submit" class="w-100 btn-style quaternary-btn add-to-cart">
+                                                <!-- <button type="submit" class="w-100 btn-style quaternary-btn add-to-cart">
                                                     <span class="product-icon">
                                                         <span class="product-bag-icon">Add to cart</span>
                                                         <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
                                                         <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
                                                     </span>
-                                                </button>
+                                                </button> -->
                                             </div>
                                             <div class="col-12">
-                                                <a class="w-100 btn-style secondary-btn">Buy now</a>
+                                                <a class="w-100 btn-style secondary-btn" id="buy_now_btn">Buy now</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="quick-info mst-15" data-animate="animate__fadeIn">
-                                    <div class="ul-row">
-                                        <div class="product-wishlist">
-                                            <a class="add-to-wishlist heading-color"><i class="ri-heart-line icon-16 mer-4"></i>Wishlist</a>
-                                        </div>
-                                        <div class="product-compare">
-                                            <a class="add-to-compare heading-color"><i class="ri-stack-line icon-16 mer-4"></i>Compare</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="quick-info mst-20" data-animate="animate__fadeIn">
                                     <div class="product-border bst"></div>
                                 </div>
@@ -1420,4 +1216,41 @@ function openModal(pid) {
         </div>
     </div>
 </div>
+
+<script>
+    function buyNow(pId)
+    {
+        // $('#question-pid').val(pId);
+        $('.product_id').val(pId);
+
+        // Show Bootstrap modal using jQuery
+
+        
+        $('#buy-now-modal').modal('show');
+        }
+
+
+ function updateSelectedSize() {
+        const selected = document.querySelector('input[name="selected_size"]:checked');
+        if (selected) {
+            const size = selected.value;
+            selected_Size_to_Buy = selected.value;
+            document.getElementById('display-size').innerText = size;
+        }else{
+            selected_Size_to_Buy = 'NA';
+        }
+            console.log("Selected Size:", selected_Size_to_Buy);
+    }
+
+   function attachSizeListeners() {
+    updateSelectedSize(); // Set default initially
+    const radios = document.querySelectorAll('input[name="selected_size"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', updateSelectedSize);
+    });
+}
+
+</script>
+
+<!-- buy Now Modal -->
 </html>

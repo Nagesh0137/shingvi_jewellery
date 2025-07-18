@@ -41,22 +41,22 @@
                 <!-- notification-bar start -->
                 <div class="notification-bar ptb-10 dominant-bg">
                     <div class="container-fluid d-none d-xl-block">
-                        <div class="text-center extra-color">Save now 50% on jewellery appliances discount <a href="collection.html" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
+                        <div class="text-center extra-color"> 🛒 Find the best deals and newest arrivals — shop now and enjoy fast delivery! <a href="<?=base_url()?>user/products" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
                     </div>
                     <div class="notification-marquee d-flex d-xl-none overflow-hidden">
                         <div class="notification-marquee-row notification-marquee1 d-flex">
-                            <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a href="collection.html" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
+                            <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a href="<?=base_url()?>user/products" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
                             <div class="extra-color psl-15 text-nowrap">Super best jewellery sale up to <span class="blinking">20% Off</span></div>
                             <div class="extra-color psl-15 text-nowrap"><i class="ri-mail-line icon-16 mer-5"></i><a href="mailto:demo@demo.com" class="d-inline-block text-white">demo@demo.com</a></div>
-                            <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a href="collection.html" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
+                            <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a href="<?=base_url()?>user/products" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
                             <div class="extra-color psl-15 text-nowrap">Super best jewellery sale up to <span class="blinking">20% Off</span></div>
                             <div class="extra-color psl-15 text-nowrap"><i class="ri-mail-line icon-16 mer-5"></i><a href="mailto:demo@demo.com" class="d-inline-block text-white">demo@demo.com</a></div>
                         </div>
                         <div class="notification-marquee-row notification-marquee2 d-flex">
-                            <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a href="collection.html" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
+                            <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a href="<?=base_url()?>user/products" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
                             <div class="extra-color psl-15 text-nowrap">Super best jewellery sale up to <span class="blinking">20% Off</span></div>
                             <div class="extra-color psl-15 text-nowrap"><i class="ri-mail-line icon-16 mer-5"></i><a href="mailto:demo@demo.com" class="d-inline-block text-white">demo@demo.com</a></div>
-                            <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a href="collection.html" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
+                            <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a href="<?=base_url()?>user/products" class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
                             <div class="extra-color psl-15 text-nowrap">Super best jewellery sale up to <span class="blinking">20% Off</span></div>
                             <div class="extra-color psl-15 text-nowrap"><i class="ri-mail-line icon-16 mer-5"></i><a href="mailto:demo@demo.com" class="d-inline-block text-white">demo@demo.com</a></div>
                         </div>
@@ -68,7 +68,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col">
-                                <span class="d-block">Super best jewellery sale up to <span class="dominant-color text-uppercase heading-weight blinking">20% Off</span></span>
+                                <span class="d-block">Explore exclusive collections crafted  <span class="dominant-color text-uppercase heading-weight blinking">just for you.</span></span>
                             </div>
                             <div class="col-3">
                                 <div class="notification-search w-100">
@@ -262,7 +262,7 @@
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collections.html" class="d-inline-block dominant-link">Collections</a></span>
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-category.html" class="d-inline-block dominant-link">Collection category</a></span>
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-without.html" class="d-inline-block dominant-link">Collection full</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection.html" class="d-inline-block dominant-link">Collection left</a></span>
+                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="<?=base_url()?>user/products" class="d-inline-block dominant-link">Collection left</a></span>
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-right.html" class="d-inline-block dominant-link">Collection right</a></span>
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-list-without.html" class="d-inline-block dominant-link">Collection list full</a></span>
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-list.html" class="d-inline-block dominant-link">Collection list left</a></span>
@@ -285,14 +285,14 @@
                                                             </div>
                                                             <div class="col">
                                                                 <div class="banner-hover">
-                                                                    <a href="collection.html" class="d-block banner-img br-hidden">
+                                                                    <a href="<?=base_url()?>user/products" class="d-block banner-img br-hidden">
                                                                         <img src="<?=base_url()?>u_assets/assets/image/index3/menu/menu-banner-product1.jpg" class="w-100 img-fluid" alt="menu-banner-product1">
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="banner-hover">
-                                                                    <a href="collection.html" class="d-block banner-img br-hidden">
+                                                                    <a href="<?=base_url()?>user/products" class="d-block banner-img br-hidden">
                                                                         <img src="<?=base_url()?>u_assets/assets/image/index3/menu/menu-banner-product2.jpg" class="w-100 img-fluid" alt="menu-banner-product2">
                                                                     </a>
                                                                 </div>
@@ -302,7 +302,7 @@
                                                 </div>
                                             </li>
                                             <li class="menu-li">
-                                                <a href="collection.html" class="menu-link font-16 d-flex align-items-center plr-15">
+                                                <a href="<?=base_url()?>user/products" class="menu-link font-16 d-flex align-items-center plr-15">
                                                     <span class="menu-title text-uppercase heading-weight">Shop</span>
                                                     <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span>
                                                 </a>
@@ -513,7 +513,21 @@
                                                     <span class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
                                                         <span class="header-block-icon icon-16"><i class="ri-heart-line"></i></span>
                                                         <span class="d-none d-xl-block header-text-content">Wishlist</span>
-                                                        <span class="header-block-counter wishlist-counter dominant-color">4</span>
+                                                        <span id="wishlistCount" class="header-block-counter wishlist-counter dominant-color">
+                                                            <?php 
+                                                                if(isset($_SESSION['user_id']))
+                                                                {
+                                                                    $wt = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id']]);
+                                                                    echo count($wt);
+                                                                }else{
+                                                                     if(isset($_SESSION['wishlist'])){
+                                                                            echo count($_SESSION['wishlist']);
+                                                                      }else{
+                                                                        echo 0;
+                                                                      }
+                                                                } 
+                                                            ?>
+                                                        </span>
                                                     </span>
                                                 </a>
                                             </div>
