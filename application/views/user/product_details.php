@@ -412,7 +412,7 @@
                 let errorMsg = '';
                 let userDet = '';
                 let productDet = '';
-$(document).on('click', '.question-form-submit:first', function () {
+$(document).on('click', '.question-form-submit-otp', function () {
     const mobile = $('#phone').val().trim();
 
     // Validate mobile: 10 digits and starts with 7, 8, or 9

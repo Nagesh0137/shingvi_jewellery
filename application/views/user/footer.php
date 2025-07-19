@@ -1,101 +1,5 @@
 <!-- footer start -->
 <footer id="footer">
-    <!-- footer-insta start -->
-    <!-- <section class="footer-insta extra-bg">
-        <div class="container-fluid">
-            <div class="insta-category">
-                <div class="section-capture text-center" data-animate="animate__fadeIn">
-                    <div class="section-title">
-                        <h2 class="section-heading">Follow on instagram</h2>
-                    </div>
-                </div>
-                <div class="insta-wrap">
-                    <div class="insta-slider swiper" id="insta-slider">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" data-animate="animate__fadeIn">
-                                <div class="insta-post banner-hover">
-                                    <a href="collection.html" class="d-block banner-img position-relative br-hidden">
-                                        <span class="banner-icon extra-color icon-24 position-absolute top-50 start-50 translate-middle z-1"><i class="ri-instagram-line d-block lh-1"></i></span>
-                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/footer-insta1.jpg" class="w-100 img-fluid" alt="footer-insta1">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-animate="animate__fadeIn">
-                                <div class="insta-post banner-hover">
-                                    <a href="collection.html" class="d-block banner-img position-relative br-hidden">
-                                        <span class="banner-icon extra-color icon-24 position-absolute top-50 start-50 translate-middle z-1"><i class="ri-instagram-line d-block lh-1"></i></span>
-                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/footer-insta2.jpg" class="w-100 img-fluid" alt="footer-insta2">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-animate="animate__fadeIn">
-                                <div class="insta-post banner-hover">
-                                    <a href="collection.html" class="d-block banner-img position-relative br-hidden">
-                                        <span class="banner-icon extra-color icon-24 position-absolute top-50 start-50 translate-middle z-1"><i class="ri-instagram-line d-block lh-1"></i></span>
-                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/footer-insta3.jpg" class="w-100 img-fluid" alt="footer-insta3">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-animate="animate__fadeIn">
-                                <div class="insta-post banner-hover">
-                                    <a href="collection.html" class="d-block banner-img position-relative br-hidden">
-                                        <span class="banner-icon extra-color icon-24 position-absolute top-50 start-50 translate-middle z-1"><i class="ri-instagram-line d-block lh-1"></i></span>
-                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/footer-insta4.jpg" class="w-100 img-fluid" alt="footer-insta4">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-animate="animate__fadeIn">
-                                <div class="insta-post banner-hover">
-                                    <a href="collection.html" class="d-block banner-img position-relative br-hidden">
-                                        <span class="banner-icon extra-color icon-24 position-absolute top-50 start-50 translate-middle z-1"><i class="ri-instagram-line d-block lh-1"></i></span>
-                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/footer-insta5.jpg" class="w-100 img-fluid" alt="footer-insta5">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-animate="animate__fadeIn">
-                                <div class="insta-post banner-hover">
-                                    <a href="collection.html" class="d-block banner-img position-relative br-hidden">
-                                        <span class="banner-icon extra-color icon-24 position-absolute top-50 start-50 translate-middle z-1"><i class="ri-instagram-line d-block lh-1"></i></span>
-                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/footer-insta6.jpg" class="w-100 img-fluid" alt="footer-insta6">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-animate="animate__fadeIn">
-                                <div class="insta-post banner-hover">
-                                    <a href="collection.html" class="d-block banner-img position-relative br-hidden">
-                                        <span class="banner-icon extra-color icon-24 position-absolute top-50 start-50 translate-middle z-1"><i class="ri-instagram-line d-block lh-1"></i></span>
-                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/footer-insta7.jpg" class="w-100 img-fluid" alt="footer-insta7">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" data-animate="animate__fadeIn">
-                                <div class="insta-post banner-hover">
-                                    <a href="collection.html" class="d-block banner-img position-relative br-hidden">
-                                        <span class="banner-icon extra-color icon-24 position-absolute top-50 start-50 translate-middle z-1"><i class="ri-instagram-line d-block lh-1"></i></span>
-                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/footer-insta8.jpg" class="w-100 img-fluid" alt="footer-insta8">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-buttons">
-                        <div class="swiper-buttons-wrap">
-                            <button type="button" class="swiper-prev swiper-prev-insta" aria-label="Arrow previous"><i class="ri-arrow-left-line d-block lh-1"></i></button>
-                            <button type="button" class="swiper-next swiper-next-insta" aria-label="Arrow next"><i class="ri-arrow-right-line d-block lh-1"></i></button>
-                        </div>
-                    </div>
-                    <div class="swiper-dots" data-animate="animate__fadeIn">
-                        <div class="swiper-pagination swiper-pagination-insta"></div>
-                    </div>
-                    <div class="insta-button position-absolute top-50 start-0 end-0 translate-middle-y z-1 mlr-15 mlr-sm-30 text-center" data-animate="animate__fadeIn">
-                        <a href="collection.html" class="btn-style tertiary-btn">@Veppo theme</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- footer-insta end -->
-    <!-- footer-top start -->
     <div class="footer-area section-ptb">
         <div class="container">
             <div class="row row-mtm50">
@@ -121,7 +25,30 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="footer-news">
+                                <h6 class="font-18">Subscribe newsletter</h6>
+                                <div class="footer-news-form mst-19">
+                                    <p>Subscribe with us to get special offers and other discount information</p>
+                                    <form method="post" class="news-form mst-13">
+                                        <div class="news-wrap d-flex flex-wrap extra-bg border-full br-hidden">
+                                            <input type="email" id="newsletter-email" name="newsletter-email" class="width-calc-48 border-0 rounded-0" placeholder="Enter your email" required>
+                                            <button type="submit" class="hide-btn width-48 dominant-color font-20 opacity-50 disabled pe-none" aria-label="Subscribe button"><i class="ri-arrow-right-line d-block lh-1"></i></button>
+                                        </div>
+                                        <div class="mst-11">
+                                            <label class="cust-checkbox-label checkbox-agree">
+                                                <input type="checkbox" id="newsletter-terms" name="newsletter-terms" class="cust-checkbox checkboxbtn">
+                                                <span class="d-block cust-check"></span>
+                                                <span class="login-read">I agree with the <a href="terms-condition.html" class="body-secondary-color text-decoration-underline">terms & conditions</a>.</span>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
+
+
+
+
                         <div class="col-12 col-lg-8 footer-list">
                             <div class="row">
                                 <div class="col-12 col-md-3 ft-list">
@@ -325,8 +252,8 @@
         </div>
 
     </div>
-    <!-- footer-bottom end -->
 </footer>
+    <!-- footer-bottom end -->
 <!-- footer end -->
 <!-- quickview-modal start -->
 
@@ -972,13 +899,14 @@ function openModal(pid) {
 
 function openAddressModal(pId) {
        $('#quickview-modal').modal('hide');
-
     // Wait for quickview modal to fully hide before showing the address modal
     $('#quickview-modal').on('hidden.bs.modal', function () {
         // Remove this event after it's triggered to prevent multiple calls
         $(this).off('hidden.bs.modal');
     let productDet = '';
     $('.product_id').val(pId);
+    let productSessionId = pId;
+       // alert('open'+productSessionId);
 
     // Step 1: Load the HTML content
     let selected_qty = document.getElementById('selected_qty').value;
@@ -987,7 +915,7 @@ function openAddressModal(pId) {
           '&size=' + encodeURIComponent(selected_Size_to_Buy) + 
           '&qty=' + encodeURIComponent(selected_qty);
 
-
+          console.log('pId -- ',pId)
     $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>'+url, function () {
         // Step 2: After the form is loaded, run AJAX for data
         $.ajax({
@@ -1001,7 +929,7 @@ function openAddressModal(pId) {
                     productDet = res.product_details[0];
                     // var userDet = res.data[0];
                     
-            console.log("selected_Size_to_Buy",selected_Size_to_Buy,'selected_qty',selected_qty);
+                console.log("selected_Size_to_Buy",selected_Size_to_Buy,'selected_qty',selected_qty);
 
                     $('#address-modal').modal('show');
                 } else {
@@ -1018,7 +946,180 @@ function openAddressModal(pId) {
 }
 
 </script>
+<script>
+                let receivedOtp = '';
+                let enteredMobile = '';
+                let user_status = '';
+                let errorMsg = '';
+                let userDet = '';
+                let productDet = '';
+$(document).on('click', '.question-form-submit-otp', function () {
+    const mobile = $('#phone').val().trim();
 
+    // Validate mobile: 10 digits and starts with 7, 8, or 9
+        document.getElementById('errMsg').innerHTML = '';
+
+    const regex = /^[789]\d{9}$/;
+    if (!regex.test(mobile)) {
+        document.getElementById('errMsg').innerHTML = 'Enter a valid 10-digit mobile number starting with 7, 8, or 9.';
+        // alert("Enter a valid 10-digit mobile number starting with 7, 8, or 9.");
+        return;
+    }
+
+    // Save entered mobile
+    enteredMobile = mobile;
+    let productId = document.getElementById('product_id').value;
+    // Send OTP via AJAX
+    $.ajax({
+        url: '<?= base_url("user/buy_product_otp") ?>',
+        type: 'POST',
+        data: { mobile_number: mobile,pId:productId },
+        dataType: 'json',
+        success: function (res) {
+            console.log(res);
+            if (res.status === 'success') {
+                receivedOtp = res.otp;
+                productDet = res.product_details[0];
+                if(res.user_status == 'existing')
+                {
+                    userDet = res.data[0];
+                }else{
+                    userDet = '';
+                }
+                user_status = res.user_status;
+                document.getElementById('errMsg').innerHTML = ' ';
+                $('#dummyOtp').html(receivedOtp);
+                // Show OTP field and Verify button
+                $('#otp').closest('.field-col').removeClass('d-none');
+                $('.question-form-btn').eq(0).addClass('d-none'); // Hide "Send OTP"
+                $('.question-form-btn').eq(1).removeClass('d-none'); // Show "Verify"
+            } else {
+                // alert(res.msg || "Something went wrong.");
+                 document.getElementById('errMsg').innerHTML = res.msg || "Something went wrong.";
+
+            }
+        },
+        error: function () {
+            // alert("Failed to send OTP. Try again.");
+        document.getElementById('errMsg').innerHTML = 'Failed to send OTP. Try again.';
+
+        }
+    });
+});
+
+// Verify OTP
+$(document).on('submit', '#otpForm', function (e) {
+    e.preventDefault();
+    const inputOtp = $('#otp').val().trim();
+    console.log(inputOtp,receivedOtp);
+    var productId = document.getElementById('product_id').value;
+    alert('productId --- '+productId)
+    if (inputOtp == receivedOtp) {
+            $.ajax({
+                url: '<?= base_url("user/setUserLogin") ?>',
+                type: 'POST',
+                data: { user_id: userDet.customers_id },
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                    if (res.status === 'success') {
+                        console.log('User Sessiom Set');
+                        var url = '?pId=' + encodeURIComponent(productId) + 
+                      '&size=' + encodeURIComponent(selected_Size_to_Buy) + 
+                      '&qty=' + encodeURIComponent(selected_qty);
+
+                        $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>'+url, function () {
+                              
+                            $('.user_status').val(user_status);
+
+                                $('#uname').val(userDet.name);
+                                $('#uemail').val(userDet.email);
+                                $('.customers_id').val(userDet.customers_id);
+                                $('#uaddress').val(userDet.address);
+                                $('#pincode').val(userDet.pincode);
+                                console.log('productDet',productDet);
+                            })
+        // OTP matched
+            openAddressModal(productDet.prod_gold_id);
+                    } else {
+                        console("Failed To Set User In Session");
+                    }
+                },
+              
+            });
+
+  
+
+    } else {
+        // alert("Wrong OTP. Please try again.");
+        document.getElementById('errMsg').innerHTML = 'Wrong OTP. Please try again.';
+
+    }
+});
+
+// function openAddressModal(pId)
+// {
+//     let productDet = '';
+//     $('.product_id').val(pId);
+//       $.ajax({
+//         url: '<?= base_url("user/getproductDetails") ?>',
+//         type: 'POST',
+//         data: { pId: pId },
+//         dataType: 'json',
+//         success: function (res) {
+//             console.log(res);
+//             if(res.status == 'success')
+//             {
+//                 productDet = res.product_details[0];
+
+//                 $('#final_amount_after_discount').html(productDet.formatted_discounted_price);
+
+//                 var userDet = res.data[0];
+//                 $('#uname').val(userDet.firstname + ' '+ userDet.lastname);
+//                 $('#uemail').val(userDet.email);
+//                 $('.user_status').val('existing');
+//                 $('#uaddress').val(userDet.address);
+//                 $('#pincode').val(userDet.pincode);
+//                 $('.customers_id').val(userDet.customers_id);
+//                 console.log('productDet - directLogin',productDet,'productDet.formatted_discounted_price',productDet.formatted_discounted_price);
+//                 $('#address-modal').modal('show');
+
+//            }else{
+//             alert("Something went Wrong Please Try again");
+//            }
+//         },
+//         error: function () {
+
+//         }
+//     });
+// }
+
+ function updateSelectedSize() {
+
+        const selected = document.querySelector('input[name="selected_size"]:checked');
+        if (selected) {
+            const size = selected.value;
+            selected_Size_to_Buy = selected.value;
+            console.log("Selected Size:", size);
+            document.getElementById('display-size').innerText = size;
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+        let selected_Size_to_Buy = '';
+        updateSelectedSize();
+        // Add change listener to all radios
+        const radios = document.querySelectorAll('input[name="selected_size"]');
+        radios.forEach(radio => {
+            radio.addEventListener('change', updateSelectedSize);
+        });
+    });
+
+
+
+
+
+                </script>
 <div class="address-modal modal fade justify-content-center" id="address-modal" data-bs-backdrop="static" style="height: 100vh;top:0;overflow: hidden;margin: 0;padding: 0;border-radius: 0px !important;"  >
                     <div style="overflow-y: auto;border-radius: 0px !important;" class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered my-0 justify-content-center" >
                         <div class="modal-content body-bg border-0 br-hidden" style=";height: 100vh; border-radius: 16px 16px 0 0; overflow-y: auto;border-radius: 0px !important;">

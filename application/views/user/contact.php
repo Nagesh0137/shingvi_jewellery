@@ -30,132 +30,141 @@
                         <!-- Mobile & Email -->
                         <div class="form__row">
                             <div class="form__group">
-                                <label for="mobile">Phone Number <span class="required">*</span></label>
-                                <input type="tel" name="mobile" id="mobile" placeholder="Phone number"
-                                value="<?= isset($user_det['firstname']) ? $user_det['mobile'] : '' ?>" 
-                                required pattern="[0-9]{10}" maxlength="10"
-                                title="Enter a valid 10-digit mobile number" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
-                            </div>
+                              <label for="mobile">Phone Number <span class="required">*</span></label>
+                              <input
+                              type="tel"
+                              name="mobile"
+                              id="mobile"
+                              placeholder="Phone number"
+                              value="<?= isset($user_det['firstname']) ? $user_det['mobile'] : '' ?>"
+                              required
+                              pattern="^[6-9][0-9]{9}$"
+                              maxlength="10"
+                              title="Enter a valid 10-digit Indian mobile number starting with 6-9"
+                              oninput="this.value = this.value.replace(/\D/g, '')"
+                              >
+                          </div>
 
 
-                            <div class="form__group">
-                                <label for="email">Email <span class="required">*</span></label>
-                                <input type="email" name="email" id="email" placeholder="Email"
-                                value="<?= isset($user_det['firstname']) ? $user_det['email'] : '' ?>" 
-                                required>
-                            </div>
+
+                          <div class="form__group">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" name="email" id="email" placeholder="Email"
+                            value="<?= isset($user_det['firstname']) ? $user_det['email'] : '' ?>" 
+                            required>
                         </div>
+                    </div>
 
-                        <!-- Message -->
-                        <div class="form__group">
-                            <label for="enquiry">Your Message <span class="required">*</span></label>
-                            <textarea name="enquiry" id="enquiry" placeholder="Write your message here..." required minlength="10"
-                            title="Please enter at least 10 characters"></textarea>
-                        </div>
+                    <!-- Message -->
+                    <div class="form__group">
+                        <label for="enquiry">Your Message <span class="required">*</span></label>
+                        <textarea name="enquiry" id="enquiry" placeholder="Write your message here..." required minlength="10"
+                        title="Please enter at least 10 characters"></textarea>
+                    </div>
 
-                        <button type="submit" class="submit__btn">Submit Message</button>
-                    </form>
+                    <button type="submit" class="submit__btn">Submit Message</button>
+                </form>
 
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="contact__info--wrapper">
+                <div class="contact__info--item">
+                    <div class="contact__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <div class="contact__content">
+                        <h4>Call Us</h4>
+                        <p>
+                            <a href="tel:<?=$contact[0]['mobile_no']?>"><?=$contact[0]['mobile_no']?></a><br>
+                            <a href="tel:<?=$contact[0]['mobile_no2']?>"><?=$contact[0]['mobile_no2']?></a>
+                        </p>
+                    </div>
                 </div>
                 
-                <!-- Contact Info -->
-                <div class="contact__info--wrapper">
-                    <div class="contact__info--item">
-                        <div class="contact__icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                            </svg>
-                        </div>
-                        <div class="contact__content">
-                            <h4>Call Us</h4>
-                            <p>
-                                <a href="tel:<?=$contact[0]['mobile_no']?>"><?=$contact[0]['mobile_no']?></a><br>
-                                <a href="tel:<?=$contact[0]['mobile_no2']?>"><?=$contact[0]['mobile_no2']?></a>
-                            </p>
-                        </div>
+                <div class="contact__info--item">
+                    <div class="contact__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
                     </div>
-                    
-                    <div class="contact__info--item">
-                        <div class="contact__icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                        </div>
-                        <div class="contact__content">
-                            <h4>Email Us</h4>
-                            <p>
-                                <a href="mailto:<?=$contact[0]['email1']?>"><?=$contact[0]['email1']?></a><br>
-                                <a href="mailto:<?=$contact[0]['email2']?>"><?=$contact[0]['email2']?></a>
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact__info--item">
-                        <div class="contact__icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                        </div>
-                        <div class="contact__content">
-                            <h4>Our Locations</h4>
-                            <p>
-                                3155, JUNA KAPAD BAZAR, AHMEDNAGAR,<br>
-                                MAHARASHTRA, 414001.<br><br>
-                                PROFESSOR CHOWK, SAVEDI, AHMEDNAGAR,<br>
-                                MAHARASHTRA, 414001.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact__info--item">
-                        <div class="contact__icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                                <path d="M2 10h20M7 15h1m4 0h1m4 0h1"></path>
-                            </svg>
-                        </div>
-                        <div class="contact__content">
-                            <h4>Follow Us</h4>
-                            <div class="social__links">
-                                <a href="https://www.facebook.com/shingavijewellerspvtltd/" target="_blank" class="social__link">
-                                    <i class="ri-facebook-fill"></i>
-                                </a>
-                                <a href="http://pinterest.com/pin/create/button/?url=<?=urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]")?>" target="_blank" class="social__link">
-                                    <i class="ri-pinterest-fill"></i>
-                                </a>
-                                <a href="https://www.instagram.com/shingavijewellers/" target="_blank" class="social__link">
-                                    <i class="ri-instagram-fill"></i>
-                                </a>
-                                <a href="https://wa.me/?text=<?=urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]")?>" target="_blank" class="social__link">
-                                    <i class="ri-whatsapp-fill"></i>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="contact__content">
+                        <h4>Email Us</h4>
+                        <p>
+                            <a href="mailto:<?=$contact[0]['email1']?>"><?=$contact[0]['email1']?></a><br>
+                            <a href="mailto:<?=$contact[0]['email2']?>"><?=$contact[0]['email2']?></a>
+                        </p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Map Section -->
-    <div class="map__section">
-        <div class="container-fluid">
-            <div class="row g-0">
-                <div class="col-md-6">
-                    <div class="map__wrapper">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15079.099066565494!2d74.7176940554199!3d19.117534400000018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcba80e92dceb9%3A0xb4508942ab098a3!2sShingavi%20Jewellers%20Pvt.Ltd.!5e0!3m2!1sen!2sin!4v1729669055869!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                
+                <div class="contact__info--item">
+                    <div class="contact__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="contact__content">
+                        <h4>Our Locations</h4>
+                        <p>
+                            3155, JUNA KAPAD BAZAR, AHMEDNAGAR,<br>
+                            MAHARASHTRA, 414001.<br><br>
+                            PROFESSOR CHOWK, SAVEDI, AHMEDNAGAR,<br>
+                            MAHARASHTRA, 414001.
+                        </p>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="map__wrapper">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.2983871405077!2d74.73721577583804!3d19.094561451388383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcb066ccf6dc79%3A0x1f57efbfb6863cb1!2s3155%2C%20Juna%20Kapad%20Bazaar%20Rd%2C%20Nalegaon%2C%20Ahmadnagar%2C%20Maharashtra%20414001!5e0!3m2!1sen!2sin!4v1747893669115!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                
+                <div class="contact__info--item">
+                    <div class="contact__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                            <path d="M2 10h20M7 15h1m4 0h1m4 0h1"></path>
+                        </svg>
+                    </div>
+                    <div class="contact__content">
+                        <h4>Follow Us</h4>
+                        <div class="social__links">
+                            <a href="https://www.facebook.com/shingavijewellerspvtltd/" target="_blank" class="social__link">
+                                <i class="ri-facebook-fill"></i>
+                            </a>
+                            <a href="http://pinterest.com/pin/create/button/?url=<?=urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]")?>" target="_blank" class="social__link">
+                                <i class="ri-pinterest-fill"></i>
+                            </a>
+                            <a href="https://www.instagram.com/shingavijewellers/" target="_blank" class="social__link">
+                                <i class="ri-instagram-fill"></i>
+                            </a>
+                            <a href="https://wa.me/?text=<?=urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]")?>" target="_blank" class="social__link">
+                                <i class="ri-whatsapp-fill"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
+
+<!-- Map Section -->
+<div class="map__section">
+    <div class="container-fluid">
+        <div class="row g-0">
+            <div class="col-md-6">
+                <div class="map__wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15079.099066565494!2d74.7176940554199!3d19.117534400000018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcba80e92dceb9%3A0xb4508942ab098a3!2sShingavi%20Jewellers%20Pvt.Ltd.!5e0!3m2!1sen!2sin!4v1729669055869!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="map__wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.2983871405077!2d74.73721577583804!3d19.094561451388383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcb066ccf6dc79%3A0x1f57efbfb6863cb1!2s3155%2C%20Juna%20Kapad%20Bazaar%20Rd%2C%20Nalegaon%2C%20Ahmadnagar%2C%20Maharashtra%20414001!5e0!3m2!1sen!2sin!4v1747893669115!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </main>
 
 <style>

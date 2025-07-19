@@ -252,12 +252,12 @@
                                             <li class="menu-li">
                                                 <a href="<?=base_url()?>user/products" class="menu-link font-16 d-flex align-items-center plr-15">
                                                     <span class="menu-title text-uppercase heading-weight">Product</span>
-                                                    <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span>
+                                                    <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
                                                 </a>
-                                                <div class="menu-dropdown collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
+                                                <!-- <div class="menu-dropdown collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
                                                     <div class="container ptb-25">
-                                                        <div class="row row-cols-xl-4">
-                                                            <div class="col">
+                                                        <div class="row row-cols-xl-4"> -->
+                                                           <!--  <div class="col">
                                                                 <div class="shop-title">
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collections.html" class="d-inline-block dominant-link">Collections</a></span>
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-category.html" class="d-inline-block dominant-link">Collection category</a></span>
@@ -270,8 +270,8 @@
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="search-empty.html" class="d-inline-block dominant-link">Search empty</a></span>
                                                                     <span class="d-block ptb-5 text-uppercase heading-weight"><a href="search-product.html" class="d-inline-block dominant-link">Search product</a></span>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col">
+                                                            </div> -->
+                                                            <!-- <div class="col">
                                                                 <div class="d-block heading-color ptb-5 text-uppercase heading-weight">Product layout</div>
                                                                 <div class="mst-5">
                                                                     <span class="d-block ptb-5"><a href="<?=base_url()?>user/products" class="d-inline-block body-dominant-color">01 Bottom thumbnail frequently together</a></span>
@@ -282,31 +282,31 @@
                                                                     <span class="d-block ptb-5"><a href="product6.html" class="d-inline-block body-dominant-color">06 Advance accordion-tab layout</a></span>
                                                                     <span class="d-block ptb-5"><a href="product-comparison.html" class="d-inline-block body-dominant-color">Product comparision</a></span>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col">
+                                                            </div> -->
+                                                           <!--  <div class="col">
                                                                 <div class="banner-hover">
                                                                     <a href="<?=base_url()?>user/products" class="d-block banner-img br-hidden">
                                                                         <img src="<?=base_url()?>u_assets/assets/image/index3/menu/menu-banner-product1.jpg" class="w-100 img-fluid" alt="menu-banner-product1">
                                                                     </a>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col">
+                                                            </div> -->
+                                                            <!-- <div class="col">
                                                                 <div class="banner-hover">
                                                                     <a href="<?=base_url()?>user/products" class="d-block banner-img br-hidden">
                                                                         <img src="<?=base_url()?>u_assets/assets/image/index3/menu/menu-banner-product2.jpg" class="w-100 img-fluid" alt="menu-banner-product2">
                                                                     </a>
                                                                 </div>
-                                                            </div>
-                                                        </div>
+                                                            </div> -->
+                                                       <!--  </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </li>
                                             <li class="menu-li">
                                                 <a href="<?=base_url()?>user/products" class="menu-link font-16 d-flex align-items-center plr-15">
                                                     <span class="menu-title text-uppercase heading-weight">Shop</span>
-                                                    <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span>
+                                                    <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
                                                 </a>
-                                                <div class="menu-dropdown menu-mega collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
+                                                <!-- <div class="menu-dropdown menu-mega collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
                                                     <div class="container ptb-25">
                                                         <div class="menu-overview">
                                                             <div class="heading-color ptb-5 text-uppercase heading-weight">Account</div>
@@ -362,38 +362,39 @@
                                                             <span class="d-block ptb-5"><a href="terms-condition.html" class="d-inline-block body-dominant-color">Terms & condition</a></span>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </li>
                                             <li class="menu-li">
-                                                <a href="<?=base_url()?>user/about" class="menu-link font-16 d-flex align-items-center plr-15">
-                                                    <span class="menu-title text-uppercase heading-weight">About</span>
-                                                    <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span>
+                                                <a href="<?=base_url()?>user/blog" class="menu-link font-16 d-flex align-items-center plr-15">
+                                                    <span class="menu-title text-uppercase heading-weight">Blog</span>
+                                                    <!-- <span class="icon-16 fw-normal">
+                                                        <i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
                                                 </a>
-                                                <div class="menu-dropdown menu-sub collapse position-absolute top-auto extra-bg z-2 DropDownSlide box-shadow">
-                                                    <ul class="menudrop-ul ptb-25">
-                                                        <li class="menudrop-li">
+                                                <!-- <div class="menu-dropdown menu-sub collapse position-absolute top-auto extra-bg z-2 DropDownSlide box-shadow"> -->
+                                                    <!-- <ul class="menudrop-ul ptb-25"> -->
+                                                        <!-- <li class="menudrop-li">
                                                             <div class="ptb-5 plr-30"><a href="blog-without.html" class="d-inline-block body-dominant-color">About</a></div>
-                                                        </li>
+                                                        </li> -->
                                                         <!-- <li class="menudrop-li">
                                                             <div class="ptb-5 plr-30"><a href="<?=base_url()?>user/about" class="d-inline-block body-dominant-color">Blog left</a></div>
                                                         </li>
                                                         <li class="menudrop-li">
                                                             <div class="ptb-5 plr-30"><a href="blog-right.html" class="d-inline-block body-dominant-color">Blog right</a></div>
                                                         </li> -->
-                                                        <li class="menudrop-li">
+                                                        <!-- <li class="menudrop-li">
                                                             <div class="ptb-5 plr-30"><a href="article-without.html" class="d-inline-block body-dominant-color">Article</a></div>
-                                                        </li>
-                                                        <li class="menudrop-li">
+                                                        </li> -->
+                                                        <!-- <li class="menudrop-li">
                                                             <div class="ptb-5 plr-30"><a href="article.html" class="d-inline-block body-dominant-color">Article left</a></div>
-                                                        </li>
-                                                        <li class="menudrop-li">
+                                                        </li> -->
+                                                        <!-- <li class="menudrop-li">
                                                             <div class="ptb-5 plr-30"><a href="article-right.html" class="d-inline-block body-dominant-color">Article right</a></div>
-                                                        </li>
-                                                        <li class="menudrop-li">
+                                                        </li> -->
+                                                        <!-- <li class="menudrop-li">
                                                             <div class="ptb-5 plr-30"><a href="search-blog.html" class="d-inline-block body-dominant-color">Search blog</a></div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                        </li> -->
+                                                   <!--  </ul>
+                                                </div> -->
                                             </li>
                                             <li class="menu-li">
                                                 <a href="javascript:void(0)" class="menu-link font-16 d-flex align-items-center plr-15">
@@ -404,74 +405,53 @@
                                                     <ul class="menudrop-ul ptb-25">
                                                         <li class="menudrop-li position-relative">
                                                             <div class="menu-sublink ptb-5 plr-30">
-                                                                <a href="about-us.html" class="d-flex flex-wrap align-items-center">
+                                                                <a href="<?=base_url()?>sameer/about" class="d-flex flex-wrap align-items-center">
                                                                     <span class="menusub-title width-calc-16">About us</span>
-                                                                    <span class="width-16 icon-16 fw-normal"><i class="ri-arrow-right-s-line d-block lh-1"></i></span>
+                                                                    <!-- <span class="width-16 icon-16 fw-normal"><i class="ri-arrow-right-s-line d-block lh-1"></i></span> -->
                                                                 </a>
                                                             </div>
-                                                            <div class="menusub-dropdown collapse position-absolute w-100 extra-bg DropDownSlide box-shadow">
+                                                            <!-- <div class="menusub-dropdown collapse position-absolute w-100 extra-bg DropDownSlide box-shadow">
                                                                 <ul class="menusub-ul ptb-25">
-                                                                    <li class="menusub-li">
-                                                                        <span class="d-block ptb-5 plr-30"><a href="about-us.html" class="d-inline-block body-dominant-color">01 Clean aboutus</a></span>
-                                                                    </li>
-                                                                    <li class="menusub-li">
-                                                                        <span class="d-block ptb-5 plr-30"><a href="about-us2.html" class="d-inline-block body-dominant-color">02 Standard aboutus</a></span>
-                                                                    </li>
+                                                                   
                                                                     <li class="menusub-li">
                                                                         <span class="d-block ptb-5 plr-30"><a href="about-us3.html" class="d-inline-block body-dominant-color">03 Classic aboutus</a></span>
                                                                     </li>
                                                                 </ul>
-                                                            </div>
+                                                            </div> -->
                                                         </li>
                                                         <li class="menudrop-li position-relative">
                                                             <div class="menu-sublink ptb-5 plr-30">
-                                                                <a href="contact-us.html" class="d-flex flex-wrap align-items-center">
+                                                                <a href="<?=base_url()?>sameer/contact" class="d-flex flex-wrap align-items-center">
                                                                     <span class="menusub-title width-calc-16">Contact us</span>
-                                                                    <span class="width-16 icon-16 fw-normal"><i class="ri-arrow-right-s-line d-block lh-1"></i></span>
+                                                                    <!-- <span class="width-16 icon-16 fw-normal"><i class="ri-arrow-right-s-line d-block lh-1"></i></span> -->
                                                                 </a>
                                                             </div>
-                                                            <div class="menusub-dropdown collapse position-absolute w-100 extra-bg DropDownSlide box-shadow">
+                                                           <!--  <div class="menusub-dropdown collapse position-absolute w-100 extra-bg DropDownSlide box-shadow">
                                                                 <ul class="menusub-ul ptb-25">
-                                                                    <li class="menusub-li">
-                                                                        <span class="d-block ptb-5 plr-30"><a href="contact-us.html" class="d-inline-block body-dominant-color">01 Simple contactus</a></span>
-                                                                    </li>
+                                        
                                                                     <li class="menusub-li">
                                                                         <span class="d-block ptb-5 plr-30"><a href="contact-us2.html" class="d-inline-block body-dominant-color">02 Minimalist contactus</a></span>
                                                                     </li>
                                                                 </ul>
-                                                            </div>
+                                                            </div> -->
                                                         </li>
                                                         <li class="menudrop-li position-relative">
-                                                            <div class="menu-sublink ptb-5 plr-30"><a href="faqs.html" class="d-block">Faqs</a></div>
+                                                            <div class="menu-sublink ptb-5 plr-30"><a href="<?=base_url()?>sameer/faq" class="d-block">Faqs</a></div>
                                                         </li>
                                                         <li class="menudrop-li position-relative">
-                                                            <div class="menu-sublink ptb-5 plr-30"><a href="sitemap.html" class="d-block">Sitemap</a></div>
+                                                            <div class="menu-sublink ptb-5 plr-30"><a href="<?=base_url()?>rohan/terms_of_use" class="d-block">Terms & Condition</a></div>
                                                         </li>
                                                         <li class="menudrop-li position-relative">
-                                                            <div class="menu-sublink ptb-5 plr-30"><a href="store.html" class="d-block">Store</a></div>
+                                                            <div class="menu-sublink ptb-5 plr-30"><a href="<?=base_url()?>user/event" class="d-block">Events</a></div>
                                                         </li>
+                                                       <!--  <li class="menudrop-li position-relative">
+                                                            <div class="menu-sublink ptb-5 plr-30"><a href="<?=base_url()?>user/policies" class="d-block">Privacy Policy</a></div>
+                                                        </li>
+
                                                         <li class="menudrop-li position-relative">
-                                                            <div class="menu-sublink ptb-5 plr-30"><a href="track-order.html" class="d-block">Track order</a></div>
-                                                        </li>
-                                                        <li class="menudrop-li position-relative">
-                                                            <div class="menu-sublink ptb-5 plr-30">
-                                                                <a href="<?=base_url()?>user/wishlist" class="d-flex flex-wrap align-items-center">
-                                                                    <span class="menusub-title width-calc-16">Wishlist</span>
-                                                                    <span class="width-16 icon-16 fw-normal"><i class="ri-arrow-right-s-line d-block lh-1"></i></span>
-                                                                </a>
-                                                            </div>
-                                                            <div class="menusub-dropdown collapse position-absolute w-100 extra-bg DropDownSlide box-shadow">
-                                                                <ul class="menusub-ul ptb-25">
-                                                                    <li class="menusub-li">
-                                                                        <span class="d-block ptb-5 plr-30"><a href="<?=base_url()?>user/wishlist" class="d-inline-block body-dominant-color">Wishlist</a></span>
-                                                                    </li>
-                                                                    <li class="menusub-li">
-                                                                        <span class="d-block ptb-5 plr-30"><a href="<?=base_url()?>user/wishlist_empty" class="d-inline-block body-dominant-color">Wishlist empty</a></span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                                            <div class="menu-sublink ptb-5 plr-30"><a href="<?=base_url()?>user/policies" class="d-block">Return & Refund Policy</a></div>
+                                                        </li> -->
+                                                        </ul>
                                                 </div>
                                             </li>
                                         </ul>

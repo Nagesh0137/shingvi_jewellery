@@ -593,8 +593,9 @@ class User extends CI_Controller
 	}
 public function add_in_wishlist()
 {
-    $prod_id = $this->input->post('prod_id');
-    
+    $prod_id = $_POST['prod_id'];
+    echo json_encode($_POST);
+    exit;
     if(isset($_SESSION['user_id'])) {
     	$w = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id'],'prod_id'=>$prod_id]);
     	if(isset($w[0]))
@@ -666,6 +667,9 @@ public function add_in_wishlist()
 			}
 		}else{
 			$_SESSION['cart'][$_POST['prod_id']] = 1;
+			$_SESSION['Size'][$_POST['prod_id']] = $_POST['size'];
+			echo json_encode(['status'=>'success','msg'=>'Added To Cart In session']);
+
 		}
 	}
 
@@ -675,7 +679,7 @@ public function add_in_wishlist()
 		$data['size'] = $_GET['size'];
 		$products = [];
 
-		if($_SESSION['user_id'])
+		if(isset($_SESSION['user_id']))
 		{
 			$data['ucart'] = $this->My_model->select_where("user_cart",['user_id'=>$_SESSION['user_id'],'status'=>'active']);
 			if(isset($data['ucart'][0]))
@@ -1528,8 +1532,8 @@ public function add_in_wishlist()
 		{
 
 		}else{
-			$data['products'] = '';
-			$wishlist = $_SESSION['wishlist'] ?? [];
+			$data['products'] = [];
+			$wishlist = $_SESSION['wishlist'] ;
 			$ageQ = '';
 				if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
 					$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
@@ -1662,7 +1666,7 @@ public function add_in_wishlist()
 			// Get products
 			
 	}
-		// print_r($filtered_products);
+	
 		$this->ov("wishlist",$data);
 
 	}

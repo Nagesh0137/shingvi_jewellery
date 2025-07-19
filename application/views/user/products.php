@@ -102,14 +102,15 @@
                                             </div>
 <script>
 function addToWishlist(prodId) {
+ 
     $.ajax({
         url: '<?= base_url() ?>user/add_in_wishlist',
         type: 'POST',
         data: { prod_id: prodId },
         dataType: 'json',
         success: function(response) {
-            console.log(response);
-
+            console.log('test',response);
+            return 1;
             // Target the <i> tag using its ID
             var icon = $('#add-to-wishlist' + prodId);
 
@@ -188,11 +189,13 @@ function addToWishlist(prodId) {
                                                         <?php 
                                                             if(isset($_SESSION['user_id']))
                                                             {
+                                                            $ucart = $this->My_model->select_where("user_cart",['user_id'=>$_SESSION['user_id'],$row['prod_gold_id'],'status'=>'active']);
+
                                                         ?>
                                                         <a class="add-to-cart" onclick="addToCart('<?=$row['prod_gold_id']?>')">
                                                             <span class="product-icon">
                                                                 <span class="product-bag-icon icon-16">
-                                                                    <i  class="ri-shopping-bag-3-line d-block lh-1 "></i>
+                                                                    <i class="ri-shopping-bag-3-line d-block lh-1 "></i>
                                                                 </span>
                                                                 <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
                                                                 <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
@@ -340,7 +343,7 @@ function addToWishlist(prodId) {
           $.ajax({
             url: '<?= base_url("user/addToCart") ?>',
             type: 'POST',
-            data: { prod_id: pId },
+            data: { prod_id: pId,size:selectedSize },
             dataType: 'json',
             success: function (res) {
                 console.log(res);
@@ -369,7 +372,8 @@ function addToWishlist(prodId) {
                         }, 500);
                 }
             },
-            error: function () {
+            error: function (err) {
+                console.log(err);
                 alert("Error occurred. Try again.");
             }
         });

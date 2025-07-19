@@ -1,19 +1,7 @@
 <!-- breadcrumb-area start -->
-<div class="breadcrumb-area ptb-15" data-bgimg="<?= base_url() ?>u_assets/assets/image/other/breadcrumb-bgimg.jpg">
+<div class="breadcrumb-area ptb-15" data-bgimg="<?=base_url()?>u_assets/assets/image/other/breadcrumb-bgimg.jpg">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="breadcrumb-info text-center" data-animate="animate__fadeIn">
-                    <h4 class="font-20 text-white m-2">Terms of Use</h4>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center gap-3 ">
-                            <li class="breadcrumb-item text-white"><a href="<?= base_url() ?>" class="text-white">Home</a> / </li>
-                            <li class=" active text-white" aria-current="page"> Terms of Use</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+        <span class="d-block extra-color"><a href="<?=base_url()?>" class="extra-color">Home</a> / Terms Of Use</span>
     </div>
 </div>
 <!-- breadcrumb-area end -->

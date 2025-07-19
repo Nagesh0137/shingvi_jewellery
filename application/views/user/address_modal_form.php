@@ -195,7 +195,7 @@ label.cust-checkbox-label input.cust-checkbox:checked ~ span.cust-check {
 <?php 
 if(!isset($_SESSION['user_id']))
 	{
-		print_r($_SESSION);
+		// print_r($_SESSION);
 ?>
 	<form method="post" id="otpForm">
 	
@@ -216,7 +216,7 @@ if(!isset($_SESSION['user_id']))
 	        </div>
 	    </div>
 	    <div class="question-form-btn mst-20 mst-sm-30">
-	        <button type="button" onclick class="w-100 btn-style secondary-btn question-form-submit">Send OTP</button>
+	        <button type="button" class="w-100 btn-style secondary-btn question-form-submit-otp">Send OTP</button>
 	    </div>
 	    <div class="question-form-btn mst-20 mst-sm-30 d-none">
 	        <button type="submit" class="w-100 btn-style secondary-btn question-form-submit">Verify</button>
