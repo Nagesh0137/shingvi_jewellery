@@ -138,8 +138,9 @@
                                     </div>
                                 </div>
                                 <?php foreach ($_SESSION['wishlist'] as $key => $value):
-                                    
-
+                                    $data = $this->My_model->select_where("product_gold",['prod_gold_id'=>$key]);
+                                    echo "<pre>";
+                                    print_r($data[0]);
                                  ?>
                                
                                 <div class="wish-table-data">
