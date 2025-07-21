@@ -1,7 +1,7 @@
 
         <div class="breadcrumb-area ptb-15" data-bgimg="assets/image/other/breadcrumb-bgimg.jpg">
             <div class="container">
-                <span class="d-block extra-color"><a href="index.html" class="extra-color">Home</a> / About us</span>
+                <span class="d-block extra-color"><a href="<?=base_url()?>" class="extra-color">Home</a> / About us</span>
             </div>
         </div>
         <!-- breadcrumb-area end -->

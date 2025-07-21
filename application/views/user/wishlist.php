@@ -27,10 +27,10 @@
                                                                 <div class="d-md-none heading-color heading-weight meb-11">Product</div>
                                                                 <div class="wish-item-content d-flex flex-wrap">
                                                                     <div class="wish-item-image width-88">
-                                                                        <a href="product.html" class="d-block br-hidden"><img src="<?=base_url()?>uploads/<?=$row['imgs'][0]?>" class="w-100 img-fluid" alt="cart-1"></a>
+                                                                        <a href="<?=base_url()?>user/products" class="d-block br-hidden"><img src="<?=base_url()?>uploads/<?=$row['imgs'][0]?>" class="w-100 img-fluid" alt="cart-1"></a>
                                                                     </div>
                                                                     <div class="wish-item-info width-calc-88 psl-15">
-                                                                        <a href="product.html" class="dominant-link heading-weight"><?=$row['product_name']?></a>
+                                                                        <a href="<?=base_url()?>user/products" class="dominant-link heading-weight"><?=$row['product_name']?></a>
                                                                         <div class="wish-item-price heading-color mst-8 heading-weight"><?=$row['formatted_discounted_price']?></div>
                                                                     </div>
                                                                 </div>
@@ -138,9 +138,8 @@
                                     </div>
                                 </div>
                                 <?php foreach ($_SESSION['wishlist'] as $key => $value):
-                                    $data = $this->My_model->select_where("product_gold",['prod_gold_id'=>$key]);
-                                    echo "<pre>";
-                                    print_r($data[0]);
+                                    
+
                                  ?>
                                
                                 <div class="wish-table-data">
@@ -152,10 +151,10 @@
                                                         <div class="d-md-none heading-color heading-weight meb-11">Product</div>
                                                         <div class="wish-item-content d-flex flex-wrap">
                                                             <div class="wish-item-image width-88">
-                                                                <a href="product.html" class="d-block br-hidden"><img src="assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="cart-1"></a>
+                                                                <a href="<?=base_url()?>user/products" class="d-block br-hidden"><img src="assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="cart-1"></a>
                                                             </div>
                                                             <div class="wish-item-info width-calc-88 psl-15">
-                                                                <a href="product.html" class="dominant-link heading-weight">Gleam band</a>
+                                                                <a href="<?=base_url()?>user/products" class="dominant-link heading-weight">Gleam band</a>
                                                                 <div class="wish-item-price heading-color mst-8 heading-weight">$79.00</div>
                                                             </div>
                                                         </div>
@@ -253,7 +252,7 @@
                                                 </button>
                                             </div>
                                             <div class="col-12">
-                                                <a href="wishlist-empty.html" class="w-100 btn-style secondary-btn">Clear wishlist</a>
+                                                <a href="<?=base_url()?>" class="w-100 btn-style secondary-btn">Clear wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -313,7 +312,7 @@
                                                 </button>
                                             </div>
                                             <div class="col-12">
-                                                <a href="wishlist-empty.html" class="w-100 btn-style secondary-btn">Clear wishlist</a>
+                                                <a href="<?=base_url()?>" class="w-100 btn-style secondary-btn">Clear wishlist</a>
                                             </div>
                                         </div>
                                     </div>

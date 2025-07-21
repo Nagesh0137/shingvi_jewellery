@@ -18,7 +18,7 @@
             <div class="drawer-scrollable h-100 d-flex flex-column align-items-center justify-content-center text-center">
                 <span class="secondary-color icon-32 meb-23"><i class="ri-shopping-bag-3-line d-block lh-1"></i></span>
                 <h2 class="font-24">Your cart is currently empty</h2>
-                <a href="collection.html" class="link-secondary-color mst-20">Continue shopping</a>
+                <a href="<?=base_url()?>" class="link-secondary-color mst-20">Continue shopping</a>
             </div>
         </div>
         <div class="drawer-inner h-100 d-flex flex-column justify-content-between overflow-hidden">
@@ -27,11 +27,11 @@
                     <div class="cart-drawer-info ptb-15 bst">
                         <div class="cart-drawer-content d-flex flex-wrap">
                             <div class="cart-drawer-image width-88">
-                                <a href="product.html" class="d-block br-hidden"><img src="<?= base_url() ?>u_assets/assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="cart-1"></a>
+                                <a href="<?=base_url()?>" class="d-block br-hidden"><img src="<?= base_url() ?>u_assets/assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="cart-1"></a>
                             </div>
                             <div class="cart-drawer-info width-calc-88 psl-15">
                                 <div class="cart-drawer-detail">
-                                    <a href="product.html" class="dominant-link heading-weight">Gleam band</a>
+                                    <a href="<?=base_url()?>" class="dominant-link heading-weight">Gleam band</a>
                                     <span class="d-block mst-7">16cm / Aliceblue</span>
                                 </div>
                                 <div class="heading-color heading-weight mst-7">$79.00</div>
@@ -52,11 +52,11 @@
                     <div class="cart-drawer-info ptb-15 bst">
                         <div class="cart-drawer-content d-flex flex-wrap">
                             <div class="cart-drawer-image width-88">
-                                <a href="product.html" class="d-block br-hidden"><img src="<?= base_url() ?>u_assets/assets/image/cart/cart-2.jpg" class="w-100 img-fluid" alt="cart-2"></a>
+                                <a href="<?=base_url()?>" class="d-block br-hidden"><img src="<?= base_url() ?>u_assets/assets/image/cart/cart-2.jpg" class="w-100 img-fluid" alt="cart-2"></a>
                             </div>
                             <div class="cart-drawer-info width-calc-88 psl-15">
                                 <div class="cart-drawer-detail">
-                                    <a href="product.html" class="dominant-link heading-weight">Luxe loop</a>
+                                    <a href="<?=base_url()?>" class="dominant-link heading-weight">Luxe loop</a>
                                     <span class="d-block mst-7">20cm / Azure</span>
                                 </div>
                                 <div class="heading-color heading-weight mst-7">$49.00</div>
@@ -94,12 +94,12 @@
                                     <div class="drawer-recommended-product">
                                         <div class="row drawer-recommended-single-product-wrap">
                                             <div class="product-image">
-                                                <a href="product.html" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-1.jpg" class="w-100 img-fluid" alt="p-1"></a>
+                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-1.jpg" class="w-100 img-fluid" alt="p-1"></a>
                                             </div>
                                             <div class="product-content">
                                                 <div class="pro-content">
                                                     <div class="product-title">
-                                                        <span class="d-block font-14"><a href="product.html" class="d-block w-100 text-truncate">Gleam band</a></span>
+                                                        <span class="d-block font-14"><a href="<?=base_url()?>" class="d-block w-100 text-truncate">Gleam band</a></span>
                                                     </div>
                                                     <div class="product-price">
                                                         <div class="price-box font-14 heading-weight">
@@ -116,12 +116,12 @@
                                     <div class="drawer-recommended-product">
                                         <div class="row drawer-recommended-single-product-wrap">
                                             <div class="product-image">
-                                                <a href="product.html" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-3.jpg" class="w-100 img-fluid" alt="p-3"></a>
+                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-3.jpg" class="w-100 img-fluid" alt="p-3"></a>
                                             </div>
                                             <div class="product-content">
                                                 <div class="pro-content">
                                                     <div class="product-title">
-                                                        <span class="d-block font-14"><a href="product.html" class="d-block w-100 text-truncate">Luxe loop</a></span>
+                                                        <span class="d-block font-14"><a href="<?=base_url()?>" class="d-block w-100 text-truncate">Luxe loop</a></span>
                                                     </div>
                                                     <div class="product-price">
                                                         <div class="price-box font-14 heading-weight">
@@ -138,12 +138,12 @@
                                     <div class="drawer-recommended-product">
                                         <div class="row drawer-recommended-single-product-wrap">
                                             <div class="product-image">
-                                                <a href="product.html" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-5.jpg" class="w-100 img-fluid" alt="p-5"></a>
+                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-5.jpg" class="w-100 img-fluid" alt="p-5"></a>
                                             </div>
                                             <div class="product-content">
                                                 <div class="pro-content">
                                                     <div class="product-title">
-                                                        <span class="d-block font-14"><a href="product.html" class="d-block w-100 text-truncate">Opal stud</a></span>
+                                                        <span class="d-block font-14"><a href="<?=base_url()?>" class="d-block w-100 text-truncate">Opal stud</a></span>
                                                     </div>
                                                     <div class="product-price">
                                                         <div class="price-box font-14 heading-weight">
@@ -160,12 +160,12 @@
                                     <div class="drawer-recommended-product">
                                         <div class="row drawer-recommended-single-product-wrap">
                                             <div class="product-image">
-                                                <a href="product.html" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-7.jpg" class="w-100 img-fluid" alt="p-7"></a>
+                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?= base_url() ?>u_assets/assets/image/index/product/p-7.jpg" class="w-100 img-fluid" alt="p-7"></a>
                                             </div>
                                             <div class="product-content">
                                                 <div class="pro-content">
                                                     <div class="product-title">
-                                                        <span class="d-block font-14"><a href="product.html" class="d-block w-100 text-truncate">Ruby hoop</a></span>
+                                                        <span class="d-block font-14"><a href="<?=base_url()?>" class="d-block w-100 text-truncate">Ruby hoop</a></span>
                                                     </div>
                                                     <div class="product-price">
                                                         <div class="price-box font-14 heading-weight">
@@ -219,7 +219,7 @@
                         <label class="cust-checkbox-label checkbox-agree">
                             <input type="checkbox" id="drawer-terms" name="drawer-terms" class="cust-checkbox checkboxbtn">
                             <span class="d-block cust-check"></span>
-                            <span class="login-read">I have agree with the <a href="terms-condition.html" class="body-secondary-color text-decoration-underline">terms & conditions</a>.</span>
+                            <span class="login-read">I have agree with the <a href="<?=base_url()?>rohan/terms_of_use" class="body-secondary-color text-decoration-underline">terms & conditions</a>.</span>
                         </label>
                     </div>
                     <div class="row btn-row15">

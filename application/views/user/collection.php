@@ -13,31 +13,31 @@
                                         <h6 class="font-18">Categories</h6>
                                         <div class="shop-cat-post mst-22">
                                             <div class="shop-cat ul-mtm-15">
-                                                <a href="collection-category.html" class="body-dominant-color d-flex align-items-center justify-content-between">
+                                                <a href="<?=base_url()?>" class="body-dominant-color d-flex align-items-center justify-content-between">
                                                     <span>Collection category</span>
                                                     <span>12</span>
                                                 </a>
-                                                <a href="collection-without.html" class="body-dominant-color d-flex align-items-center justify-content-between">
+                                                <a href="collection-<?=base_url()?>" class="body-dominant-color d-flex align-items-center justify-content-between">
                                                     <span>Collection without</span>
                                                     <span>12</span>
                                                 </a>
-                                                <a href="collection.html" class="dominant-color d-flex align-items-center justify-content-between">
+                                                <a href="<?=base_url()?>" class="dominant-color d-flex align-items-center justify-content-between">
                                                     <span>Collection left</span>
                                                     <span>12</span>
                                                 </a>
-                                                <a href="collection-right.html" class="body-dominant-color d-flex align-items-center justify-content-between">
+                                                <a href="collection-<?=base_url()?>" class="body-dominant-color d-flex align-items-center justify-content-between">
                                                     <span>Collection right</span>
                                                     <span>12</span>
                                                 </a>
-                                                <a href="collection-list-without.html" class="body-dominant-color d-flex align-items-center justify-content-between">
+                                                <a href="collection-list-<?=base_url()?>" class="body-dominant-color d-flex align-items-center justify-content-between">
                                                     <span>Collection list without</span>
                                                     <span>12</span>
                                                 </a>
-                                                <a href="collection-list.html" class="body-dominant-color d-flex align-items-center justify-content-between">
+                                                <a href="collection-<?=base_url()?>" class="body-dominant-color d-flex align-items-center justify-content-between">
                                                     <span>Collection list left</span>
                                                     <span>12</span>
                                                 </a>
-                                                <a href="collection-list-right.html" class="body-dominant-color d-flex align-items-center justify-content-between">
+                                                <a href="collection-list-<?=base_url()?>" class="body-dominant-color d-flex align-items-center justify-content-between">
                                                     <span>Collection list right</span>
                                                     <span>12</span>
                                                 </a>
@@ -461,12 +461,12 @@
                                                     <div class="single-product-list w-100">
                                                         <div class="single-product-wrap d-flex flex-wrap">
                                                             <div class="width-120 product-image">
-                                                                <a href="product.html" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-1.jpg" class="w-100 img-fluid" alt="p-1"></a>
+                                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-1.jpg" class="w-100 img-fluid" alt="p-1"></a>
                                                             </div>
                                                             <div class="width-calc-120 product-content">
                                                                 <div class="pro-content">
                                                                     <div class="product-title">
-                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Gleam band</a></span>
+                                                                        <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Gleam band</a></span>
                                                                     </div>
                                                                     <div class="product-price">
                                                                         <div class="price-box heading-weight">
@@ -483,12 +483,12 @@
                                                     <div class="single-product-list w-100">
                                                         <div class="single-product-wrap d-flex flex-wrap">
                                                             <div class="width-120 product-image">
-                                                                <a href="product.html" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-3.jpg" class="w-100 img-fluid" alt="p-3"></a>
+                                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-3.jpg" class="w-100 img-fluid" alt="p-3"></a>
                                                             </div>
                                                             <div class="width-calc-120 product-content">
                                                                 <div class="pro-content">
                                                                     <div class="product-title">
-                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Luxe loop</a></span>
+                                                                        <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Luxe loop</a></span>
                                                                     </div>
                                                                     <div class="product-price">
                                                                         <div class="price-box heading-weight">
@@ -505,12 +505,12 @@
                                                     <div class="single-product-list w-100">
                                                         <div class="single-product-wrap d-flex flex-wrap">
                                                             <div class="width-120 product-image">
-                                                                <a href="product.html" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-5.jpg" class="w-100 img-fluid" alt="p-5"></a>
+                                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-5.jpg" class="w-100 img-fluid" alt="p-5"></a>
                                                             </div>
                                                             <div class="width-calc-120 product-content">
                                                                 <div class="pro-content">
                                                                     <div class="product-title">
-                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Opal stud</a></span>
+                                                                        <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Opal stud</a></span>
                                                                     </div>
                                                                     <div class="product-price">
                                                                         <div class="price-box heading-weight">
@@ -527,12 +527,12 @@
                                                     <div class="single-product-list w-100">
                                                         <div class="single-product-wrap d-flex flex-wrap">
                                                             <div class="width-120 product-image">
-                                                                <a href="product.html" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-7.jpg" class="w-100 img-fluid" alt="p-7"></a>
+                                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-7.jpg" class="w-100 img-fluid" alt="p-7"></a>
                                                             </div>
                                                             <div class="width-calc-120 product-content">
                                                                 <div class="pro-content">
                                                                     <div class="product-title">
-                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Ruby hoop</a></span>
+                                                                        <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Ruby hoop</a></span>
                                                                     </div>
                                                                     <div class="product-price">
                                                                         <div class="price-box heading-weight">
@@ -549,12 +549,12 @@
                                                     <div class="single-product-list w-100">
                                                         <div class="single-product-wrap d-flex flex-wrap">
                                                             <div class="width-120 product-image">
-                                                                <a href="product.html" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-9.jpg" class="w-100 img-fluid img1" alt="p-9"></a>
+                                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-9.jpg" class="w-100 img-fluid img1" alt="p-9"></a>
                                                             </div>
                                                             <div class="width-calc-120 product-content">
                                                                 <div class="pro-content">
                                                                     <div class="product-title">
-                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Pearl link</a></span>
+                                                                        <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Pearl link</a></span>
                                                                     </div>
                                                                     <div class="product-price">
                                                                         <div class="price-box heading-weight">
@@ -571,12 +571,12 @@
                                                     <div class="single-product-list w-100">
                                                         <div class="single-product-wrap d-flex flex-wrap">
                                                             <div class="width-120 product-image">
-                                                                <a href="product.html" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-11.jpg" class="w-100 img-fluid img1" alt="p-11"></a>
+                                                                <a href="<?=base_url()?>" class="pro-img"><img src="<?=base_url()?>u_assets/assets/image/index/product/p-11.jpg" class="w-100 img-fluid img1" alt="p-11"></a>
                                                             </div>
                                                             <div class="width-calc-120 product-content">
                                                                 <div class="pro-content">
                                                                     <div class="product-title">
-                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Gold bead</a></span>
+                                                                        <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Gold bead</a></span>
                                                                     </div>
                                                                     <div class="product-price">
                                                                         <div class="price-box heading-weight">
@@ -603,7 +603,7 @@
                             <!-- collection-product-list end -->
                             <!-- shop-sidebar banner start -->
                             <div class="sidebar-banner d-none d-xl-block banner-hover mst-30" data-animate="animate__fadeIn">
-                                <a href="collection.html" class="d-block banner-img position-relative br-hidden">
+                                <a href="<?=base_url()?>" class="d-block banner-img position-relative br-hidden">
                                     <span class="banner-icon secondary-color font-20 position-absolute top-50 start-50 width-48 height-48 d-flex align-items-center justify-content-center extra-bg z-1 rounded-circle"><i class="ri-arrow-right-line d-block lh-1"></i></span>
                                     <img src="<?=base_url()?>u_assets/assets/image/collection/side-image.jpg" class="w-100 img-fluid" alt="side-image">
                                 </a>
@@ -697,12 +697,12 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-1.jpg" class="w-100 img-fluid img1" alt="p-1">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-2.jpg" class="w-100 img-fluid img2" alt="p-2">
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -715,7 +715,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Ring / Shine</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Gleam band</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Gleam band</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -785,13 +785,13 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-3.jpg" class="w-100 img-fluid img1" alt="p-3">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-4.jpg" class="w-100 img-fluid img2" alt="p-4">
                                                             <span class="product-label product-label-new product-label-left">New</span>
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>rohan/wishlist" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -804,7 +804,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Ring / Chic</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Luxe loop</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Luxe loop</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -874,12 +874,12 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-5.jpg" class="w-100 img-fluid img1" alt="p-5">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-6.jpg" class="w-100 img-fluid img2" alt="p-6">
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -892,7 +892,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Ears / Glow</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Opal stud</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Opal stud</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -962,13 +962,13 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-7.jpg" class="w-100 img-fluid img1" alt="p-7">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-8.jpg" class="w-100 img-fluid img2" alt="p-8">
                                                             <span class="product-label product-label-discount product-label-left">-5% off</span>
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -981,7 +981,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Ears / Bold</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Ruby hoop</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Ruby hoop</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -1051,12 +1051,12 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-9.jpg" class="w-100 img-fluid img1" alt="p-9">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-10.jpg" class="w-100 img-fluid img2" alt="p-10">
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -1069,7 +1069,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Neck / Soft</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Pearl link</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Pearl link</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -1139,13 +1139,13 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-11.jpg" class="w-100 img-fluid img1" alt="p-11">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-12.jpg" class="w-100 img-fluid img2" alt="p-12">
                                                             <span class="product-label product-label-sale product-label-left">Sale</span>
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -1158,7 +1158,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Wrist / Rich</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Gold bead</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Gold bead</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -1228,12 +1228,12 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-13.jpg" class="w-100 img-fluid img1" alt="p-13">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-14.jpg" class="w-100 img-fluid img2" alt="p-14">
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -1246,7 +1246,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Ears / Flow</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Sway drop</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Sway drop</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -1316,12 +1316,12 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-15.jpg" class="w-100 img-fluid img1" alt="p-15">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-16.jpg" class="w-100 img-fluid img2" alt="p-16">
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -1334,7 +1334,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Neck / Glow</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Star charm</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Star charm</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -1404,12 +1404,12 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-17.jpg" class="w-100 img-fluid img1" alt="p-17">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-18.jpg" class="w-100 img-fluid img2" alt="p-18">
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -1422,7 +1422,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Wrist / Dazz</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Glim cuff</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Glim cuff</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -1492,13 +1492,13 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-19.jpg" class="w-100 img-fluid img1" alt="p-19">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-20.jpg" class="w-100 img-fluid img2" alt="p-20">
                                                             <span class="product-label product-label-sold product-label-left">Sold</span>
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -1511,7 +1511,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Neck / Pure</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Jade bead</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Jade bead</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -1581,12 +1581,12 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-21.jpg" class="w-100 img-fluid img1" alt="p-21">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-22.jpg" class="w-100 img-fluid img2" alt="p-22">
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -1599,7 +1599,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Wrist / Flex</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Twist bangle</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Twist bangle</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">
@@ -1669,12 +1669,12 @@
                                             <div class="single-product w-100">
                                                 <div class="row single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="product.html" class="pro-img">
+                                                        <a href="<?=base_url()?>" class="pro-img">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-23.jpg" class="w-100 img-fluid img1" alt="p-23">
                                                             <img src="<?=base_url()?>u_assets/assets/image/index/product/p-24.jpg" class="w-100 img-fluid img2" alt="p-24">
                                                         </a>
                                                         <div class="product-action">
-                                                            <a href="wishlist.html" class="wishlist">
+                                                            <a href="<?=base_url()?>" class="wishlist">
                                                                 <span class="product-icon">Wishlist</span>
                                                             </a>
                                                             <a href="#quickview-modal" data-bs-toggle="modal" class="quick-view">
@@ -1687,7 +1687,7 @@
                                                             <div class="pro-content-action">
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-8">Neck / Luxe</span>
-                                                                    <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Shiny choke</a></span>
+                                                                    <span class="d-block heading-weight"><a href="<?=base_url()?>" class="d-block w-100 dominant-link text-truncate">Shiny choke</a></span>
                                                                 </div>
                                                                 <div class="pro-price-action">
                                                                     <div class="price-box heading-weight">

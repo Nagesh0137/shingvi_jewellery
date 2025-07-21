@@ -38,14 +38,14 @@ if (isset($_SESSION['wishlist']) && count($_SESSION['wishlist']) > 0) {
     ?>
     <input type="hidden" name="numbers_tbl_id" value="<?= $row['numbers_tbl_id'] ?>">
     <div class="d-flex align-items-center" id="wishListBlock_<?= $row['numbers_tbl_id'] ?>">
-      <a class="position-relative flex-shrink-0" href="shop-product-grocery.html">
+      <a class="position-relative flex-shrink-0" href="<?=base_url()?>">
         <span class="badge text-bg-success position-absolute top-0 start-0 z-2 mt-0 ms-0">Saved
           <?= $row['original_price'] - $row['price'] ?></span>
         <img src="https://cdn.pixabay.com/photo/2013/07/12/16/37/sim-151267_1280.png" width="90" alt="Thumbnail">
       </a>
       <div class="w-100 ps-3">
         <h5 class="fs-sm fw-medium lh-base mb-2">
-          <a class="hover-effect-underline" href="shop-product-grocery.html"><?= $row['mobile_number'] ?></a>
+          <a class="hover-effect-underline" href="<?=base_url()?>"><?= $row['mobile_number'] ?></a>
         </h5>
         <div class="h6 pb-1 mb-2">&#8377; <?= number_format($row['price']) ?></div>
         <div class="d-flex align-items-center justify-content-between">

@@ -1,12 +1,12 @@
-<div class="breadcrumb-area ptb-15" data-bgimg="assets/image/other/breadcrumb-bgimg.jpg">
+<div class="breadcrumb-area ptb-15" data-bgimg="<?=base_url()?>u_assets/assets/image/other/breadcrumb-bgimg.jpg">
     <div class="container">
-        <span class="d-block extra-color"><a href="index.html" class="extra-color">Home</a> / Checkout</span>
+        <span class="d-block extra-color"><a href="<?=base_url()?>" class="extra-color">Home</a> / Checkout</span>
     </div>
 </div>
 
 <main id="main">
     <section class="checkout-area section-ptb">
-        <form method="post" action="javascript:void(0)">
+        <form method="post" action="<?=base_url()?>sameer/checkout_save">
             <div class="container">
                 <div class="row row-mtm flex-lg-row-reverse align-items-lg-start">
                     <div class="col-12 col-lg-5 p-lg-sticky top-0" data-animate="animate__fadeIn">
@@ -21,14 +21,14 @@
                                                     <img src="<?=base_url()?>u_assets/assets/image/cart/cart-1.jpg"
                                                         class="w-100 img-fluid border-radius" alt="cart-1">
                                                     <span
-                                                        class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1">1</span>
+                                                        class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
                                                 </div>
                                             </div>
                                             <div class="checkitem-info width-calc-88">
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
                                                     <div class="checkitem-text">
-                                                        <a href="product.html"
+                                                        <a href="<?=base_url()?>"
                                                             class="dominant-link heading-weight">Gleam band</a>
                                                         <div class="mst-8">16cm / Aliceblue</div>
                                                     </div>
@@ -46,14 +46,14 @@
                                                     <img src="<?=base_url()?>u_assets/assets/image/cart/cart-2.jpg"
                                                         class="w-100 img-fluid border-radius" alt="cart-2">
                                                     <span
-                                                        class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1">1</span>
+                                                        class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
                                                 </div>
                                             </div>
                                             <div class="checkitem-info width-calc-88">
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
                                                     <div class="checkitem-text">
-                                                        <a href="product.html" class="dominant-link heading-weight">Luxe
+                                                        <a href="<?=base_url()?>" class="dominant-link heading-weight">Luxe
                                                             loop</a>
                                                         <div class="mst-8">20cm / Azure</div>
                                                     </div>
@@ -71,14 +71,14 @@
                                                     <img src="<?=base_url()?>u_assets/assets/image/cart/cart-3.jpg"
                                                         class="w-100 img-fluid border-radius" alt="cart-3">
                                                     <span
-                                                        class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1">1</span>
+                                                        class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
                                                 </div>
                                             </div>
                                             <div class="checkitem-info width-calc-88">
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
                                                     <div class="checkitem-text">
-                                                        <a href="product.html" class="dominant-link heading-weight">Opal
+                                                        <a href="<?=base_url()?>" class="dominant-link heading-weight">Opal
                                                             stud</a>
                                                         <div class="mst-8">22cm / Aliceblue</div>
                                                     </div>
@@ -96,14 +96,14 @@
                                                     <img src="<?=base_url()?>u_assets/assets/image/cart/cart-4.jpg"
                                                         class="w-100 img-fluid border-radius" alt="cart-4">
                                                     <span
-                                                        class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1">1</span>
+                                                        class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
                                                 </div>
                                             </div>
                                             <div class="checkitem-info width-calc-88">
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
                                                     <div class="checkitem-text">
-                                                        <a href="product.html" class="dominant-link heading-weight">Ruby
+                                                        <a href="<?=base_url()?>" class="dominant-link heading-weight">Ruby
                                                             hoop</a>
                                                         <div class="mst-8">Petite / Azure</div>
                                                     </div>
@@ -569,7 +569,7 @@
                                             <button type="button"
                                                 class="checktab-next width-100 width-md-auto btn-style secondary-btn">Next
                                                 step</button>
-                                            <button type="button" onclick="location.href='cart-page.html'"
+                                            <button type="button" onclick="location.href='<?=base_url()?>'"
                                                 class="dominant-link d-flex align-items-center justify-content-center mst-15 mst-md-0"><i
                                                     class="ri-arrow-left-s-line icon-16 mer-5"></i>Return to
                                                 cart</button>
@@ -1221,7 +1221,7 @@
                                         </div>
                                         <div
                                             class="checktab-btn d-flex flex-column flex-md-row-reverse justify-content-md-between mst-30 pst-30 bst">
-                                            <button type="button" onclick="window.location.href='order-complete.html'"
+                                            <button type="button" onclick="window.location.href='<?=base_url()?>'"
                                                 class="width-100 width-md-auto btn-style secondary-btn">Place
                                                 order</button>
                                             <button type="button"

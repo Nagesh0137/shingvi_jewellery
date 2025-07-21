@@ -7,10 +7,10 @@
             <!-- product-detail start -->
             <section class="product-detail section-pt">
                 <!-- product prev-next start -->
-                <a href="product2.html" class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product prev">
+                <a href="<?=base_url()?>" class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product prev">
                     <span class="d-block body-secondary-color msl-5 heading-weight text-uppercase lh-1">Prev</span>
                 </a>
-                <a href="product4.html" class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product next">
+                <a href="<?=base_url()?>" class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product next">
                     <span class="d-block body-secondary-color mer-5 heading-weight text-uppercase lh-1">Next</span>
                 </a>
                 <!-- product prev-next end -->

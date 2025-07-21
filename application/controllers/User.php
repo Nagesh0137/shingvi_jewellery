@@ -137,6 +137,29 @@ class User extends CI_Controller
 		$data = $this->My_model->select_where("district", ['status' => 'active', 'state_id' => $_POST['state_id']]);
 		echo json_encode(['data' => $data]);
 	}
+	private function calculatePrice($product)
+{
+    if ($product['cat_id'] == 5) {
+        return $this->goldprice($product['prod_gold_id']);
+    } elseif ($product['cat_id'] == 6) {
+        return $this->silverprice($product['prod_gold_id']);
+    } elseif ($product['cat_id'] == 8 && $product['entry_type'] == 'dgold') {
+        return $this->golddiamondprice($product['prod_gold_id']);
+    } elseif ($product['cat_id'] == 8 && $product['entry_type'] == 'dsilver') {
+        return $this->silverdiamondprice($product['prod_gold_id']);
+    }
+    return 0;
+}
+
+private function calculateDiscountPrice($product)
+{
+    if ($product['cat_id'] == 5) {
+        return $this->discountgoldprice($product['prod_gold_id']);
+    } elseif ($product['cat_id'] == 6) {
+        return $this->discountsilverprice($product['prod_gold_id']);
+    }
+    return 0;
+}
 
 	public function generate_encrypted_url()
 	{
@@ -157,11 +180,98 @@ class User extends CI_Controller
 	}
 
 	public function index()
-	{
+{
+    $data['admin'] = $this;
 
+    // Fetch basic data
+    $data['category'] = $this->My_model->select_where("category", ['status' => 'active']);
+    $all_products = $this->db->query("SELECT * FROM product_gold WHERE status='active'")->result_array();
+    $all_filters = $this->db->query("SELECT * FROM product_filter WHERE status='active'")->result_array();
+    $all_offers = $this->db->query("SELECT * FROM gold_product_offer WHERE status='active' 
+                                    UNION 
+                                    SELECT * FROM silver_product_offer WHERE status='active'")->result_array();
 
-		$this->ov("index");
-	}
+    // Web content
+    $data['special_days_product'] = $this->db->query("SELECT * FROM special_days WHERE status='active' ORDER BY special_days_id DESC")->result_array();
+    $data['slider'] = $this->db->query("SELECT * FROM web_slider WHERE status='active' ORDER BY web_slider_id DESC")->result_array();
+    $data['web_banner_half'] = $this->My_model->select_where("web_banner", ['banner_size' => 'half', 'status' => 'active']);
+    $data['web_banner_full'] = $this->My_model->select_where("web_banner", ['banner_size' => 'full', 'status' => 'active']);
+    // $data['web_banner_gold'] = $this->My_model->select_where("web_banner", ['banner_size' => 'Gold', 'status' => 'active']);
+    // $data['web_banner'] = $this->My_model->select_where("web_banner", ['status' => 'active', 'banner_type' => 'exclusive_collection']);
+    $data['web_banner_new'] = $this->My_model->select_where("web_banner", ['status' => 'active', 'banner_type' => "new_design"]);
+    $data['web_banner_silver'] = $this->My_model->select_where("web_banner", ['banner_size' => 'Silver', 'status' => 'active']);
+   	 $data['web_testimonial'] = $this->My_model->select_where("web_testimonial", ['status' => 'active']);
+    // $data['web_blog'] = $this->My_model->select_where("web_blog", ['status' => 'active']);
+    // $data['web_banner_for_exclusive_design'] = $this->db->query("SELECT * FROM web_banner WHERE status='active' AND banner_type='exclusive_collection' ORDER BY web_banner_id DESC LIMIT 2")->result_array();
+
+    // Categorize products
+    $data['new_products'] = array_filter($all_products, fn($p) => $p['label'] === 'New');
+    $data['trending_products'] = array_filter($all_products, fn($p) => $p['label'] === 'Trending');
+    $data['silver_special'] = array_filter($all_products, fn($p) => $p['label'] === 'Special' && $p['cat_id'] == 6);
+    $data['gold_special'] = array_filter($all_products, fn($p) => $p['label'] === 'Special' && $p['cat_id'] == 5);
+    $data['top_selling_products'] = array_filter($all_products, fn($p) => $p['label'] === 'Top Selling');
+
+    $data['all_product_details'] = array_merge($data['silver_special'], $data['gold_special']);
+    $data['new_products_user'] = array_slice($data['new_products'], 0, 8);
+
+    // Function to process each product with filters, offers, cart, price
+    $process_products = function (&$products, $filters, $offers) {
+        foreach ($products as &$product) {
+            $product_id = $product['prod_gold_id'];
+            $product['ft'] = '';
+            $product['ff'] = '';
+            $product['cart'] = 'No';
+            $product['offer_status'] = '';
+
+            // Apply filters
+            foreach ($filters as $filter) {
+                if ($filter['prod'] == $product_id) {
+                    $product['ft'] .= "ftitle" . $filter['filter_title'] . " ";
+                    $product['ff'] .= "fname" . $filter['filter_name'] . " ";
+                }
+            }
+
+            // Cart check
+            if (isset($_SESSION['user_id'])) {
+                $cart_item = $this->My_model->select_where('user_cart', [
+                    'user_id' => $_SESSION['user_id'],
+                    'prod_id' => $product_id,
+                    'status' => 'pending'
+                ]);
+                if (!empty($cart_item)) {
+                    $product['cart'] = 'Yes';
+                }
+            }
+
+            // Offer check with isset()
+            foreach ($offers as $offer) {
+                if (
+                    (isset($offer['prod_gold_id']) && $offer['prod_gold_id'] == $product_id) ||
+                    (isset($offer['prod_silver_id']) && $offer['prod_silver_id'] == $product_id)
+                ) {
+                    $product['offer_status'] = 'active';
+                    break;
+                }
+            }
+
+            // Price calculation
+            $product['price'] = $this->calculatePrice($product);
+            $product['discount_price'] = $this->calculateDiscountPrice($product);
+            $product['rating'] = isset($product['rating']) ? (int)$product['rating'] : 0;
+        }
+    };
+
+    // Process all product sets
+    $process_products($data['silver_special'], $all_filters, $all_offers);
+    $process_products($data['gold_special'], $all_filters, $all_offers);
+    $process_products($data['new_products'], $all_filters, $all_offers);
+    $process_products($data['trending_products'], $all_filters, $all_offers);
+    $process_products($data['top_selling_products'], $all_filters, $all_offers);
+
+    // Final view load
+    $this->ov("index", $data);
+}
+
 	public function add_to_wishlist()
 	{
 		$id = $this->input->post('id');
@@ -1708,10 +1818,55 @@ public function add_in_wishlist()
 		echo json_encode(['post'=>$_SESSION['wishlist'][$_POST['prod_id']],'msg'=>$msg,'status'=>'success','session'=>$_SESSION['wishlist'],'price'=>$price]);
 	}
 	// cart-page
-	public function cart_page()
+	// public function cart_page()
+	// {
+	// 	$this->ov("cart_page");
+	// }
+	public function cart()
 	{
-		$this->ov("cart_page");
+	   // unset($_SESSION['cart']);
+	   // unset($_SESSION['cart2']);
+	   
+	   // echo "<pre>";
+	   // print_r($_SESSION);
+	   // exit;
+// 		if (isset($_SESSION['user_id'])) {
+// 			$data['admin'] = $this;
+// 			$cond['user_id'] = $_SESSION['user_id'];
+// 			$cond['status'] = 'pending';
+// 			$data['order_charges'] = $this->My_model->select_where('order_charges', ['status' => 'active']);
+// 			$data['products'] = $this->My_model->select_where('user_cart', $cond);
+// 			$data['cutomer_det'] = $this->My_model->select_where("customers", ['customers_id' => $_SESSION['user_id']]);
+// 			$this->ov("cart", $data);
+// 		} 
+// 		else {
+	$data['admin'] = $this;
+	$cond['status'] = 'pending';
+	$data['order_charges'] = $this->My_model->select_where('order_charges', ['status' => 'active']);
+        $data['products'] = [];
+        $i=0;
+        foreach($_SESSION['cart2'] as $key => $row)
+        {
+            $i++;
+            // echo $key."<br>";
+            $p = $this->db->query("SELECT * FROM category,product_gold WHERE product_gold.cat_id = category.category_id AND product_gold.prod_gold_id='".$key."' AND product_gold.status='active' ")->result_array()[0];
+            $data['products'][$i] = $p;
+        }
+          
+            $this->ov("cart", $data);
+// 			$this->head();
+// 			$this->load->view('user/nav1');
+// 			$this->load->view("user/login1");
+// 			$this->load->view("user/footer1");
+		
 	}
+	// public function scheme(){
+	// 	$this->ov("scheme");
+	// }
+	// public function activate_scheme()
+	// {
+	// 	$this->ov("activate_scheme");
+	// }
 	// checkout
 	public function checkout()
 	{
