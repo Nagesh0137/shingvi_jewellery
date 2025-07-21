@@ -1,259 +1,184 @@
-<!-- footer start -->
-<footer id="footer">
-    <div class="footer-area section-ptb">
-        <div class="container">
-            <div class="row row-mtm50">
-                <div class="col-12">
-                    <div class="row row-mtm">
-                        <div class="col-12 col-lg-4">
-                            <!-- Newsletter Section (Original) -->
-
-
-
-
-                            <!-- QR Code Section (New Design) -->
-                            <!-- QR Code Section (New Design) -->
-<!-- QR Code Section (Now on Top) -->
-<div class="footer-news mb-4">
-    <h2 class="font-24 text-center dominant-color" style="color: #d4af37; font-weight: bold;">DIGITAL GOLD</h2>
-    <div class="footer-news-form mst-15 text-center">
-        <div class="d-inline-block extra-bg border-radius"
-        style="background: white; padding: 10px; border-radius: 16px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);">
-        <!-- QR Code Image -->
-        <img src="<?= base_url() ?>u_assets/assets/image/qr_image/qr-code.png"
-        alt="Download App QR Code"
-        class="img-fluid"
-        style="width: 200px; height: 200px;">
-        <p class="mst-10 heading-weight font-14 mt-3 mb-0">Scan And Download The App</p>
-    </div>
-</div>
-</div>
-
-<!-- Newsletter Section (Now Below QR) -->
-<!-- <div class="footer-news">
-    <h6 class="font-18">Subscribe newsletter</h6>
-    <div class="footer-news-form mst-19">
-        <p>Subscribe with us to get special offers and other discount information</p>
-        <form method="post" class="news-form mst-13">
-            <div class="news-wrap d-flex flex-wrap extra-bg border-full br-hidden">
-                <input type="email" id="newsletter-email" name="newsletter-email"
-                class="width-calc-48 border-0 rounded-0"
-                placeholder="Enter your email" required>
-                <button type="submit"
-                class="hide-btn width-48 dominant-color font-20 opacity-50 disabled pe-none"
-                aria-label="Subscribe button">
-                <i class="ri-arrow-right-line d-block lh-1"></i>
-            </button>
-        </div>
-        <div class="mst-11">
-            <label class="cust-checkbox-label checkbox-agree">
-                <input type="checkbox" id="newsletter-terms" name="newsletter-terms" class="cust-checkbox checkboxbtn">
-                <span class="d-block cust-check"></span>
-                <span class="login-read">I agree with the 
-                    <a href="terms-condition.html" class="body-secondary-color text-decoration-underline">terms & conditions</a>.
-                </span>
-            </label>
-        </div>
-    </form>
-</div>
-</div>
- -->
-
-
-
-
-
-
-</div>
-
-
-
-
-<div class="col-12 col-lg-8 footer-list">
-    <div class="row">
-        <div class="col-12 col-md-3 ft-list">
-            <div class="footer-menu">
-                <h6 class="ft-title d-none d-md-block font-18">Top category</h6>
-                <a href="#collapse-top-category" class="ft-title font-18 d-flex d-md-none flex-wrap align-items-center justify-content-between" data-bs-toggle="collapse" aria-expanded="false">
-                    <span class="ftmenu-title width-calc-16 heading-weight">Top category</span>
-                    <span class="ftmenu-icon width-16 icon-16"><i class="ri-add-line"></i></span>
-                </a>
-                <div class="ft-link collapse" id="collapse-top-category">
-                    <ul class="ftlink-ul ul-ft pst-21 peb-1 peb-md-0">
-                        <li class="ftlink-li">
-                            <a href="collection.html" class="d-inline-block body-dominant-color">Rings</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="collection.html" class="d-inline-block body-dominant-color">Earrings</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="collection.html" class="d-inline-block body-dominant-color">Necklace</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="collection.html" class="d-inline-block body-dominant-color">Bracelet</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="collection.html" class="d-inline-block body-dominant-color">Anklets</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/custome_jewellery" class="d-inline-block body-dominant-color">Custome Jewellery</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-3 ft-list">
-            <div class="footer-menu">
-                <h6 class="ft-title d-none d-md-block font-18">Information</h6>
-                <a href="#collapse-information" class="ft-title font-18 d-flex d-md-none flex-wrap align-items-center justify-content-between" data-bs-toggle="collapse" aria-expanded="false">
-                    <span class="ftmenu-title width-calc-16 heading-weight">Information</span>
-                    <span class="ftmenu-icon width-16 icon-16"><i class="ri-add-line"></i></span>
-                </a>
-                <div class="ft-link collapse" id="collapse-information">
-                    <ul class="ftlink-ul ul-ft pst-21 peb-1 peb-md-0">
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/about" class="d-inline-block body-dominant-color">About us</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/contact" class="d-inline-block body-dominant-color">Contact us</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/faq" class="d-inline-block body-dominant-color">Faqs</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="store.html" class="d-inline-block body-dominant-color">Store</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/blog" class="d-inline-block body-dominant-color">Blog</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/branch" class="d-inline-block body-dominant-color">Our Branches</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/event" class="d-inline-block body-dominant-color">Events</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/history" class="d-inline-block body-dominant-color">Our History</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="<?= base_url() ?>user/customer_review" class="d-inline-block body-dominant-color">Customer Review</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-3 ft-list">
-            <div class="footer-menu">
-                <h6 class="ft-title d-none d-md-block font-18">Quick link</h6>
-                <a href="#collapse-quick-link" class="ft-title font-18 d-flex d-md-none flex-wrap align-items-center justify-content-between" data-bs-toggle="collapse" aria-expanded="false">
-                    <span class="ftmenu-title width-calc-16 heading-weight">Quick link</span>
-                    <span class="ftmenu-icon width-16 icon-16"><i class="ri-add-line"></i></span>
-                </a>
-                <div class="ft-link collapse" id="collapse-quick-link">
-                    <ul class="ftlink-ul ul-ft pst-21 peb-1 peb-md-0">
-                        <li class="ftlink-li">
-                            <a href="404.html" class="d-inline-block body-dominant-color">404</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="coming-soon.html" class="d-inline-block body-dominant-color">Comingsoon</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="cookie.html" class="d-inline-block body-dominant-color">Cookie</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="legal.html" class="d-inline-block body-dominant-color">Legal</a>
-                        </li>
-                        <li class="ftlink-li">
-                            <a href="sitemap.html" class="d-inline-block body-dominant-color">Sitemap</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-3 ft-list">
-            <div class="footer-menu">
-                <h6 class="ft-title d-none d-md-block font-18">Policies</h6>
-                <a href="#collapse-policies" class="ft-title font-18 d-flex d-md-none flex-wrap align-items-center justify-content-between" data-bs-toggle="collapse" aria-expanded="false">
-                    <span class="ftmenu-title width-calc-16 heading-weight">Policies</span>
-                    <span class="ftmenu-icon width-16 icon-16"><i class="ri-add-line"></i></span>
-                </a>
-                <div class="ft-link collapse" id="collapse-policies">
-                    <ul class="ftlink-ul ul-ft pst-21 peb-1 peb-md-0">
-                        <?php
-                        if (isset($pages_name[0]) && count($pages_name) > 0) {
-                            foreach ($pages_name as $key => $row) {
-                                ?>
-                                <li class="ftlink-li"><a class="d-inline-block body-dominant-color" href="<?= base_url(); ?>user/policies/<?=$row['pages_name_id'] ?>"><?= $row['pages_name'] ?></a></li>
-                                <?php
-                            }
-                        }
-                        ?>
-
-                    </ul>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-
-
-<div class="col-12 text-center">
-    <div class="row row-mtm">
-
-        <div class="col-12 col-md-6 order-first order-md-0">
-            <div class="footer-info">
-                <div class="footer-theme-logo">
-                    <a href="index.html" class="d-inline-block theme-logo">
-                        <img src="<?= base_url() ?>uploads/<?= $company_det[0]['company_logo'] ?>" class="width-96 width-xl-144 img-fluid" alt="logo">
-                    </a>
-                </div>
-                <div class="footer-company-detail mst-24">
-                    <p>It has survived not only five centuries, but also the leap are into electronic type remaining unchanged recently with desktop publishing.</p>
-                </div>
-                <div class="footer-social mst-23">
-                    <ul class="social-ul ul-mt15 justify-content-center">
-                        <li class="social-li">
-                            <a href="javascript:void(0)" class="d-block body-dominant-color icon-16" aria-label="Social link"><i class="ri-facebook-fill d-block lh-1"></i></a>
-                        </li>
-                        <li class="social-li">
-                            <a href="javascript:void(0)" class="d-block body-dominant-color icon-16" aria-label="Social link"><i class="ri-instagram-fill d-block lh-1"></i></a>
-                        </li>
-                        <li class="social-li">
-                            <a href="javascript:void(0)" class="d-block body-dominant-color icon-16" aria-label="Social link"><i class="ri-pinterest-fill d-block lh-1"></i></a>
-                        </li>
-                        <li class="social-li">
-                            <a href="javascript:void(0)" class="d-block body-dominant-color icon-16" aria-label="Social link"><i class="ri-twitter-fill d-block lh-1"></i></a>
-                        </li>
-                        <li class="social-li">
-                            <a href="javascript:void(0)" class="d-block body-dominant-color icon-16" aria-label="Social link"><i class="ri-youtube-fill d-block lh-1"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-</div>
-</div>
-</div>
-<!-- footer-top end -->
-<!-- footer-bottom start -->
-<div class="copyright ptb-10 extra-bg">
+<footer id="footer" style="background-color: #f4ead6;">
+  <div class="footer-area section-ptb py-4">
     <div class="container">
-        <div class="text-center">
-            Powered by <a href="https://a2zithub.com" target="_blank" rel="noopener noreferrer">A2Z IT Hub</a>
-        </div>
-    </div>
+      <div class="row align-items-start gy-4">
 
-</div>
+        <!-- DIGITAL GOLD + QR -->
+        <div class="col-12 col-sm-6 col-lg-2 px-3 d-flex justify-content-start justify-content-sm-start justify-content-md-center">
+          <div class="footer-menu text-start text-sm-start text-md-center w-100">
+            <h6 class="ft-title font-18" style="color: #080e27; font-weight: bold;">DIGITAL GOLD</h6>
+            <hr class="footer-line">
+            <div class="footer-news-form">
+              <div class="d-inline-block border-radius" style="background: white; padding: 10px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);">
+                <img src="<?= base_url() ?>u_assets/assets/image/qr_image/qr-code.png" alt="Download App QR Code" class="img-fluid" style="width: 100%; height: 180px;">
+                <p class="heading-weight font-14 mt-3 mb-0 text-center" style="color: #909090;">Scan And Download The App</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Columns -->
+        <div class="col-12 col-lg-10">
+          <div class="row gy-4">
+
+            <!-- Top Category -->
+            <div class="col-6 col-sm-4 col-lg-2 ft-list">
+              <div class="footer-menu">
+                <h6 class="ft-title font-18">Top category</h6>
+                <hr class="footer-line">
+                <ul class="ftlink-ul ul-ft">
+                  <li><a href="collection.html">Rings</a></li>
+                  <li><a href="collection.html">Earrings</a></li>
+                  <li><a href="collection.html">Necklace</a></li>
+                  <li><a href="collection.html">Bracelet</a></li>
+                  <li><a href="collection.html">Anklets</a></li>
+                  <li><a href="<?= base_url() ?>user/custome_jewellery">Custom Jewellery</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Information -->
+            <div class="col-6 col-sm-4 col-lg-2 ft-list">
+              <div class="footer-menu">
+                <h6 class="ft-title font-18">Information</h6>
+                <hr class="footer-line">
+                <ul class="ftlink-ul ul-ft">
+                  <li><a href="<?= base_url() ?>user/about">About us</a></li>
+                  <li><a href="<?= base_url() ?>user/contact">Contact us</a></li>
+                  <li><a href="<?= base_url() ?>user/faq">Faqs</a></li>
+                  <li><a href="store.html">Store</a></li>
+                  <li><a href="<?= base_url() ?>user/blog">Blog</a></li>
+                  <li><a href="<?= base_url() ?>user/branch">Our Branches</a></li>
+                  <li><a href="<?= base_url() ?>user/event">Events</a></li>
+                  <li><a href="<?= base_url() ?>user/history">Our History</a></li>
+                  <li><a href="<?= base_url() ?>user/customer_review">Customer Review</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Quick Link -->
+            <div class="col-6 col-sm-4 col-lg-2 ft-list">
+              <div class="footer-menu">
+                <h6 class="ft-title font-18">Quick link</h6>
+                <hr class="footer-line">
+                <ul class="ftlink-ul ul-ft">
+                  <li><a href="404.html">404</a></li>
+                  <li><a href="coming-soon.html">Comingsoon</a></li>
+                  <li><a href="cookie.html">Cookie</a></li>
+                  <li><a href="legal.html">Legal</a></li>
+                  <li><a href="sitemap.html">Sitemap</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Policies -->
+            <div class="col-6 col-sm-4 col-lg-3 ft-list">
+              <div class="footer-menu">
+                <h6 class="ft-title font-18">Policies</h6>
+                <hr class="footer-line">
+                <ul class="ftlink-ul ul-ft">
+                  <?php if (isset($pages_name[0]) && count($pages_name) > 0) {
+                    foreach ($pages_name as $row) { ?>
+                      <li><a href="<?= base_url(); ?>user/policies/<?= $row['pages_name_id'] ?>"><?= $row['pages_name'] ?></a></li>
+                  <?php }} ?>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="col-6 col-sm-4 col-lg-3 ft-list">
+              <div class="footer-menu">
+                <h6 class="ft-title font-18">Follow Us</h6>
+                <hr class="footer-line" style="width: 60px;">
+                <ul class="ftlink-ul ul-ft">
+                  <li><a href="https://www.facebook.com/shingavijewellerspvtltd/" target="_blank" class="d-flex align-items-center"><i class="ri-facebook-fill me-2"></i> Facebook</a></li>
+                  <li><a href="https://www.instagram.com/shingavijewellers/" target="_blank" class="d-flex align-items-center"><i class="ri-instagram-line me-2"></i> Instagram</a></li>
+                  <li><a href="https://wa.me/918605500025" target="_blank" class="d-flex align-items-center"><i class="ri-whatsapp-line me-2"></i> WhatsApp</a></li>
+                </ul>
+              </div>
+            </div>
+
+          </div> <!-- row -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="copyright ptb-10 extra-bg" style="background-color: #f4ead6;">
+    <div class="container">
+      <hr>
+      <div class="text-center" style="color: #2f2f48;">
+        Designed & Developed by
+        <a href="https://a2zithub.com" target="_blank" rel="noopener noreferrer" style="color: #2f2f48; font-weight: 500;">
+          A2Z IT HUB PVT LTD
+        </a>
+        for Shingavi Jewellers © 2025
+      </div>
+    </div>
+  </div>
 </footer>
+
+<!-- FOOTER STYLES -->
+<style>
+  .footer-menu ul li a {
+    color: #2f2f48;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+
+  .footer-menu ul li a:hover {
+    color: #FF7F7F !important;
+  }
+
+  .footer-menu ul li a:hover i {
+    color: #FF7F7F !important;
+  }
+
+  .footer-menu ul li a i {
+    color: #1b1a17;
+    transition: color 0.3s ease;
+  }
+
+  .footer-line {
+    width: 80px;
+    border-color: #080e27;
+    height: 3px;
+    opacity: 1;
+    border-width: 2px;
+    margin: 5px 0;
+    margin-left: 0; /* align with heading */
+  }
+
+  @media (max-width: 576px) {
+    #footer .footer-menu {
+      text-align: left !important;
+    }
+
+    #footer .footer-news-form {
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-line {
+      width: 60px !important;
+      margin-left: 0 !important;
+    }
+
+    .footer-menu h6 {
+      font-size: 16px;
+    }
+  }
+</style>
+
+
+
+
+
+
+
 <!-- footer-bottom end -->
 <!-- footer end -->
 <!-- quickview-modal start -->
@@ -777,7 +702,7 @@
                             $wt = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id']]);
                             echo count($wt);
                         }else{
-                           if(isset($_SESSION['wishlist'])){
+                         if(isset($_SESSION['wishlist'])){
                             echo count($_SESSION['wishlist']);
                         }else{
                             echo 0;
@@ -899,9 +824,9 @@
     }
 
     function openAddressModal(pId) {
-     $('#quickview-modal').modal('hide');
+       $('#quickview-modal').modal('hide');
     // Wait for quickview modal to fully hide before showing the address modal
-     $('#quickview-modal').on('hidden.bs.modal', function () {
+       $('#quickview-modal').on('hidden.bs.modal', function () {
         // Remove this event after it's triggered to prevent multiple calls
         $(this).off('hidden.bs.modal');
         let productDet = '';
@@ -944,7 +869,7 @@
 
         });
     });
- }
+   }
 
 </script>
 <script>
@@ -996,11 +921,11 @@
                 $('.question-form-btn').eq(1).removeClass('d-none'); // Show "Verify"
             } else {
                 // alert(res.msg || "Something went wrong.");
-               document.getElementById('errMsg').innerHTML = res.msg || "Something went wrong.";
+             document.getElementById('errMsg').innerHTML = res.msg || "Something went wrong.";
 
-           }
-       },
-       error: function () {
+         }
+     },
+     error: function () {
             // alert("Failed to send OTP. Try again.");
         document.getElementById('errMsg').innerHTML = 'Failed to send OTP. Try again.';
 

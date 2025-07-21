@@ -1,3 +1,300 @@
+<style>
+  .popup-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .popup-wrapper.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .popup-container {
+    background: #fff;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #b80000;
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .popup-content {
+    display: flex;
+    width: 100%;
+  }
+
+  .popup-left {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 0;
+  }
+
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 300px; /* Fixed compact row height */
+  gap: 0;
+  width: 100%;
+  height: auto;
+}
+
+.image-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-grid img:last-child {
+  grid-column: span 2;
+}
+
+
+
+  .popup-right {
+    width: 50%;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+  }
+
+  .popup-right h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+    line-height: 1.4;
+  }
+
+  .valid-text {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .popup-input {
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .popup-btn {
+    padding: 12px;
+    background: #b80000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .popup-container {
+      flex-direction: column;
+    }
+
+    .popup-left,
+    .popup-right {
+      width: 100%;
+    }
+
+    .popup-right {
+      padding: 20px;
+    }
+  }
+  .popup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+</style>
+
+<!-- Modal Wrapper -->
+<div class="popup-wrapper" id="popupModal">
+  <div class="popup-container">
+    <!-- Close Button -->
+    <div class="popup-close" id="popupClose">✕</div>
+
+    <!-- Content Area -->
+      <form action="<?=base_url()?>sameer/save_subscriber_customer_details" method="post" class="popup-form" id="subscriptionForm">
+    <div class="popup-content">
+      <!-- Left Side with Images -->
+      <div class="popup-left">
+        <div class="image-grid">
+          <img src="<?=base_url()?>u_assets/assets/image/model/image2.webp" alt="Jewellery 2" />
+          <img src="<?=base_url()?>u_assets/assets/image/model/image3.webp" alt="Jewellery 3" />
+          <img src="<?=base_url()?>u_assets/assets/image/model/image1.webp" alt="Jewellery 1" />
+        </div>
+      </div>
+
+      <!-- Right Side with Form -->
+      <div class="popup-right">
+        <h2>Register & Get <span>500 Off</span> <br>on your first purchase</h2>
+        <p class="valid-text">Valid on shopping above ₹2000</p>
+
+        <!-- FORM START -->
+        <div class="form-group">
+          <input type="text" 
+                 name="subcriber_details" 
+                 id="subscriberInput"
+                 class="popup-input" 
+                 placeholder="Enter your email address or mobile number here.." 
+                 required
+                 title="Please enter a valid 10-digit mobile number or email address"
+                 oninput="validateInput(this)" />
+          <div id="validationMessage" class="validation-message"></div>
+          <button type="submit" class="popup-btn">SUBSCRIBE</button>
+        </div>
+        <!-- FORM END -->
+      </div>
+    </div>
+</form>
+
+<style>
+  .validation-message {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 5px;
+    min-height: 18px;
+  }
+  
+  .valid-input {
+    border: 1px solid #28a745 !important;
+  }
+  
+  .invalid-input {
+    border: 1px solid #dc3545 !important;
+  }
+</style>
+
+<script>
+  function validateInput(input) {
+    const value = input.value.trim();
+    const validationMessage = document.getElementById('validationMessage');
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const mobileRegex = /^[0-9]{10}$/;
+    
+    // Clear previous validation states
+    input.classList.remove('valid-input', 'invalid-input');
+    validationMessage.textContent = '';
+    
+    if (value === '') {
+      return;
+    }
+    
+    // Check if input is a mobile number (exactly 10 digits)
+    if (/^[0-9]+$/.test(value)) {
+      if (value.length > 10) {
+        input.value = value.slice(0, 10); // Truncate to 10 digits
+      }
+      
+      if (mobileRegex.test(input.value)) {
+        input.classList.add('valid-input');
+      } else {
+        input.classList.add('invalid-input');
+        validationMessage.textContent = 'Mobile number must be 10 digits';
+      }
+    } 
+    // Check if input is an email
+    else if (emailRegex.test(value)) {
+      input.classList.add('valid-input');
+    } 
+    // Invalid input
+    else {
+      input.classList.add('invalid-input');
+      validationMessage.textContent = 'Please enter a valid email or 10-digit mobile number';
+    }
+  }
+
+  document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
+    const input = document.getElementById('subscriberInput');
+    const value = input.value.trim();
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const mobileRegex = /^[0-9]{10}$/;
+    
+    if (!emailRegex.test(value) && !mobileRegex.test(value)) {
+      e.preventDefault();
+      input.classList.add('invalid-input');
+      document.getElementById('validationMessage').textContent = 'Please enter a valid email or 10-digit mobile number';
+      input.focus();
+    }
+  });
+</script>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const closeBtn = document.getElementById("popupClose");
+    const popupWrapper = document.getElementById("popupModal");
+
+    closeBtn.addEventListener("click", function () {
+      popupWrapper.classList.add("hide");
+      setTimeout(() => {
+        popupWrapper.style.display = "none";
+      }, 400);
+    });
+
+    // Optional: Auto-show popup after delay
+    // setTimeout(() => {
+    //   popupWrapper.style.display = "flex";
+    //   popupWrapper.classList.remove("hide");
+    // }, 3000);
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- header end -->
         <!-- main start -->
