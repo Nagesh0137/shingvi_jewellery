@@ -30,6 +30,11 @@ class User extends CI_Controller
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
 		$this->load->library('upload', $config);
 		date_default_timezone_set('Asia/Kolkata');
+		// 	$this->client = new Google_Client();
+		// $this->client->setClientId('143872437300-lueb4tlfjhqj34p7ej2s2drocdvn265s.apps.googleusercontent.com');
+		// $this->client->setClientSecret('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');
+		// $this->client->setRedirectUri('https://jewelnagar.com/new_web/user/login_with_google');
+		// $this->client->addScope("profile");
 		// if(!isset($_SESSION['user_tbl_id']))
 		// {
 		// 	redirect(base_url().'login','refresh');
@@ -182,6 +187,7 @@ private function calculateDiscountPrice($product)
 	public function index()
 {
     $data['admin'] = $this;
+
 
     // Fetch basic data
     $data['category'] = $this->My_model->select_where("category", ['status' => 'active']);
@@ -390,14 +396,32 @@ private function calculateDiscountPrice($product)
 		}
 		echo json_encode($_SESSION);
 	}
-	public function profile()
-	{
 
-		$data['state'] = $this->My_model->select_where("state", ['status' => 'active']);
-		$data['det'] = $this->My_model->select_where("user_tbl", ['user_tbl_id' => $_SESSION['user_tbl_id']])[0];
-		$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['status' => 'active']);
-		$this->ov('profile', $data);
+	public function my_account()
+	{
+		if (isset($_SESSION['user_id'])) {
+			$data['customer_details'] = $this->My_model->select_where("customers", ['status' => 'active', 'customers_id' => $_SESSION['user_id']]);
+			// print_r($data['customer_details']);
+			// exit;
+			$this->ov("my_account", $data);
+		} else {
+			redirect(base_url() . "user/login");
+		}
 	}
+	// public function profile()
+	// {
+	// 	if (isset($_SESSION['user_id'])) {
+	// 		$data['customer_details'] = $this->My_model->select_where("customers", ['status' => 'active', 'customers_id' => $_SESSION['user_id']]);
+	// 		$this->ov("my_account", $data);
+	// 	} else {
+	// 		// redirect(base_url() . "user/login");
+	// 	}
+
+	// 	// $data['state'] = $this->My_model->select_where("state", ['status' => 'active']);
+	// 	// $data['det'] = $this->My_model->select_where("user_tbl", ['user_tbl_id' => $_SESSION['user_tbl_id']])[0];
+	// 	$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['status' => 'active']);
+	// 	$this->ov('profile', $data);
+	// }
 	public function update_profile()
 	{
 		// exit();
@@ -428,6 +452,70 @@ private function calculateDiscountPrice($product)
 			redirect(base_url() . 'user/profile', 'refresh');
 		}
 	}
+
+	public function update_user_details()
+{
+	if (isset($_SESSION['user_id'])) {
+
+		// Handle profile image upload
+		if (isset($_FILES['profile_photo'])) {
+			if ($_FILES['profile_photo']['name'] != "") {
+				$imgname = $_FILES['profile_photo']['name'];
+				$imgtemp = $_FILES['profile_photo']['tmp_name'];
+				$path = "uploads/";
+
+				// Upload and resize the image
+				$_POST['profile_photo'] = $this->upload_img($imgname, $imgtemp, $path);
+
+				// Delete old image if exists
+				$path1 = "uploads/" . $_POST['profile_photo1'];
+				if (!empty($_POST['profile_photo1']) && file_exists($path1)) {
+					unlink($path1);
+				}
+			} else {
+				// Keep old image if no new image uploaded
+				$_POST['profile_photo'] = $_POST['profile_photo1'];
+			}
+		}
+		unset($_POST['profile_photo1']);
+
+		
+		$this->My_model->update("customers", ['status' => 'active', 'customers_id' => $_SESSION['user_id']], $_POST);
+
+		redirect(base_url() . "user/my_account");
+
+	} else {
+		redirect(base_url() . "user/my_account");
+	}
+}
+
+public function logout()
+{
+    $this->session->sess_destroy();
+    redirect(base_url('user/login')); // or homepage
+}
+public function delete_account()
+{
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+
+        // Optional: delete user profile image
+        $user = $this->My_model->select_where('customers', ['customers_id' => $user_id]);
+        if (!empty($user['user_profile_img']) && file_exists('uploads/' . $user['user_profile_img'])) {
+            unlink('uploads/' . $user['user_profile_img']);
+        }
+
+        // Delete user from database
+        $this->My_model->update('customers', ['customers_id' => $user_id],['status'=>'deleted']);
+
+        // Destroy session and redirect
+        $this->session->sess_destroy();
+        redirect(base_url('user/login')); // or homepage
+    } else {
+        redirect(base_url('user/login'));
+    }
+}
+
 
 
 
@@ -512,9 +600,10 @@ private function calculateDiscountPrice($product)
 	{
 		$this->head();
 		$this->nav();
-		// $data['about'] = $this->My_model->select_where("about_tbl", ["status" => "active"]);
+		$data["faq_info"] = $this->My_model->select_where("faq_tbl", ["status" => "active"]);
+		$data['about'] = $this->My_model->select_where("web_about_details", ['status' => 'active']);
 		// $data['mission_vision'] = $this->My_model->select_where("mission_vision_tbl", ["status" => "active"]);
-		$this->load->view("User/about");
+		$this->load->view("User/about",$data);
 		$this->footer();
 	}
 	// public function contact()
@@ -698,6 +787,10 @@ private function calculateDiscountPrice($product)
 			}
 		}
 
+		// echo "<pre>";
+		// print_r($filtered_products);
+		// exit;
+
 		$data['products'] = $filtered_products;
 		$this->ov("products", $data);
 	}
@@ -753,35 +846,55 @@ public function add_in_wishlist()
 }
 
 	public function addToCart()
+{
+	if(isset($_SESSION['user_id']))
 	{
-		if(isset($_SESSION['user_id']))
+		$ucart = $this->My_model->select_where("user_cart", ['user_id' => $_SESSION['user_id'], 'prod_id' =>$_POST['prod_id'], 'status' => 'active']);
+		
+		if(isset($ucart[0]))
 		{
-			$ucart = $this->My_model->select_where("user_cart",['user_id'=>$_SESSION['user_id'],$_POST['prod_id'],'status'=>'active']);
-			if(isset($ucart[0]))
-			{
-				$rmCart = $this->db->query("DELETE FROM user_cart WHERE user_id = '".$_SESSION['user_id']."' AND prod_id='".$_POST['prod_id']."' ");
-				echo json_encode(['status'=>'success','msg'=>'Removed From Cart']);
-			}else{
-
-				$cart['prod_id'] = $_POST['prod_id'];
-				$cart['user_id'] = $_SESSION['user_id'];
-				$cart['status'] = 'active';
-				$cart['entry_time'] = time();
-				$c = $this->My_model->insert("user_cart",$cart);
-				if($c)
-				{
-					echo json_encode(['status'=>'success','msg'=>'Added To Cart']);
-				}else{
-					echo json_encode(['status'=>'failed','msg'=>'Failed To Add in Cart..!']);
-				}
-			}
-		}else{
-			$_SESSION['cart'][$_POST['prod_id']] = 1;
-			$_SESSION['Size'][$_POST['prod_id']] = $_POST['size'];
-			echo json_encode(['status'=>'success','msg'=>'Added To Cart In session']);
-
+			$rmCart = $this->db->query("DELETE FROM user_cart WHERE user_id = '".$_SESSION['user_id']."' AND prod_id='".$_POST['prod_id']."' ");
+			echo json_encode(['status'=>'success','msg'=>'Removed From Cart']);
 		}
+		else
+		{
+			$cart['prod_id'] = $_POST['prod_id'];
+			$cart['user_id'] = $_SESSION['user_id'];
+			$cart['status'] = 'active';
+			$cart['entry_time'] = time();
+			$c = $this->My_model->insert("user_cart", $cart);
+			
+			if($c)
+			{
+				echo json_encode(['status'=>'success','msg'=>'Added To Cart']);
+			}
+			else
+			{
+				echo json_encode(['status'=>'failed','msg'=>'Failed To Add in Cart..!']);
+			}
+		}
+
+		// 👉 Print user cart from database
+		$printCart = $this->My_model->select_where("user_cart", ['user_id' => $_SESSION['user_id'], 'status' => 'active']);
+		// echo "<pre>";
+		// print_r($printCart);
+		// exit();
+
 	}
+	else
+	{
+		$_SESSION['cart'][$_POST['prod_id']] = 1;
+		$_SESSION['Size'][$_POST['prod_id']] = $_POST['size'];
+		echo json_encode(['status'=>'success','msg'=>'Added To Cart In session']);
+
+		// 👉 Print session cart
+		// echo "<pre>";
+		// print_r($_SESSION['cart']);
+		// print_r($_SESSION['Size']);
+		// exit();
+	}
+}
+
 
 	public function load_cart_drawer()
 	{
@@ -817,9 +930,32 @@ public function add_in_wishlist()
 				$msg = 'No';
 			}
 		}
+
+		// echo "<pre>";
+		// print_r($products);
+		// exit;
+
 			$data['cart'] = $products;
+
 		$this->load->view('user/add_to_cart_modal_form',$data);
 	}
+
+	public function remove_cart_item()
+{
+    if (isset($_SESSION['user_id'])) {
+        $this->db->where(['user_id' => $_SESSION['user_id'], 'prod_id' => $_POST['prod_id']]);
+        $this->db->delete('user_cart');
+    } else {
+        unset($_SESSION['cart'][$_POST['prod_id']]);
+        unset($_SESSION['Size'][$_POST['prod_id']]);
+    }
+
+    echo json_encode(['status' => 'success']);
+}
+
+
+
+
 
 	public function buy_now($id)
 	{
@@ -1923,6 +2059,73 @@ public function add_in_wishlist()
             echo json_encode(['status' => 'failed', 'msg' => 'Mobile Number Not Found']);
         }
     }
+   public function login_otp()
+{
+    header('Content-Type: application/json');
+
+    // Get mobile number safely
+    $mobile_number = $this->input->post('mobile_number');
+
+    if (!empty($mobile_number)) {
+
+        // Generate 4-digit OTP
+        $otp = rand(1000, 9999);
+
+        // Message (for sending via SMS if needed)
+        $msg = "OTP to login " . $otp . " is your Shingavi Jewellers code and is valid for 10 minutes. Do not share it with anyone. @www.shingavijewellers.com";
+
+        // Check if existing user
+        $existingUser = $this->My_model->select_where("customers", [
+            'status' => 'active',
+            'mobile' => $mobile_number
+        ]);
+
+        if (isset($existingUser[0])) {
+            $user_status = 'existing';
+            $user_id = $existingUser[0]['customers_id'];
+        } else {
+            $user_status = 'new';
+            $user = [
+                'mobile'   => $mobile_number,
+                'status'   => 'active',
+                'reg_time' => time()
+            ];
+            $user_id = $this->My_model->insert("customers", $user);
+
+            // fetch inserted user
+            $existingUser = $this->My_model->select_where("customers", [
+                'status' => 'active',
+                'mobile' => $mobile_number
+            ]);
+        }
+
+        // Store OTP in table
+        $otpData = [
+            'mobile_number' => $mobile_number,
+            'otp'           => $otp,
+            'otp_entry_time'=> time(),
+            'status'        => 'active'
+        ];
+        $this->My_model->insert("otp_tbl", $otpData);
+
+        // (Optional) set session if you want
+        $_SESSION['user_id'] = $user_id;
+
+        echo json_encode([
+            'status'      => 'success',
+            'otp'         => $otp, // 🔴 remove in production
+            'data'        => $existingUser,
+            'user_status' => $user_status
+        ]);
+
+    } else {
+        echo json_encode([
+            'status' => 'failed',
+            'msg'    => 'Mobile Number Not Found'
+        ]);
+    }
+}
+
     public function getUserAddress()
     {
 
@@ -2299,6 +2502,8 @@ $this->load->view("user/cashfree",$data);
 }
 
 
-
+public function login(){
+	$this->ov("login");
+}
 }
 

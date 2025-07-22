@@ -27,7 +27,7 @@
                 <!-- Question Toggle -->
                 <a href="#faq<?= $i ?>" class="dominant-link d-flex justify-content-between align-items-center text-decoration-none" data-bs-toggle="collapse" aria-expanded="<?= $i == 1 ? 'true' : 'false' ?>">
                   <span class="font-18 fw-semibold text-dark"><?= $faq['faq_question'] ?></span>
-                  <span class="icon-16 text-secondary"><i class="ri-add-line"></i></span>
+                  <span class="icon-16" style="color: #bb4749;"><i class="ri-add-line"></i></span>
                 </a>
 
                 <!-- Answer Collapse -->

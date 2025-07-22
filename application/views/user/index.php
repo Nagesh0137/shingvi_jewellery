@@ -1,3 +1,373 @@
+<style>
+  .popup-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .popup-wrapper.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .popup-container {
+    background: #fff;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #b80000;
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .popup-content {
+    display: flex;
+    width: 100%;
+  }
+
+  .popup-left {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 0;
+  }
+
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 300px; /* Fixed compact row height */
+  gap: 0;
+  width: 100%;
+  height: auto;
+}
+
+.image-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-grid img:last-child {
+  grid-column: span 2;
+}
+
+
+
+  .popup-right {
+    width: 50%;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+  }
+
+  .popup-right h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+    line-height: 1.4;
+  }
+
+  .valid-text {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .popup-input {
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .popup-btn {
+    padding: 12px;
+    background: #b80000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .popup-container {
+      flex-direction: column;
+    }
+
+    .popup-left,
+    .popup-right {
+      width: 100%;
+    }
+
+    .popup-right {
+      padding: 20px;
+    }
+  }
+  .popup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+</style>
+
+<!-- Modal Wrapper -->
+<div class="popup-wrapper" id="popupModal">
+  <div class="popup-container">
+    <!-- Close Button -->
+    <div class="popup-close" id="popupClose">✕</div>
+
+    <!-- Content Area -->
+      <form action="<?=base_url()?>sameer/save_subscriber_customer_details" method="post" class="popup-form" id="subscriptionForm">
+    <div class="popup-content">
+      <!-- Left Side with Images -->
+      <div class="popup-left">
+        <div class="image-grid">
+          <img src="<?=base_url()?>u_assets/assets/image/model/image2.webp" alt="Jewellery 2" />
+          <img src="<?=base_url()?>u_assets/assets/image/model/image3.webp" alt="Jewellery 3" />
+          <img src="<?=base_url()?>u_assets/assets/image/model/image1.webp" alt="Jewellery 1" />
+        </div>
+      </div>
+
+      <!-- Right Side with Form -->
+      <div class="popup-right">
+        <h2>Register & Get <span>500 Off</span> <br>on your first purchase</h2>
+        <p class="valid-text">Valid on shopping above ₹2000</p>
+
+        <!-- FORM START -->
+        <div class="form-group">
+          <input type="text" 
+                 name="subcriber_details" 
+                 id="subscriberInput"
+                 class="popup-input" 
+                 placeholder="Enter your email address or mobile number here.." 
+                 required
+                 title="Please enter a valid 10-digit mobile number or email address"
+                 oninput="validateInput(this)" />
+          <div id="validationMessage" class="validation-message"></div>
+          <button type="submit" class="popup-btn">SUBSCRIBE</button>
+        </div>
+        <!-- FORM END -->
+      </div>
+    </div>
+</form>
+
+<!-- Success Modal -->
+<div id="successModal" class="modal-overlay" style="display: none;">
+  <div class="modal-box">
+    <div class="checkmark">&#10004;</div>
+    <p class="modal-message">Thank you for subscribing 😊</p>
+  </div>
+</div>
+<style>
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #f0fbf4;
+  padding: 30px 40px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.checkmark {
+  font-size: 48px;
+  color: green;
+  margin-bottom: 15px;
+}
+
+.modal-message {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $('#subscriptionForm').on('submit', function(e) {
+    e.preventDefault(); // stop default submission
+    
+    // OPTIONAL: Ajax submission (if you want to actually submit to backend)
+    $.ajax({
+      url: $(this).attr('action'),
+      type: 'POST',
+      data: $(this).serialize(),
+      success: function(response) {
+        // Show success modal
+        $('#successModal').fadeIn();
+
+        // Hide modal after 3 seconds
+        setTimeout(function() {
+          $('#successModal').fadeOut();
+          $('#subscriptionForm')[0].reset(); // reset the form
+        }, 3000);
+      }
+    });
+  });
+</script>
+
+
+<style>
+  .validation-message {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 5px;
+    min-height: 18px;
+  }
+  
+  .valid-input {
+    border: 1px solid #28a745 !important;
+  }
+  
+  .invalid-input {
+    border: 1px solid #dc3545 !important;
+  }
+</style>
+
+<script>
+  function validateInput(input) {
+    const value = input.value.trim();
+    const validationMessage = document.getElementById('validationMessage');
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const mobileRegex = /^[0-9]{10}$/;
+    
+    // Clear previous validation states
+    input.classList.remove('valid-input', 'invalid-input');
+    validationMessage.textContent = '';
+    
+    if (value === '') {
+      return;
+    }
+    
+    // Check if input is a mobile number (exactly 10 digits)
+    if (/^[0-9]+$/.test(value)) {
+      if (value.length > 10) {
+        input.value = value.slice(0, 10); // Truncate to 10 digits
+      }
+      
+      if (mobileRegex.test(input.value)) {
+        input.classList.add('valid-input');
+      } else {
+        input.classList.add('invalid-input');
+        validationMessage.textContent = 'Mobile number must be 10 digits';
+      }
+    } 
+    // Check if input is an email
+    else if (emailRegex.test(value)) {
+      input.classList.add('valid-input');
+    } 
+    // Invalid input
+    else {
+      input.classList.add('invalid-input');
+      validationMessage.textContent = 'Please enter a valid email or 10-digit mobile number';
+    }
+  }
+
+  document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
+    const input = document.getElementById('subscriberInput');
+    const value = input.value.trim();
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const mobileRegex = /^[0-9]{10}$/;
+    
+    if (!emailRegex.test(value) && !mobileRegex.test(value)) {
+      e.preventDefault();
+      input.classList.add('invalid-input');
+      document.getElementById('validationMessage').textContent = 'Please enter a valid email or 10-digit mobile number';
+      input.focus();
+    }
+  });
+</script>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const closeBtn = document.getElementById("popupClose");
+    const popupWrapper = document.getElementById("popupModal");
+
+    closeBtn.addEventListener("click", function () {
+      popupWrapper.classList.add("hide");
+      setTimeout(() => {
+        popupWrapper.style.display = "none";
+      }, 400);
+    });
+
+    // Optional: Auto-show popup after delay
+    // setTimeout(() => {
+    //   popupWrapper.style.display = "flex";
+    //   popupWrapper.classList.remove("hide");
+    // }, 3000);
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- header end -->
         <!-- main start -->
@@ -975,77 +1345,145 @@ if (!empty($category)) {
             </section>
             <!-- deal-area-banner end -->
             <!-- testimonial start -->
-           <section class="testimonial section-ptb">
-    <div class="container">
-        <div class="testi-category">
-            <div class="section-capture text-center mb-4" data-animate="animate__fadeIn">
-                <div class="section-title">
-                    <h2 class="section-heading fw-bold text-uppercase">Customer Experience</h2>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-10">
-                    <div class="testi-wrap position-relative">
-                        <div class="testi-slider swiper" id="testi-slider">
-                            <div class="swiper-wrapper">
-                                <?php if (!empty($web_testimonial)) {
-                                    foreach ($web_testimonial as $row) { ?>
-                                        <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
-                                            <div class="testi-content w-100 bg-white shadow rounded p-4">
-                                                <div class="d-flex flex-column flex-md-row align-items-center text-center text-md-start gap-4">
-                                                    <!-- Image + Badge -->
-                                                    <div class="position-relative">
-                                                        <img src="<?= compress_image() ?>uploads/<?= $row['testimonial_img'] ?>" alt="testimonial-img" class="rounded-circle" style="height: 100px; width: 100px; object-fit: cover;">
-                                                        <div class="position-absolute bottom-0 start-0 end-0 text-center">
-                                                            <span class="badge bg-secondary text-white text-uppercase small mt-2"><?= $row['testimonial_person'] ?></span>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Content -->
-                                                    <div class="flex-grow-1">
-                                                        <div class="testi-review mb-2">
-                                                            <span class="testi-star text-warning fs-5">
-                                                                <?php
-                                                                $rating = (int)$row['rating'];
-                                                                for ($i = 1; $i <= 5; $i++) {
-                                                                    echo ($i <= $rating) ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line"></i>';
-                                                                }
-                                                                ?>
-                                                            </span>
-                                                        </div>
-                                                        <p class="mb-2 text-muted fst-italic">"<?= $row['testimonial_details'] ?>"</p>
-                                                        <div><strong class="text-dark"><?= $row['testimonial_person'] ?></strong> <span class="text-muted">~ Customer</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                <?php }
-                                } ?>
-                            </div>
-                        </div>
-
-                        <!-- Slider Controls -->
-                        <div class="swiper-buttons mt-4">
-                            <div class="swiper-buttons-wrap d-flex justify-content-center gap-3">
-                                <button type="button" class="btn btn-outline-dark swiper-prev swiper-prev-testi" aria-label="Previous">
-                                    <i class="ri-arrow-left-line"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-dark swiper-next swiper-next-testi" aria-label="Next">
-                                    <i class="ri-arrow-right-line"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Pagination Dots -->
-                        <div class="swiper-dots mt-3">
-                            <div class="swiper-pagination swiper-pagination-testi"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       <!-- Include Swiper CSS (Required) -->
+<section class="testimonial section-ptb">
+  <div class="container">
+    <div class="section-capture text-center">
+      <div class="section-title">
+        <h2 class="section-heading">Our Clients Say</h2>
+      </div>
     </div>
+
+    <div class="swiper testimonial-slider mt-4">
+      <div class="swiper-wrapper">
+        <?php if (!empty($web_testimonial) && count($web_testimonial) > 0) {
+          foreach ($web_testimonial as $row) { ?>
+            <div class="swiper-slide">
+              <div class="testimonial-box text-center p-4 shadow rounded">
+                <div class="d-flex justify-content-center">
+                  <img src="<?= compress_image() ?>uploads/<?= $row['testimonial_img'] ?>" class="rounded-circle mb-3" alt="testimonial" style="width:100px;height:100px;object-fit:cover;">
+                </div>
+                <h5 class="fw-bold"><?= $row['testimonial_person'] ?></h5>
+                <p class="text-muted"><?= $row['testimonial_details'] ?></p>
+                <div class="stars text-warning mb-2">
+                  <?php
+                  $rating = (int)$row['rating'];
+                  for ($i = 1; $i <= 5; $i++) {
+                    echo $i <= $rating ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line"></i>';
+                  }
+                  ?>
+                </div>
+              </div>
+            </div>
+        <?php }
+        } ?>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="swiper-pagination testimonial-pagination mt-4"></div>
+  </div>
 </section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+const swiper = new Swiper('.testimonial-slider', {
+  loop: true,
+  spaceBetween: 30,
+  grabCursor: true,
+  autoplay: {
+    delay: 4000,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: '.testimonial-pagination',
+    clickable: true,
+    dynamicBullets: true,
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+    768: {
+      slidesPerView: 2,
+    },
+    992: {
+      slidesPerView: 3,
+    }
+  }
+});
+</script>
+
+<style>
+.section-title {
+  margin-bottom: 20px;
+}
+
+.section-heading {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.swiper-slide {
+  display: flex;
+  height: 100%;
+}
+
+.testimonial-box {
+  border-radius: 12px;
+  transition: 0.3s;
+  background: white !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 340px;
+  border: 1px solid #eee;
+}
+
+.testimonial-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stars i {
+  font-size: 18px;
+}
+
+/* Pagination dots styling - Always visible */
+.testimonial-pagination.swiper-pagination {
+  position: relative;
+  text-align: center;
+  margin-top: 30px;
+  display: block !important;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: #ccc;
+  opacity: 1;
+  border-radius: 50%;
+  margin: 0 6px;
+  transition: 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #f65a8a;
+  transform: scale(1.2);
+}
+
+/* Make sure pagination is visible on all screens */
+@media (min-width: 768px) {
+  .testimonial-pagination.swiper-pagination {
+    display: block !important;
+  }
+}
+</style>
+
+
 
 
             <!-- testimonial end -->
@@ -1219,4 +1657,8 @@ if (!empty($category)) {
             <!-- blog-area end -->
         </main>
         <!-- main end -->
+
+
+
+
         

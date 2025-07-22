@@ -310,7 +310,7 @@
                                                     <div class="container ptb-25">
                                                         <div class="menu-overview">
                                                             <div class="heading-color ptb-5 text-uppercase heading-weight">Account</div>
-                                                            <span class="d-block ptb-5"><a href="login.html" class="d-inline-block body-dominant-color">Login</a></span>
+                                                            <span class="d-block ptb-5"><a href="<?=base_url()?>user/login" class="d-inline-block body-dominant-color">Login</a></span>
                                                             <span class="d-block ptb-5"><a href="forgot-password.html" class="d-inline-block body-dominant-color">Forgot password</a></span>
                                                             <span class="d-block ptb-5"><a href="register.html" class="d-inline-block body-dominant-color">Register</a></span>
                                                             <div class="heading-color ptb-5 text-uppercase heading-weight">Other</div>
@@ -369,9 +369,9 @@
                                                     <span class="menu-title text-uppercase heading-weight">Blog</span>
                                                     <!-- <span class="icon-16 fw-normal">
                                                         <i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
-                                                </a>
-                                                <!-- <div class="menu-dropdown menu-sub collapse position-absolute top-auto extra-bg z-2 DropDownSlide box-shadow"> -->
-                                                    <!-- <ul class="menudrop-ul ptb-25"> -->
+                                                    </a>
+                                                    <!-- <div class="menu-dropdown menu-sub collapse position-absolute top-auto extra-bg z-2 DropDownSlide box-shadow"> -->
+                                                        <!-- <ul class="menudrop-ul ptb-25"> -->
                                                         <!-- <li class="menudrop-li">
                                                             <div class="ptb-5 plr-30"><a href="blog-without.html" class="d-inline-block body-dominant-color">About</a></div>
                                                         </li> -->
@@ -405,7 +405,7 @@
                                                     <ul class="menudrop-ul ptb-25">
                                                         <li class="menudrop-li position-relative">
                                                             <div class="menu-sublink ptb-5 plr-30">
-                                                                <a href="<?=base_url()?>sameer/about" class="d-flex flex-wrap align-items-center">
+                                                                <a href="<?=base_url()?>user/about" class="d-flex flex-wrap align-items-center">
                                                                     <span class="menusub-title width-calc-16">About us</span>
                                                                     <!-- <span class="width-16 icon-16 fw-normal"><i class="ri-arrow-right-s-line d-block lh-1"></i></span> -->
                                                                 </a>
@@ -451,7 +451,7 @@
                                                         <li class="menudrop-li position-relative">
                                                             <div class="menu-sublink ptb-5 plr-30"><a href="<?=base_url()?>user/policies" class="d-block">Return & Refund Policy</a></div>
                                                         </li> -->
-                                                        </ul>
+                                                    </ul>
                                                 </div>
                                             </li>
                                         </ul>
@@ -477,16 +477,7 @@
                                                 </a>
                                             </div>
                                         </li>
-                                        <li class="header-icon-wrap user-wrap d-none d-md-block">
-                                            <div class="header-icon-wrapper">
-                                                <a href="login.html" class="d-block header-icon-user" aria-label="Login user">
-                                                    <span class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
-                                                        <span class="header-block-icon icon-16"><i class="ri-user-3-line"></i></span>
-                                                        <span class="d-none d-xl-block header-text-content">Account</span>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </li>
+                                        
                                         <li class="header-icon-wrap wishlist-wrap d-none d-md-block">
                                             <div class="header-icon-wrapper">
                                                 <a href="<?=base_url()?>user/wishlist" class="d-block header-icon-wishlist">
@@ -495,42 +486,83 @@
                                                         <span class="d-none d-xl-block header-text-content">Wishlist</span>
                                                         <span id="wishlistCount" class="header-block-counter wishlist-counter dominant-color">
                                                             <?php 
-                                                                if(isset($_SESSION['user_id']))
-                                                                {
-                                                                    $wt = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id']]);
-                                                                    echo count($wt);
-                                                                }else{
-                                                                     if(isset($_SESSION['wishlist'])){
-                                                                            echo count($_SESSION['wishlist']);
-                                                                      }else{
-                                                                        echo 0;
-                                                                      }
-                                                                } 
-                                                            ?>
-                                                        </span>
+                                                            if(isset($_SESSION['user_id']))
+                                                            {
+                                                                $wt = $this->My_model->select_where("user_wishlist",['user_id'=>$_SESSION['user_id']]);
+                                                                echo count($wt);
+                                                            }else{
+                                                             if(isset($_SESSION['wishlist'])){
+                                                                echo count($_SESSION['wishlist']);
+                                                            }else{
+                                                                echo 0;
+                                                            }
+                                                        } 
+                                                        ?>
                                                     </span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li class="header-icon-wrap cart-wrap d-none d-md-block">
+                                        <div class="header-icon-wrapper">
+                                            <a href="javascript:void(0)" class="d-block header-icon-cart js-cart-drawer">
+                                                <span class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
+                                                    <span class="header-block-icon icon-16"><i class="ri-shopping-bag-3-line"></i></span>
+                                                    <span class="d-none d-xl-block header-text-content">Cart</span>
+                                                    <span class="header-block-counter cart-counter dominant-color">4</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li class="header-icon-wrap user-wrap d-none d-md-block">
+                                        <div class="header-icon-wrapper">
+                                            <?php if (isset($_SESSION['user_id'])): ?>
+                                                <?php 
+                                                //  Fetch active user details using session user ID
+                                                $user_details = $this->My_model->select_where("customers", [
+                                                    'status' => 'active',
+                                                    'customers_id' => $_SESSION['user_id']
+                                                ]); 
+                                                ?>
+                                                <!--  My Account Link -->
+                                                <a href="<?= base_url() ?>user/my_account" class="d-block header-icon-user text-center" aria-label="My Account">
+                                                    <div class="d-flex flex-column align-items-center">
+                                                        <?php if (!empty($user_details[0]['profile_photo'])): ?>
+                                                            <!--  User uploaded profile image -->
+                                                            <img src="<?= base_url() ?>uploads/<?= $user_details[0]['profile_photo'] ?>" 
+                                                            alt="Profile" 
+                                                            style="height:40px; width:40px; border-radius:50%; object-fit:cover; margin-bottom:5px;">
+                                                        <?php else: ?>
+                                                            <!--  Default user icon when no profile image -->
+                                                            <span class="header-block-icon icon-24 mb-1"><i class="ri-user-3-line" style="font-size: 40px;"></i></span>
+                                                        <?php endif; ?>
+
+                                                        <!--  Username or label below the profile image -->
+                                                        <!-- <span class="d-block header-text-content">My Account</span> -->
+                                                    </div>
                                                 </a>
-                                            </div>
-                                        </li>
-                                        <li class="header-icon-wrap cart-wrap d-none d-md-block">
-                                            <div class="header-icon-wrapper">
-                                                <a href="javascript:void(0)" class="d-block header-icon-cart js-cart-drawer">
-                                                    <span class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
-                                                        <span class="header-block-icon icon-16"><i class="ri-shopping-bag-3-line"></i></span>
-                                                        <span class="d-none d-xl-block header-text-content">Cart</span>
-                                                        <span class="header-block-counter cart-counter dominant-color">4</span>
-                                                    </span>
+                                            <?php else: ?>
+                                                <!--  Login Link for guest users -->
+                                                <a href="<?= base_url() ?>user/login" class="d-block header-icon-user text-center" aria-label="Login">
+                                                    <div class="d-flex flex-column align-items-center">
+                                                        <span class="header-block-icon icon-24 mb-1"><i class="ri-user-3-line" style="font-size: 20px;"></i></span>
+                                                        <span class="d-block header-text-content">Account</span>
+                                                    </div>
                                                 </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
                             </div>
-                            <!-- header-icon end -->
                         </div>
+                        <!-- header-icon end -->
                     </div>
                 </div>
-                <!-- header-top-first end -->
             </div>
-            <!-- header-top end -->
-        </header>
+            <!-- header-top-first end -->
+        </div>
+        <!-- header-top end -->
+    </header>

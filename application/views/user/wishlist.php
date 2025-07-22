@@ -260,14 +260,9 @@
                             </div>
                         </div>
 
-                            
-
-
                             <?php
                         } 
                          if(isset($products[0])){ 
-                            
-           
 
                         ?>
                             <div class="col-12 col-lg-4" data-animate="animate__fadeIn" style="position: sticky;top: 10px;">

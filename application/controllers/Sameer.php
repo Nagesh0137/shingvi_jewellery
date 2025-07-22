@@ -189,6 +189,21 @@ class Sameer extends CI_Controller
 			'wishlist' => $this->session->userdata('wishlist') // Optional: Return updated wishlist
 		]);
 	}
+
+	public function save_subscriber_customer_details() {
+		$sanitized_data = array_map(function($value) {
+			if (is_string($value)) {
+				return strip_tags($value);
+			}
+			return $value;
+		}, $_POST);
+		$sanitized_data['entry_time'] = time();
+		$sanitized_data['entry_date'] = date('Y-m-d');
+		$sanitized_data['entry_by'] = 'user';
+		$sanitized_data['status'] = 'active';
+		$this->My_model->insert("subscriber_customer_details", $sanitized_data);
+		redirect(base_url()."user/");
+	}
 	public function remove_wishlist()
 	{
 		if (isset($_POST['id'])) {
