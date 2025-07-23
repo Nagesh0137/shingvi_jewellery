@@ -169,9 +169,7 @@
 </style>
 <!-- footer-bottom end -->
 <!-- footer end -->
-<!-- quickview-modal start -->
 
-<!-- quickview-modal end -->
 <!-- mobile-menu start -->
 <div class="mobile-menu d-xl-none position-fixed top-0 bottom-0 extra-bg z-index-5 invisible box-shadow"
     id="mobile-menu">
@@ -1178,9 +1176,7 @@
                             '&qty=' + encodeURIComponent(selected_qty);
 
                         $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
-
                             $('.user_status').val(user_status);
-
                             $('#uname').val(userDet.name);
                             $('#uemail').val(userDet.email);
                             $('.customers_id').val(userDet.customers_id);

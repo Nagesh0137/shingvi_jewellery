@@ -91,11 +91,6 @@
                                                         <?php
                                                     }
                                                     ?>
-
-
-                                                    
-
-
                                                     <a onclick="openModal('<?=$row['prod_gold_id']?>')" >
                                                         <span class="product-icon">Quickview</span>
                                                     </a>
@@ -112,7 +107,7 @@
                                                         success: function(response) {
                                                             console.log('test',response);
                                                             return 1;
-            // Target the <i> tag using its ID
+                                                            // Target the <i> tag using its ID
                                                             var icon = $('#add-to-wishlist' + prodId);
 
                                                             if (response.status === 'added') {

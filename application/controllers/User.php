@@ -672,10 +672,10 @@ class User extends CI_Controller
 
 		// Search Conditions
 		$show = " AND (
-        product_gold.product_details LIKE '%" . $search . "%' OR
-        category.category_name LIKE '%" . $search . "%' OR
-        product_gold.product_name LIKE '%" . $search . "%'
-    )";
+			product_gold.product_details LIKE '%" . $search . "%' OR
+			category.category_name LIKE '%" . $search . "%' OR
+			product_gold.product_name LIKE '%" . $search . "%'
+    	)";
 
 		if (isset($_GET['g_id'])) {
 			$gId = "AND product_group.product_group_id = '" . $_GET['g_id'] . "'";
@@ -2087,6 +2087,168 @@ class User extends CI_Controller
 			echo json_encode([
 				'status' => 'failed',
 				'msg'    => 'Mobile Number Not Found'
+			]);
+		}
+	}
+
+	// New User Registration Method
+	public function register_new_user()
+	{
+		header('Content-Type: application/json');
+		
+		// Get POST data
+		$mobile = $_POST['mobile'];
+		$name = $_POST['name'];
+		$email = $_POST['email'];
+		$pincode = $_POST['pincode'];
+		$city = $_POST['city'];
+		$address = $_POST['address'];
+		$product_id = $_POST['product_id'];
+		
+		// Validate required fields
+		if (empty($mobile) || empty($name) || empty($email) || empty($pincode) || empty($city) || empty($address)) {
+			echo json_encode([
+				'status' => 'error',
+				'message' => 'All fields are required'
+			]);
+			return;
+		}
+		
+		// Validate mobile number format
+		if (!preg_match('/^[789]\d{9}$/', $mobile)) {
+			echo json_encode([
+				'status' => 'error',
+				'message' => 'Invalid mobile number format'
+			]);
+			return;
+		}
+		
+		// Validate email format
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			echo json_encode([
+				'status' => 'error',
+				'message' => 'Invalid email format'
+			]);
+			return;
+		}
+		
+		// Validate pincode
+		if (strlen($pincode) != 6 || !is_numeric($pincode)) {
+			echo json_encode([
+				'status' => 'error',
+				'message' => 'Invalid pincode format'
+			]);
+			return;
+		}
+		
+		try {
+			// Check if user already exists
+			$existingUser = $this->My_model->select_where("customers", [
+				'mobile' => $mobile,
+				'status' => 'active'
+			]);
+			
+			$customer_id = null;
+			
+			if (empty($existingUser)) {
+				// Create new customer
+				$customerData = [
+					'name' => $name,
+					'email' => $email,
+					'mobile' => $mobile,
+					'status' => 'active',
+					'reg_time' => time()
+				];
+				
+				$customer_id = $this->My_model->insert("customers", $customerData);
+				
+				if (!$customer_id) {
+					throw new Exception('Failed to create customer account');
+				}
+			} else {
+				// Update existing customer with new details
+				$customer_id = $existingUser[0]['customers_id'];
+				$updateData = [
+					'name' => $name,
+					'email' => $email
+				];
+				
+				$this->My_model->update_where("customers", $updateData, ['customers_id' => $customer_id]);
+			}
+			
+			// Set user session
+			$_SESSION['user_id'] = $customer_id;
+			
+			// Create or update customer address
+			$existingAddress = $this->My_model->select_where("customer_address", [
+				'customers_id' => $customer_id,
+				'status' => 'active'
+			]);
+			
+			if (empty($existingAddress)) {
+				// Create new address
+				$addressData = [
+					'customers_id' => $customer_id,
+					'address' => $address,
+					'pincode' => $pincode,
+					'city' => $city,
+					'default_address' => 'yes',
+					'status' => 'active',
+					'created_at' => date('Y-m-d H:i:s')
+				];
+				
+				$address_id = $this->My_model->insert("customer_address", $addressData);
+				
+				if (!$address_id) {
+					throw new Exception('Failed to save address');
+				}
+			} else {
+				// Update existing address
+				$updateAddressData = [
+					'address' => $address,
+					'pincode' => $pincode,
+					'city' => $city
+				];
+				
+				$this->My_model->update_where("customer_address", $updateAddressData, [
+					'customers_id' => $customer_id,
+					'status' => 'active'
+				]);
+			}
+			
+			// Get updated user data
+			$userData = $this->My_model->select_where("customers", [
+				'customers_id' => $customer_id,
+				'status' => 'active'
+			]);
+			
+			$addressData = $this->My_model->select_where("customer_address", [
+				'customers_id' => $customer_id,
+				'status' => 'active'
+			]);
+			
+			// Prepare user data for response
+			$userResponse = [
+				'customers_id' => $customer_id,
+				'name' => $name,
+				'email' => $email,
+				'mobile' => $mobile,
+				'address' => $address,
+				'pincode' => $pincode,
+				'city' => $city
+			];
+			
+			echo json_encode([
+				'status' => 'success',
+				'message' => 'Registration completed successfully',
+				'user_data' => $userResponse,
+				'customer_id' => $customer_id
+			]);
+			
+		} catch (Exception $e) {
+			echo json_encode([
+				'status' => 'error',
+				'message' => 'Registration failed: ' . $e->getMessage()
 			]);
 		}
 	}

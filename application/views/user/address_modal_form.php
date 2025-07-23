@@ -308,7 +308,7 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="payment-option">
                         <input type="radio" checked name="payment_type" id="online" value="Online">
                         <label class="payment-label" for="online">
-                            <img src="https://cdn-icons-png.flaticon.com/512/10551/10551890.png" style="width: 20px;"><span>Online
+                            <span>Online
                                 Payment</span>
                         </label>
                     </div>
@@ -316,7 +316,7 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="payment-option">
                         <input type="radio" name="payment_type" id="cod" value="COD">
                         <label class="payment-label" for="cod">
-                            <img src="https://cdn-icons-png.flaticon.com/512/9198/9198191.png" style="width: 20px;"><span>Cash on
+                            <span>Cash on
                                 Delivery</span>
                         </label>
                     </div>

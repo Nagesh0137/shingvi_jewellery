@@ -119,7 +119,8 @@
         <div class="drawer-footer ptb-15 plr-15 bst">
             <div class="drawer-total d-flex justify-content-between">
                 <span>Subtotal</span>
-                <span class="heading-color heading-weight">₹<?= number_format($subtotal, 2) ?></span>
+                <span
+                    class="heading-color heading-weight">₹<?= isset($subtotal) ? number_format($subtotal, 2) : '0.00' ?></span>
             </div>
             <div class="font-12 mst-8">Shipping, taxes, and discount codes calculated at checkout</div>
             <div class="drawer-cart-checkout mst-12">
