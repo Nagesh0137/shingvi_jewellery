@@ -131,7 +131,6 @@
 
                                             <div class="product-content">
 
-
                                                 <div class="pro-content">
                                                     <div class="pro-content-action">
                                                         <div class="product-title">
