@@ -1,36 +1,43 @@
 <main id="main">
     <!-- <?php
+    print_r($products[0]);
 
-
-            ?> -->
-            <section class="product-detail section-pt">
-                <!-- product prev-next start -->
-                <a href="<?=base_url()?>" class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product prev">
-                    <span class="d-block body-secondary-color msl-5 heading-weight text-uppercase lh-1">Prev</span>
-                </a>
-                <a href="<?=base_url()?>" class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product next">
-                    <span class="d-block body-secondary-color mer-5 heading-weight text-uppercase lh-1">Next</span>
-                </a>
-                <!-- product prev-next end -->
-                <div class="container">
-                    <div class="row row-mtm align-items-lg-start">
-                        <div class="col-12 col-lg-6 p-lg-sticky top-0">
-                            <!-- product-detail-slider start -->
-                            <div class="product-detail-slider per-xxl-10">
-                                <div class="row ul-mt15 flex-sm-row-reverse">
-                                    <div class="col-12 col-sm-10" data-animate="animate__fadeIn">
-                                        <!-- product-img-big start -->
-                                        <div class="product-img-big slider-big-v position-relative br-hidden">
-                                            <div class="swiper" id="slider-big-v">
-                                                <div class="swiper-wrapper product-swiper-wrapper">
-                                                    <?php 
-                                                        foreach($products[0]['imgs'] as $row){
-                                                    ?>
-                                                    <div class="swiper-slide product-swiper-slide">
-                                                        <div class="product-item-img position-relative">
-                                                            <a href="<?=base_url()?>uploads/<?=$row?>" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                            <img src="<?=base_url()?>uploads/<?=$row?>" data-zoom="assets/image/product/p-1.jpg" class="w-100 img-fluid zoom" alt="p-1">
-                                                        </div>
+    ?> -->
+    <!-- product-detail start -->
+    <section class="product-detail section-pt">
+        <!-- product prev-next start -->
+        <a href="<?= base_url() ?>"
+            class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product prev">
+            <span class="d-block body-secondary-color msl-5 heading-weight text-uppercase lh-1">Prev</span>
+        </a>
+        <a href="<?= base_url() ?>"
+            class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product next">
+            <span class="d-block body-secondary-color mer-5 heading-weight text-uppercase lh-1">Next</span>
+        </a>
+        <!-- product prev-next end -->
+        <div class="container">
+            <div class="row row-mtm align-items-lg-start">
+                <div class="col-12 col-lg-6 p-lg-sticky top-0">
+                    <!-- product-detail-slider start -->
+                    <div class="product-detail-slider per-xxl-10">
+                        <div class="row ul-mt15 flex-sm-row-reverse">
+                            <div class="col-12 col-sm-10" data-animate="animate__fadeIn">
+                                <!-- product-img-big start -->
+                                <div class="product-img-big slider-big-v position-relative br-hidden">
+                                    <div class="swiper" id="slider-big-v">
+                                        <div class="swiper-wrapper product-swiper-wrapper">
+                                            <?php
+                                            foreach ($products[0]['imgs'] as $row) {
+                                                ?>
+                                                <div class="swiper-slide product-swiper-slide">
+                                                    <div class="product-item-img position-relative">
+                                                        <a href="<?= base_url() ?>uploads/<?= $row ?>"
+                                                            class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow"
+                                                            aria-label="Image full view"><i
+                                                                class="ri-fullscreen-line d-block lh-1"></i></a>
+                                                        <img src="<?= base_url() ?>uploads/<?= $row ?>"
+                                                            data-zoom="assets/image/product/p-1.jpg"
+                                                            class="w-100 img-fluid zoom" alt="p-1">
                                                     </div>
                                                 </div>
 
@@ -256,22 +263,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <?=
-                                print_r($_SESSION)
-                                ?>
                             <div class="product-button mst-15">
                                 <div class="row btn-row15">
+                                    <?php
+                                    $cat_id = isset($user_cat['prod_id']) ? $user_cat['prod_id'] : '';
+                                    ?>
                                     <div class="col-12 col-sm-6">
-                                        <button type="button" class="w-100 btn-style quaternary-btn add-to-cart"
-                                            onclick="addToCartpd('<?= $products[0]['prod_gold_id'] ?>')">
-                                            <span class="product-icon">
-                                                <span class="product-bag-icon">Add to Cart</span>
-                                                <span class="product-loader-icon icon-16"><i
-                                                        class="ri-loader-4-line d-block lh-1"></i></span>
-                                                <span class="product-check-icon icon-16"><i
-                                                        class="ri-check-line d-block lh-1"></i></span>
-                                            </span>
-                                        </button>
+                                        <?php if ($cat_id == $products[0]['prod_gold_id']) { ?>
+                                            <button type="button" class="w-100 btn-style quaternary-btn add-to-cart"
+                                                onclick="addToCartpd('<?= $products[0]['prod_gold_id'] ?>')">
+                                                <span class="product-icon">
+                                                    <span class="product-bag-icon">Remove from Cart</span>
+                                                    <span class="product-loader-icon icon-16"><i
+                                                            class="ri-loader-4-line d-block lh-1"></i></span>
+                                                    <span class="product-check-icon icon-16"><i
+                                                            class="ri-check-line d-block lh-1"></i></span>
+                                                </span>
+                                            </button>
+                                        <?php } else { ?>
+                                            <button type="button" class="w-100 btn-style quaternary-btn add-to-cart"
+                                                onclick="addToCartpd('<?= $products[0]['prod_gold_id'] ?>')">
+                                                <span class="product-icon">
+                                                    <span class="product-bag-icon">Add to Cart</span>
+                                                    <span class="product-loader-icon icon-16"><i
+                                                            class="ri-loader-4-line d-block lh-1"></i></span>
+                                                    <span class="product-check-icon icon-16"><i
+                                                            class="ri-check-line d-block lh-1"></i></span>
+                                                </span>
+                                            </button>
+                                        <?php } ?>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <?php
@@ -448,7 +468,7 @@
             <div style="overflow-y: auto;border-radius: 0px !important;"
                 class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered my-0 justify-content-center">
                 <div class="modal-content body-bg border-0 br-hidden"
-                    style="height: 100vh; border-radius: 16px 16px 0 0; overflow-y: auto;border-radius: 0px !important;">
+                    style=";height: 100vh; border-radius: 16px 16px 0 0; overflow-y: auto;border-radius: 0px !important;">
                     <div class="modal-body plr-15 plr-sm-30" id="address-modal-body"
                         style="border-radius: 0px !important;">
 
@@ -693,6 +713,8 @@
 
                 // Get the clicked button
                 var $clickedButton = $(event.target).closest('.add-to-cart');
+                var $buttonText = $clickedButton.find('.product-bag-icon');
+                var currentText = $buttonText.text().trim();
 
                 $.ajax({
                     url: '<?= base_url("user/addToCart") ?>',
@@ -714,6 +736,13 @@
 
                                 setTimeout(function () {
                                     $clickedButton.removeClass("done active disabled");
+
+                                    // Toggle button text based on current state
+                                    if (currentText === 'Add to Cart') {
+                                        $buttonText.text('Remove from Cart');
+                                    } else {
+                                        $buttonText.text('Add to Cart');
+                                    }
 
                                     // Call miniCart function
                                     miniCart();
