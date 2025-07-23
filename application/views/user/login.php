@@ -166,7 +166,7 @@ $(document).on('submit', '#otpForm', function (e) {
       success: function (res) {
         if (res.status === 'success') {
           alert('✅ OTP Verified & User Session Set');
-          // 👉 do next step (redirect, load modal, etc.)
+          window.location.href = '<?= base_url("user/my_account") ?>'; // Redirect to user account page
         } else {
           $('#errMsg').text('Failed to set session.');
         }

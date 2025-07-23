@@ -107,6 +107,33 @@ class My_model extends CI_model
 		return $query->result_array();
 	}
 
+	// Get minimum product price
+	public function get_min_price() {
+		$this->db->select_min('discounted_price');
+		$row = $this->db->get('product_gold')->row_array();
+		return $row ? $row['discounted_price'] : 0;
+	}
+	// Get maximum product price
+	public function get_max_price() {
+		$this->db->select_max('discounted_price');
+		$row = $this->db->get('product_gold')->row_array();
+		return $row ? $row['discounted_price'] : 0;
+	}
+	// Get all products
+	public function get_all_products() {
+		return $this->db->where('status', 'active')->get('product_gold')->result_array();
+	}
+	// Get filtered products
+	public function get_filtered_products($category, $group, $min_price, $max_price, $gender) {
+		$this->db->from('product_gold');
+		$this->db->where('status', 'active');
+		if ($category) $this->db->where('cat_id', $category);
+		if ($group) $this->db->where('group_id', $group);
+		if ($min_price) $this->db->where('discounted_price >=', $min_price);
+		if ($max_price) $this->db->where('discounted_price <=', $max_price);
+		if ($gender) $this->db->where('gender', $gender);
+		return $this->db->get()->result_array();
+	}
 
 }
 ?>

@@ -563,6 +563,50 @@
                                             </ul>
                                         </div>
                                     </li>
+                                    <li class="header-icon-wrap cart-wrap d-none d-md-block">
+                                        <div class="header-icon-wrapper">
+                                            <a href="javascript:void(0)" class="d-block header-icon-cart js-cart-drawer">
+                                                <span class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
+                                                    <span class="header-block-icon icon-16"><i class="ri-shopping-bag-3-line"></i></span>
+                                                    <span class="d-none d-xl-block header-text-content">Cart</span>
+                                                    <span class="header-block-counter cart-counter dominant-color">4</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li class="header-icon-wrap user-wrap d-none d-md-block">
+                                        <div class="header-icon-wrapper">
+                                            <?php if (isset($_SESSION['user_id'])): ?>
+                                                <?php 
+                                                //  Fetch active user details using session user ID
+                                                $user_details = $this->My_model->select_where("customers", [
+                                                    'status' => 'active',
+                                                    'customers_id' => $_SESSION['user_id']
+                                                ]); 
+                                                ?>
+                                                <a href="<?= base_url() ?>user/my_account" class="d-block header-icon-user text-center" aria-label="My Account">
+                                                    <div class="d-flex flex-column align-items-center">
+                                                        <?php if (!empty($user_details[0]['profile_photo'])): ?>
+                                                            <span class="header-block-icon icon-24 mb-1"><i class="ri-user-3-line" style="font-size: 20px;"></i></span>
+                                                        <span class="d-block header-text-content">Account</span>
+                                                        <?php else: ?>
+                                                            <span class="header-block-icon icon-24 mb-1"><i class="ri-user-3-line" style="font-size: 40px;"></i></span>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </a>
+                                            <?php else: ?>
+                                                <a href="<?= base_url() ?>user/login" class="d-block header-icon-user text-center" aria-label="Login">
+                                                    <div class="d-flex flex-column align-items-center">
+                                                        <span class="header-block-icon icon-24 mb-1"><i class="ri-user-3-line" style="font-size: 20px;"></i></span>
+                                                        <span class="d-block header-text-content">Account</span>
+                                                    </div>
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </li>
+
+
                                 </ul>
                             </div>
                         </div>

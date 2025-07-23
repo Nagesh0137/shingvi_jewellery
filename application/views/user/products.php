@@ -107,7 +107,10 @@
                                                         success: function(response) {
                                                             console.log('test',response);
                                                             return 1;
+<<<<<<< Updated upstream
                                                             // Target the <i> tag using its ID
+=======
+>>>>>>> Stashed changes
                                                             var icon = $('#add-to-wishlist' + prodId);
 
                                                             if (response.status === 'added') {

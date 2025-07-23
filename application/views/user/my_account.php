@@ -15,7 +15,11 @@
                 <div class="col-12 col-lg-4 col-xl-3 p-lg-sticky top-0" data-animate="animate__fadeIn">
                     <div class="ap-info">
                         <div class="ap-author ptb-30 plr-15 extra-bg text-center border-radius">
-                            <img src="<?=base_url()?>uploads/<?=$customer_details[0]['profile_photo']?>" class="img-fluid" alt="customer Profile" style="height:70px; width:70px; border-radius:50%; object-fit:cover; margin-bottom:5px;">
+                            <?php if (!empty($customer_details[0]['profile_photo'])): ?>
+                                <img src="<?=base_url()?>uploads/<?=$customer_details[0]['profile_photo']?>" class="img-fluid" alt="customer Profile" style="height:70px; width:70px; border-radius:50%; object-fit:cover; margin-bottom:5px;">
+                            <?php else: ?>
+                                <img src="<?=base_url()?>uploads/dummy_profile.png" class="img-fluid" alt="customer Profile" style="height:70px; width:70px; border-radius:50%; object-fit:cover;">
+                            <?php endif; ?>
                             <div class="ap-ac mst-26">
                                 <h6 class="font-18"><?=$customer_details[0]['firstname']?> <?=$customer_details[0]['lastname']?></h6>
                                 <h3 class="font-12"><?=$customer_details[0]['mobile']?></h3>
@@ -36,12 +40,12 @@
                             </a> -->
                             
                             
-                            <a href="#deletemodal" class="body-dominant-color d-flex align-items-center justify-content-between ptb-15 plr-15" data-bs-toggle="modal">
+                            <a href="<?=base_url()?>user/my_orders" class="body-dominant-color d-flex align-items-center justify-content-between ptb-15 plr-15">
                                 <span class="ap-icon body-color icon-16 mer-5"><i class="ri-delete-bin-line"></i></span>
-                                <span class="ap-name me-auto">Delete account</span>
+                                <span class="ap-name me-auto">My Orders</span>
                             </a>
 
-                            <a href="<?= base_url('user/logout') ?>" class="body-dominant-color d-flex align-items-center justify-content-between ptb-15 plr-15">
+                            <a href="<?= base_url('user/logout') ?>" class="body-dominant-color d-flex align-items-center justify-content-between ptb-15 plr-15" onclick="return confirm('Are you sure you want to logout?')">
                                 <span class="ap-icon body-color icon-16 mer-5"><i class="ri-logout-box-line"></i></span>
                                 <span class="ap-name me-auto">Logout</span>
                             </a>
