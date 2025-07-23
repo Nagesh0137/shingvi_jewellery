@@ -99,6 +99,17 @@ function user_name($cid)
     return '-';
   }
 }
+
+
+function productImage($id)
+{
+  $data = $GLOBALS['CI']->My_model->select_where("product_gold", ['prod_gold_id' => $id, 'status' => 'active']);
+  if (isset($data[0])) {
+    return $data[0]['product_image'];
+  } else {
+    return '-';
+  }
+}
 function tripId()
 {
   $count = $GLOBALS['CI']->db->query("SELECT COUNT(trip_tbl_id) as count FROM trip_tbl where entry_date='" . date('Y-m-d') . "'")->row_array();
