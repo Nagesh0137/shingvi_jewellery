@@ -713,17 +713,7 @@ class User extends CI_Controller
 		$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'], 'status' => 'active']);
 
 
-		$data['product_group'] = $this->db->query("
-        SELECT category.*, product_group.*, product_group.product_group_id 
-        FROM category, product_gold, product_group 
-        WHERE category.category_id = product_gold.cat_id 
-        AND product_gold.status = 'active' 
-        AND product_group.status = 'active' 
-        AND category.category_id = '" . $_GET['cat_id'] . "'
-        AND product_gold.group_id = product_group.product_group_id 
-        " . $gId . "
-        GROUP BY product_group.product_group_id
-    ")->result_array();
+		$data['product_group'] = $this->My_model->select_where("product_group", ['status' => 'active']);
 
 		// Filtered products result
 		$filtered_products = [];
@@ -2900,23 +2890,11 @@ class User extends CI_Controller
 		$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'],'status' => 'active']);
 	   
 		
-		$data['product_group'] = $this->db->query("
-			SELECT category.*, product_group.*, product_group.product_group_id 
-			FROM category, product_gold, product_group 
-			WHERE category.category_id = product_gold.cat_id 
-			AND product_gold.status = 'active' 
-			AND product_group.status = 'active' 
-			AND category.category_id = '".$_GET['cat_id']."'
-			AND product_gold.group_id = product_group.product_group_id 
-			".$gId."
-			GROUP BY product_group.product_group_id
-		")->result_array();
+		$data['product_group'] = $this->My_model->select_where("product_group", ['status' => 'active']);
 	
-		// Filtered products result
 		$filtered_products = [];
 	
 		foreach ($products as $row) {
-			// Fetch filters
 			$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
 			$ft = '';
 			$ff = '';
@@ -2961,9 +2939,9 @@ class User extends CI_Controller
 		}
 	
 		$data['products'] = $filtered_products;
-		echo "<pre>";
-		print_r($data);
-		exit;
+		// echo "<pre>";
+		// print_r($data);
+		// exit;
 		$this->ov("product_details_filter",$data);
 	}
 
