@@ -863,11 +863,11 @@
                                                     Item</span>
                                                 <h6 class="font-18"><?= $cat['category_name'] ?></h6>
                                                 <a href="<?= base_url('user/product_details_filter/' . $cat['category_id']) ?>"
-                                                            class="btn-style secondary-btn mst-15">Shop now</a>
-                                                    </div>
-                                                </div>
+                                                    class="btn-style secondary-btn mst-15">Shop now</a>
                                             </div>
-                                    <?php } ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             <?php } ?>
 
                         </div>
@@ -998,179 +998,179 @@
                     <div class="collection-slider swiper" id="feature-product-slider">
                         <div class="swiper-wrapper">
                             <?php if (!empty($new_products) && count($new_products) > 0): ?>
-                                    <?php foreach ($new_products as $row): ?>
-                                            <?php
-                                            $images = explode("||", $row['product_image']);
-                                            $main_image = !empty($images[0]) ? $images[0] : 'default.png';
-                                            $second_image = !empty($images[1]) ? $images[1] : $main_image;
-                                            $product_link = base_url("user/view_product_details?product_id={$row['prod_gold_id']}&prod_name={$row['product_name']}");
-                                            $group_name = !empty($row['group_id']) ? getgroupname($row['group_id']) : '';
+                                <?php foreach ($new_products as $row): ?>
+                                    <?php
+                                    $images = explode("||", $row['product_image']);
+                                    $main_image = !empty($images[0]) ? $images[0] : 'default.png';
+                                    $second_image = !empty($images[1]) ? $images[1] : $main_image;
+                                    $product_link = base_url("user/view_product_details?product_id={$row['prod_gold_id']}&prod_name={$row['product_name']}");
+                                    $group_name = !empty($row['group_id']) ? getgroupname($row['group_id']) : '';
 
-                                            // Calculate product price based on category and type
-                                            $price = '---';
-                                            $formatted_price = '---';
-                                            $formatted_discounted_price = '---';
+                                    // Calculate product price based on category and type
+                                    $price = '---';
+                                    $formatted_price = '---';
+                                    $formatted_discounted_price = '---';
 
-                                            if ($row['cat_id'] == 5) {
-                                                $price = $admin->goldprice($row['prod_gold_id']);
-                                                $formatted_price = number_format1($price);
-                                            } elseif ($row['cat_id'] == 6) {
-                                                $price = $admin->silverprice($row['prod_gold_id']);
-                                                $formatted_price = number_format1($price);
-                                            } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
-                                                $price = $admin->golddiamondprice($row['prod_gold_id']);
-                                                $formatted_price = number_format1($price);
-                                            } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
-                                                $price = $admin->silverdiamondprice($row['prod_gold_id']);
-                                                $formatted_price = number_format1($price);
-                                            }
+                                    if ($row['cat_id'] == 5) {
+                                        $price = $admin->goldprice($row['prod_gold_id']);
+                                        $formatted_price = number_format1($price);
+                                    } elseif ($row['cat_id'] == 6) {
+                                        $price = $admin->silverprice($row['prod_gold_id']);
+                                        $formatted_price = number_format1($price);
+                                    } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+                                        $price = $admin->golddiamondprice($row['prod_gold_id']);
+                                        $formatted_price = number_format1($price);
+                                    } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+                                        $price = $admin->silverdiamondprice($row['prod_gold_id']);
+                                        $formatted_price = number_format1($price);
+                                    }
 
-                                            // Calculate discount if applicable
-                                            $discount_percentage = 0;
-                                            $show_discount = false;
+                                    // Calculate discount if applicable
+                                    $discount_percentage = 0;
+                                    $show_discount = false;
 
-                                            if ($price != '---' && isset($row['total_discount_amt']) && $row['total_discount_amt'] > 0) {
-                                                $discounted_price = $price - $row['total_discount_amt'];
-                                                $formatted_discounted_price = number_format1($discounted_price);
-                                                $discount_percentage = round(($row['total_discount_amt'] / $price) * 100);
-                                                $show_discount = true;
-                                            }
-                                            ?>
-                                            <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
-                                                <div class="single-product w-100">
-                                                    <div class="row single-product-wrap">
-                                                        <div class="product-image">
-                                                            <a href="<?= base_url() ?>user/product_details/<?= $row['prod_gold_id'] ?>"
-                                                                class="pro-img">
-                                                                <img src="<?= compress_image() ?>uploads/<?= $main_image ?>"
-                                                                    class="w-100 img-fluid img1"
-                                                                    alt="<?= htmlspecialchars($row['product_name']) ?>">
-                                                                <img src="<?= compress_image() ?>uploads/<?= $second_image ?>"
-                                                                    class="w-100 img-fluid img2"
-                                                                    alt="<?= htmlspecialchars($row['product_name']) ?>">
-                                                                <?php if ($show_discount && $discount_percentage > 0): ?>
-                                                                        <span
-                                                                            class="product-label product-label-discount product-label-right">-<?= $discount_percentage ?>%
-                                                                            off</span>
-                                                                <?php endif; ?>
-                                                            </a>
-                                                            <div class="product-action">
-                                                                <!-- <a href="javascript:void(0)" class="add-to-wishlist">
+                                    if ($price != '---' && isset($row['total_discount_amt']) && $row['total_discount_amt'] > 0) {
+                                        $discounted_price = $price - $row['total_discount_amt'];
+                                        $formatted_discounted_price = number_format1($discounted_price);
+                                        $discount_percentage = round(($row['total_discount_amt'] / $price) * 100);
+                                        $show_discount = true;
+                                    }
+                                    ?>
+                                    <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
+                                        <div class="single-product w-100">
+                                            <div class="row single-product-wrap">
+                                                <div class="product-image">
+                                                    <a href="<?= base_url() ?>user/product_details/<?= $row['prod_gold_id'] ?>"
+                                                        class="pro-img">
+                                                        <img src="<?= compress_image() ?>uploads/<?= $main_image ?>"
+                                                            class="w-100 img-fluid img1"
+                                                            alt="<?= htmlspecialchars($row['product_name']) ?>">
+                                                        <img src="<?= compress_image() ?>uploads/<?= $second_image ?>"
+                                                            class="w-100 img-fluid img2"
+                                                            alt="<?= htmlspecialchars($row['product_name']) ?>">
+                                                        <?php if ($show_discount && $discount_percentage > 0): ?>
+                                                            <span
+                                                                class="product-label product-label-discount product-label-right">-<?= $discount_percentage ?>%
+                                                                off</span>
+                                                        <?php endif; ?>
+                                                    </a>
+                                                    <div class="product-action">
+                                                        <!-- <a href="javascript:void(0)" class="add-to-wishlist">
                                                             <span class="product-icon"><i
                                                                     class="ri-heart-line d-block icon-16 lh-1"></i></span>
                                                             <span class="tooltip-text">wishlist</span>
                                                         </a> -->
-                                                                <a href="javascript:void(0)"
-                                                                    onclick="openModal('<?= $row['prod_gold_id'] ?>')"
-                                                                    class="quick-view">
-                                                                    <span class="product-icon quick-view"><i
-                                                                            class="ri-eye-line d-block icon-16 lh-1"></i></span>
-                                                                    <span class="tooltip-text">quickview</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-content">
-                                                            <div class="pro-content">
-                                                                <div class="pro-content-action">
-                                                                    <div class="pro-content-info">
-                                                                        <div class="product-title">
-                                                                            <span class="d-block meb-7"><?= $group_name ?></span>
-                                                                            <span class="d-block heading-weight">
-                                                                                <a href="<?= $product_link ?>"
-                                                                                    class="d-block w-100 dominant-link text-truncate">
-                                                                                    <?= htmlspecialchars($row['product_name']) ?>
-                                                                                </a>
+                                                        <a href="javascript:void(0)"
+                                                            onclick="openModal('<?= $row['prod_gold_id'] ?>')"
+                                                            class="quick-view">
+                                                            <span class="product-icon quick-view"><i
+                                                                    class="ri-eye-line d-block icon-16 lh-1"></i></span>
+                                                            <span class="tooltip-text">quickview</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <div class="pro-content">
+                                                        <div class="pro-content-action">
+                                                            <div class="pro-content-info">
+                                                                <div class="product-title">
+                                                                    <span class="d-block meb-7"><?= $group_name ?></span>
+                                                                    <span class="d-block heading-weight">
+                                                                        <a href="<?= $product_link ?>"
+                                                                            class="d-block w-100 dominant-link text-truncate">
+                                                                            <?= htmlspecialchars($row['product_name']) ?>
+                                                                        </a>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="product-price">
+                                                                    <div class="price-box heading-weight">
+                                                                        <?php if ($show_discount): ?>
+                                                                            <span
+                                                                                class="new-price dominant-color">&#8377;<?= $formatted_discounted_price ?></span>
+                                                                            <span class="old-price">
+                                                                                <span class="mer-3">~</span>
+                                                                                <span
+                                                                                    class="text-decoration-line-through">&#8377;<?= $formatted_price ?></span>
                                                                             </span>
-                                                                        </div>
-                                                                        <div class="product-price">
-                                                                            <div class="price-box heading-weight">
-                                                                                <?php if ($show_discount): ?>
-                                                                                        <span
-                                                                                            class="new-price dominant-color">&#8377;<?= $formatted_discounted_price ?></span>
-                                                                                        <span class="old-price">
-                                                                                            <span class="mer-3">~</span>
-                                                                                            <span
-                                                                                                class="text-decoration-line-through">&#8377;<?= $formatted_price ?></span>
-                                                                                        </span>
-                                                                                <?php else: ?>
-                                                                                        <span
-                                                                                            class="new-price dominant-color">&#8377;<?= $formatted_price ?></span>
-                                                                                <?php endif; ?>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="product-action">
-                                                                        <?php if (isset($_SESSION['cart'][$row['prod_gold_id']])): ?>
-                                                                                <a href="javascript:void(0)" class="add-to-cart added">
-                                                                                    <span class="product-icon">
-                                                                                        <span class="product-check-icon icon-16"><i
-                                                                                                class="ri-check-line d-block lh-1"></i></span>
-                                                                                    </span>
-                                                                                    <span class="tooltip-text">added to cart</span>
-                                                                                </a>
                                                                         <?php else: ?>
-                                                                                <a href="javascript:void(0)" class="add-to-cart"
-                                                                                    onclick="add_in_cart2('<?= $row['prod_gold_id'] ?>',this)">
-                                                                                    <span class="product-icon">
-                                                                                        <span class="product-bag-icon icon-16"><i
-                                                                                                class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                                        <span class="product-loader-icon icon-16"><i
-                                                                                                class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                                        <span class="product-check-icon icon-16"><i
-                                                                                                class="ri-check-line d-block lh-1"></i></span>
-                                                                                    </span>
-                                                                                    <span class="tooltip-text">add to cart</span>
-                                                                                </a>
+                                                                            <span
+                                                                                class="new-price dominant-color">&#8377;<?= $formatted_price ?></span>
                                                                         <?php endif; ?>
                                                                     </div>
                                                                 </div>
-                                                                <div class="product-description">
-                                                                    <p><?= !empty($row['short_description']) ? htmlspecialchars($row['short_description']) : 'Premium quality jewelry with exquisite craftsmanship' ?>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="product-action">
-                                                                    <?php if (isset($_SESSION['cart'][$row['prod_gold_id']])): ?>
-                                                                            <a href="javascript:void(0)" class="add-to-cart added">
-                                                                                <span class="product-icon">
-                                                                                    <span class="product-check-icon icon-16"><i
-                                                                                            class="ri-check-line d-block lh-1"></i></span>
-                                                                                </span>
-                                                                                <span class="tooltip-text">added to cart</span>
-                                                                            </a>
-                                                                    <?php else: ?>
-                                                                            <a href="javascript:void(0)" class="add-to-cart"
-                                                                                onclick="add_in_cart2('<?= $row['prod_gold_id'] ?>',this)">
-                                                                                <span class="product-icon">
-                                                                                    <span class="product-bag-icon icon-16"><i
-                                                                                            class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                                    <span class="product-loader-icon icon-16"><i
-                                                                                            class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                                    <span class="product-check-icon icon-16"><i
-                                                                                            class="ri-check-line d-block lh-1"></i></span>
-                                                                                </span>
-                                                                                <span class="tooltip-text">add to cart</span>
-                                                                            </a>
-                                                                    <?php endif; ?>
-
-                                                                    <a href="<?= $product_link ?>" class="quick-view">
-                                                                        <span class="product-icon"><i
-                                                                                class="ri-eye-line d-block icon-16 lh-1"></i></span>
-                                                                        <span class="tooltip-text">quickview</span>
-                                                                    </a>
-                                                                </div>
                                                             </div>
+
+                                                            <div class="product-action">
+                                                                <?php if (isset($_SESSION['cart'][$row['prod_gold_id']])): ?>
+                                                                    <a href="javascript:void(0)" class="add-to-cart added">
+                                                                        <span class="product-icon">
+                                                                            <span class="product-check-icon icon-16"><i
+                                                                                    class="ri-check-line d-block lh-1"></i></span>
+                                                                        </span>
+                                                                        <span class="tooltip-text">added to cart</span>
+                                                                    </a>
+                                                                <?php else: ?>
+                                                                    <a href="javascript:void(0)" class="add-to-cart"
+                                                                        onclick="add_in_cart2('<?= $row['prod_gold_id'] ?>',this)">
+                                                                        <span class="product-icon">
+                                                                            <span class="product-bag-icon icon-16"><i
+                                                                                    class="ri-shopping-bag-3-line d-block lh-1"></i></span>
+                                                                            <span class="product-loader-icon icon-16"><i
+                                                                                    class="ri-loader-4-line d-block lh-1"></i></span>
+                                                                            <span class="product-check-icon icon-16"><i
+                                                                                    class="ri-check-line d-block lh-1"></i></span>
+                                                                        </span>
+                                                                        <span class="tooltip-text">add to cart</span>
+                                                                    </a>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-description">
+                                                            <p><?= !empty($row['short_description']) ? htmlspecialchars($row['short_description']) : 'Premium quality jewelry with exquisite craftsmanship' ?>
+                                                            </p>
+                                                        </div>
+                                                        <div class="product-action">
+                                                            <?php if (isset($_SESSION['cart'][$row['prod_gold_id']])): ?>
+                                                                <a href="javascript:void(0)" class="add-to-cart added">
+                                                                    <span class="product-icon">
+                                                                        <span class="product-check-icon icon-16"><i
+                                                                                class="ri-check-line d-block lh-1"></i></span>
+                                                                    </span>
+                                                                    <span class="tooltip-text">added to cart</span>
+                                                                </a>
+                                                            <?php else: ?>
+                                                                <a href="javascript:void(0)" class="add-to-cart"
+                                                                    onclick="add_in_cart2('<?= $row['prod_gold_id'] ?>',this)">
+                                                                    <span class="product-icon">
+                                                                        <span class="product-bag-icon icon-16"><i
+                                                                                class="ri-shopping-bag-3-line d-block lh-1"></i></span>
+                                                                        <span class="product-loader-icon icon-16"><i
+                                                                                class="ri-loader-4-line d-block lh-1"></i></span>
+                                                                        <span class="product-check-icon icon-16"><i
+                                                                                class="ri-check-line d-block lh-1"></i></span>
+                                                                    </span>
+                                                                    <span class="tooltip-text">add to cart</span>
+                                                                </a>
+                                                            <?php endif; ?>
+
+                                                            <a href="<?= $product_link ?>" class="quick-view">
+                                                                <span class="product-icon"><i
+                                                                        class="ri-eye-line d-block icon-16 lh-1"></i></span>
+                                                                <span class="tooltip-text">quickview</span>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                    <?php endforeach; ?>
-                            <?php else: ?>
-                                    <div class="swiper-slide h-auto d-flex">
-                                        <div class="alert alert-info text-center w-100">
-                                            No new products found.
                                         </div>
                                     </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="swiper-slide h-auto d-flex">
+                                    <div class="alert alert-info text-center w-100">
+                                        No new products found.
+                                    </div>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -1190,7 +1190,7 @@
                         <div class="swiper-pagination swiper-pagination-feature-product"></div>
                     </div>
                     <div class="view-button" data-animate="animate__fadeIn">
-                        <a href="<?= base_url('user/collection') ?>" class="btn-style secondary-btn">View all</a>
+                        <a href="<?= base_url('user/products') ?>" class="btn-style secondary-btn">View all</a>
                     </div>
                 </div>
             </div>
@@ -1567,26 +1567,26 @@
                 <div class="swiper-wrapper">
                     <?php if (!empty($web_testimonial) && count($web_testimonial) > 0) {
                         foreach ($web_testimonial as $row) { ?>
-                                    <div class="swiper-slide">
-                                        <div class="testimonial-box text-center p-4 shadow rounded">
-                                            <div class="d-flex justify-content-center">
-                                                <img src="<?= compress_image() ?>uploads/<?= $row['testimonial_img'] ?>"
-                                                    class="rounded-circle mb-3" alt="testimonial"
-                                                    style="width:100px;height:100px;object-fit:cover;">
-                                            </div>
-                                            <h5 class="fw-bold"><?= $row['testimonial_person'] ?></h5>
-                                            <p class="text-muted"><?= $row['testimonial_details'] ?></p>
-                                            <div class="stars text-warning mb-2">
-                                                <?php
-                                                $rating = (int) $row['rating'];
-                                                for ($i = 1; $i <= 5; $i++) {
-                                                    echo $i <= $rating ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line"></i>';
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-box text-center p-4 shadow rounded">
+                                    <div class="d-flex justify-content-center">
+                                        <img src="<?= compress_image() ?>uploads/<?= $row['testimonial_img'] ?>"
+                                            class="rounded-circle mb-3" alt="testimonial"
+                                            style="width:100px;height:100px;object-fit:cover;">
                                     </div>
-                            <?php }
+                                    <h5 class="fw-bold"><?= $row['testimonial_person'] ?></h5>
+                                    <p class="text-muted"><?= $row['testimonial_details'] ?></p>
+                                    <div class="stars text-warning mb-2">
+                                        <?php
+                                        $rating = (int) $row['rating'];
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            echo $i <= $rating ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line"></i>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php }
                     } ?>
                 </div>
             </div>

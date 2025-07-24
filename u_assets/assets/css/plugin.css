@@ -18281,7 +18281,8 @@ print {
     font-family: remixicon !important;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 22px;
 }
 
 .ri-lg {
@@ -67442,7 +67443,7 @@ button.swiper-pagination-bullet {
 }
 
 .icon-16 {
-    font-size: 16px
+    font-size: 22px
 }
 
 .icon-24 {

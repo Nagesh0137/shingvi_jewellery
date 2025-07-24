@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="<?= base_url() ?>u_assets/assets/css/collection.css">
-<script src="<?= base_url() ?>u_assets/assets/js/theme.js"></script>
+
 <div class="bg-screen">
     <div class="bg-back filter-backdrop opacity-0 invisible"></div>
 </div>
@@ -10,35 +9,12 @@
     </div>
 </div>
 <main id="main">
-    <section class="shop-content section-ptb">
-        <div class="container">
-            <div class="row row-mtm" data-animate="animate__fadeIn">
-                <!-- MOBILE FILTER BUTTON -->
-                <button type="button" class="shop-filter-btn secondary-color d-flex align-items-center d-xl-none mb-3">
-                    <i class="ri-filter-line icon-16 mer-5"></i>Filter
-                </button>
-                <!-- FILTER TAGS LIST -->
-                <!-- <div class="shop-filter-list d-flex align-items-start justify-content-between">
-                    <ul class="shop-filter-ul ul-mt5 align-items-center">
-                        <li class="shop-filter-li"><a class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">Out of stock<i class="ri-close-large-line"></i></a></li>
-                        <li class="shop-filter-li"><a class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">In stock<i class="ri-close-large-line"></i></a></li>
-                        <li class="shop-filter-li"><a class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">Aliceblue<i class="ri-close-large-line"></i></a></li>
-                        <li class="shop-filter-li"><a class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">16cm<i class="ri-close-large-line"></i></a></li>
-                        <li class="shop-filter-li"><a class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">Rings<i class="ri-close-large-line"></i></a></li>
-                        <li class="shop-filter-li"><button type="submit" class="shop-filter-active text-decoration-underline">Clear all</button></li>
-                    </ul>
-                    <div class="shop-filter-loader"><svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="var(--heading-font-color)" stroke-width="3" cx="33" cy="33" r="30"></circle></svg></div>
-                </div> -->
-                <!-- PRODUCT GRID + SIDEBAR start -->
-
-                <div class="shop-product-wrap data-grid ">
-                    <div class="row">
-                        <div class="col-md-3 ">
-                            <div class="shop-sidebar-wrap shop-filter-sidebar card bg-white p-3 border-0"
-                                data-animate="animate__fadeIn">
-                                <button type="button"
-                                    class="shop-sidebar-close body-secondary-color icon-16 position-absolute"
-                                    aria-label="Close"><i class="ri-close-large-line d-block lh-1"></i></button>
+<section class="shop-content section-ptb">
+                <div class="container">
+                    <div class="row align-items-xl-start">
+                        <div class="col-12 col-xl-3 p-xl-sticky top-0 mt-4">
+                            <div class="shop-sidebar-wrap shop-filter-sidebar card bg-white p-4 border-0" data-animate="animate__fadeIn">
+                                <button type="button" class="shop-sidebar-close body-secondary-color icon-16 position-absolute" aria-label="Close"><i class="ri-close-large-line d-block lh-1"></i></button>
                                 <form class="shop-form" method="get" id="shopForm">
 
                                     <div class="shop-sidebar availability" >
@@ -50,9 +26,39 @@
                                             }
                                             ?>
                                         </h2>
-                                        <!-- Search By Products section start -->
-                                        <ul class="widget__categories--menu mt-3 bg-light"
-                                            style="height: 200px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ccc #f5f5f5;">
+                                       <style>
+                                        .widget__categories--menu{
+	height: 200px;
+	width: 100%;
+	background: #F5F5F5;
+	overflow-y: scroll;
+                                        }
+                                       #widget__categories::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#widget__categories::-webkit-scrollbar
+{
+	width: 7px;
+	background-color: #F5F5F5;
+}
+
+#widget__categories::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}
+                                        .widget__categories--menu__list{
+
+                                        }
+                                       </style>
+                                        <ul class="widget__categories--menu mt-3 "
+                                            id="widget__categories">
+                                           
 
                                             <?php if (isset($_GET['cat_id']) && $_GET['cat_id'] != ''): ?>
                                                 <?php if (!empty($product_group)) { ?>
@@ -62,8 +68,8 @@
                                                             <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $_GET['cat_id'] ?>&g_id=<?= $row1['product_group_id'] ?>"
                                                                 style="cursor: pointer;">
                                                                 <label class="bg-white d-flex align-items-center p-2 text-center justify-content-justify <?php if (isset($_GET['g_id']) && $_GET['g_id'] == $row1['product_group_id'])
-                                                                    echo ''; ?>"
-                                                                    style="margin-bottom: 10px;cursor: pointer;">
+                                                                    ?>"
+                                                                    style="margin-bottom: 10px;cursor: pointer;border:1px solid hsla(0, 92.70%, 52.00%, 0.2);">
                                                                     <!-- <img style="width: 20px; height: 20px;cursor: pointer;" src="<?= base_url() ?>uploads/<?= $row1['product_group_image'] ?>" alt="categories-img"> -->
                                                                     <span class="widget__categories--menu__text"
                                                                         style="text-transform: uppercase;">
@@ -122,8 +128,6 @@
                                         </div>
                                         <div class="range-slider-container">
                                             <div class="range-values-above">
-                                                <!-- <span id="min-range-value">0</span> -->
-                                                <!-- <span id="max-range-value">2,00,000+</span> -->
                                             </div>
                                             <div class="range-slider">
                                                 <div class="slider-track"></div>
@@ -133,10 +137,7 @@
                                                 <input type="range" id="max-range" min="0" max="200000" step="1"
                                                     value="<?= isset($_GET['max_amt']) ? htmlspecialchars($_GET['max_amt']) : '200000' ?>">
                                             </div>
-                                            <div class="range-values-below">
-                                                <!-- <span id="min-range-label">0</span> -->
-                                                <!-- <span id="max-range-label">2,00,000+</span> -->
-                                            </div>
+                                           
                                         </div>
                                         <button class="btn btn-danger btn-sm mt-3 w-100" type="submit">Filter</button>
                                     </div>
@@ -145,9 +146,226 @@
 
                                 </form>
                             </div>
+                            <!-- <div class="collection-product-list d-none d-xl-block pst-30 mst-30 bst">
+                                <div class="side-collection-category">
+                                    <h6 class="font-18" data-animate="animate__fadeIn">Special products</h6>
+                                    <div class="side-collection-wrap mst-25">
+                                        <div class="collection-slider swiper" id="special-product-slider">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
+                                                    <div class="single-product-list w-100">
+                                                        <div class="single-product-wrap d-flex flex-wrap">
+                                                            <div class="width-120 product-image">
+                                                                <a href="product.html" class="pro-img"><img src="assets/image/index/product/p-1.jpg" class="w-100 img-fluid" alt="p-1"></a>
+                                                            </div>
+                                                            <div class="width-calc-120 product-content">
+                                                                <div class="pro-content">
+                                                                    <div class="product-title">
+                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Gleam band</a></span>
+                                                                    </div>
+                                                                    <div class="product-price">
+                                                                        <div class="price-box heading-weight">
+                                                                            <span class="new-price dominant-color">$79.00</span>
+                                                                            <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$89.00</span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
+                                                    <div class="single-product-list w-100">
+                                                        <div class="single-product-wrap d-flex flex-wrap">
+                                                            <div class="width-120 product-image">
+                                                                <a href="product.html" class="pro-img"><img src="assets/image/index/product/p-3.jpg" class="w-100 img-fluid" alt="p-3"></a>
+                                                            </div>
+                                                            <div class="width-calc-120 product-content">
+                                                                <div class="pro-content">
+                                                                    <div class="product-title">
+                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Luxe loop</a></span>
+                                                                    </div>
+                                                                    <div class="product-price">
+                                                                        <div class="price-box heading-weight">
+                                                                            <span class="new-price dominant-color">$49.00</span>
+                                                                            <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$59.00</span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
+                                                    <div class="single-product-list w-100">
+                                                        <div class="single-product-wrap d-flex flex-wrap">
+                                                            <div class="width-120 product-image">
+                                                                <a href="product.html" class="pro-img"><img src="assets/image/index/product/p-5.jpg" class="w-100 img-fluid" alt="p-5"></a>
+                                                            </div>
+                                                            <div class="width-calc-120 product-content">
+                                                                <div class="pro-content">
+                                                                    <div class="product-title">
+                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Opal stud</a></span>
+                                                                    </div>
+                                                                    <div class="product-price">
+                                                                        <div class="price-box heading-weight">
+                                                                            <span class="new-price dominant-color">$69.00</span>
+                                                                            <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$79.00</span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
+                                                    <div class="single-product-list w-100">
+                                                        <div class="single-product-wrap d-flex flex-wrap">
+                                                            <div class="width-120 product-image">
+                                                                <a href="product.html" class="pro-img"><img src="assets/image/index/product/p-7.jpg" class="w-100 img-fluid" alt="p-7"></a>
+                                                            </div>
+                                                            <div class="width-calc-120 product-content">
+                                                                <div class="pro-content">
+                                                                    <div class="product-title">
+                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Ruby hoop</a></span>
+                                                                    </div>
+                                                                    <div class="product-price">
+                                                                        <div class="price-box heading-weight">
+                                                                            <span class="new-price dominant-color">$49.00</span>
+                                                                            <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$54.00</span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
+                                                    <div class="single-product-list w-100">
+                                                        <div class="single-product-wrap d-flex flex-wrap">
+                                                            <div class="width-120 product-image">
+                                                                <a href="product.html" class="pro-img"><img src="assets/image/index/product/p-9.jpg" class="w-100 img-fluid img1" alt="p-9"></a>
+                                                            </div>
+                                                            <div class="width-calc-120 product-content">
+                                                                <div class="pro-content">
+                                                                    <div class="product-title">
+                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Pearl link</a></span>
+                                                                    </div>
+                                                                    <div class="product-price">
+                                                                        <div class="price-box heading-weight">
+                                                                            <span class="new-price dominant-color">$89.00</span>
+                                                                            <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$99.00</span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
+                                                    <div class="single-product-list w-100">
+                                                        <div class="single-product-wrap d-flex flex-wrap">
+                                                            <div class="width-120 product-image">
+                                                                <a href="product.html" class="pro-img"><img src="assets/image/index/product/p-11.jpg" class="w-100 img-fluid img1" alt="p-11"></a>
+                                                            </div>
+                                                            <div class="width-calc-120 product-content">
+                                                                <div class="pro-content">
+                                                                    <div class="product-title">
+                                                                        <span class="d-block heading-weight"><a href="product.html" class="d-block w-100 dominant-link text-truncate">Gold bead</a></span>
+                                                                    </div>
+                                                                    <div class="product-price">
+                                                                        <div class="price-box heading-weight">
+                                                                            <span class="new-price dominant-color">$79.00</span>
+                                                                            <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through">$84.00</span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-buttons" data-animate="animate__fadeIn">
+                                            <div class="swiper-buttons-wrap">
+                                                <button type="button" class="swiper-prev swiper-prev-special-product" aria-label="Arrow previous"><i class="ri-arrow-left-line d-block lh-1"></i></button>
+                                                <button type="button" class="swiper-next swiper-next-special-product" aria-label="Arrow next"><i class="ri-arrow-right-line d-block lh-1"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="sidebar-banner d-none d-xl-block banner-hover mst-30" data-animate="animate__fadeIn">
+                                <a href="collection.html" class="d-block banner-img position-relative br-hidden">
+                                    <span class="banner-icon secondary-color font-20 position-absolute top-50 start-50 width-48 height-48 d-flex align-items-center justify-content-center extra-bg z-1 rounded-circle"><i class="ri-arrow-right-line d-block lh-1"></i></span>
+                                    <img src="assets/image/collection/side-image.jpg" class="w-100 img-fluid" alt="side-image">
+                                </a>
+                            </div> -->
+                            <!-- shop-sidebar banner end -->
                         </div>
-                        <div class="col-md-9">
-                            <div class="row row-mtm30">
+                        <!-- shop-sidebar end -->
+                        <div class="col-12 col-xl-9 p-xl-sticky top-0">
+                            <div class="row row-mtm" data-animate="animate__fadeIn">
+                             <div class="shop-top-bar">
+                                    <div class="row row-mtm15 align-items-md-center">
+                                        <div class="col-12 col-sm-6 col-md-7 col-lg-8">
+                                            <div class="shop-filter-view ul-mt15 align-items-center">
+                                                <div class="shop-filter">
+                                                    <button type="button" class="shop-filter-btn secondary-color d-flex align-items-center"><i class="ri-filter-line icon-16 mer-5"></i>Filter</button>
+                                                </div>
+                                                <!-- <div class="shop-view-mode">
+                                                    <div class="ul-mt10">
+                                                        <button type="button" class="shop-view-btn dominant-color icon-16 opacity-100 disabled" data-view="grid" aria-label="Grid view"><i class="ri-layout-grid-line"></i></button>
+                                                        <button type="button" class="shop-view-btn body-color icon-16 opacity-100" data-view="list" aria-label="List view"><i class="ri-list-unordered"></i></button>
+                                                    </div>
+                                                </div> -->
+                                               
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-12 col-sm-6 col-md-5 col-lg-4">
+                                            <div class="shop-short d-flex flex-wrap position-relative">
+                                                <label for="sortby" class="width-72 secondary-color heading-weight">Sort by:</label>
+                                                <select id="sortby" name="sortby" class="d-xl-none width-calc-72 h-auto ptb-0 bg-transparent border-0">
+                                                    <option value="manual">Featured</option>
+                                                    <option value="best-selling">Best selling</option>
+                                                    <option value="title-ascending" selected>Alphabetically, A-Z</option>
+                                                    <option value="title-descending">Alphabetically, Z-A</option>
+                                                    <option value="price-ascending">Price, low to high</option>
+                                                    <option value="price-descending">Price, high to low</option>
+                                                    <option value="created-descending">Date, new to old</option>
+                                                    <option value="created-ascending">Date, old to new</option>
+                                                </select>
+                                                <a href="javascript:void(0)" class="short-title width-calc-72 body-color d-none d-xl-flex align-items-xl-start justify-content-xl-between">
+                                                    <span class="sort-title">Alphabetically, A-Z</span>
+                                                    <span class="sort-icon heading-weight"><i class="ri-arrow-down-s-line d-block lh-1"></i></span>
+                                                </a>
+                                                <ul class="collapse position-absolute top-100 start-0 end-0 ptb-5 body-bg z-1 DropDownSlide br-hidden box-shadow" id="select-wrap">
+                                                    <li><a href="javascript:void(0)" data-value="manual" class="d-block body-dominant-color ptb-5 plr-15">Featured</a></li>
+                                                    <li><a href="javascript:void(0)" data-value="best-selling" class="d-block body-dominant-color ptb-5 plr-15">Best selling</a></li>
+                                                    <li class="selected"><a href="javascript:void(0)" data-value="title-ascending" class="d-block secondary-color ptb-5 plr-15 extra-bg">Alphabetically, A-Z</a></li>
+                                                    <li><a href="javascript:void(0)" data-value="title-descending" class="d-block body-dominant-color ptb-5 plr-15">Alphabetically, Z-A</a></li>
+                                                    <li><a href="javascript:void(0)" data-value="price-ascending" class="d-block body-dominant-color ptb-5 plr-15">Price, low to high</a></li>
+                                                    <li><a href="javascript:void(0)" data-value="price-descending" class="d-block body-dominant-color ptb-5 plr-15">Price, high to low</a></li>
+                                                    <li><a href="javascript:void(0)" data-value="created-descending" class="d-block body-dominant-color ptb-5 plr-15">Date, new to old</a></li>
+                                                    <li><a href="javascript:void(0)" data-value="created-ascending" class="d-block body-dominant-color ptb-5 plr-15">Date, old to new</a></li>
+                                                </ul>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <!-- <div class="shop-filter-list d-flex align-items-start justify-content-between">
+                                    <ul class="shop-filter-ul ul-mt5 align-items-center">
+                                        <li class="shop-filter-li"><a href="javascript:void(0)" class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">Out of stock<i class="ri-close-large-line d-block lh-1"></i></a></li>
+                                        <li class="shop-filter-li"><a href="javascript:void(0)" class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">In stock<i class="ri-close-large-line d-block lh-1"></i></a></li>
+                                        <li class="shop-filter-li"><a href="javascript:void(0)" class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">Aliceblue<i class="ri-close-large-line d-block lh-1"></i></a></li>
+                                        <li class="shop-filter-li"><a href="javascript:void(0)" class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">16cm<i class="ri-close-large-line d-block lh-1"></i></a></li>
+                                        <li class="shop-filter-li"><a href="javascript:void(0)" class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">Rings<i class="ri-close-large-line d-block lh-1"></i></a></li>
+                                        <li class="shop-filter-li"><button type="submit" class="shop-filter-active text-decoration-underline">Clear all</button></li>
+                                    </ul>
+                                    <div class="shop-filter-loader"><svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="var(--heading-font-color)" stroke-width="3" cx="33" cy="33" r="30"></circle></svg></div>
+                                </div> -->
+                                <div class="shop-product-wrap data-grid">
+                                    <div class="row">
                                 <?php
                                 if (!empty($products) && count($products) > 0) {
                                     if (count($products) > 0) {
@@ -155,7 +373,7 @@
                                             $imgs = explode('||', $row['product_image']);
 
                                             ?>
-                                            <div class="col-6 col-md-4 col-xl-4 d-flex shop-col" data-animate="animate__fadeIn">
+                                            <div class="col-6 col-md-4 col-xl-4 d-flex shop-col mb-3" data-animate="animate__fadeIn">
                                                 <div class="single-product w-100">
                                                     <div class="row single-product-wrap">
                                                         <div class="product-image">
@@ -183,7 +401,7 @@
 
 
                                                                 <a onclick="openModal('<?= $row['prod_gold_id'] ?>')">
-                                                                    <span class="product-icon">Quickview</span>
+                                                                    <span class="product-icon" style="cursor: pointer;">Quickview</span>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -272,18 +490,18 @@
                                                                             ?>
                                                                             <a class="add-to-cart <?= $inCart ? 'in-cart' : '' ?>"
                                                                                 onclick="addToCart('<?= $row['prod_gold_id'] ?>')">
-                                                                                <span class="product-icon">
-                                                                                    <span class="product-bag-icon icon-16">
+                                                                                <span class="product-icon" style="cursor: pointer;">
+                                                                                    <span class="product-bag-icon icon-16" style="cursor: pointer;">
                                                                                         <i
                                                                                             class="<?= $inCart ? 'ri-shopping-bag-fill text-success' : 'ri-shopping-bag-3-line' ?> d-block lh-1"></i>
                                                                                     </span>
-                                                                                    <span class="product-loader-icon icon-16"><i
+                                                                                    <span class="product-loader-icon icon-16" style="cursor: pointer;"><i
                                                                                             class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                                    <span class="product-check-icon icon-16"><i
+                                                                                    <span class="product-check-icon icon-16" style="cursor: pointer;"><i
                                                                                             class="ri-check-line d-block lh-1"></i></span>
                                                                                 </span>
                                                                                 <span
-                                                                                    class="tooltip-text"><?= $inCart ? 'Added to cart' : 'Add to cart' ?></span>
+                                                                                    class="tooltip-text" style="cursor: pointer;"><?= $inCart ? 'Added to cart' : 'Add to cart' ?></span>
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -318,17 +536,17 @@
                                                                     <a class="add-to-cart <?= $inCart ? 'in-cart' : '' ?>"
                                                                         onclick="addToCart('<?= $row['prod_gold_id'] ?>')">
                                                                         <span class="product-icon">
-                                                                            <span class="product-bag-icon icon-16">
+                                                                            <span class="product-bag-icon icon-16" style="cursor: pointer;">
                                                                                 <i
                                                                                     class="<?= $inCart ? 'ri-shopping-bag-fill text-success' : 'ri-shopping-bag-3-line' ?> d-block lh-1"></i>
                                                                             </span>
-                                                                            <span class="product-loader-icon icon-16"><i
+                                                                            <span class="product-loader-icon icon-16" style="cursor: pointer;"><i
                                                                                     class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                            <span class="product-check-icon icon-16"><i
+                                                                            <span class="product-check-icon icon-16" style="cursor: pointer;"><i
                                                                                     class="ri-check-line d-block lh-1"></i></span>
                                                                         </span>
                                                                         <span
-                                                                            class="tooltip-text"><?= $inCart ? 'Added to cart' : 'Add to cart' ?></span>
+                                                                            class="tooltip-text" style="cursor: pointer;"><?= $inCart ? 'Added to cart' : 'Add to cart' ?></span>
                                                                     </a>
 
 
@@ -349,7 +567,6 @@
 
 
                                                                 <div class="product-sku-variant">
-                                                                    <!-- if isset session - user it -->
 
                                                                     <div class="pro-sku font-14">
                                                                         <span
@@ -392,44 +609,42 @@
                                     }
                                 } ?>
                             </div>
-                           
-                            <!-- <div class="paginatoin-area section-pt" data-animate="animate__fadeIn">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination ul-mt5 align-items-center justify-content-center pagination-box">
-                                        <li class="page-item first">
-                                            <a class="page-link p-0 m-0 bg-transparent heading-weight border-0 lh-1" aria-label="First page">First</a>
-                                        </li>
-                                        <li class="page-item prev">
-                                            <a class="page-link icon-16 d-flex align-items-center justify-content-center p-0 m-0 bg-transparent heading-weight border-0 border-radius" aria-label="Previous"><i class="ri-arrow-left-line d-block lh-1"></i></a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link d-flex align-items-center justify-content-center p-0 m-0 heading-weight border-0 border-radius lh-1" aria-label="Page number">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link active d-flex align-items-center justify-content-center p-0 m-0 heading-weight border-0 border-radius lh-1" aria-label="Page number">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link d-flex align-items-center justify-content-center p-0 m-0 heading-weight border-0 border-radius lh-1" aria-label="Page number">3</a>
-                                        </li>
-                                        <li class="page-item next">
-                                            <a class="page-link icon-16 d-flex align-items-center justify-content-center p-0 m-0 bg-transparent heading-weight border-0 border-radius" aria-label="Next"><i class="ri-arrow-right-line d-block lh-1"></i></a>
-                                        </li>
-                                        <li class="page-item last">
-                                            <a class="page-link p-0 m-0 bg-transparent heading-weight border-0 lh-1" aria-label="Last page">Last</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div> -->
+                                   
+                                    <!-- <div class="paginatoin-area section-pt" data-animate="animate__fadeIn">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination ul-mt5 align-items-center justify-content-center pagination-box">
+                                                <li class="page-item first">
+                                                    <a href="javascript:void(0)" class="page-link p-0 m-0 bg-transparent heading-weight border-0 lh-1" aria-label="First page">First</a>
+                                                </li>
+                                                <li class="page-item prev">
+                                                    <a href="javascript:void(0)" class="page-link icon-16 d-flex align-items-center justify-content-center p-0 m-0 bg-transparent heading-weight border-0 border-radius" aria-label="Previous"><i class="ri-arrow-left-line d-block lh-1"></i></a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a href="javascript:void(0)" class="page-link d-flex align-items-center justify-content-center p-0 m-0 heading-weight border-0 border-radius lh-1" aria-label="Page number">1</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a href="javascript:void(0)" class="page-link active d-flex align-items-center justify-content-center p-0 m-0 heading-weight border-0 border-radius lh-1" aria-label="Page number">2</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a href="javascript:void(0)" class="page-link d-flex align-items-center justify-content-center p-0 m-0 heading-weight border-0 border-radius lh-1" aria-label="Page number">3</a>
+                                                </li>
+                                                <li class="page-item next">
+                                                    <a href="javascript:void(0)" class="page-link icon-16 d-flex align-items-center justify-content-center p-0 m-0 bg-transparent heading-weight border-0 border-radius" aria-label="Next"><i class="ri-arrow-right-line d-block lh-1"></i></a>
+                                                </li>
+                                                <li class="page-item last">
+                                                    <a href="javascript:void(0)" class="page-link p-0 m-0 bg-transparent heading-weight border-0 lh-1" aria-label="Last page">Last</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <!-- collection-info end -->
                         </div>
                     </div>
                 </div>
-                <!-- PRODUCT GRID + SIDEBAR end -->
-
-            </div>
-        </div>
-    </section>
+            </section>
 </main>
-
 
 
 
@@ -741,7 +956,7 @@
     .bg-screen {
         position: fixed;
         inset: 0;
-        z-index: 1040;
+        /* z-index: 1040; */
         pointer-events: none;
     }
 

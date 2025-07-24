@@ -838,35 +838,41 @@ class User extends CI_Controller
 
 	public function addToCart()
 	{
-		if (isset($_SESSION['user_id'])) {
-			$ucart = $this->My_model->select_where("user_cart", ['user_id' => $_SESSION['user_id'], 'prod_id' => $_POST['prod_id'], 'status' => 'active']);
+		// if (isset($_SESSION['user_id'])) {
+		// 	$ucart = $this->My_model->select_where("user_cart", ['user_id' => $_SESSION['user_id'], 'prod_id' => $_POST['prod_id'], 'status' => 'active']);
 
-			if (isset($ucart[0])) {
-				$rmCart = $this->db->query("DELETE FROM user_cart WHERE user_id = '" . $_SESSION['user_id'] . "' AND prod_id='" . $_POST['prod_id'] . "' ");
-				echo json_encode(['status' => 'success', 'msg' => 'Removed From Cart']);
-			} else {
-				$cart['prod_id'] = $_POST['prod_id'];
-				$cart['user_id'] = $_SESSION['user_id'];
-				$cart['status'] = 'active';
-				$cart['entry_time'] = time();
-				$c = $this->My_model->insert("user_cart", $cart);
+		// 	if (isset($ucart[0])) {
+		// 		$rmCart = $this->db->query("DELETE FROM user_cart WHERE user_id = '" . $_SESSION['user_id'] . "' AND prod_id='" . $_POST['prod_id'] . "' ");
+		// 		echo json_encode(['status' => 'success', 'msg' => 'Removed From Cart']);
+		// 	} else {
+		// 		$cart['prod_id'] = $_POST['prod_id'];
+		// 		$cart['user_id'] = $_SESSION['user_id'];
+		// 		$cart['status'] = 'active';
+		// 		$cart['entry_time'] = time();
+		// 		$c = $this->My_model->insert("user_cart", $cart);
 
-				if ($c) {
-					echo json_encode(['status' => 'success', 'msg' => 'Added To Cart']);
-				} else {
-					echo json_encode(['status' => 'failed', 'msg' => 'Failed To Add in Cart..!']);
-				}
-			}
+		// 		if ($c) {
+		// 			echo json_encode(['status' => 'success', 'msg' => 'Added To Cart']);
+		// 		} else {
+		// 			echo json_encode(['status' => 'failed', 'msg' => 'Failed To Add in Cart..!']);
+		// 		}
+		// 	}
 
-			// 👉 Print user cart from database
-			$printCart = $this->My_model->select_where("user_cart", ['user_id' => $_SESSION['user_id'], 'status' => 'active']);
-			// echo "<pre>";
-			// print_r($printCart);
-			// exit();
+		// 	// 👉 Print user cart from database
+		// 	$printCart = $this->My_model->select_where("user_cart", ['user_id' => $_SESSION['user_id'], 'status' => 'active']);
+		// 	// echo "<pre>";
+		// 	// print_r($printCart);
+		// 	// exit();
 
-		} else {
+		// } else {
+		if(isset($_SESSION['cart'][$_POST['prod_id']]))
+		{
+			unset($_SESSION['cart'][$_POST['prod_id']]);
+			unset($_SESSION['Size'][$_POST['prod_id']]);
+		}else{
 			$_SESSION['cart'][$_POST['prod_id']] = 1;
 			$_SESSION['Size'][$_POST['prod_id']] = $_POST['size'];
+		}
 			echo json_encode(['status' => 'success', 'msg' => 'Added To Cart In session']);
 
 			// 👉 Print session cart
@@ -874,45 +880,43 @@ class User extends CI_Controller
 			// print_r($_SESSION['cart']);
 			// print_r($_SESSION['Size']);
 			// exit();
-		}
+		
 	}
 
 
 	public function load_cart_drawer()
 	{
-		$data['product_details'] = isset($_GET['pId']) && $_GET['pId'] != '0' ? getProductDetails($_GET['pId']) : [];
-		$data['size'] = isset($_GET['size']) ? $_GET['size'] : '';
+		// $data['product_details'] = isset($_GET['pId']) && $_GET['pId'] != '0' ? getProductDetails($_GET['pId']) : [];
+		// $data['size'] = isset($_GET['size']) ? $_GET['size'] : '';
 		$products = [];
 
-		if (isset($_SESSION['user_id'])) {
-			$data['ucart'] = $this->My_model->select_where("user_cart", ['user_id' => $_SESSION['user_id'], 'status' => 'active']);
-			if (isset($data['ucart'][0])) {
-				$msg = 'Yes';
-				foreach ($data['ucart'] as $key => $row) {
-					$products[$key] = getProductDetails($row['prod_id']);
-				}
-			} else {
-				$msg = 'No';
-			}
-		} else {
+		// if (isset($_SESSION['user_id'])) {
+		// 	$data['ucart'] = $this->My_model->select_where("user_cart", ['user_id' => $_SESSION['user_id'], 'status' => 'active']);
+		// 	if (isset($data['ucart'][0])) {
+		// 		$msg = 'Yes';
+		// 		foreach ($data['ucart'] as $key => $row) {
+		// 			$products[$key] = getProductDetails($row['prod_id']);
+		// 		}
+		// 	} else {
+		// 		$msg = 'No';
+		// 	}
+		// } else {
 			if (isset($_SESSION['cart'])) {
 				$i = 0;
 				foreach ($_SESSION['cart'] as $key => $row) {
-					$products[$i] = getProductDetails($key);
+					$products[$key] = getProductDetails($key);
 					$i++;
 				}
 				$msg = 'Yes';
 			} else {
 				$msg = 'No';
 			}
-		}
+		// }
 
-		// echo "<pre>";
-		// print_r($products);
-		// exit;
+		$data['order_charges'] = $this->My_model->select_where('order_charges', ['status' => 'active']);
 
 		$data['cart'] = $products;
-
+		// print_r($products);
 		$this->load->view('user/add_to_cart_modal_form', $data);
 	}
 	
@@ -920,13 +924,13 @@ class User extends CI_Controller
 
 	public function remove_cart_item()
 	{
-			if (isset($_SESSION['user_id'])) {
-			$this->db->where(['user_id' => $_SESSION['user_id'], 'prod_id' => $_POST['prod_id']]);
-			$this->db->delete('user_cart');
-		} else {
+		// 	if (isset($_SESSION['user_id'])) {
+		// 	$this->db->where(['user_id' => $_SESSION['user_id'], 'prod_id' => $_POST['prod_id']]);
+		// 	$this->db->delete('user_cart');
+		// } else {
 			unset($_SESSION['cart'][$_POST['prod_id']]);
 			unset($_SESSION['Size'][$_POST['prod_id']]);
-		}
+		// }
 
 		echo json_encode(['status' => 'success',
 		'id' => $_POST['prod_id']]);
@@ -1918,10 +1922,10 @@ class User extends CI_Controller
 		echo json_encode(['post' => $_SESSION['wishlist'][$_POST['prod_id']], 'msg' => $msg, 'status' => 'success', 'session' => $_SESSION['wishlist'], 'price' => $price]);
 	}
 	// cart-page
-	// public function cart_page()
-	// {
-	// 	$this->ov("cart_page");
-	// }
+	public function cart_page()
+	{
+		$this->ov("cart_page");
+	}
 	public function cart()
 	{
 		// unset($_SESSION['cart']);
@@ -1969,7 +1973,23 @@ class User extends CI_Controller
 	// checkout
 	public function checkout()
 	{
-		$this->ov("checkout");
+		if (isset($_SESSION['cart'])) {
+				$i = 0;
+				foreach ($_SESSION['cart'] as $key => $row) {
+					$products[$key] = getProductDetails($key);
+					$i++;
+				}
+				$msg = 'Yes';
+			} else {
+				$msg = 'No';
+			}
+		// }
+
+		$data['order_charges'] = $this->My_model->select_where('order_charges', ['status' => 'active']);
+			
+		$data['cart'] = $products;
+
+		$this->ov("checkout",$data);
 	}
 	// collection
 	public function collection()

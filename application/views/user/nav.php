@@ -104,8 +104,7 @@
                                         <input type="search" name="search-input"
                                             class="search-input width-calc-16 h-auto text-color bg-transparent ptb-0 plr-0 border-0 rounded-0"
                                             value="" placeholder="Find our product" required>
-                                        <button type="submit" onclick="window.location.href='search-product.html'"
-                                            class="d-block width-16 body-secondary-color icon-16"
+                                        <button type="submit" class="d-block width-16 body-secondary-color icon-16"
                                             aria-label="Go to search" disabled><i
                                                 class="ri-search-line d-block lh-1"></i></button>
                                     </div>
@@ -235,7 +234,8 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                        <div class="search-more ptb-10 plr-15 bst"><a href="<?=base_url()?>user/products"
+                                        <div class="search-more ptb-10 plr-15 bst"><a
+                                                href="<?= base_url() ?>user/products"
                                                 class="body-secondary-color text-decoration-underline">See all results
                                                 (12)</a></div>
                                         <div class="search-fail ptb-10 plr-15">Search not found</div>
@@ -295,7 +295,7 @@
 
                                     <li class="menu-li">
                                         <a href="<?= base_url() ?>user/index"
-                                            class="menu-link font-16 d-flex align-items-center plr-15">
+                                            class="menu-link font-16 d-flex active align-items-center plr-15">
                                             <span class="menu-title text-uppercase heading-weight">Home</span>
                                         </a>
 
@@ -370,7 +370,8 @@
                                                 class="menu-li <?= count($row['sub_category_details']) > 0 ? 'has-dropdown' : '' ?>">
                                                 <?php if (strtolower($row['category_name']) == 'gift') { ?>
                                                     <a href="javascript:void(0)"
-                                                        class="menu-link font-16 d-flex align-items-center plr-15" style="font-weight: 600;text-transform: uppercase;">
+                                                        class="menu-link font-16 d-flex align-items-center plr-15"
+                                                        style="font-weight: 600;text-transform: uppercase;">
                                                         <?= $row['category_name'] ?>
                                                         <?php if (count($row['sub_category_details']) > 0) { ?>
                                                             <span class="icon-16 fw-normal"><i
@@ -379,7 +380,8 @@
                                                     </a>
                                                 <?php } else if ($row['category_name'] != 'Diamond' && strtolower($row['category_name']) != 'coin') { ?>
                                                         <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>"
-                                                            class="menu-link font-16 d-flex align-items-center plr-15" style="font-weight: 600;text-transform: uppercase;">
+                                                            class="menu-link font-16 d-flex align-items-center plr-15"
+                                                            style="font-weight: 600;text-transform: uppercase;">
                                                         <?= $row['category_name'] ?>
                                                         <?php if (count($row['sub_category_details']) > 0) { ?>
                                                                 <span class="icon-16 fw-normal"><i
@@ -507,7 +509,7 @@
                                         <!--  </ul>
                                                 </div> -->
                                     </li>
-                                    
+
                                 </ul>
                             </div>
                         </div>
@@ -565,7 +567,7 @@
                                 </li> -->
                                 <li class="header-icon-wrap cart-wrap d-none d-md-block">
                                     <div class="header-icon-wrapper">
-                                        <a href="javascript:void(0)" class="d-block header-icon-cart js-cart-drawer">
+                                        <a onclick="miniCart()" class="d-block header-icon-cart js-cart-drawer">
                                             <span
                                                 class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
                                                 <span class="header-block-icon icon-16"><i
@@ -577,16 +579,16 @@
                                     </div>
                                 </li>
 
-                                  <li class="header-icon-wrap cart-wrap d-none d-md-block">
+                                <li class="header-icon-wrap cart-wrap d-none d-md-block">
                                     <div class="header-icon-wrapper">
-                                    <?php 
-                                        if(isset($_SESSION['user_id'])){
+                                        <?php
+                                        if (isset($_SESSION['user_id'])) {
                                             $urlAccount = 'my_account';
-                                        }else{
+                                        } else {
                                             $urlAccount = 'login';
                                         }
-                                    ?>
-                                    <a href="<?=base_url()?>user/<?=$urlAccount?>" class="d-block">
+                                        ?>
+                                        <a href="<?= base_url() ?>user/<?= $urlAccount ?>" class="d-block">
                                             <span
                                                 class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
                                                 <span class="header-block-icon icon-16"><i

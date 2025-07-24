@@ -112,7 +112,7 @@
                                         <!-- <?php if (!empty($size)): ?>
                                         <span class="d-block mst-7">Size: <?= $size ?></span>
                                     <?php endif; ?> -->
-                                        <span class="d-block mst-7"><?= $item[0]['caret'] ?> / <?= $item[0]['purity'] ?>%</span>
+                                        <span class="d-block mst-7"></span>
                                     </div>
                                     <div class="heading-color heading-weight mst-7">₹<?= number_format($price, 2) ?></div>
 
@@ -170,21 +170,13 @@
             </div>
             <div class="font-12 mst-8">Shipping, taxes, and discount codes calculated at checkout</div>
             <div class="drawer-cart-checkout mst-12">
-                <div class="drawer-cart-box meb-11">
-                    <label class="cust-checkbox-label checkbox-agree">
-                        <input type="checkbox" id="drawer-terms" name="drawer-terms" class="cust-checkbox checkboxbtn">
-                        <span class="d-block cust-check"></span>
-                        <span class="login-read">I agree to the <a href="<?= base_url() ?>rohan/terms_of_use"
-                                class="body-secondary-color text-decoration-underline">terms & conditions</a>.</span>
-                    </label>
-                </div>
+
                 <div class="row btn-row15">
-                    <div class="col-sm-6 col-12">
+                    <!-- <div class="col-sm-6 col-12">
                         <a href="<?= base_url() ?>user/cart_page" class="w-100 btn-style quaternary-btn">View cart</a>
-                    </div>
-                    <div class="col-sm-6 col-12">
-                        <a href="<?= base_url() ?>user/checkout"
-                            class="w-100 btn-style secondary-btn opacity-50 pe-none">Checkout</a>
+                    </div> -->
+                    <div class="col-sm-12 col-12">
+                        <a href="<?= base_url() ?>user/checkout" class="w-100 btn-style secondary-btn ">Checkout</a>
                     </div>
                 </div>
             </div>

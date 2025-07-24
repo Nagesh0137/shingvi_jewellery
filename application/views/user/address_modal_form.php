@@ -270,7 +270,7 @@ if (!isset($_SESSION['user_id'])) {
                     class="address-modal-header bg-white p-2 mt-2 mb-1 rounded d-flex align-items-center justify-content-between meb-30">
                     <h6 class="font-15">Order Summary (1 Item)</h6>
                     <h6 id="final_amount_after_discount">&#8377;
-                        
+
                         <?= number_format(floatval($product_details[0]['discounted_price']) * floatval($qty)) ?>
                     </h6>
                     <input type="hidden" name="product_id" value="<?= $product_id ?>" id="product_id" class="product_id">
@@ -296,7 +296,8 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="card p-1 mt-2">
                         <div class="d-flex p-2 align-items-center justify-content-between">
                             <h6 style="font-size:15px;" class="card-title">Delivery Details</h6>
-                            <h6 style="font-size:15px;color: #9C1137;" onclick="openModal()" class="card-title">Change</h6>
+                            <h6 style="font-size:15px;color: #9C1137;cursor:pointer" onclick="openModal()" class="card-title">Change
+                            </h6>
 
                         </div>
                         <div class="card-body p-2 mt-0 pt-0">
@@ -337,13 +338,14 @@ if (!isset($_SESSION['user_id'])) {
                         <i class="ri-close-large-line d-block lh-1"></i>
                     </button> -->
                 </div>
-                <div class="address-modal-header d-none bg-white p-2 rounded d-flex align-items-center justify-content-between meb-30">
+                <div
+                    class="address-modal-header d-none bg-white p-2 rounded d-flex align-items-center justify-content-between meb-30">
                     <h6 class="font-18">Order Summary</h6>
                     <h6><?= number_format(floatval($product_details[0]['discounted_price']) * floatval($qty)) ?></h6>
                     <button type="button" onclick="showProductDetails('<?= $product_details[0]['prod_gold_id'] ?>')"
                         class="body-secondary-color icon-16"><i class="ri-arrow-right-line d-block lh-1"></i></button>
                 </div>
-                
+
 
                 <div class="address-modal-form mt-2">
                     <div class="row field-row">
@@ -461,8 +463,8 @@ if (!isset($_SESSION['user_id'])) {
 
                             <div class="col-6 field-col">
                                 <label for="pincode" class="field-label">Pincode</label>
-                                <input type="number" onkeyup="getCityByPincode(this)" id="new_pincode" name="pincode" class="w-100"
-                                    placeholder="Enter Pincode" required>
+                                <input type="number" onkeyup="getCityByPincode(this)" id="new_pincode" name="pincode"
+                                    class="w-100" placeholder="Enter Pincode" required>
                             </div>
                             <div class="col-6 field-col">
                                 <label for="city" class="field-label">City</label>
@@ -559,8 +561,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
     $(document).ready(function () {
-        $('#newAddressForm').on('submit', function (e) 
-        {
+        $('#newAddressForm').on('submit', function (e) {
             e.preventDefault(); // Prevent form default submit
 
             let formData = $(this).serialize();

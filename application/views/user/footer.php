@@ -880,19 +880,20 @@
             </a>
         </div>
         <div class="col">
-           <?php 
-                                        if(isset($_SESSION['user_id'])){
-                                            $urlAccount = 'my_account';
-                                        }else{
-                                            $urlAccount = 'login';
-                                        }
-                                    ?>
-                <a href="<?= base_url() ?>user/<?=$urlAccount?>" class="d-flex flex-column align-items-center ptb-10 text-center">
-                    <span class="bottom-menu-icon heading-color icon-16">
-                        <i class="ri-user-3-line d-block lh-1"></i>
-                    </span>
-                    <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Profile</span>
-                </a>
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                $urlAccount = 'my_account';
+            } else {
+                $urlAccount = 'login';
+            }
+            ?>
+            <a href="<?= base_url() ?>user/<?= $urlAccount ?>"
+                class="d-flex flex-column align-items-center ptb-10 text-center">
+                <span class="bottom-menu-icon heading-color icon-16">
+                    <i class="ri-user-3-line d-block lh-1"></i>
+                </span>
+                <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Profile</span>
+            </a>
         </div>
 
         <div class="col">
@@ -902,7 +903,7 @@
                 <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Shop</span>
             </a>
         </div>
-     
+
         <div class="col">
             <a href="javascript:void(0)"
                 class="js-cart-drawer d-flex flex-column align-items-center ptb-10 text-center">
@@ -911,7 +912,7 @@
                             class="ri-shopping-bag-3-line d-block lh-1"></i></span>
                     <!-- <span class="bottom-menu-counter cart-counter extra-color font-10 position-absolute end-0 dominant-bg d-flex align-items-center justify-content-center rounded-circle">4</span>
                 </span> -->
-                <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Cart</span>
+                    <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Cart</span>
             </a>
         </div>
 
@@ -1065,12 +1066,13 @@
     //         });
     //     // });
     // }
-      // function miniCart() {
-      //       $("#cart-drawer").removeClass("invisible").addClass("active visible");
-      //       $(".bg-shop").removeClass("opacity-0 invisible").addClass("opacity-50 visible");
-      //       $("#cart-drawer").load("<?= base_url('user/load_cart_drawer') ?>";
+    function miniCart() {
 
-      //   }
+        $("#cart-drawer").removeClass("invisible").addClass("active visible");
+        $(".bg-shop").removeClass("opacity-0 invisible").addClass("opacity-50 visible");
+        $("#cart-drawer").load("<?= base_url('user/load_cart_drawer') ?>");
+
+    }
     function openAddressModal(pId) {
         const isQuickViewOpen = $('#quickview-modal').hasClass('show');
 
@@ -1117,6 +1119,93 @@
         }
     }
 
+</script>
+
+<script>
+    // function miniCart() {
+    //     $("#cart-drawer").removeClass("invisible").addClass("active visible");
+    //     $(".bg-shop").removeClass("opacity-0 invisible").addClass("opacity-50 visible");
+    // }
+
+    function addToCart(pId, clickedElement) {
+        event.preventDefault();
+
+        // Get the clicked button element
+        var $clickedBtn = $(clickedElement);
+
+        var selectedSize = document.getElementById("gleam-band-size-"+pId).value;
+
+        if (selectedSize === "") {
+            alert("Please select a size before adding to cart.");
+            return;
+        }
+
+        // Show loading state immediately
+        $clickedBtn.addClass("loading active disabled");
+        $clickedBtn.find('.product-bag-icon').hide();
+        $clickedBtn.find('.product-loader-icon').show();
+
+        $.ajax({
+            url: '<?= base_url("user/addToCart") ?>',
+            type: 'POST',
+            data: { prod_id: pId, size: selectedSize },
+            dataType: 'json',
+            success: function (res) {
+                console.log(res);
+                if (res.status == 'success') {
+                    // Show success state
+                    setTimeout(function () {
+                        $clickedBtn.removeClass("loading").addClass("done");
+                        $clickedBtn.find('.product-loader-icon').hide();
+                        $clickedBtn.find('.product-check-icon').show();
+
+                        setTimeout(function () {
+                            $clickedBtn.removeClass("done active disabled");
+                            $clickedBtn.find('.product-check-icon').hide();
+                            $clickedBtn.find('.product-bag-icon').show();
+
+                            // Update all add-to-cart buttons for this product
+                            var allCartButtons = $('[id^="add-to-cart-btn-"][id$="-' + pId + '"]');
+                            allCartButtons.each(function () {
+                                $(this).addClass("in-cart");
+                                // $(this).find('.tooltip-text').text('Added to cart');
+                                $(this).find('.product-bag-icon i')
+                                    .removeClass('ri-shopping-bag-3-line')
+                                    .addClass('ri-shopping-bag-fill text-success');
+                            });
+
+                            // Call miniCart function
+                            miniCart();
+
+                            // Close quickview modal if exists
+                            $clickedBtn.closest(".quickview-modal").find(".quickview-modal-header button").click();
+
+                            // Load cart drawer content via AJAX
+                            $("#cart-drawer").load("<?= base_url('user/load_cart_drawer') ?>?pId=" + encodeURIComponent(pId) + "&size=" + encodeURIComponent(selectedSize));
+
+                        }, 800);
+                    }, 500);
+                } else {
+                    // Reset button state on failure
+                    $clickedBtn.removeClass("loading active disabled");
+                    $clickedBtn.find('.product-loader-icon').hide();
+                    $clickedBtn.find('.product-bag-icon').show();
+                    alert("Failed to add to cart. Please try again.");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                // Reset button state on error
+                $clickedBtn.removeClass("loading active disabled");
+                $clickedBtn.find('.product-loader-icon').hide();
+                $clickedBtn.find('.product-bag-icon').show();
+                alert("Error occurred. Try again.");
+            }
+        });
+
+        console.log("Product ID:", pId);
+        console.log("Selected Size:", selectedSize);
+    }
 </script>
 <script>
     let receivedOtp = '';
