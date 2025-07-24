@@ -19,6 +19,48 @@
         display: flex;
         flex-direction: column;
     }
+
+    /* Smooth transitions for cart item removal */
+    .cart-drawer-info {
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .cart-drawer-info.removing {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    /* Loading state for remove button */
+    .remove-cart-item:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            opacity: 0.6;
+        }
+
+        50% {
+            opacity: 0.3;
+        }
+
+        100% {
+            opacity: 0.6;
+        }
+    }
+
+    /* Smooth subtotal update animation */
+    .drawer-total .heading-color.heading-weight {
+        transition: all 0.3s ease;
+    }
+
+    .drawer-total .heading-color.heading-weight.updating {
+        color: #28a745;
+        font-weight: bold;
+    }
 </style>
 
 <form method="post" action="javascript:void(0)" class="drawer-contents d-flex flex-column h-100">
@@ -47,18 +89,20 @@
                     <?php
                     $subtotal = 0;
                     foreach ($cart as $item):
+
                         $price = isset($item[0]['fixed_amount']) ? $item[0]['fixed_amount'] : 0;
                         $subtotal += $price;
                         ?>
                         <div class="cart-drawer-info ptb-15 bst">
                             <div class="cart-drawer-content d-flex flex-wrap">
-                                <div class="cart-drawer-image width-88">
-                                    <a href="<?= base_url() ?>user/product_detail/" class="d-block br-hidden">
+                                <div class="cart-drawer-image  width-88">
+                                    <a href="<?= base_url() ?>user/product_detail/<?= $item[0]['product_id'] ?>"
+                                        class="d-block br-hidden">
                                         <img src="<?= base_url() ?>uploads/<?= $item[0]['imgs'][0] ?>" class="w-100 img-fluid"
                                             alt="<?= $item[0]['product_name'] ?>">
                                     </a>
                                 </div>
-                                <div class="cart-drawer-info width-calc-88 psl-15">
+                                <div class=" width-calc-88 psl-15">
                                     <div class="cart-drawer-detail">
                                         <?php if (!empty($item[0]['product_name'])) {
                                             ?>
@@ -89,7 +133,8 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <button type="button" data-id="<?= $item[0]['product_id'] ?>"
+
+                                        <button type="button" data-id="<?= $item[0]['prod_gold_id'] ?>"
                                             class="cart-drawer-remove text-danger icon-16 remove-cart-item"
                                             aria-label="Remove item">
                                             <i class="ri-delete-bin-line d-block lh-1"></i>
@@ -153,10 +198,16 @@
         e.stopPropagation();
 
         let prod_id = $(this).data('id');
+        console.log('Removing item with ID:', prod_id); // Debug log
         let $button = $(this);
+        let $cartItem = $button.closest('.cart-drawer-info');
 
-        // Disable button to prevent multiple clicks
+        // Get the price of the item being removed for subtotal calculation
+        let itemPrice = parseFloat($cartItem.find('.heading-color.heading-weight').text().replace('₹', '').replace(',', '')) || 0;
+
+        // Disable button to prevent multiple clicks and show loading state
         $button.prop('disabled', true);
+        $button.addClass('loading');
 
         $.ajax({
             url: "<?= base_url() ?>user/remove_cart_item",
@@ -164,36 +215,189 @@
             data: { prod_id: prod_id },
             dataType: 'json',
             success: function (response) {
+                console.log('Remove cart response:', response); // Debug log
+
                 if (response.status === 'success') {
-                    // Remove the item from the cart display
-                    $button.closest('.cart-drawer-info').fadeOut(300, function () {
-                        $(this).remove();
+                    // Add removing class for smooth animation
+                    $cartItem.addClass('removing');
 
-                        // Reload the entire cart drawer to update totals
-                        let reloadUrl = "<?= base_url() ?>user/load_cart_drawer";
-                        <?php if (isset($product_details['product_id']) && isset($size)): ?>
-                            reloadUrl += "?pId=<?= $product_details['product_id'] ?>&size=<?= $size ?>";
-                        <?php else: ?>
-                            reloadUrl += "?pId=0&size=";
-                        <?php endif; ?>
+                    // Remove the item from the cart display with animation
+                    setTimeout(function () {
+                        $cartItem.slideUp(400, function () {
+                            $(this).remove();
 
-                        $('#cartDrawerContainer').load(reloadUrl, function () {
-                            // Update cart count in header if it exists
-                            if (typeof updateCartCount === 'function') {
-                                updateCartCount();
+                            // Update subtotal immediately with animation
+                            updateSubtotal();
+
+                            // Check if cart is empty and show empty state
+                            checkEmptyCart();
+
+                            // Update cart count in header using response data
+                            updateCartCountFromResponse(response.cartCount || 0);
+
+                            console.log('Cart count after removal:', response.cartCount); // Debug log
+
+                            // If cart count is 0, make sure we show the proper empty state
+                            if (response.cartCount === 0) {
+                                console.log('Cart is empty, reloading drawer...'); // Debug log
+                                // Force reload from server to get the proper empty state
+                                setTimeout(function () {
+                                    reloadCartDrawer();
+                                }, 800);
                             }
                         });
-                    });
+                    }, 100);
                 } else {
                     alert('Error removing item from cart: ' + (response.message || 'Unknown error'));
-                    $button.prop('disabled', false);
+                    $button.prop('disabled', false).removeClass('loading');
                 }
             },
             error: function (xhr, status, error) {
                 console.error('AJAX Error:', error);
                 alert('Failed to remove item from cart. Please try again.');
-                $button.prop('disabled', false);
+                $button.prop('disabled', false).removeClass('loading');
             }
         });
     });
+
+    // Function to update subtotal accounting for quantities
+    function updateSubtotalWithQuantity() {
+        let subtotal = 0;
+        $('.cart-drawer-info').each(function () {
+            let priceText = $(this).find('.heading-color.heading-weight').text().replace('₹', '').replace(/,/g, '');
+            let price = parseFloat(priceText) || 0;
+            let quantity = parseInt($(this).find('.js-qty-num').val()) || 1;
+            subtotal += (price * quantity);
+        });
+
+        // Update the subtotal display with animation
+        let $subtotalElement = $('.drawer-total .heading-color.heading-weight');
+        $subtotalElement.addClass('updating');
+
+        setTimeout(function () {
+            $subtotalElement.text('₹' + subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+
+            setTimeout(function () {
+                $subtotalElement.removeClass('updating');
+            }, 300);
+        }, 100);
+    }
+
+    // Function to update subtotal without reloading (keep for compatibility)
+    function updateSubtotal() {
+        updateSubtotalWithQuantity();
+    }
+
+    // Function to check if cart is empty and show appropriate state
+    function checkEmptyCart() {
+        console.log('Checking if cart is empty, found', $('.cart-drawer-info').length, 'items'); // Debug log
+
+        if ($('.cart-drawer-info').length === 0) {
+            console.log('Cart appears empty, showing empty state'); // Debug log
+
+            // Show empty cart state
+            $('.cart-drawer-table').html(`
+                <div class="drawer-cart-empty h-100 ptb-30 plr-15 d-flex flex-column align-items-center justify-content-center text-center">
+                    <span class="secondary-color icon-32 meb-23">
+                        <i class="ri-shopping-bag-3-line d-block lh-1"></i>
+                    </span>
+                    <h2 class="font-24">Your cart is currently empty</h2>
+                    <a href="<?= base_url() ?>" class="link-secondary-color mst-20">Continue shopping</a>
+                </div>
+            `);
+
+            // Hide the footer checkout section when cart is empty
+            $('.drawer-footer').hide();
+
+            // Also trigger a reload of the cart drawer to ensure server state is synced
+            setTimeout(function () {
+                reloadCartDrawer();
+            }, 500);
+        }
+    }
+
+    // Function to reload cart drawer from server (useful when database changes)
+    function reloadCartDrawer() {
+        console.log('Reloading cart drawer from server...'); // Debug log
+        let reloadUrl = "<?= base_url() ?>user/load_cart_drawer?pId=0&size=";
+
+        $.get(reloadUrl, function (data) {
+            console.log('Cart drawer reload response received'); // Debug log
+
+            // Parse the returned HTML
+            let $newContent = $(data);
+
+            // Check if the server returns empty cart
+            if (data.indexOf('drawer-cart-empty') !== -1 || data.indexOf('Your cart is currently empty') !== -1) {
+                console.log('Server returned empty cart, updating UI'); // Debug log
+                // Replace the cart content area
+                $('.drawer-scrollable').html($newContent.find('.drawer-scrollable').html());
+                $('.drawer-footer').hide();
+            } else {
+                console.log('Server returned cart with items, updating UI'); // Debug log
+                // Cart has items, update the content
+                $('.drawer-scrollable').html($newContent.find('.drawer-scrollable').html());
+                $('.drawer-footer').show();
+                updateSubtotal();
+            }
+        }).fail(function () {
+            console.log('Failed to reload cart drawer');
+        });
+    }
+
+    // Handle quantity adjustments
+    $(document).off('click', '.js-qty-adjust').on('click', '.js-qty-adjust', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let $this = $(this);
+        let $qtyInput = $this.siblings('.js-qty-num');
+        let currentQty = parseInt($qtyInput.val()) || 1;
+        let newQty = currentQty;
+
+        if ($this.hasClass('js-qty-adjust-plus')) {
+            newQty = currentQty++;
+        } else if ($this.hasClass('js-qty-adjust-minus')) {
+            newQty = Math.max(1, currentQty - 1);
+        }
+
+        if (newQty !== currentQty) {
+            $qtyInput.val(newQty);
+            updateSubtotalWithQuantity();
+        }
+    });
+
+    // Handle direct quantity input changes
+    $(document).off('change', '.js-qty-num').on('change', '.js-qty-num', function () {
+        let newQty = Math.max(1, parseInt($(this).val()) || 1);
+        $(this).val(newQty);
+        updateSubtotalWithQuantity();
+    });
+
+    // Function to update cart count (you may need to implement this based on your header structure)
+    function updateCartCount() {
+        let cartCount = $('.cart-drawer-info').length;
+        updateCartCountFromResponse(cartCount);
+    }
+
+    // Function to update cart count from server response
+    function updateCartCountFromResponse(cartCount) {
+        // Update cart counter in header - adjust selector based on your header structure
+        $('.cart-counter, .cart-count').text(cartCount);
+
+        // If you have a specific cart count element in header, update it
+        if ($('.header-cart-count').length) {
+            $('.header-cart-count').text(cartCount);
+        }
+
+        // Update any cart badge indicators
+        if ($('.cart-badge').length) {
+            $('.cart-badge').text(cartCount);
+            if (cartCount === 0) {
+                $('.cart-badge').hide();
+            } else {
+                $('.cart-badge').show();
+            }
+        }
+    }
 </script>

@@ -148,10 +148,16 @@ $config['navbar'] = array(
                 'url' => 'admin/policies_page_name',
                 'method' => 'policies_page_name'
             ),
+
             array(
                 'title' => 'Product Group',
                 'url' => 'admin/manage_product_group',
                 'method' => 'manage_product_group'
+            ),
+            array(
+                'title' => 'Social Media',
+                'url' => 'admin/social_media',
+                'method' => 'social_media'
             ),
 
         )

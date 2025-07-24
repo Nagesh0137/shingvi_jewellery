@@ -291,10 +291,40 @@ class Admin extends CI_Controller
 		$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['company_det_id' => '1'])[0];
 		$this->load->view("admin/footer", $data);
 	}
-	public function index()
-	{
-		$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['company_det_id' => '1'])[0];
-		$this->ov("index", $data);
+	// public function index()
+	// {
+	// 	$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['company_det_id' => '1'])[0];
+	// 	$this->ov("index", $data);
+	// }
+
+	public function index(){
+		$data['dashboard']['today_visits']=count($this->My_model->select_where('user_visits' ,array('entry_date'=>date('Y-m-d'))));
+		// date('Y-m-d', strtotime("+1 day", date('Y-m-d')));
+		$data['dashboard']['last_thirty_days_visits']=count($this->My_model->select_where('user_visits' ,array('entry_date>='=>date('Y-m-d',strtotime('-30 day')))));
+
+		$data['dashboard']['gold_products']=count($this->My_model->select_where("product_gold",['cat_id'=>5,'status'=>'active']));
+		$data['dashboard']['silver_products']=count($this->My_model->select_where("product_gold",['cat_id'=>6,'status'=>'active']));
+		$data['dashboard']['diamond_products']=count($this->My_model->select_where("product_gold",['cat_id'=>8,'status'=>'active']));
+		$data['dashboard']['pending_order']=count($this->My_model->select_where("user_billing_details",['status'=>'pending']));
+		$data['dashboard']['confirm_order']=count($this->My_model->select_where("user_billing_details",['status'=>'confirm']));
+		$data['dashboard']['processing_order']=count($this->My_model->select_where("user_billing_details",['status'=>'processing']));
+		$data['dashboard']['dispatch_order']=count($this->My_model->select_where("user_billing_details",['status'=>'dispatch']));
+		$data['dashboard']['delivered_order']=count($this->My_model->select_where("user_billing_details",['status'=>'delivered']));
+		$data['dashboard']['rejected_order']=count($this->My_model->select_where("user_billing_details",['status'=>'rejected']));
+
+		$data['dashboard']['pending_cj']=count($this->My_model->select_where("custom_jwellery",['status'=>'pending']));
+
+		$data['dashboard']['progess_cj']=count($this->My_model->select_where("custom_jwellery",['status'=>'progress']));
+
+		$data['dashboard']['confirm_cj']=count($this->My_model->select_where("custom_jwellery",['status'=>'confirm']));
+
+		$data['dashboard']['cancel_cj']=count($this->My_model->select_where("custom_jwellery",['status'=>'cancel']));
+		$data['gold_rate'] = $this->db->query("SELECT * FROM rate_gold WHERE status='active' ORDER BY rate_gold_id DESC LIMIT 1")->result_array();
+		$data['silver_rate'] = $this->db->query("SELECT * FROM rate_silver WHERE status='active' ORDER BY rate_silver_id DESC LIMIT 1")->result_array();
+		$data['diamond_rate'] = $this->db->query("SELECT * FROM rate_diamond WHERE status='active' ORDER BY rate_diamond_id DESC LIMIT 1")->result_array();
+		$data['dashboard']['act_customers']=count($this->My_model->select_where("customers",['status'=>'active']));
+		$data['dashboard']['block_customers']=count($this->My_model->select_where("customers",['status'=>'block']));
+		$this->ov("index",$data);
 	}
 	public function profile()
 	{
@@ -1493,20 +1523,19 @@ class Admin extends CI_Controller
 		// 	exit;
 		$this->ov('silver_product_list_update', $data);
 	}
-	function float_rate_check($val){
-			$a=explode('.', $val);
-			if(isset($a[1])) {
-				if ($a[1]>100) {
-				return  $c=$a[0]+1;
-				}
-				else{
-				return  $c=$a[0];
-				}
+	function float_rate_check($val)
+	{
+		$a = explode('.', $val);
+		if (isset($a[1])) {
+			if ($a[1] > 100) {
+				return $c = $a[0] + 1;
+			} else {
+				return $c = $a[0];
 			}
-			else{
-				return  $c=$a[0];
-			}
-			}
+		} else {
+			return $c = $a[0];
+		}
+	}
 	public function silver_product_list_update_del_other()
 	{
 		$other_id = $_POST['other_id'];
@@ -2911,4 +2940,26 @@ class Admin extends CI_Controller
 		$data['custom_jwellery'] = $this->My_model->select_where("custom_jwellery", ['status' => 'cancel']);
 		$this->ov("custom_jwellery_cancel", $data);
 	}
+	// social media start
+	public function social_media()
+	{
+		$data['list'] = $this->My_model->select_where("social_media_tbl", ['status' => 'active'])[0];
+		$this->ov("social_media", $data);
+	}
+	public function save_social_media()
+	{
+		$_POST['added_by'] = 'admin';
+		$_POST['entry_time'] = time();
+		$_POST['entry_by'] = $_SESSION['admin_id'];
+		$_POST['status'] = 'active';
+		$data = $this->My_model->update("social_media_tbl", ['social_media_tbl_id' => $_POST['social_media_tbl_id']], $_POST);
+		if ($data) {
+			$this->setToastMessage('Social Media Account Updated Successfully', 'success');
+			redirect('admin/social_media', 'refresh');
+		} else {
+			$this->setToastMessage('Something Went Wrong', 'error');
+			redirect('admin/social_media', 'refresh');
+		}
+	}
+	// social media end
 }

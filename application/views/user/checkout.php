@@ -1,12 +1,12 @@
-<div class="breadcrumb-area ptb-15" data-bgimg="<?=base_url()?>u_assets/assets/image/other/breadcrumb-bgimg.jpg">
+<div class="breadcrumb-area ptb-15" data-bgimg="<?= base_url() ?>u_assets/assets/image/other/breadcrumb-bgimg.jpg">
     <div class="container">
-        <span class="d-block extra-color"><a href="<?=base_url()?>" class="extra-color">Home</a> / Checkout</span>
+        <span class="d-block extra-color"><a href="<?= base_url() ?>" class="extra-color">Home</a> / Checkout</span>
     </div>
 </div>
 
 <main id="main">
     <section class="checkout-area section-ptb">
-        <form method="post" action="<?=base_url()?>sameer/checkout_save">
+        <form method="post" action="<?= base_url() ?>user/checkout_save">
             <div class="container">
                 <div class="row row-mtm flex-lg-row-reverse align-items-lg-start">
                     <div class="col-12 col-lg-5 p-lg-sticky top-0" data-animate="animate__fadeIn">
@@ -18,7 +18,7 @@
                                         <div class="ul-mt15">
                                             <div class="checkitem-img width-88">
                                                 <div class="position-relative">
-                                                    <img src="<?=base_url()?>u_assets/assets/image/cart/cart-1.jpg"
+                                                    <img src="<?= base_url() ?>u_assets/assets/image/cart/cart-1.jpg"
                                                         class="w-100 img-fluid border-radius" alt="cart-1">
                                                     <span
                                                         class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
@@ -28,7 +28,7 @@
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
                                                     <div class="checkitem-text">
-                                                        <a href="<?=base_url()?>"
+                                                        <a href="<?= base_url() ?>"
                                                             class="dominant-link heading-weight">Gleam band</a>
                                                         <div class="mst-8">16cm / Aliceblue</div>
                                                     </div>
@@ -43,7 +43,7 @@
                                         <div class="ul-mt15">
                                             <div class="checkitem-img width-88">
                                                 <div class="position-relative">
-                                                    <img src="<?=base_url()?>u_assets/assets/image/cart/cart-2.jpg"
+                                                    <img src="<?= base_url() ?>u_assets/assets/image/cart/cart-2.jpg"
                                                         class="w-100 img-fluid border-radius" alt="cart-2">
                                                     <span
                                                         class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
@@ -53,7 +53,8 @@
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
                                                     <div class="checkitem-text">
-                                                        <a href="<?=base_url()?>" class="dominant-link heading-weight">Luxe
+                                                        <a href="<?= base_url() ?>"
+                                                            class="dominant-link heading-weight">Luxe
                                                             loop</a>
                                                         <div class="mst-8">20cm / Azure</div>
                                                     </div>
@@ -68,7 +69,7 @@
                                         <div class="ul-mt15">
                                             <div class="checkitem-img width-88">
                                                 <div class="position-relative">
-                                                    <img src="<?=base_url()?>u_assets/assets/image/cart/cart-3.jpg"
+                                                    <img src="<?= base_url() ?>u_assets/assets/image/cart/cart-3.jpg"
                                                         class="w-100 img-fluid border-radius" alt="cart-3">
                                                     <span
                                                         class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
@@ -78,7 +79,8 @@
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
                                                     <div class="checkitem-text">
-                                                        <a href="<?=base_url()?>" class="dominant-link heading-weight">Opal
+                                                        <a href="<?= base_url() ?>"
+                                                            class="dominant-link heading-weight">Opal
                                                             stud</a>
                                                         <div class="mst-8">22cm / Aliceblue</div>
                                                     </div>
@@ -93,7 +95,7 @@
                                         <div class="ul-mt15">
                                             <div class="checkitem-img width-88">
                                                 <div class="position-relative">
-                                                    <img src="<?=base_url()?>u_assets/assets/image/cart/cart-4.jpg"
+                                                    <img src="<?= base_url() ?>u_assets/assets/image/cart/cart-4.jpg"
                                                         class="w-100 img-fluid border-radius" alt="cart-4">
                                                     <span
                                                         class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
@@ -103,7 +105,8 @@
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
                                                     <div class="checkitem-text">
-                                                        <a href="<?=base_url()?>" class="dominant-link heading-weight">Ruby
+                                                        <a href="<?= base_url() ?>"
+                                                            class="dominant-link heading-weight">Ruby
                                                             hoop</a>
                                                         <div class="mst-8">Petite / Azure</div>
                                                     </div>
@@ -569,7 +572,7 @@
                                             <button type="button"
                                                 class="checktab-next width-100 width-md-auto btn-style secondary-btn">Next
                                                 step</button>
-                                            <button type="button" onclick="location.href='<?=base_url()?>'"
+                                            <button type="button" onclick="location.href='<?= base_url() ?>'"
                                                 class="dominant-link d-flex align-items-center justify-content-center mst-15 mst-md-0"><i
                                                     class="ri-arrow-left-s-line icon-16 mer-5"></i>Return to
                                                 cart</button>
@@ -843,7 +846,7 @@
                                                         <div class="st-payment mst-25">
                                                             <div class="st-img-num d-flex flex-wrap align-items-center">
                                                                 <span class="width-48"><img
-                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-maestro.png"
+                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-maestro.png"
                                                                         class="w-100 img-fluid border-radius"
                                                                         alt="paying-maestro"></span>
                                                                 <span class="width-calc-48 psl-15">xxxx 0446</span>
@@ -873,7 +876,7 @@
                                                                             <div
                                                                                 class="check-method-img ul-mt5 text-danger">
                                                                                 <span><img
-                                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-apple.png"
+                                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-apple.png"
                                                                                         class="width-40 img-fluid"
                                                                                         alt="paying-apple"></span>
                                                                             </div>
@@ -896,7 +899,7 @@
                                                                                         <button type="button"
                                                                                             class="w-100 btn-style apple-btn">Pay
                                                                                             with <img
-                                                                                                src="<?=base_url()?>u_assets/assets/image/other/paying-applepay-btn.png"
+                                                                                                src="<?= base_url() ?>u_assets/assets/image/other/paying-applepay-btn.png"
                                                                                                 class="width-40 img-fluid"
                                                                                                 alt="paying-applepay-btn"></button>
                                                                                     </div>
@@ -919,7 +922,7 @@
                                                                             <div
                                                                                 class="check-method-img ul-mt5 text-danger">
                                                                                 <span><img
-                                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-gpay.png"
+                                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-gpay.png"
                                                                                         class="width-40 img-fluid"
                                                                                         alt="paying-gpay"></span>
                                                                             </div>
@@ -942,7 +945,7 @@
                                                                                         <button type="button"
                                                                                             class="w-100 btn-style google-btn">Pay
                                                                                             with <img
-                                                                                                src="<?=base_url()?>u_assets/assets/image/other/paying-gpay-btn.png"
+                                                                                                src="<?= base_url() ?>u_assets/assets/image/other/paying-gpay-btn.png"
                                                                                                 class="width-40 img-fluid"
                                                                                                 alt="paying-gpay-btn"></button>
                                                                                     </div>
@@ -965,7 +968,7 @@
                                                                             <div
                                                                                 class="check-method-img ul-mt5 text-danger">
                                                                                 <span><img
-                                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-bank.png"
+                                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-bank.png"
                                                                                         class="width-40 img-fluid"
                                                                                         alt="paying-bank"></span>
                                                                             </div>
@@ -1018,7 +1021,7 @@
                                                                                                 <button type="button"
                                                                                                     class="w-100 btn-style bank-btn">Proceed
                                                                                                     payment <img
-                                                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-bank-btn.png"
+                                                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-bank-btn.png"
                                                                                                         class="width-40 img-fluid"
                                                                                                         alt="paying-bank-btn"></button>
                                                                                             </div>
@@ -1043,7 +1046,7 @@
                                                                             <div
                                                                                 class="check-method-img ul-mt5 text-danger">
                                                                                 <span><img
-                                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-paypal.png"
+                                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-paypal.png"
                                                                                         class="width-40 img-fluid"
                                                                                         alt="paying-paypal"></span>
                                                                             </div>
@@ -1098,7 +1101,7 @@
                                                                                                 <button type="button"
                                                                                                     class="w-100 btn-style paypal-btn">Pay
                                                                                                     with <img
-                                                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-paypal-btn.png"
+                                                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-paypal-btn.png"
                                                                                                         class="width-40 img-fluid"
                                                                                                         alt="paying-paypal-btn"></button>
                                                                                             </div>
@@ -1123,11 +1126,11 @@
                                                                             <div
                                                                                 class="check-method-img ul-mt5 text-danger">
                                                                                 <span><img
-                                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-maestro.png"
+                                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-maestro.png"
                                                                                         class="width-40 img-fluid"
                                                                                         alt="paying-maestro"></span>
                                                                                 <span><img
-                                                                                        src="<?=base_url()?>u_assets/assets/image/other/paying-visa.png"
+                                                                                        src="<?= base_url() ?>u_assets/assets/image/other/paying-visa.png"
                                                                                         class="width-40 img-fluid"
                                                                                         alt="paying-visa"></span>
                                                                             </div>
@@ -1221,7 +1224,7 @@
                                         </div>
                                         <div
                                             class="checktab-btn d-flex flex-column flex-md-row-reverse justify-content-md-between mst-30 pst-30 bst">
-                                            <button type="button" onclick="window.location.href='<?=base_url()?>'"
+                                            <button type="button" onclick="window.location.href='<?= base_url() ?>'"
                                                 class="width-100 width-md-auto btn-style secondary-btn">Place
                                                 order</button>
                                             <button type="button"
@@ -1253,7 +1256,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="ul-mt15 pickup-availability-modal-info">
                                         <div class="pickup-availability-modal-img width-88">
-                                            <img src="<?=base_url()?>u_assets/assets/image/cart/cart-1.jpg"
+                                            <img src="<?= base_url() ?>u_assets/assets/image/cart/cart-1.jpg"
                                                 class="w-100 img-fluid border-radius" alt="cart-1">
                                         </div>
                                         <div class="pickup-availability-modal-text width-calc-88">
@@ -1266,7 +1269,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="ul-mt15 pickup-availability-modal-info">
                                         <div class="pickup-availability-modal-img width-88">
-                                            <img src="<?=base_url()?>u_assets/assets/image/cart/cart-2.jpg"
+                                            <img src="<?= base_url() ?>u_assets/assets/image/cart/cart-2.jpg"
                                                 class="w-100 img-fluid border-radius" alt="cart-2">
                                         </div>
                                         <div class="pickup-availability-modal-text width-calc-88">
@@ -1279,7 +1282,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="ul-mt15 pickup-availability-modal-info">
                                         <div class="pickup-availability-modal-img width-88">
-                                            <img src="<?=base_url()?>u_assets/assets/image/cart/cart-3.jpg"
+                                            <img src="<?= base_url() ?>u_assets/assets/image/cart/cart-3.jpg"
                                                 class="w-100 img-fluid border-radius" alt="cart-3">
                                         </div>
                                         <div class="pickup-availability-modal-text width-calc-88">
@@ -1292,7 +1295,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="ul-mt15 pickup-availability-modal-info">
                                         <div class="pickup-availability-modal-img width-88">
-                                            <img src="<?=base_url()?>u_assets/assets/image/cart/cart-4.jpg"
+                                            <img src="<?= base_url() ?>u_assets/assets/image/cart/cart-4.jpg"
                                                 class="w-100 img-fluid border-radius" alt="cart-4">
                                         </div>
                                         <div class="pickup-availability-modal-text width-calc-88">

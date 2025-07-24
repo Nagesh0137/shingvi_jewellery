@@ -76,13 +76,13 @@
                                 <h6 class="ft-title font-18">Follow Us</h6>
                                 <hr class="footer-line" style="width: 60px;">
                                 <ul class="ftlink-ul ul-ft">
-                                    <li><a href="https://www.facebook.com/shingavijewellerspvtltd/" target="_blank"
+                                    <li><a href="<?= $social_media['facebook'] ?>" target="_blank"
                                             class="d-flex align-items-center"><i class="ri-facebook-fill me-2"></i>
                                             Facebook</a></li>
-                                    <li><a href="https://www.instagram.com/shingavijewellers/" target="_blank"
+                                    <li><a href="<?= $social_media['instagram'] ?>" target="_blank"
                                             class="d-flex align-items-center"><i class="ri-instagram-line me-2"></i>
                                             Instagram</a></li>
-                                    <li><a href="https://wa.me/918605500025" target="_blank"
+                                    <li><a href="<?= $social_media['whatsapp'] ?>" target="_blank"
                                             class="d-flex align-items-center"><i class="ri-whatsapp-line me-2"></i>
                                             WhatsApp</a></li>
                                 </ul>
@@ -880,23 +880,19 @@
             </a>
         </div>
         <div class="col">
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <!-- Show Profile if user is logged in -->
-                <a href="<?= base_url() ?>user/my_account" class="d-flex flex-column align-items-center ptb-10 text-center">
+           <?php 
+                                        if(isset($_SESSION['user_id'])){
+                                            $urlAccount = 'my_account';
+                                        }else{
+                                            $urlAccount = 'login';
+                                        }
+                                    ?>
+                <a href="<?= base_url() ?>user/<?=$urlAccount?>" class="d-flex flex-column align-items-center ptb-10 text-center">
                     <span class="bottom-menu-icon heading-color icon-16">
                         <i class="ri-user-3-line d-block lh-1"></i>
                     </span>
                     <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Profile</span>
                 </a>
-            <?php else: ?>
-                <!-- Show Account/Login if user is not logged in -->
-                <a href="<?= base_url() ?>user/login" class="d-flex flex-column align-items-center ptb-10 text-center">
-                    <span class="bottom-menu-icon heading-color icon-16">
-                        <i class="ri-user-3-line d-block lh-1"></i>
-                    </span>
-                    <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Account</span>
-                </a>
-            <?php endif; ?>
         </div>
 
         <div class="col">
@@ -906,39 +902,15 @@
                 <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Shop</span>
             </a>
         </div>
-        <div class="col">
-            <a href="<?= base_url() ?>user/wishlist" class="d-flex flex-column align-items-center ptb-10 text-center">
-                <span class="bottom-menu-icon-wrap position-relative per-7">
-                    <span class="d-block bottom-menu-icon heading-color icon-16"><i
-                            class="ri-heart-line d-block lh-1"></i></span>
-                    <span id="wishlistCountmv"
-                        class="bottom-menu-counter wishlist-counter extra-color font-10 position-absolute end-0 dominant-bg d-flex align-items-center justify-content-center rounded-circle">
-                        <?php
-                        if (isset($_SESSION['user_id'])) {
-                            $wt = $this->My_model->select_where("user_wishlist", ['user_id' => $_SESSION['user_id']]);
-                            echo count($wt);
-                        } else {
-                            if (isset($_SESSION['wishlist'])) {
-                                echo count($_SESSION['wishlist']);
-                            } else {
-                                echo 0;
-                            }
-                        }
-                        ?>
-                    </span>
-                </span>
-                <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Wishlist</span>
-            </a>
-        </div>
+     
         <div class="col">
             <a href="javascript:void(0)"
                 class="js-cart-drawer d-flex flex-column align-items-center ptb-10 text-center">
                 <span class="bottom-menu-icon-wrap position-relative per-7">
                     <span class="d-block bottom-menu-icon heading-color icon-16"><i
                             class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                    <span
-                        class="bottom-menu-counter cart-counter extra-color font-10 position-absolute end-0 dominant-bg d-flex align-items-center justify-content-center rounded-circle">4</span>
-                </span>
+                    <!-- <span class="bottom-menu-counter cart-counter extra-color font-10 position-absolute end-0 dominant-bg d-flex align-items-center justify-content-center rounded-circle">4</span>
+                </span> -->
                 <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Cart</span>
             </a>
         </div>
@@ -956,9 +928,11 @@
 <a href="javascript:void(0)" id="top"
     class="icon-16 secondary-btn position-fixed width-32 height-32 d-flex align-items-center justify-content-center z-1 opacity-0 invisible border-radius"
     aria-label="Back to top"><i class="ri-arrow-up-line d-block lh-1"></i></a>
+
 <!-- back-to-top end -->
 <!-- plugin js -->
 <script src="<?= base_url() ?>u_assets/assets/js/plugin.js"></script>
+<script src="<?= base_url() ?>u_assets/assets/js/buynow.js"></script>
 <!-- theme js -->
 <script src="<?= base_url() ?>u_assets/assets/js/theme3.js"></script>
 </body>
@@ -1045,27 +1019,72 @@
         });
     }
 
+    // function openAddressModal(pId) {
+    //     // $('#quickview-modal').modal('hide');
+    //     // $('#quickview-modal').on('hidden.bs.modal', function () {
+    //         // Remove this event after it's triggered to prevent multiple calls
+    //         $(this).off('hidden.bs.modal');
+    //         let productDet = '';
+    //         $('.product_id').val(pId);
+    //         let productSessionId = pId;
+    //         // alert('open'+productSessionId);
+
+    //         // Step 1: Load the HTML content
+    //         let selected_qty = document.getElementById('selected_qty').value;
+
+    //         var url = '?pId=' + encodeURIComponent(pId) +
+    //             '&size=' + encodeURIComponent(selected_Size_to_Buy) +
+    //             '&qty=' + encodeURIComponent(selected_qty);
+
+    //         console.log('pId -- ', pId)
+    //         $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
+    //             // Step 2: After the form is loaded, run AJAX for data
+    //             $.ajax({
+    //                 url: '<?= base_url("user/getproductDetails") ?>',
+    //                 type: 'POST',
+    //                 data: { pId: pId },
+    //                 dataType: 'json',
+    //                 success: function (res) {
+    //                     console.log(res);
+    //                     if (res.status == 'success') {
+    //                         productDet = res.product_details[0];
+    //                         // var userDet = res.data[0];
+
+    //                         console.log("selected_Size_to_Buy", selected_Size_to_Buy, 'selected_qty', selected_qty);
+
+    //                         $('#address-modal').modal('show');
+    //                     } else {
+    //                         alert("Something went wrong. Please try again.");
+    //                     }
+    //                 },
+    //                 error: function () {
+    //                     alert("Error occurred. Try again.");
+    //                 }
+    //             });
+
+    //         });
+    //     // });
+    // }
+      // function miniCart() {
+      //       $("#cart-drawer").removeClass("invisible").addClass("active visible");
+      //       $(".bg-shop").removeClass("opacity-0 invisible").addClass("opacity-50 visible");
+      //       $("#cart-drawer").load("<?= base_url('user/load_cart_drawer') ?>";
+
+      //   }
     function openAddressModal(pId) {
-        $('#quickview-modal').modal('hide');
-        // Wait for quickview modal to fully hide before showing the address modal
-        $('#quickview-modal').on('hidden.bs.modal', function () {
-            // Remove this event after it's triggered to prevent multiple calls
-            $(this).off('hidden.bs.modal');
-            let productDet = '';
+        const isQuickViewOpen = $('#quickview-modal').hasClass('show');
+
+        function loadAddressModalContent() {
             $('.product_id').val(pId);
-            let productSessionId = pId;
-            // alert('open'+productSessionId);
+            const selected_qty = document.getElementById('selected_qty').value;
 
-            // Step 1: Load the HTML content
-            let selected_qty = document.getElementById('selected_qty').value;
-
-            var url = '?pId=' + encodeURIComponent(pId) +
+            const url = '?pId=' + encodeURIComponent(pId) +
                 '&size=' + encodeURIComponent(selected_Size_to_Buy) +
                 '&qty=' + encodeURIComponent(selected_qty);
 
-            console.log('pId -- ', pId)
+            console.log('pId -- ', pId);
+
             $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
-                // Step 2: After the form is loaded, run AJAX for data
                 $.ajax({
                     url: '<?= base_url("user/getproductDetails") ?>',
                     type: 'POST',
@@ -1073,12 +1092,9 @@
                     dataType: 'json',
                     success: function (res) {
                         console.log(res);
-                        if (res.status == 'success') {
-                            productDet = res.product_details[0];
-                            // var userDet = res.data[0];
-
+                        if (res.status === 'success') {
+                            const productDet = res.product_details[0];
                             console.log("selected_Size_to_Buy", selected_Size_to_Buy, 'selected_qty', selected_qty);
-
                             $('#address-modal').modal('show');
                         } else {
                             alert("Something went wrong. Please try again.");
@@ -1088,9 +1104,17 @@
                         alert("Error occurred. Try again.");
                     }
                 });
-
             });
-        });
+        }
+
+        if (isQuickViewOpen) {
+            $('#quickview-modal').modal('hide');
+            $('#quickview-modal').one('hidden.bs.modal', function () {
+                loadAddressModalContent(); // Load after modal is fully hidden
+            });
+        } else {
+            loadAddressModalContent(); // No modal open, load directly
+        }
     }
 
 </script>
@@ -1160,46 +1184,31 @@
         const inputOtp = $('#otp').val().trim();
         console.log(inputOtp, receivedOtp);
         var productId = document.getElementById('product_id').value;
-        alert('productId --- ' + productId)
+
         if (inputOtp == receivedOtp) {
-            $.ajax({
-                url: '<?= base_url("user/setUserLogin") ?>',
-                type: 'POST',
-                data: { user_id: userDet.customers_id },
-                dataType: 'json',
-                success: function (res) {
-                    console.log(res);
-                    if (res.status === 'success') {
-                        console.log('User Sessiom Set');
-                        var url = '?pId=' + encodeURIComponent(productId) +
-                            '&size=' + encodeURIComponent(selected_Size_to_Buy) +
-                            '&qty=' + encodeURIComponent(selected_qty);
 
-                        $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
-                            $('.user_status').val(user_status);
-                            $('#uname').val(userDet.name);
-                            $('#uemail').val(userDet.email);
-                            $('.customers_id').val(userDet.customers_id);
-                            $('#uaddress').val(userDet.address);
-                            $('#pincode').val(userDet.pincode);
-                            console.log('productDet', productDet);
-                        })
-                        // OTP matched
-                        openAddressModal(productDet.prod_gold_id);
-                    } else {
-                        console("Failed To Set User In Session");
-                    }
-                },
+            var url = '?pId=' + encodeURIComponent(productId) +
+                '&size=' + encodeURIComponent(selected_Size_to_Buy) +
+                '&qty=' + encodeURIComponent(selected_qty);
 
+            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
+                console.log('Modal content reloaded.');
             });
 
-
-
-        } else {
-            // alert("Wrong OTP. Please try again.");
-            document.getElementById('errMsg').innerHTML = 'Wrong OTP. Please try again.';
-
+            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
+                // alert('productId --- ' + productId);
+                $('.user_status').val(user_status);
+                $('#uname').val(userDet.name);
+                $('#uemail').val(userDet.email);
+                $('.customers_id').val(userDet.customers_id);
+                $('#uaddress').val(userDet.address);
+                $('#pincode').val(userDet.pincode);
+                console.log('productDet', productDet);
+            })
+            // OTP matched
+            openAddressModal(productDet.prod_gold_id);
         }
+
     });
 
     // function openAddressModal(pId)
@@ -1458,15 +1467,7 @@
                                     </div>
                                     <div class="product-button mst-15">
                                         <div class="row btn-row15">
-                                            <div class="col-12">
-                                                <!-- <button type="submit" class="w-100 btn-style quaternary-btn add-to-cart">
-                                                    <span class="product-icon">
-                                                        <span class="product-bag-icon">Add to cart</span>
-                                                        <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                        <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                    </span>
-                                                </button> -->
-                                            </div>
+
                                             <div class="col-12">
                                                 <a class="w-100 btn-style secondary-btn" id="buy_now_btn">Buy now</a>
                                             </div>

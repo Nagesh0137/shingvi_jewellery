@@ -55,14 +55,16 @@
                     <div class="extra-color psl-15 text-nowrap">Super best jewellery sale up to <span
                             class="blinking">20% Off</span></div>
                     <div class="extra-color psl-15 text-nowrap"><i class="ri-mail-line icon-16 mer-5"></i><a
-                            href="mailto:demo@demo.com" class="d-inline-block text-white">demo@demo.com</a></div>
+                            href="mailto:<?= $social_media['email'] ?>"
+                            class="d-inline-block text-white"><?= $social_media['email'] ?></a></div>
                     <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a
                             href="<?= base_url() ?>user/products"
                             class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
                     <div class="extra-color psl-15 text-nowrap">Super best jewellery sale up to <span
                             class="blinking">20% Off</span></div>
                     <div class="extra-color psl-15 text-nowrap"><i class="ri-mail-line icon-16 mer-5"></i><a
-                            href="mailto:demo@demo.com" class="d-inline-block text-white">demo@demo.com</a></div>
+                            href="mailto:<?= $social_media['email'] ?>"
+                            class="d-inline-block text-white"><?= $social_media['email'] ?></a></div>
                 </div>
                 <div class="notification-marquee-row notification-marquee2 d-flex">
                     <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a
@@ -71,14 +73,16 @@
                     <div class="extra-color psl-15 text-nowrap">Super best jewellery sale up to <span
                             class="blinking">20% Off</span></div>
                     <div class="extra-color psl-15 text-nowrap"><i class="ri-mail-line icon-16 mer-5"></i><a
-                            href="mailto:demo@demo.com" class="d-inline-block text-white">demo@demo.com</a></div>
+                            href="mailto:<?= $social_media['email'] ?>"
+                            class="d-inline-block text-white"><?= $social_media['email'] ?></a></div>
                     <div class="extra-color psl-15 text-nowrap">Save now 50% on jewellery appliances discount <a
                             href="<?= base_url() ?>user/products"
                             class="extra-color text-uppercase text-decoration-underline blinking">Shop now</a>!</div>
                     <div class="extra-color psl-15 text-nowrap">Super best jewellery sale up to <span
                             class="blinking">20% Off</span></div>
                     <div class="extra-color psl-15 text-nowrap"><i class="ri-mail-line icon-16 mer-5"></i><a
-                            href="mailto:demo@demo.com" class="d-inline-block text-white">demo@demo.com</a></div>
+                            href="mailto:<?= $social_media['email'] ?>"
+                            class="d-inline-block text-white"><?= $social_media['email'] ?></a></div>
                 </div>
             </div>
         </div>
@@ -231,7 +235,7 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                        <div class="search-more ptb-10 plr-15 bst"><a href="search-product.html"
+                                        <div class="search-more ptb-10 plr-15 bst"><a href="<?=base_url()?>user/products"
                                                 class="body-secondary-color text-decoration-underline">See all results
                                                 (12)</a></div>
                                         <div class="search-fail ptb-10 plr-15">Search not found</div>
@@ -242,28 +246,13 @@
                     </div>
                     <div class="col">
                         <ul class="ul-mt30 justify-content-end">
-                            <li><span class="d-inline-block body-secondary-color"><a href="mailto:demo@demo.com"><i
-                                            class="ri-mail-line icon-16 mer-5"></i>demo@demo.com</a></span></li>
-                            <li><span class="d-inline-block body-secondary-color"><a href="track-order.html"><i
-                                            class="ri-map-pin-line icon-16 mer-5"></i>Track order</a></span></li>
-                            <li>
-                                <div class="local-cl position-relative">
-                                    <form method="post" action="JavaScript:void(0)" class="localization-form"
-                                        enctype="multipart/form-data">
-                                        <button type="submit" class="dropdown-toggle d-flex align-items-center"
-                                            data-bs-toggle="dropdown">USD $<i
-                                                class="ri-arrow-down-s-line d-block icon-16 lh-1"></i></button>
-                                        <ul class="dropdown-menu body-bg z-2 p-0 border-0 br-hidden box-shadow">
-                                            <li class="active"><a href="javascript:void(0)"
-                                                    class="d-block font-13 ptb-5 plr-15">USD $</a></li>
-                                            <li><a href="javascript:void(0)" class="d-block font-13 ptb-5 plr-15">EUR
-                                                    €</a></li>
-                                            <li><a href="javascript:void(0)" class="d-block font-13 ptb-5 plr-15">INR
-                                                    ₹</a></li>
-                                        </ul>
-                                    </form>
-                                </div>
+                            <li><span class="d-inline-block body-secondary-color"><a
+                                        href="mailto:<?= $social_media['email'] ?>"><i
+                                            class="ri-mail-line icon-16 mer-5"></i><?= $social_media['email'] ?></a></span>
                             </li>
+                            <li><span class="d-inline-block body-secondary-color"><a><i
+                                            class="ri-map-pin-line icon-16 mer-5"></i>Track order</a></span></li>
+
                         </ul>
                     </div>
                 </div>
@@ -299,16 +288,15 @@
                         <div class="mainmenu-content">
                             <div class="main-wrap">
                                 <ul class="menu-ul d-flex flex-wrap">
-                                    <a href="<?= base_url() ?>user/unset_ses"
+                                    <!-- <a href="<?= base_url() ?>user/unset_ses"
                                         class="menu-link font-16 d-flex align-items-center plr-15">
                                         <span class="menu-title text-uppercase heading-weight">Logout</span>
-                                        <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
-                                    </a>
+                                    </a> -->
+
                                     <li class="menu-li">
                                         <a href="<?= base_url() ?>user/index"
                                             class="menu-link font-16 d-flex align-items-center plr-15">
                                             <span class="menu-title text-uppercase heading-weight">Home</span>
-                                            <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
                                         </a>
 
                                         <!-- <div class="menu-dropdown collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
@@ -342,6 +330,94 @@
                                                     </div>
                                                 </div> -->
                                     </li>
+
+                                    <?php
+                                    $category = $this->db->query("SELECT * FROM category WHERE status='active'")->result_array();
+
+                                    if (!empty($category) && count($category) > 0) {
+                                        foreach ($category as $key => $row) {
+                                            $subcatdetails = $this->db->query("SELECT * FROM product_group WHERE group_category = " . $row['category_id'] . " AND status = 'active'")->result_array();
+                                            $filtered_subcat = [];
+
+                                            if (!empty($category) && count($subcatdetails) > 0) {
+                                                foreach ($subcatdetails as $key1 => $row1) {
+                                                    $details = $this->db->query("SELECT * FROM product_gold WHERE status='active' AND cat_id = " . $row['category_id'] . " AND group_id = " . $row1['product_group_id'] . " AND label != 'Out Of Stock'")->result_array();
+
+                                                    if (count($details) > 0) {
+                                                        $row1['details'] = $details;
+                                                        $filtered_subcat[] = $row1;
+                                                    }
+                                                }
+                                            }
+
+                                            if (count($filtered_subcat) > 0) {
+                                                $category[$key]['sub_category_details'] = $filtered_subcat;
+                                            } else {
+                                                unset($category[$key]['sub_category_details']);
+                                            }
+                                        }
+                                    }
+
+                                    $category = array_filter($category, function ($cat) {
+                                        return isset($cat['sub_category_details']);
+                                    });
+                                    ?>
+
+                                    <!-- Categories displayed directly in navbar -->
+                                    <?php if (!empty($category)) { ?>
+                                        <?php foreach ($category as $key => $row) { ?>
+                                            <li
+                                                class="menu-li <?= count($row['sub_category_details']) > 0 ? 'has-dropdown' : '' ?>">
+                                                <?php if (strtolower($row['category_name']) == 'gift') { ?>
+                                                    <a href="javascript:void(0)"
+                                                        class="menu-link font-16 d-flex align-items-center plr-15" style="font-weight: 600;text-transform: uppercase;">
+                                                        <?= $row['category_name'] ?>
+                                                        <?php if (count($row['sub_category_details']) > 0) { ?>
+                                                            <span class="icon-16 fw-normal"><i
+                                                                    class="ri-arrow-down-s-line d-block lh-1"></i></span>
+                                                        <?php } ?>
+                                                    </a>
+                                                <?php } else if ($row['category_name'] != 'Diamond' && strtolower($row['category_name']) != 'coin') { ?>
+                                                        <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>"
+                                                            class="menu-link font-16 d-flex align-items-center plr-15" style="font-weight: 600;text-transform: uppercase;">
+                                                        <?= $row['category_name'] ?>
+                                                        <?php if (count($row['sub_category_details']) > 0) { ?>
+                                                                <span class="icon-16 fw-normal"><i
+                                                                        class="ri-arrow-down-s-line d-block lh-1"></i></span>
+                                                        <?php } ?>
+                                                        </a>
+                                                <?php } ?>
+
+                                                <!-- Subcategories dropdown -->
+                                                <?php if (count($row['sub_category_details']) > 0) { ?>
+                                                    <ul class="dropdown-menu" style="width: 200px;">
+                                                        <?php foreach (
+                                                            $row['sub_category_details'] as $subCat) { ?>
+                                                            <li class="position-relative">
+                                                                <a
+                                                                    href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>&g_id=<?= $subCat['product_group_id'] ?>">
+                                                                    <?= $subCat['product_group_name'] ?>
+                                                                </a>
+                                                                <?php if (!empty($subCat['details'])) { ?>
+                                                                    <ul class="dropdown-menu"
+                                                                        style="left: 200px; top: 0; min-width: 220px;">
+                                                                        <?php foreach ($subCat['details'] as $product) { ?>
+                                                                            <li>
+                                                                                <a
+                                                                                    href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>&g_id=<?= $subCat['product_group_id'] ?>&p_id=<?= $product['product_id'] ?>">
+                                                                                    <?= $product['product_name'] ?>
+                                                                                </a>
+                                                                            </li>
+                                                                        <?php } ?>
+                                                                    </ul>
+                                                                <?php } ?>
+                                                            </li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                <?php } ?>
+                                            </li>
+                                        <?php } ?>
+                                    <?php } ?>
 
                                     <li class="menu-li">
                                         <a href="<?= base_url() ?>user/products"
@@ -396,70 +472,8 @@
                                                     </div>
                                                 </div> -->
                                     </li>
-                                    <li class="menu-li">
-                                        <a href="<?= base_url() ?>user/products"
-                                            class="menu-link font-16 d-flex align-items-center plr-15">
-                                            <span class="menu-title text-uppercase heading-weight">Shop</span>
-                                            <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
-                                        </a>
-                                        <!-- <div class="menu-dropdown menu-mega collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
-                                                    <div class="container ptb-25">
-                                                        <div class="menu-overview">
-                                                            <div class="heading-color ptb-5 text-uppercase heading-weight">Account</div>
-                                                            <span class="d-block ptb-5"><a href="<?= base_url() ?>user/login" class="d-inline-block body-dominant-color">Login</a></span>
-                                                            <span class="d-block ptb-5"><a href="forgot-password.html" class="d-inline-block body-dominant-color">Forgot password</a></span>
-                                                            <span class="d-block ptb-5"><a href="register.html" class="d-inline-block body-dominant-color">Register</a></span>
-                                                            <div class="heading-color ptb-5 text-uppercase heading-weight">Other</div>
-                                                            <span class="d-block ptb-5"><a href="404.html" class="d-inline-block body-dominant-color">404</a></span>
-                                                            <span class="d-block ptb-5"><a href="cart-empty.html" class="d-inline-block body-dominant-color">Cart empty</a></span>
-                                                            <span class="d-block ptb-5"><a href="cart-page.html" class="d-inline-block body-dominant-color">Cart</a></span>
-                                                            <span class="d-block ptb-5"><a href="checkout.html" class="d-inline-block body-dominant-color">Checkout</a></span>
-                                                            <span class="d-block ptb-5"><a href="coming-soon.html" class="d-inline-block body-dominant-color">Comingsoon</a></span>
-                                                            <span class="d-block ptb-5"><a href="invoice.html" class="d-inline-block body-dominant-color">Invoice</a></span>
-                                                            <div class="heading-color ptb-5 text-uppercase heading-weight">Order</div>
-                                                            <span class="d-block ptb-5"><a href="order-complete.html" class="d-inline-block body-dominant-color">Order complete</a></span>
-                                                            <span class="d-block ptb-5"><a href="order.html" class="d-inline-block body-dominant-color">Order</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info.html" class="d-inline-block body-dominant-color">Order info</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-default.html" class="d-inline-block body-dominant-color">Order default</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-unfulfilled.html" class="d-inline-block body-dominant-color">Order unfulfilled</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-fulfilled.html" class="d-inline-block body-dominant-color">Order fulfilled</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-inprogress.html" class="d-inline-block body-dominant-color">Order inprogress</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-intransit.html" class="d-inline-block body-dominant-color">Order intransit</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-indelivery.html" class="d-inline-block body-dominant-color">Order indelivery</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-delivered.html" class="d-inline-block body-dominant-color">Order delivered</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-pickup.html" class="d-inline-block body-dominant-color">Order pickup</a></span>
-                                                            <span class="d-block ptb-5"><a href="order-info-cancel.html" class="d-inline-block body-dominant-color">Order cancel</a></span>
-                                                            <div class="heading-color ptb-5 text-uppercase heading-weight">Profile</div>
-                                                            <span class="d-block ptb-5"><a href="profile.html" class="d-inline-block body-dominant-color">Profile</a></span>
-                                                            <span class="d-block ptb-5"><a href="profile-address.html" class="d-inline-block body-dominant-color">Profile address</a></span>
-                                                            <span class="d-block ptb-5"><a href="profile-notification.html" class="d-inline-block body-dominant-color">Profile notification</a></span>
-                                                            <span class="d-block ptb-5"><a href="profile-order.html" class="d-inline-block body-dominant-color">Profile order</a></span>
-                                                            <span class="d-block ptb-5"><a href="profile-order-empty.html" class="d-inline-block body-dominant-color">Profile order empty</a></span>
-                                                            <span class="d-block ptb-5"><a href="profile-ticket.html" class="d-inline-block body-dominant-color">Profile ticket</a></span>
-                                                            <span class="d-block ptb-5"><a href="profile-ticket-empty.html" class="d-inline-block body-dominant-color">Profile ticket empty</a></span>
-                                                            <span class="d-block ptb-5"><a href="profile-wishlist.html" class="d-inline-block body-dominant-color">Profile wishlist</a></span>
-                                                            <span class="d-block ptb-5"><a href="profile-wishlist-empty.html" class="d-inline-block body-dominant-color">Profile wishlist empty</a></span>
-                                                            <div class="heading-color ptb-5 text-uppercase heading-weight">Ticket</div>
-                                                            <span class="d-block ptb-5"><a href="ticket.html" class="d-inline-block body-dominant-color">Ticket</a></span>
-                                                            <span class="d-block ptb-5"><a href="ticket-create.html" class="d-inline-block body-dominant-color">Ticket create</a></span>
-                                                            <span class="d-block ptb-5"><a href="ticket-edit.html" class="d-inline-block body-dominant-color">Ticket edit</a></span>
-                                                            <span class="d-block ptb-5"><a href="ticket-info.html" class="d-inline-block body-dominant-color">Ticket info</a></span>
-                                                            <div class="heading-color ptb-5 text-uppercase heading-weight">Features</div>
-                                                            <span class="d-block ptb-5"><a href="button.html" class="d-inline-block body-dominant-color">Button</a></span>
-                                                            <span class="d-block ptb-5"><a href="cart-drawer-empty.html" class="d-inline-block body-dominant-color">Cart drawer empty</a></span>
-                                                            <div class="heading-color ptb-5 text-uppercase heading-weight">Policies</div>
-                                                            <span class="d-block ptb-5"><a href="cancellation.html" class="d-inline-block body-dominant-color">Cancellation</a></span>
-                                                            <span class="d-block ptb-5"><a href="cookie.html" class="d-inline-block body-dominant-color">Cookie</a></span>
-                                                            <span class="d-block ptb-5"><a href="legal.html" class="d-inline-block body-dominant-color">Legal</a></span>
-                                                            <span class="d-block ptb-5"><a href="payment-policy.html" class="d-inline-block body-dominant-color">Payment policy</a></span>
-                                                            <span class="d-block ptb-5"><a href="privacy-policy.html" class="d-inline-block body-dominant-color">Privacy policy</a></span>
-                                                            <span class="d-block ptb-5"><a href="return-policy.html" class="d-inline-block body-dominant-color">Return policy</a></span>
-                                                            <span class="d-block ptb-5"><a href="shipping-policy.html" class="d-inline-block body-dominant-color">Shipping policy</a></span>
-                                                            <span class="d-block ptb-5"><a href="terms-condition.html" class="d-inline-block body-dominant-color">Terms & condition</a></span>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-                                    </li>
+
+
                                     <li class="menu-li">
                                         <a href="<?= base_url() ?>user/blog"
                                             class="menu-link font-16 d-flex align-items-center plr-15">
@@ -493,91 +507,7 @@
                                         <!--  </ul>
                                                 </div> -->
                                     </li>
-                                    <li class="menu-li">
-                                        <a href="javascript:void(0)"
-                                            class="menu-link font-16 d-flex align-items-center plr-15">
-                                            <span class="menu-title text-uppercase heading-weight">Page</span>
-                                            <span class="icon-16 fw-normal"><i
-                                                    class="ri-arrow-down-s-line d-block lh-1"></i></span>
-                                        </a>
-                                        <div
-                                            class="menu-dropdown menu-sub collapse position-absolute top-auto extra-bg z-2 DropDownSlide box-shadow">
-                                            <ul class="menudrop-ul ptb-25">
-                                                <li class="menudrop-li position-relative">
-                                                    <div class="menu-sublink ptb-5 plr-30">
-                                                        <a href="<?= base_url() ?>user/about"
-                                                            class="d-flex flex-wrap align-items-center">
-                                                            <span class="menusub-title width-calc-16">About us</span>
-                                                            <!-- <span class="width-16 icon-16 fw-normal"><i class="ri-arrow-right-s-line d-block lh-1"></i></span> -->
-                                                        </a>
-                                                    </div>
-                                                    <!-- <div class="menusub-dropdown collapse position-absolute w-100 extra-bg DropDownSlide box-shadow">
-                                                                <ul class="menusub-ul ptb-25">
-                                                                   
-                                                                    <li class="menusub-li">
-                                                                        <span class="d-block ptb-5 plr-30"><a href="about-us3.html" class="d-inline-block body-dominant-color">03 Classic aboutus</a></span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div> -->
-                                                </li>
-                                                <li class="menudrop-li position-relative">
-                                                    <div class="menu-sublink ptb-5 plr-30">
-                                                        <a href="<?= base_url() ?>sameer/contact"
-                                                            class="d-flex flex-wrap align-items-center">
-                                                            <span class="menusub-title width-calc-16">Contact us</span>
-                                                            <!-- <span class="width-16 icon-16 fw-normal"><i class="ri-arrow-right-s-line d-block lh-1"></i></span> -->
-                                                        </a>
-                                                    </div>
-                                                    <!--  <div class="menusub-dropdown collapse position-absolute w-100 extra-bg DropDownSlide box-shadow">
-                                                                <ul class="menusub-ul ptb-25">
-                                        
-                                                                    <li class="menusub-li">
-                                                                        <span class="d-block ptb-5 plr-30"><a href="contact-us2.html" class="d-inline-block body-dominant-color">02 Minimalist contactus</a></span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div> -->
-                                                </li>
-                                                <li class="menudrop-li position-relative">
-                                                    <div class="menu-sublink ptb-5 plr-30"><a
-                                                            href="<?= base_url() ?>sameer/faq" class="d-block">Faqs</a>
-                                                    </div>
-                                                </li>
-                                                <li class="menudrop-li position-relative">
-                                                    <div class="menu-sublink ptb-5 plr-30"><a
-                                                            href="<?= base_url() ?>rohan/terms_of_use"
-                                                            class="d-block">Terms & Condition</a></div>
-                                                </li>
-                                                <li class="menudrop-li position-relative">
-                                                    <div class="menu-sublink ptb-5 plr-30"><a
-                                                            href="<?= base_url() ?>user/event"
-                                                            class="d-block">Events</a>
-                                                    </div>
-                                                </li>
-                                                <!--  <li class="menudrop-li position-relative">
-                                                            <div class="menu-sublink ptb-5 plr-30"><a href="<?= base_url() ?>user/policies" class="d-block">Privacy Policy</a></div>
-                                                        </li>
-
-                                                        <li class="menudrop-li position-relative">
-                                                            <div class="menu-sublink ptb-5 plr-30"><a href="<?= base_url() ?>user/policies" class="d-block">Return & Refund Policy</a></div>
-                                                        </li> -->
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="header-icon-wrap cart-wrap d-none d-md-block">
-                                        <div class="header-icon-wrapper">
-                                            <a href="javascript:void(0)" class="d-block header-icon-cart js-cart-drawer">
-                                                <span class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
-                                                    <span class="header-block-icon icon-16"><i class="ri-shopping-bag-3-line"></i></span>
-                                                    <span class="d-none d-xl-block header-text-content">Cart</span>
-                                                    <span class="header-block-counter cart-counter dominant-color">4</span>
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </li>
-
-                                  
-
-
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -606,7 +536,7 @@
                                     </div>
                                 </li>
 
-                                <li class="header-icon-wrap wishlist-wrap d-none d-md-block">
+                                <!-- <li class="header-icon-wrap wishlist-wrap d-none d-md-block">
                                     <div class="header-icon-wrapper">
                                         <a href="<?= base_url() ?>user/wishlist" class="d-block header-icon-wishlist">
                                             <span
@@ -632,7 +562,7 @@
                                             </span>
                                         </a>
                                     </div>
-                                </li>
+                                </li> -->
                                 <li class="header-icon-wrap cart-wrap d-none d-md-block">
                                     <div class="header-icon-wrapper">
                                         <a href="javascript:void(0)" class="d-block header-icon-cart js-cart-drawer">
@@ -641,40 +571,30 @@
                                                 <span class="header-block-icon icon-16"><i
                                                         class="ri-shopping-bag-3-line"></i></span>
                                                 <span class="d-none d-xl-block header-text-content">Cart</span>
-                                                <span class="header-block-counter cart-counter dominant-color">4</span>
+                                                <!-- <span class="header-block-counter cart-counter dominant-color"><?= isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0 ?></span> -->
                                             </span>
                                         </a>
                                     </div>
                                 </li>
 
-                                <li class="header-icon-wrap user-wrap d-none d-md-block">
+                                  <li class="header-icon-wrap cart-wrap d-none d-md-block">
                                     <div class="header-icon-wrapper">
-                                       <?php if (isset($_SESSION['user_id'])): ?>
-                                                <?php 
-                                                //  Fetch active user details using session user ID
-                                                $user_details = $this->My_model->select_where("customers", [
-                                                    'status' => 'active',
-                                                    'customers_id' => $_SESSION['user_id']
-                                                ]); 
-                                                ?>
-                                                <a href="<?= base_url() ?>user/my_account" class="d-block header-icon-user text-center" aria-label="My Account">
-                                                    <div class="d-flex flex-column align-items-center">
-                                                        <?php if (!empty($user_details[0]['profile_photo'])): ?>
-                                                            <span class="header-block-icon icon-24 mb-1"><i class="ri-user-3-line" style="font-size: 20px;"></i></span>
-                                                        <span class="d-block header-text-content">Account</span>
-                                                        <?php else: ?>
-                                                            <span class="header-block-icon icon-24 mb-1"><i class="ri-user-3-line" style="font-size: 40px;"></i></span>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </a>
-                                            <?php else: ?>
-                                                <a href="<?= base_url() ?>user/login" class="d-block header-icon-user text-center" aria-label="Login">
-                                                    <div class="d-flex flex-column align-items-center">
-                                                        <span class="header-block-icon icon-24 mb-1"><i class="ri-user-3-line" style="font-size: 20px;"></i></span>
-                                                        <span class="d-block header-text-content">Account</span>
-                                                    </div>
-                                                </a>
-                                            <?php endif; ?>
+                                    <?php 
+                                        if(isset($_SESSION['user_id'])){
+                                            $urlAccount = 'my_account';
+                                        }else{
+                                            $urlAccount = 'login';
+                                        }
+                                    ?>
+                                    <a href="<?=base_url()?>user/<?=$urlAccount?>" class="d-block">
+                                            <span
+                                                class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
+                                                <span class="header-block-icon icon-16"><i
+                                                        class="ri-user-line"></i></span>
+                                                <span class="d-none d-xl-block header-text-content">Account</span>
+                                                <!-- <span class="header-block-counter cart-counter dominant-color"><?= isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0 ?></span> -->
+                                            </span>
+                                        </a>
                                     </div>
                                 </li>
 
@@ -690,3 +610,49 @@
     </div>
     <!-- header-top end -->
 </header>
+<style>
+    .menu-li.has-dropdown {
+        position: relative;
+    }
+
+    .menu-li.has-dropdown>.dropdown-menu {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        z-index: 1000;
+        background: #fff;
+        min-width: 200px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .menu-li.has-dropdown:hover>.dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-menu li a {
+        display: block;
+        padding: 10px 20px;
+        color: #222;
+        text-decoration: none;
+    }
+
+    .dropdown-menu li a:hover {
+        background: #f5f5f5;
+    }
+
+    .menu-li.has-dropdown>.dropdown-menu>li.position-relative:hover>.dropdown-menu {
+        display: block;
+    }
+
+    .menu-li.has-dropdown>.dropdown-menu>li.position-relative>.dropdown-menu {
+        display: none;
+        position: absolute;
+        left: 200px;
+        top: 0;
+        z-index: 1001;
+        background: #fff;
+        min-width: 220px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+</style>

@@ -1,8 +1,8 @@
 <main class="main__content_wrapper">
     <!-- Breadcrumb Section -->
-    <div class="breadcrumb-area ptb-15" data-bgimg="<?=base_url()?>u_assets/assets/image/other/breadcrumb-bgimg.jpg">
+    <div class="breadcrumb-area ptb-15" data-bgimg="<?= base_url() ?>u_assets/assets/image/other/breadcrumb-bgimg.jpg">
         <div class="container">
-            <span class="d-block extra-color"><a href="<?=base_url()?>" class="extra-color">Home</a> / Blog</span>
+            <span class="d-block extra-color"><a href="<?= base_url() ?>" class="extra-color">Home</a> / Blog</span>
         </div>
     </div>
 
@@ -13,23 +13,24 @@
                 <h2 class="section__title">Latest Articles</h2>
                 <p class="section__subtitle">Discover the latest trends and insights in jewelry</p>
             </div>
-            
+
             <div class="blog__grid--wrapper">
                 <div class="row">
-                    <?php if(count($blogs) > 0): ?>
-                        <?php foreach($blogs as $row): ?>
+                    <?php if (count($blogs) > 0): ?>
+                        <?php foreach ($blogs as $row): ?>
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="blog__card shadow-sm">
                                     <div class="blog__media">
-                                        <a href="<?=base_url()?>user/view_blog/<?=$row['web_blog_id']?>" class="blog__media--link">
-                                            <?php if($row['blog_type'] == "Image"): ?>
-                                                <img src="<?=base_url()?>uploads/<?=$row['blog_image']?>" 
-                                                     alt="<?=$row['blog_label']?>" 
-                                                     class="blog__image img-fluid">
+                                        <a href="<?= base_url() ?>user/view_blog/<?= $row['web_blog_id'] ?>"
+                                            class="blog__media--link">
+                                            <?php if ($row['blog_type'] == "Image"): ?>
+                                                <img src="<?= base_url() ?>uploads/<?= $row['blog_image'] ?>"
+                                                    alt="<?= $row['blog_label'] ?>" class="blog__image img-fluid">
                                             <?php else: ?>
                                                 <div class="blog__video--wrapper">
                                                     <video class="blog__video" controls>
-                                                        <source src="<?=base_url()?>uploads/<?=$row['blog_image']?>" type="video/mp4">
+                                                        <source src="<?= base_url() ?>uploads/<?= $row['blog_image'] ?>"
+                                                            type="video/mp4">
                                                         Your browser does not support the video tag.
                                                     </video>
                                                 </div>
@@ -44,26 +45,27 @@
                                             </span>
                                         </div>
                                         <h3 class="blog__title">
-                                            <a href="<?=base_url()?>sameer/view_blog/<?=$row['web_blog_id']?>"><?= $row['blog_label'] ?></a>
+                                            <a
+                                                href="<?= base_url() ?>user/view_blog/<?= $row['web_blog_id'] ?>"><?= $row['blog_label'] ?></a>
                                         </h3>
                                         <p class="blog__excerpt">
                                             <?= isset($row['blog_details']) ? word_limiter(strip_tags($row['blog_details']), 20) : '' ?>
                                         </p>
-                                        <a href="<?=base_url()?>sameer/view_blog/<?=$row['web_blog_id']?>" class="blog__readmore">Read More <i class="ri-arrow-right-line"></i></a>
+                                        <a href="<?= base_url() ?>user/view_blog/<?= $row['web_blog_id'] ?>"
+                                            class="blog__readmore">Read More <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <!-- Default blog items when no blogs exist -->
-                        <?php for($i = 0; $i < 3; $i++): ?>
+                        <?php for ($i = 0; $i < 3; $i++): ?>
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="blog__card shadow-sm">
                                     <div class="blog__media">
                                         <a href="#" class="blog__media--link">
-                                            <img src="https://shingavijewellers.com/uploads/blog-1610352838-41827.jpg" 
-                                                 alt="Default blog image" 
-                                                 class="blog__image img-fluid">
+                                            <img src="https://shingavijewellers.com/uploads/blog-1610352838-41827.jpg"
+                                                alt="Default blog image" class="blog__image img-fluid">
                                         </a>
                                     </div>
                                     <div class="blog__content">
@@ -74,8 +76,10 @@
                                         <h3 class="blog__title">
                                             <a href="#">How Jewelers Can Respond to Volatility in Gold and Silver Prices</a>
                                         </h3>
-                                        <p class="blog__excerpt">What do you do when commodity markets swing? This article will explore how jewelry...</p>
-                                        <a href="<?=base_url()?>sameer/view_blog/<?=$row['web_blog_id']?>" class="blog__readmore">Read More <i class="ri-arrow-right-line"></i></a>
+                                        <p class="blog__excerpt">What do you do when commodity markets swing? This article will
+                                            explore how jewelry...</p>
+                                        <a href="<?= base_url() ?>user/view_blog/<?= $row['web_blog_id'] ?>"
+                                            class="blog__readmore">Read More <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +134,7 @@
 
     .blog__card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     }
 
     .blog__media {

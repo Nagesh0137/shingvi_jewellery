@@ -270,7 +270,8 @@ if (!isset($_SESSION['user_id'])) {
                     class="address-modal-header bg-white p-2 mt-2 mb-1 rounded d-flex align-items-center justify-content-between meb-30">
                     <h6 class="font-15">Order Summary (1 Item)</h6>
                     <h6 id="final_amount_after_discount">&#8377;
-                        <?= number_format(floatval($product_details[0]['final_amount_after_discount']) * floatval($qty)) ?>
+                        
+                        <?= number_format(floatval($product_details[0]['discounted_price']) * floatval($qty)) ?>
                     </h6>
                     <input type="hidden" name="product_id" value="<?= $product_id ?>" id="product_id" class="product_id">
                     <input type="hidden" name="customers_id" value="<?= $user[0]['customers_id'] ?>" id="customers_id"
@@ -331,18 +332,18 @@ if (!isset($_SESSION['user_id'])) {
             ?>
             <form method="post" action="<?= base_url() ?>user/save_buy_now" id="customerdetails">
                 <div class="address-modal-header body-bg d-flex align-items-center justify-content-between meb-30">
-                    <h6 class="font-18">We never ask for payments outside our website or apps</h6>
-                    <button type="button" class="body-secondary-color icon-16" data-bs-dismiss="modal" aria-label="Close">
+                    <!-- <h6 class="font-18">We never ask for payments outside our website or apps</h6> -->
+                    <!-- <button type="button" class="body-secondary-color icon-16" data-bs-dismiss="modal" aria-label="Close">
                         <i class="ri-close-large-line d-block lh-1"></i>
-                    </button>
+                    </button> -->
                 </div>
-                <div class="address-modal-header bg-white p-2 rounded d-flex align-items-center justify-content-between meb-30">
+                <div class="address-modal-header d-none bg-white p-2 rounded d-flex align-items-center justify-content-between meb-30">
                     <h6 class="font-18">Order Summary</h6>
-                    <h6 id="final_amount_after_discount"><?= $product_details[0]['formatted_discounted_price'] ?></h6>
+                    <h6><?= number_format(floatval($product_details[0]['discounted_price']) * floatval($qty)) ?></h6>
                     <button type="button" onclick="showProductDetails('<?= $product_details[0]['prod_gold_id'] ?>')"
                         class="body-secondary-color icon-16"><i class="ri-arrow-right-line d-block lh-1"></i></button>
                 </div>
-                <!-- <?= print_r($product_details) ?> -->
+                
 
                 <div class="address-modal-form mt-2">
                     <div class="row field-row">
@@ -460,7 +461,7 @@ if (!isset($_SESSION['user_id'])) {
 
                             <div class="col-6 field-col">
                                 <label for="pincode" class="field-label">Pincode</label>
-                                <input type="number" id="new_pincode" name="pincode" class="w-100"
+                                <input type="number" onkeyup="getCityByPincode(this)" id="new_pincode" name="pincode" class="w-100"
                                     placeholder="Enter Pincode" required>
                             </div>
                             <div class="col-6 field-col">
@@ -533,8 +534,8 @@ if (!isset($_SESSION['user_id'])) {
 </script>
 
 <script>
-    document.getElementById('new_pincode').addEventListener('keyup', function () {
-        const pincode = this.value;
+    function getCityByPincode(event) {
+        const pincode = event.value;
 
         if (pincode.length === 6) {
             fetch(`https://api.postalpincode.in/pincode/${pincode}`)
@@ -554,32 +555,12 @@ if (!isset($_SESSION['user_id'])) {
         } else {
             document.getElementById('new_city').value = '';
         }
-    });
-    document.getElementById('pincode').addEventListener('keyup', function () {
-        const pincode = this.value;
+    }
 
-        if (pincode.length === 6) {
-            fetch(`https://api.postalpincode.in/pincode/${pincode}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data[0].Status === "Success") {
-                        const block = data[0].PostOffice[0].Block;
-                        document.getElementById('city').value = block;
-                    } else {
-                        console.error("Invalid pincode or not found");
-                        document.getElementById('city').value = '';
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching pincode details:", error);
-                });
-        } else {
-            document.getElementById('city').value = '';
-        }
-    });
 
     $(document).ready(function () {
-        $('#newAddressForm').on('submit', function (e) {
+        $('#newAddressForm').on('submit', function (e) 
+        {
             e.preventDefault(); // Prevent form default submit
 
             let formData = $(this).serialize();

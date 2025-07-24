@@ -21,12 +21,12 @@ if (!function_exists('u_name')) {
   }
 }
 if (!function_exists('getProductDetails')) {
-    function getProductDetails($id)
-    {
-        $CI = &get_instance(); // Access CodeIgniter instance
+  function getProductDetails($id)
+  {
+    $CI = &get_instance(); // Access CodeIgniter instance
 
-        // Fetch product with category
-        $products = $CI->db->query("
+    // Fetch product with category
+    $products = $CI->db->query("
             SELECT * FROM category, product_gold
             WHERE product_gold.cat_id = category.category_id
             AND product_gold.status = 'active'
@@ -34,60 +34,60 @@ if (!function_exists('getProductDetails')) {
             ORDER BY product_gold.prod_gold_id DESC
         ")->result_array();
 
-        $filtered_products = [];
+    $filtered_products = [];
 
-        foreach ($products as $row) {
-            // Fetch filters
-            $fil = $CI->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
-            $ft = '';
-            $ff = '';
-            foreach ($fil as $frow) {
-                if (strpos($ft, $frow['filter_title']) === false) {
-                    $ft .= "ftitle" . $frow['filter_title'] . " ";
-                }
-                $ff .= "fname" . $frow['filter_name'] . " ";
-            }
-
-            $row['ft'] = $ft;
-            $row['ff'] = $ff;
-            $row['cart'] = "No";
-
-            // Price Calculation
-            $price = 0;
-            if ($row['cat_id'] == 5) {
-                $price = $CI->goldprice($row['prod_gold_id']);
-            } elseif ($row['cat_id'] == 6) {
-                $price = $CI->silverprice($row['prod_gold_id']);
-            } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
-                $price = $CI->golddiamondprice($row['prod_gold_id']);
-            } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
-                $price = $CI->silverdiamondprice($row['prod_gold_id']);
-            }
-
-            $row['price'] = $price;
-            $row['rating'] = (int) $row['rating'];
-
-            if ($row['total_discount_amt'] > 0) {
-                $row['original_price'] = $row['price'];
-                $row['discount_amount'] = $row['total_discount_amt'];
-                $row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
-                $row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
-                $row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
-            } else {
-                $row['original_price'] = $row['price'];
-                $row['discount_amount'] = 0;
-                $row['discounted_price'] = $row['price'];
-                $row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
-                $row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
-            }
-
-            $row['imgs'] = explode('||', $row['product_image']);
-
-            $filtered_products[] = $row;
+    foreach ($products as $row) {
+      // Fetch filters
+      $fil = $CI->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+      $ft = '';
+      $ff = '';
+      foreach ($fil as $frow) {
+        if (strpos($ft, $frow['filter_title']) === false) {
+          $ft .= "ftitle" . $frow['filter_title'] . " ";
         }
+        $ff .= "fname" . $frow['filter_name'] . " ";
+      }
 
-        return $filtered_products;
+      $row['ft'] = $ft;
+      $row['ff'] = $ff;
+      $row['cart'] = "No";
+
+      // Price Calculation
+      $price = 0;
+      if ($row['cat_id'] == 5) {
+        $price = $CI->goldprice($row['prod_gold_id']);
+      } elseif ($row['cat_id'] == 6) {
+        $price = $CI->silverprice($row['prod_gold_id']);
+      } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+        $price = $CI->golddiamondprice($row['prod_gold_id']);
+      } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+        $price = $CI->silverdiamondprice($row['prod_gold_id']);
+      }
+
+      $row['price'] = $price;
+      $row['rating'] = (int) $row['rating'];
+
+      if ($row['total_discount_amt'] > 0) {
+        $row['original_price'] = $row['price'];
+        $row['discount_amount'] = $row['total_discount_amt'];
+        $row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
+        $row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+        $row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
+      } else {
+        $row['original_price'] = $row['price'];
+        $row['discount_amount'] = 0;
+        $row['discounted_price'] = $row['price'];
+        $row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+        $row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
+      }
+
+      $row['imgs'] = explode('||', $row['product_image']);
+
+      $filtered_products[] = $row;
     }
+
+    return $filtered_products;
+  }
 }
 
 function user_name($cid)

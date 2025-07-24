@@ -121,6 +121,7 @@ class User extends CI_Controller
 	{
 		$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['status' => 'active']);
 		// $data['system_not'] = $this->db->query("SELECT * FROM system_notification ORDER BY system_notification_id DESC limit 20")->result_array();
+		$data['social_media'] = $this->My_model->select_where("social_media_tbl", ['status' => 'active'])[0];
 		$this->load->view("user/nav", $data);
 	}
 	public function topnav()
@@ -131,6 +132,7 @@ class User extends CI_Controller
 	}
 	public function footer()
 	{
+		$data['social_media'] = $this->My_model->select_where("social_media_tbl", ['status' => 'active'])[0];
 		$data['category'] = $this->My_model->select_where("category", ['status' => 'active']);
 		$data['pages_name'] = $this->My_model->select_where("pages_name", ['status' => 'active']);
 		$data['web_contact_details'] = $this->My_model->select("web_contact_details");
@@ -913,10 +915,12 @@ class User extends CI_Controller
 
 		$this->load->view('user/add_to_cart_modal_form', $data);
 	}
+	
+
 
 	public function remove_cart_item()
 	{
-		if (isset($_SESSION['user_id'])) {
+			if (isset($_SESSION['user_id'])) {
 			$this->db->where(['user_id' => $_SESSION['user_id'], 'prod_id' => $_POST['prod_id']]);
 			$this->db->delete('user_cart');
 		} else {
@@ -924,7 +928,8 @@ class User extends CI_Controller
 			unset($_SESSION['Size'][$_POST['prod_id']]);
 		}
 
-		echo json_encode(['status' => 'success']);
+		echo json_encode(['status' => 'success',
+		'id' => $_POST['prod_id']]);
 	}
 
 
@@ -1615,7 +1620,7 @@ class User extends CI_Controller
 		$this->load->helper('text'); // Load helper for character_limiter
 
 		$data['blog_det'] = $this->My_model->select_where("web_blog", ['web_blog_id' => $blog_id]);
-		$data['blog_comments'] = $this->My_model->select_where("blog_comments", ['blog_id' => $blog_id, 'status' => 'active']);
+		$data['blog_comments'] = $this->db->query("SELECT * FROM blog_comments WHERE blog_id = '".$blog_id."' AND  status ='active' ORDER BY blog_comments_id DESC LIMIT 10")->result_array();
 		$data['other_blogs'] = array_reverse($this->My_model->select_where("web_blog", ['status' => 'active', 'web_blog_id!=' => $blog_id]));
 
 		$this->ov("view_blog", $data);
@@ -2325,6 +2330,8 @@ class User extends CI_Controller
 			unset($_POST['user_status']);
 			$data = $this->My_model->insert("customer_address", $_POST);
 		}
+
+		
 		if ($data) {
 			echo json_encode(['status' => 'success']);
 		} else {
@@ -2671,280 +2678,384 @@ class User extends CI_Controller
 		$this->ov("order_view",$data);
 	}
 	
-	public function product_details_filter(){
-			// Age Category Filter
-		// 	$ageQ = '';
-		// 	if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
-		// 		$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
-		// 	}
+	// public function product_details_filter(){
+	// 		// Age Category Filter
+	// 	// 	$ageQ = '';
+	// 	// 	if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
+	// 	// 		$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
+	// 	// 	}
 	
-		// 	if (isset($_GET['g_id'])) {
-		// 		$ageQ .= "AND product_gold.group_id = '" . $_GET['g_id'] . "'";
-		// 	}
+	// 	// 	if (isset($_GET['g_id'])) {
+	// 	// 		$ageQ .= "AND product_gold.group_id = '" . $_GET['g_id'] . "'";
+	// 	// 	}
 	
-		// 	if (!isset($_GET['cat_id'])) {
-		// 		if (isset($_GET['label'])) {
-		// 			if ($_GET['label'] != 'Gift') {
-		// 				// $_GET['cat_id'] = 5;
-		// 			}
-		// 		} else {
-		// 			$_GET['cat_id'] = 5;
-		// 		}
-		// 	}
+	// 	// 	if (!isset($_GET['cat_id'])) {
+	// 	// 		if (isset($_GET['label'])) {
+	// 	// 			if ($_GET['label'] != 'Gift') {
+	// 	// 				// $_GET['cat_id'] = 5;
+	// 	// 			}
+	// 	// 		} else {
+	// 	// 			$_GET['cat_id'] = 5;
+	// 	// 		}
+	// 	// 	}
 	
-		// 	$page_no = 1;
-		// 	$per_page = 20;
-		// 	$search = $_GET['q'] ?? '';
+	// 	// 	$page_no = 1;
+	// 	// 	$per_page = 20;
+	// 	// 	$search = $_GET['q'] ?? '';
 	
-		// 	// Search Conditions
-		// 	$show = " AND (
-		// 	product_gold.product_details LIKE '%" . $search . "%' OR
-		// 	category.category_name LIKE '%" . $search . "%' OR
-		// 	product_gold.product_name LIKE '%" . $search . "%'
-		// )";
+	// 	// 	// Search Conditions
+	// 	// 	$show = " AND (
+	// 	// 	product_gold.product_details LIKE '%" . $search . "%' OR
+	// 	// 	category.category_name LIKE '%" . $search . "%' OR
+	// 	// 	product_gold.product_name LIKE '%" . $search . "%'
+	// 	// )";
 	
-		// 	if (isset($_GET['g_id'])) {
-		// 		$gId = "AND product_group.product_group_id = '" . $_GET['g_id'] . "'";
-		// 		$pgId = "AND product_gold.group_id = '" . $_GET['g_id'] . "'";
-		// 	} else {
-		// 		$gId = " ";
-		// 		$pgId = " ";
-		// 	}
-		// 	// Count total rows
-		// 	$total_rows = $this->db->query("
-		// 	SELECT COUNT(product_gold.prod_gold_id) AS ttl_rows
-		// 	FROM category, product_gold
-		// 	WHERE product_gold.cat_id = category.category_id
-		// 	AND product_gold.status = 'active'
-		// 	$show $ageQ
-		// ")->result_array()[0]['ttl_rows'];
+	// 	// 	if (isset($_GET['g_id'])) {
+	// 	// 		$gId = "AND product_group.product_group_id = '" . $_GET['g_id'] . "'";
+	// 	// 		$pgId = "AND product_gold.group_id = '" . $_GET['g_id'] . "'";
+	// 	// 	} else {
+	// 	// 		$gId = " ";
+	// 	// 		$pgId = " ";
+	// 	// 	}
+	// 	// 	// Count total rows
+	// 	// 	$total_rows = $this->db->query("
+	// 	// 	SELECT COUNT(product_gold.prod_gold_id) AS ttl_rows
+	// 	// 	FROM category, product_gold
+	// 	// 	WHERE product_gold.cat_id = category.category_id
+	// 	// 	AND product_gold.status = 'active'
+	// 	// 	$show $ageQ
+	// 	// ")->result_array()[0]['ttl_rows'];
 	
-		// 	// Pagination
-		// 	$data['start'] = $per_page * $page_no - $per_page;
-		// 	$data['ttl_pages'] = ceil($total_rows / $per_page);
-		// 	$data['page_no'] = $page_no;
+	// 	// 	// Pagination
+	// 	// 	$data['start'] = $per_page * $page_no - $per_page;
+	// 	// 	$data['ttl_pages'] = ceil($total_rows / $per_page);
+	// 	// 	$data['page_no'] = $page_no;
 	
-		// 	// Get products
-		// 	$products = $this->db->query(
-		// 		"
-		// 	SELECT * FROM category, product_gold
-		// 	WHERE product_gold.cat_id = category.category_id
-		// 	AND product_gold.status = 'active'
-		// 	$show $ageQ $pgId
-		// 	ORDER BY product_gold.prod_gold_id DESC
-		// 	LIMIT " . $data['start'] . "," . $per_page
-		// 	)->result_array();
+	// 	// 	// Get products
+	// 	// 	$products = $this->db->query(
+	// 	// 		"
+	// 	// 	SELECT * FROM category, product_gold
+	// 	// 	WHERE product_gold.cat_id = category.category_id
+	// 	// 	AND product_gold.status = 'active'
+	// 	// 	$show $ageQ $pgId
+	// 	// 	ORDER BY product_gold.prod_gold_id DESC
+	// 	// 	LIMIT " . $data['start'] . "," . $per_page
+	// 	// 	)->result_array();
 	
-		// 	// Get categories and product groups
-		// 	$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'], 'status' => 'active']);
+	// 	// 	// Get categories and product groups
+	// 	// 	$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'], 'status' => 'active']);
 	
 	
-		// 	$data['product_group'] = $this->db->query("
-		// 	SELECT category.*, product_group.*, product_group.product_group_id 
-		// 	FROM category, product_gold, product_group 
-		// 	WHERE category.category_id = product_gold.cat_id 
-		// 	AND product_gold.status = 'active' 
-		// 	AND product_group.status = 'active' 
-		// 	AND category.category_id = '" . $_GET['cat_id'] . "'
-		// 	AND product_gold.group_id = product_group.product_group_id 
-		// 	" . $gId . "
-		// 	GROUP BY product_group.product_group_id
-		// ")->result_array();
+	// 	// 	$data['product_group'] = $this->db->query("
+	// 	// 	SELECT category.*, product_group.*, product_group.product_group_id 
+	// 	// 	FROM category, product_gold, product_group 
+	// 	// 	WHERE category.category_id = product_gold.cat_id 
+	// 	// 	AND product_gold.status = 'active' 
+	// 	// 	AND product_group.status = 'active' 
+	// 	// 	AND category.category_id = '" . $_GET['cat_id'] . "'
+	// 	// 	AND product_gold.group_id = product_group.product_group_id 
+	// 	// 	" . $gId . "
+	// 	// 	GROUP BY product_group.product_group_id
+	// 	// ")->result_array();
 	
-		// 	// Filtered products result
-		// 	$filtered_products = [];
+	// 	// 	// Filtered products result
+	// 	// 	$filtered_products = [];
 	
-		// 	foreach ($products as $row) {
-		// 		// Fetch filters
-		// 		$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
-		// 		$ft = '';
-		// 		$ff = '';
-		// 		foreach ($fil as $frow) {
-		// 			if (strpos($ft, $frow['filter_title']) === false) {
-		// 				$ft .= "ftitle" . $frow['filter_title'] . " ";
-		// 			}
-		// 			$ff .= "fname" . $frow['filter_name'] . " ";
-		// 		}
+	// 	// 	foreach ($products as $row) {
+	// 	// 		// Fetch filters
+	// 	// 		$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+	// 	// 		$ft = '';
+	// 	// 		$ff = '';
+	// 	// 		foreach ($fil as $frow) {
+	// 	// 			if (strpos($ft, $frow['filter_title']) === false) {
+	// 	// 				$ft .= "ftitle" . $frow['filter_title'] . " ";
+	// 	// 			}
+	// 	// 			$ff .= "fname" . $frow['filter_name'] . " ";
+	// 	// 		}
 	
-		// 		$row['ft'] = $ft;
-		// 		$row['ff'] = $ff;
-		// 		$row['cart'] = "No";
+	// 	// 		$row['ft'] = $ft;
+	// 	// 		$row['ff'] = $ff;
+	// 	// 		$row['cart'] = "No";
 	
-		// 		// Calculate product price
-		// 		$price = 0;
-		// 		if ($row['cat_id'] == 5) {
-		// 			$price = $this->goldprice($row['prod_gold_id']);
-		// 		} elseif ($row['cat_id'] == 6) {
-		// 			$price = $this->silverprice($row['prod_gold_id']);
-		// 		} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
-		// 			$price = $this->golddiamondprice($row['prod_gold_id']);
-		// 		} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
-		// 			$price = $this->silverdiamondprice($row['prod_gold_id']);
-		// 		}
+	// 	// 		// Calculate product price
+	// 	// 		$price = 0;
+	// 	// 		if ($row['cat_id'] == 5) {
+	// 	// 			$price = $this->goldprice($row['prod_gold_id']);
+	// 	// 		} elseif ($row['cat_id'] == 6) {
+	// 	// 			$price = $this->silverprice($row['prod_gold_id']);
+	// 	// 		} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+	// 	// 			$price = $this->golddiamondprice($row['prod_gold_id']);
+	// 	// 		} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+	// 	// 			$price = $this->silverdiamondprice($row['prod_gold_id']);
+	// 	// 		}
 	
-		// 		$row['price'] = $price;
-		// 		$row['rating'] = (int) $row['rating'];
+	// 	// 		$row['price'] = $price;
+	// 	// 		$row['rating'] = (int) $row['rating'];
 	
-		// 		// $row['total_discount_amt'] = 2000;
-		// 		if ($row['total_discount_amt'] > 0) {
-		// 			$row['original_price'] = $row['price'];
-		// 			$row['discount_amount'] = $row['total_discount_amt'];
-		// 			$row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
-		// 			$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
-		// 			$row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
-		// 		} else {
-		// 			$row['original_price'] = $row['price'];
-		// 			$row['discount_amount'] = 0;
-		// 			$row['discounted_price'] = 0;
-		// 			$row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
-		// 			$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
-		// 		}
-		// 		$row['imgs'] = explode('||', $row['product_image']);
+	// 	// 		// $row['total_discount_amt'] = 2000;
+	// 	// 		if ($row['total_discount_amt'] > 0) {
+	// 	// 			$row['original_price'] = $row['price'];
+	// 	// 			$row['discount_amount'] = $row['total_discount_amt'];
+	// 	// 			$row['discounted_price'] = $row['price'] - $row['total_discount_amt'];
+	// 	// 			$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+	// 	// 			$row['formatted_discounted_price'] = '₹ ' . number_format1($row['discounted_price']);
+	// 	// 		} else {
+	// 	// 			$row['original_price'] = $row['price'];
+	// 	// 			$row['discount_amount'] = 0;
+	// 	// 			$row['discounted_price'] = 0;
+	// 	// 			$row['formatted_discounted_price'] = '₹ ' . number_format1($row['price']);
+	// 	// 			$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
+	// 	// 		}
+	// 	// 		$row['imgs'] = explode('||', $row['product_image']);
 	
-		// 		// Apply min and max amount filter
-		// 		$valid = true;
-		// 		if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
-		// 			$valid = false;
-		// 		}
-		// 		if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
-		// 			$valid = false;
-		// 		}
+	// 	// 		// Apply min and max amount filter
+	// 	// 		$valid = true;
+	// 	// 		if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
+	// 	// 			$valid = false;
+	// 	// 		}
+	// 	// 		if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
+	// 	// 			$valid = false;
+	// 	// 		}
 	
-		// 		if ($valid) {
-		// 			$filtered_products[] = $row;
-		// 		}
-		// 	}
+	// 	// 		if ($valid) {
+	// 	// 			$filtered_products[] = $row;
+	// 	// 		}
+	// 	// 	}
 	
-		// 	// echo "<pre>";
-		// 	// print_r($filtered_products);
-		// 	// exit;
-		// 	$data['categories'] = $this->My_model->select_where("category", ['status' => 'active']);
+	// 	// 	// echo "<pre>";
+	// 	// 	// print_r($filtered_products);
+	// 	// 	// exit;
+	// 	// 	$data['categories'] = $this->My_model->select_where("category", ['status' => 'active']);
 		
-		// 	$data['product_groupes'] = $this->My_model->select_where("product_group", ['status' => 'active']);
-		// 	$data['products'] = $filtered_products;
+	// 	// 	$data['product_groupes'] = $this->My_model->select_where("product_group", ['status' => 'active']);
+	// 	// 	$data['products'] = $filtered_products;
 
-		$ageQ = '';
-		if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
-			$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
-		}
+	// 	$ageQ = '';
+	// 	if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
+	// 		$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
+	// 	}
 		
-		if(isset($_GET['g_id']))
-		{
-			$ageQ .= "AND product_gold.group_id = '".$_GET['g_id']."'";
-		}
+	// 	if(isset($_GET['g_id']))
+	// 	{
+	// 		$ageQ .= "AND product_gold.group_id = '".$_GET['g_id']."'";
+	// 	}
 		
-		if (!isset($_GET['cat_id'])) {
-					if (isset($_GET['label'])) {
-						if ($_GET['label'] != 'Gift') {
-							// $_GET['cat_id'] = 5;
-						}
-					} else {
-						$_GET['cat_id'] = 5;
-					}
-				}
+	// 	if (!isset($_GET['cat_id'])) {
+	// 				if (isset($_GET['label'])) {
+	// 					if ($_GET['label'] != 'Gift') {
+	// 						// $_GET['cat_id'] = 5;
+	// 					}
+	// 				} else {
+	// 					$_GET['cat_id'] = 5;
+	// 				}
+	// 			}
 			
-		$page_no = 1;
-		$per_page = 20;
-		$search = $_GET['q'] ?? '';
+	// 	$page_no = 1;
+	// 	$per_page = 20;
+	// 	$search = $_GET['q'] ?? '';
 	
-		// Search Conditions
-		$show = " AND (
-			product_gold.product_details LIKE '%" . $search . "%' OR
-			category.category_name LIKE '%" . $search . "%' OR
-			product_gold.product_name LIKE '%" . $search . "%'
-		)";
+	// 	// Search Conditions
+	// 	$show = " AND (
+	// 		product_gold.product_details LIKE '%" . $search . "%' OR
+	// 		category.category_name LIKE '%" . $search . "%' OR
+	// 		product_gold.product_name LIKE '%" . $search . "%'
+	// 	)";
 	
-		if(isset($_GET['g_id']))
-		{
-			$gId = "AND product_group.product_group_id = '".$_GET['g_id']."'";
-			$pgId = "AND product_gold.group_id = '".$_GET['g_id']."'";
-		}else{
-			$gId = " "; 
-			$pgId = " ";
-		}
-		// Count total rows
-		$total_rows = $this->db->query("
-			SELECT COUNT(product_gold.prod_gold_id) AS ttl_rows
-			FROM category, product_gold
-			WHERE product_gold.cat_id = category.category_id
-			AND product_gold.status = 'active'
-			$show $ageQ
-		")->result_array()[0]['ttl_rows'];
+	// 	if(isset($_GET['g_id']))
+	// 	{
+	// 		$gId = "AND product_group.product_group_id = '".$_GET['g_id']."'";
+	// 		$pgId = "AND product_gold.group_id = '".$_GET['g_id']."'";
+	// 	}else{
+	// 		$gId = " "; 
+	// 		$pgId = " ";
+	// 	}
+	// 	// Count total rows
+	// 	$total_rows = $this->db->query("
+	// 		SELECT COUNT(product_gold.prod_gold_id) AS ttl_rows
+	// 		FROM category, product_gold
+	// 		WHERE product_gold.cat_id = category.category_id
+	// 		AND product_gold.status = 'active'
+	// 		$show $ageQ
+	// 	")->result_array()[0]['ttl_rows'];
 	
-		// Pagination
-		$data['start'] = $per_page * $page_no - $per_page;
-		$data['ttl_pages'] = ceil($total_rows / $per_page);
-		$data['page_no'] = $page_no;
+	// 	// Pagination
+	// 	$data['start'] = $per_page * $page_no - $per_page;
+	// 	$data['ttl_pages'] = ceil($total_rows / $per_page);
+	// 	$data['page_no'] = $page_no;
 	
-		// Get products
-		$products = $this->db->query("
-			SELECT * FROM category, product_gold
-			WHERE product_gold.cat_id = category.category_id
-			AND product_gold.status = 'active'
-			$show $ageQ $pgId
-			ORDER BY product_gold.prod_gold_id DESC
-			LIMIT " . $data['start'] . "," . $per_page
-		)->result_array();
+	// 	// Get products
+	// 	$products = $this->db->query("
+	// 		SELECT * FROM category, product_gold
+	// 		WHERE product_gold.cat_id = category.category_id
+	// 		AND product_gold.status = 'active'
+	// 		$show $ageQ $pgId
+	// 		ORDER BY product_gold.prod_gold_id DESC
+	// 		LIMIT " . $data['start'] . "," . $per_page
+	// 	)->result_array();
 	 
-		// Get categories and product groups
-		$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'],'status' => 'active']);
+	// 	// Get categories and product groups
+	// 	$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'],'status' => 'active']);
 	   
 		
-		$data['product_group'] = $this->My_model->select_where("product_group", ['status' => 'active']);
+	// 	$data['product_group'] = $this->My_model->select_where("product_group", ['status' => 'active']);
 	
-		$filtered_products = [];
+	// 	$filtered_products = [];
 	
-		foreach ($products as $row) {
-			$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
-			$ft = '';
-			$ff = '';
-			foreach ($fil as $frow) {
-				if (strpos($ft, $frow['filter_title']) === false) {
-					$ft .= "ftitle" . $frow['filter_title'] . " ";
-				}
-				$ff .= "fname" . $frow['filter_name'] . " ";
-			}
+	// 	foreach ($products as $row) {
+	// 		$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+	// 		$ft = '';
+	// 		$ff = '';
+	// 		foreach ($fil as $frow) {
+	// 			if (strpos($ft, $frow['filter_title']) === false) {
+	// 				$ft .= "ftitle" . $frow['filter_title'] . " ";
+	// 			}
+	// 			$ff .= "fname" . $frow['filter_name'] . " ";
+	// 		}
 	
-			$row['ft'] = $ft;
-			$row['ff'] = $ff;
-			$row['cart'] = "No";
+	// 		$row['ft'] = $ft;
+	// 		$row['ff'] = $ff;
+	// 		$row['cart'] = "No";
 	
-			// Calculate product price
-			$price = 0;
-			if ($row['cat_id'] == 5) {
-				$price = $this->goldprice($row['prod_gold_id']);
-			} elseif ($row['cat_id'] == 6) {
-				$price = $this->silverprice($row['prod_gold_id']);
-			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
-				$price = $this->golddiamondprice($row['prod_gold_id']);
-			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
-				$price = $this->silverdiamondprice($row['prod_gold_id']);
-			}
+	// 		// Calculate product price
+	// 		$price = 0;
+	// 		if ($row['cat_id'] == 5) {
+	// 			$price = $this->goldprice($row['prod_gold_id']);
+	// 		} elseif ($row['cat_id'] == 6) {
+	// 			$price = $this->silverprice($row['prod_gold_id']);
+	// 		} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+	// 			$price = $this->golddiamondprice($row['prod_gold_id']);
+	// 		} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+	// 			$price = $this->silverdiamondprice($row['prod_gold_id']);
+	// 		}
 	
-			$row['price'] = $price;
-			$row['rating'] = (int) $row['rating'];
+	// 		$row['price'] = $price;
+	// 		$row['rating'] = (int) $row['rating'];
 	
-			// Apply min and max amount filter
-			$valid = true;
-			if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
-				$valid = false;
-			}
-			if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
-				$valid = false;
-			}
+	// 		// Apply min and max amount filter
+	// 		$valid = true;
+	// 		if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
+	// 			$valid = false;
+	// 		}
+	// 		if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
+	// 			$valid = false;
+	// 		}
 	
-			if ($valid) {
-				$filtered_products[] = $row;
-			}
-		}
+	// 		if ($valid) {
+	// 			$filtered_products[] = $row;
+	// 		}
+	// 	}
 	
-		$data['products'] = $filtered_products;
-		// echo "<pre>";
-		// print_r($data);
-		// exit;
-		$this->ov("product_details_filter",$data);
-	}
+	// 	$data['products'] = $filtered_products;
+	// 	// echo "<pre>";
+	// 	// print_r($data);
+	// 	// exit;
+	// 	$this->ov("product_details_filter",$data);
+	// }
 
+	public function product_details_filter(){
+ 
+    $ageQ = '';
+    if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
+        $ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
+    }
+    // Restore group_id filter: if g_id is present, filter by group_id
+    if(isset($_GET['g_id']) && $_GET['g_id'] != '') {
+        $ageQ .= " AND product_gold.group_id = '".$_GET['g_id']."'";
+    }
+    if (!isset($_GET['cat_id'])) {
+        if (isset($_GET['label'])) {
+            if ($_GET['label'] != 'Gift') {
+                // $_GET['cat_id'] = 5;
+            }
+        } else {
+            $_GET['cat_id'] = 5;
+        }
+    }
+    $page_no = 1;
+    $per_page = 20;
+    $search = $_GET['q'] ?? '';
+    // Search Conditions
+    $show = " AND (
+        product_gold.product_details LIKE '%" . $search . "%' OR
+        category.category_name LIKE '%" . $search . "%' OR
+        product_gold.product_name LIKE '%" . $search . "%'
+    )";
+    $gId = " ";
+    $pgId = " ";
+    // Count total rows
+    $total_rows = $this->db->query("
+        SELECT COUNT(product_gold.prod_gold_id) AS ttl_rows
+        FROM category, product_gold
+        WHERE product_gold.cat_id = category.category_id
+        AND product_gold.status = 'active'
+        $show $ageQ
+    ")->result_array()[0]['ttl_rows'];
+    // Pagination
+    $data['start'] = $per_page * $page_no - $per_page;
+    $data['ttl_pages'] = ceil($total_rows / $per_page);
+    $data['page_no'] = $page_no;
+    // Get products
+    $products = $this->db->query("
+        SELECT * FROM category, product_gold
+        WHERE product_gold.cat_id = category.category_id
+        AND product_gold.status = 'active'
+        $show $ageQ $pgId
+        ORDER BY product_gold.prod_gold_id DESC
+        LIMIT " . $data['start'] . "," . $per_page
+    )->result_array();
+    // Get categories and product groups
+    $data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'],'status' => 'active']);
+    // Only fetch product groups for the selected category
+    $data['product_group'] = $this->My_model->select_where("product_group", [
+        'status' => 'active',
+        'group_category' => $_GET['cat_id']
+    ]);
+    $filtered_products = [];
+    foreach ($products as $row) {
+        $fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+        $ft = '';
+        $ff = '';
+        foreach ($fil as $frow) {
+            if (strpos($ft, $frow['filter_title']) === false) {
+                $ft .= "ftitle" . $frow['filter_title'] . " ";
+            }
+            $ff .= "fname" . $frow['filter_name'] . " ";
+        }
+        $row['ft'] = $ft;
+        $row['ff'] = $ff;
+        $row['cart'] = "No";
+        // Calculate product price
+        $price = 0;
+        if ($row['cat_id'] == 5) {
+            $price = $this->goldprice($row['prod_gold_id']);
+        } elseif ($row['cat_id'] == 6) {
+            $price = $this->silverprice($row['prod_gold_id']);
+        } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+            $price = $this->golddiamondprice($row['prod_gold_id']);
+        } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+            $price = $this->silverdiamondprice($row['prod_gold_id']);
+        }
+        $row['price'] = $price;
+        $row['rating'] = (int) $row['rating'];
+        // Apply min and max amount filter
+        $valid = true;
+        if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
+            $valid = false;
+        }
+        if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
+            $valid = false;
+        }
+        if ($valid) {
+            $filtered_products[] = $row;
+        }
+    }
+    $data['products'] = $filtered_products;
+    // Calculate min and max price for slider
+    $all_prices = array_column($filtered_products, 'price');
+    $data['min_amt'] = !empty($all_prices) ? min($all_prices) : 0;
+    $data['max_amt'] = !empty($all_prices) ? max($all_prices) : 2000;
+    $this->ov("product_details_filter",$data);
+}
 
 }
 

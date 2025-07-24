@@ -74,7 +74,7 @@ $status_map = [
     <div class="table-responsive">
         <table class="table orders-table">
             <thead>
-                <tr>
+                <tr style="white-space:nowrap;">
                     <th>Sr. No.</th>
                     <th>Order Date</th>
                     <th>Payment Mode</th>
@@ -100,10 +100,10 @@ $status_map = [
                 }
                 if (empty($orders)) {
                     $tabLabel = ucfirst(str_replace('_', ' ', $tab));
-                    echo '<tr><td colspan="5" class="orders-empty">No <span class="pending">' . $tabLabel . '</span> Order Available</td></tr>';
+                    echo '<tr><td colspan="5" class="orders-empty" style="font-size: 15px;">No <span class="pending">' . $tabLabel . '</span> Order Available</td></tr>';
                 } else {
                     foreach ($orders as $key => $order) {
-                        echo '<tr>';
+                        echo '<tr style="white-space:nowrap;">';
                         echo '<td>' . ($key + 1) . '.</td>';
                         echo '<td>' . date('d-m-Y', strtotime($order['order_date'])) . '</td>';
                         echo '<td>' . htmlspecialchars($order['payment_type']) . '</td>';
