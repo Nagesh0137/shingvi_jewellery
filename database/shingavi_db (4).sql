@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2025 at 09:38 AM
+-- Generation Time: Jul 25, 2025 at 02:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -225,17 +225,20 @@ CREATE TABLE `admin_tbl` (
   `entry_time` text DEFAULT NULL,
   `entry_by` int(11) DEFAULT NULL,
   `status` text DEFAULT NULL,
-  `admin_position` text NOT NULL
+  `admin_position` text NOT NULL,
+  `admin_city` text NOT NULL,
+  `admin_contry` text NOT NULL,
+  `entry_date` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin_tbl`
 --
 
-INSERT INTO `admin_tbl` (`admin_tbl_id`, `admin_name`, `admin_mobile_no`, `admin_profile_logo`, `admin_email`, `admin_password`, `admin_address`, `last_modified_date`, `entry_time`, `entry_by`, `status`, `admin_position`) VALUES
-(5, 'Admin Master', '8888430137', '175223711046367713.jpg', 'admin@gmail.com', 'admin', 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '2025-03-20 00:00:00', '1742467163', 4, 'active', '1'),
-(9, 'nageshsonawane870@gmail.com', '5456789876', '175100889982896658.png', 'nageshsonawane870@gmail.com', 'admin1', 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '2025-06-27 00:00:00', '1751006081', 5, 'active', '3'),
-(12, NULL, NULL, '', '', NULL, '', '2025-06-27 00:00:00', '1751008249', 5, 'deleted', '');
+INSERT INTO `admin_tbl` (`admin_tbl_id`, `admin_name`, `admin_mobile_no`, `admin_profile_logo`, `admin_email`, `admin_password`, `admin_address`, `last_modified_date`, `entry_time`, `entry_by`, `status`, `admin_position`, `admin_city`, `admin_contry`, `entry_date`) VALUES
+(5, 'Admin Master', '8888430137', '175223711046367713.jpg', 'admin@gmail.com', 'admin', 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '2025-03-20 00:00:00', '1742467163', 4, 'active', '1', 'Nagar', 'India', ''),
+(9, 'nageshsonawane870@gmail.com', '5456789876', '175100889982896658.png', 'nageshsonawane870@gmail.com', 'admin1', 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '2025-06-27 00:00:00', '1751006081', 5, 'active', '3', '', '', ''),
+(12, NULL, NULL, '', '', NULL, '', '2025-06-27 00:00:00', '1751008249', 5, 'deleted', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1394,7 +1397,7 @@ CREATE TABLE `custom_jwellery` (
 
 INSERT INTO `custom_jwellery` (`custom_jwellery_id`, `gold_color`, `budget`, `name`, `phone_number`, `diamond_clarity`, `gold_purity`, `description`, `address`, `image`, `email`, `status`, `date_time`, `prod_gold_id`) VALUES
 (1, '', '25000', 'Sameer Dharmanath Palve', '7878787878', '', '', 'dsnsndmnsdnsm', 'bsdbsdnsbdbsn', 'custom_jwellery-1752312876-81674.png', 'sameerpalve.2019@gmail.com', 'pending', '1752312876', 0),
-(2, '', '250000', 'Manali', '9586587458', '', '', 'Design Description', 'BalikaAshram Road Ahmednagar\r\nBalika Ashram Road', 'custom_jwellery-1753334780-28858.png', 'a2z.d.manali@gmail.com', 'pending', '1753334780', 0);
+(2, '', '250000', 'Manali', '9586587458', '', '', 'Design Description', 'BalikaAshram Road Ahmednagar\r\nBalika Ashram Road', 'custom_jwellery-1753334780-28858.png', 'a2z.d.manali@gmail.com', 'confirm', '1753334780', 0);
 
 -- --------------------------------------------------------
 
@@ -1491,7 +1494,8 @@ INSERT INTO `diamond_clarity` (`diamond_clarity_id`, `diamond_clarity`, `dec_amt
 (2, 'vs', '5', 'active', '4', '1607664494'),
 (3, 'SI', '10', 'active', '4', '1607664502'),
 (4, 'wer', '234', 'deleted', '4', '1730780693'),
-(5, 'fggh', '565676', 'deleted', '4', '1730780868');
+(5, 'fggh', '565676', 'deleted', '4', '1730780868'),
+(0, 'DiamonD', '303', 'deleted', '5', '1753445509');
 
 -- --------------------------------------------------------
 
@@ -1515,12 +1519,13 @@ CREATE TABLE `diamond_color` (
 INSERT INTO `diamond_color` (`diamond_color_id`, `diamond_color`, `dec_amt`, `status`, `entry_by`, `entry_time`) VALUES
 (1, 'E-F', '0', 'active', '4', '1607664443'),
 (2, 'F-G', '5', 'active', '4', '1607664452'),
-(3, 'G-H', '10', 'active', '4', '1607664460'),
+(3, 'G-W', '10', 'deleted', '4', '1607664460'),
 (4, 'sdf', '345', 'deleted', '4', '1730723564'),
 (1, 'E-F', '0', 'active', '4', '1607664443'),
 (2, 'F-G', '5', 'active', '4', '1607664452'),
-(3, 'G-H', '10', 'active', '4', '1607664460'),
-(4, 'sdf', '345', 'deleted', '4', '1730723564');
+(3, 'G-W', '10', 'deleted', '4', '1607664460'),
+(4, 'sdf', '345', 'deleted', '4', '1730723564'),
+(0, 'A-R', '25', 'active', '5', '1753445472');
 
 -- --------------------------------------------------------
 
@@ -2300,7 +2305,8 @@ INSERT INTO `gst` (`gst_id`, `gst_label`, `cgst`, `sgst`, `igst`, `status`, `ent
 (13, '78', '39', '39', '78', 'deleted', '1', '1730716447'),
 (14, '67', '33.5', '33.5', '67', 'deleted', '4', '1730721361'),
 (15, '4', '2', '2', '4', 'deleted', '4', '1730779535'),
-(16, '', '', '', '', 'deleted', '4', '1752299661');
+(16, '', '', '', '', 'deleted', '4', '1752299661'),
+(0, '30', '15', '15', '30', 'deleted', '5', '1753445421');
 
 -- --------------------------------------------------------
 
@@ -3107,7 +3113,8 @@ INSERT INTO `otp_tbl` (`otp_tbl_id`, `otp`, `mobile_number`, `status`, `otp_entr
 (492, '8584', '9075461110', 'active', '1753355095'),
 (493, '8385', '8888430137', 'active', '1753356693'),
 (494, '3464', '9075461110', 'active', '1753416659'),
-(495, '7015', '9075461110', 'active', '1753416660');
+(495, '7015', '9075461110', 'active', '1753416660'),
+(496, '2619', '9075461110', 'active', '1753429298');
 
 -- --------------------------------------------------------
 
@@ -3643,7 +3650,7 @@ CREATE TABLE `product_group` (
 
 INSERT INTO `product_group` (`product_group_id`, `product_group_name`, `product_group_image`, `product_group_details`, `group_category`, `status`, `entry_by`, `entry_time`) VALUES
 (7, 'Ear Ring', '', '\'\'', '5', 'deleted', '4', '1604740642'),
-(8, 'EAR RING', 'product_group-1624858399-23227.png', '\'\'', '5', 'deactivated', '4', '1604740843'),
+(8, 'EAR RING', 'product_group-1624858399-23227.png', '\'details\\r\\n\'', '5', 'deactivated', '4', '1604740843'),
 (9, 'BANGLES', 'product_group-1624858414-21079.png', '\'\'', '5', 'active', '4', '1604743225'),
 (10, 'FINGER RING', 'product_group-1624858427-20198.png', '\'\'', '5', 'active', '4', '1604744821'),
 (11, 'CHAIN', 'product_group-1624858438-81848.png', '\'\'', '5', 'active', '4', '1604745055'),
@@ -7010,9 +7017,24 @@ INSERT INTO `rate_gold` (`rate_gold_id`, `rateamt`, `ratedate`, `ratetime`, `ct2
 (152, '97500', '2025-07-11', '05:52:00', '97500', '91650', '78975', '97988', 'active', '4', '1752236547'),
 (153, '97860', '2025-07-12', '11:44:00', '97860', '91989', '79267', '98350', 'active', '4', '1752300901'),
 (154, '97980', '2025-07-14', '11:46:00', '97980', '92102', '79364', '98470', 'active', '4', '1752473798'),
-(155, '97980', '2025-07-15', '12:06:00', '97980', '92102', '79364', '98470', 'active', '5', '1752561418'),
-(156, '97225', '2025-07-17', '09:57:00', '97225', '91392', '78753', '97712', 'active', '5', '1752726542'),
-(157, '97445', '2025-07-18', '10:10:00', '97445', '91599', '78931', '97933', 'active', '5', '1752813622');
+(155, '97820', '2025-07-15', '05:36:00', '97820', '91951', '79235', '98310', 'active', '4', '1752581206'),
+(156, '97285', '2025-07-16', '11:56:00', '97285', '91448', '78801', '97772', 'active', '4', '1752647224'),
+(157, '97445', '2025-07-17', '11:28:00', '97445', '91599', '78931', '97933', 'active', '4', '1752731887'),
+(158, '97860', '2025-07-18', '11:38:00', '97860', '91989', '79267', '98350', 'active', '4', '1752818906'),
+(159, '98300', '2025-07-18', '05:54:00', '98300', '92402', '79623', '98792', 'active', '4', '1752841488'),
+(160, '98200', '2025-07-19', '05:48:00', '98200', '92308', '79542', '98691', 'active', '4', '1752927505'),
+(161, '98700', '2025-07-21', '11:41:00', '98700', '92778', '79947', '99194', 'active', '4', '1753078292'),
+(162, '98830', '2025-07-21', '05:29:00', '98830', '92901', '80053', '99325', 'active', '4', '1753099156'),
+(163, '99415', '2025-07-22', '11:57:00', '99415', '93451', '80527', '99913', 'active', '4', '1753165684'),
+(164, '99575', '2025-07-22', '05:58:00', '99575', '93601', '80656', '100073', 'active', '4', '1753187303'),
+(165, '99785', '2025-07-22', '06:37:00', '99785', '93798', '80826', '100284', 'active', '4', '1753189684'),
+(166, '10160', '2025-07-23', '11:36:00', '10160', '9551', '8230', '10211', 'active', '4', '1753251216'),
+(167, '100530', '2025-07-23', '05:55:00', '100530', '94499', '81430', '101033', 'active', '4', '1753273526'),
+(168, '99200', '2025-07-24', '11:30:00', '99200', '93248', '80352', '99696', 'active', '4', '1753336845'),
+(169, '99200', '2025-07-24', '11:30:00', '99200', '93248', '80352', '99696', 'active', '4', '1753336857'),
+(170, '98725', '2025-07-24', '05:34:00', '98725', '92802', '79968', '99219', 'active', '4', '1753358702'),
+(171, '98725', '2025-07-25', '04:05:00', '98725', '92802', '79968', '99219', 'deleted', '5', '1753439726'),
+(172, '99860', '2025-07-25', '05:43:00', '99860', '93869', '80887', '100360', 'deleted', '5', '1753445625');
 
 -- --------------------------------------------------------
 
@@ -7176,9 +7198,54 @@ INSERT INTO `rate_silver` (`rate_silver_id`, `silver_amt`, `ratedate`, `ratetime
 (139, '1130', '2025-07-12', '11:44', 4, '1752300893', 'active'),
 (140, '1145', '2025-07-14', '11:46', 4, '1752473814', 'active'),
 (141, '1130', '2025-07-15', '11:27', 4, '1752559060', 'active'),
-(142, '1120', '2025-07-17', '09:59', 5, '1752726549', 'active'),
-(143, '1120', '2025-07-18', '10:10', 5, '1752813637', 'active'),
-(144, '1120', '2025-07-19', '11:47', 5, '1752905849', 'active');
+(142, '1125', '2025-07-15', '05:37', 4, '1752581238', 'active'),
+(143, '1120', '2025-07-16', '11:57', 4, '1752647265', 'active'),
+(144, '1130', '2025-07-18', '11:38', 4, '1752818921', 'active'),
+(145, '1140', '2025-07-18', '05:54', 4, '1752841495', 'active'),
+(146, '11300', '2025-07-19', '11:34', 4, '1752905079', 'active'),
+(147, '1135', '2025-07-19', '05:48', 4, '1752927521', 'active'),
+(148, '1145', '2025-07-21', '05:29', 4, '1753099166', 'active'),
+(149, '1150', '2025-07-22', '11:58', 4, '1753165702', 'active'),
+(150, '1160', '2025-07-22', '05:58', 4, '1753187294', 'active'),
+(151, '1165', '2025-07-23', '11:43', 4, '1753251226', 'active'),
+(152, '1155', '2025-07-24', '11:31', 4, '1753336874', 'active'),
+(153, '1155.00', '2025-07-24', '11:30', 4, '1753336889', 'active'),
+(154, '1155', '2025-07-25', '04:05', 5, '1753439738', 'active'),
+(155, '1130', '2025-07-25', '05:44', 5, '1753445672', 'deleted');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `review_tbl`
+--
+
+CREATE TABLE `review_tbl` (
+  `review_tbl_id` int(11) NOT NULL,
+  `review_name` text DEFAULT NULL,
+  `review_email` text DEFAULT NULL,
+  `prod_gold_id` text NOT NULL,
+  `review_stars` text NOT NULL,
+  `review_message` text DEFAULT NULL,
+  `review_img` text DEFAULT NULL,
+  `user_id` text DEFAULT NULL,
+  `status` text DEFAULT NULL,
+  `entry_time` text DEFAULT NULL,
+  `entry_date` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `review_tbl`
+--
+
+INSERT INTO `review_tbl` (`review_tbl_id`, `review_name`, `review_email`, `prod_gold_id`, `review_stars`, `review_message`, `review_img`, `user_id`, `status`, `entry_time`, `entry_date`) VALUES
+(1, 'Rohan Dhumal', 'rohan@gmail.com', '117', '4', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat impedit totam aliquid. Iste, quam pariatur repellat fugiat optio beatae soluta!\r\n', '175344209511260632.jpg', '35', 'active', '1753442095', '2025-07-25'),
+(2, 'Shrikant Khade', 'shrikant@gmail.com', '89', '4', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, ducimus eaque. Nulla, odit quisquam quae molestias vel voluptatem sunt tempore?', '175344457553993214.jpg', '35', 'active', '1753444575', '2025-07-25'),
+(3, 'Rohan Dhumal', 'rohan@gmail.com', '89', '5', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, ducimus eaque. Nulla, odit quisquam quae molestias vel voluptatem sunt tempore?', '175344467350748048.csv', '35', 'active', '1753444673', '2025-07-25'),
+(4, 'Rohan Dhumal', 'rohan@gmail.com', '90', '4', 'hgfreswa', NULL, '35', 'active', '1753445380', '2025-07-25'),
+(5, 'Rohan Dhumal', 'rohan@gmail.com', '90', '4', 'ewq', NULL, '35', 'active', '1753445523', '2025-07-25'),
+(6, 'Rohan Dhumal', 'rohan@gmail.com', '117', '4', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla ab maxime at, tenetur repellat suscipit doloremque dignissimos deleniti quas officiis repudiandae, sapiente quidem, fugiat temporibus nihil. Animi, molestiae? Commodi, vitae!', 'img_688379f4824f4.jpg', '35', 'active', '1753446900', '2025-07-25'),
+(7, 'Rohan Dhumal', 'rohan@gmail.com', '117', '4', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla ab maxime at, tenetur repellat suscipit doloremque dignissimos deleniti quas officiis repudiandae, sapiente quidem, fugiat temporibus nihil. Animi, molestiae? Commodi, vitae!', 'img_68837a27075a6.jpg', '35', 'active', '1753446951', '2025-07-25'),
+(8, 'Rohan Dhumal', 'shrikant@gmail.com', '117', '5', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla ab maxime at, tenetur repellat suscipit doloremque dignissimos deleniti quas officiis repudiandae, sapiente quidem, fugiat temporibus nihil. Animi, molestiae? Commodi, vitae!', 'img_68837a4f02331.jpg', '35', 'active', '1753446991', '2025-07-25');
 
 -- --------------------------------------------------------
 
@@ -7322,7 +7389,8 @@ CREATE TABLE `stone_shape` (
 INSERT INTO `stone_shape` (`stone_shape_id`, `stone_shape_name`, `status`, `entry_by`, `entry_time`) VALUES
 (1, 'Round', 'active', '4', '1607664528'),
 (2, 'circle', 'active', '4', '1607664533'),
-(3, 'cgfcgfc123', 'deleted', '4', '1730783456');
+(3, 'cgfcgfc123', 'deleted', '4', '1730783456'),
+(0, 'GOLD', 'deleted', '5', '1753445548');
 
 -- --------------------------------------------------------
 
@@ -7345,7 +7413,8 @@ CREATE TABLE `stone_type` (
 INSERT INTO `stone_type` (`stone_type_id`, `stone_type_name`, `status`, `entry_by`, `entry_time`) VALUES
 (1, 'Diamond', 'active', '4', '1607664517'),
 (2, 'vcnfgb123', 'deleted', '4', '1730782422'),
-(3, 'dfgfh', 'deleted', '4', '1730782580');
+(3, 'dfgfh', 'deleted', '4', '1730782580'),
+(0, 'GOLD', 'deleted', '5', '1753445535');
 
 -- --------------------------------------------------------
 
@@ -7833,7 +7902,14 @@ INSERT INTO `system_log` (`sl_id`, `slog_title`, `slog_desc`, `slog_admin_id`, `
 (0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-24', '1753354990'),
 (0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-24', '1753355172'),
 (0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753416617'),
-(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753427261');
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753427261'),
+(0, 'LogIn', 'LogIn Failed', 'no-admin', '2025-07-25', '1753434998'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753435002'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753436151'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753438075'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753438189'),
+(0, 'LogOut', 'Admin Master LogOut Success', '5', '2025-07-25', '1753444903'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753444915');
 
 -- --------------------------------------------------------
 
@@ -8143,7 +8219,47 @@ INSERT INTO `system_notification` (`system_notification_id`, `type`, `msg`, `sn_
 (5639, 'Success', 'LogIn Success', '1753355172', 5, NULL, NULL, NULL),
 (5640, 'Success', 'LogIn Success', '1753416617', 5, NULL, NULL, NULL),
 (5641, 'error', 'Product Group Deleted Successfully..', '1753427344', 5, '2025-07-25', '1753427344', 'active'),
-(5642, 'error', 'Product Group Deleted Successfully..', '1753427349', 5, '2025-07-25', '1753427349', 'active');
+(5642, 'error', 'Product Group Deleted Successfully..', '1753427349', 5, '2025-07-25', '1753427349', 'active'),
+(5643, 'Success', 'LogIn Success', '1753435002', 5, NULL, NULL, NULL),
+(5644, 'Success', 'LogIn Success', '1753436151', 5, NULL, NULL, NULL),
+(5645, 'success', 'Product Group Updated Successfully..', '1753437083', 5, '2025-07-25', '1753437083', 'active'),
+(5646, 'Success', 'LogIn Success', '1753438075', 5, NULL, NULL, NULL),
+(5647, 'Success', 'LogIn Success', '1753438189', 5, NULL, NULL, NULL),
+(5648, 'success', 'Todays Gold Rate Added Successfully..', '1753439726', 5, '2025-07-25', '1753439726', 'active'),
+(5649, 'success', 'Todays Silver Rate Added Successfully..', '1753439738', 5, '2025-07-25', '1753439738', 'active'),
+(5650, 'Success', 'LogIn Success', '1753444915', 5, NULL, NULL, NULL),
+(5651, 'success', 'GST Add Successfully...', '1753445421', 5, '2025-07-25', '1753445421', 'active'),
+(5652, 'success', 'GST Updated Successfully...', '1753445430', 5, '2025-07-25', '1753445430', 'active'),
+(5653, 'error', 'GST Deleted Successfully...', '1753445433', 5, '2025-07-25', '1753445433', 'active'),
+(5654, 'success', 'Diamond Color Add Successfully...', '1753445472', 5, '2025-07-25', '1753445472', 'active'),
+(5655, 'success', 'Diamond Color Updated Successfully...', '1753445488', 5, '2025-07-25', '1753445488', 'active'),
+(5656, 'error', 'Diamond Color Deleted Successfully...', '1753445493', 5, '2025-07-25', '1753445493', 'active'),
+(5657, 'success', 'Diamond Clarity Add Successfully...', '1753445509', 5, '2025-07-25', '1753445509', 'active'),
+(5658, 'success', 'Diamond Clarity Updated Successfully...', '1753445517', 5, '2025-07-25', '1753445517', 'active'),
+(5659, 'success', 'Diamond Clarity Deleted Successfully...', '1753445521', 5, '2025-07-25', '1753445521', 'active'),
+(5660, 'error', 'This Stone Type Allready Exists...', '1753445529', 5, '2025-07-25', '1753445529', 'active'),
+(5661, 'success', 'Stone Type Add Successfully...', '1753445535', 5, '2025-07-25', '1753445535', 'active'),
+(5662, 'success', 'Stone Type Updated Successfully...', '1753445540', 5, '2025-07-25', '1753445540', 'active'),
+(5663, 'error', 'Stone Type Deleted Successfully...', '1753445543', 5, '2025-07-25', '1753445543', 'active'),
+(5664, 'success', 'Stone Shape Add Successfully...', '1753445548', 5, '2025-07-25', '1753445548', 'active'),
+(5665, 'success', 'Stone Shape Deleted Successfully...', '1753445552', 5, '2025-07-25', '1753445552', 'active'),
+(5666, 'success', 'Spcial Days Save Successfully ...', '1753445568', 5, '2025-07-25', '1753445568', 'active'),
+(5667, 'success', 'Spcial Days Updated Successfully ...', '1753445580', 5, '2025-07-25', '1753445580', 'active'),
+(5668, 'success', 'Spcial Days Deleted Successfully ...', '1753445585', 5, '2025-07-25', '1753445585', 'active'),
+(5669, 'success', 'Delivery Charges Added Successfully ...', '1753445593', 5, '2025-07-25', '1753445593', 'active'),
+(5670, 'success', 'Delivery Charges Updated Successfully ...', '1753445600', 5, '2025-07-25', '1753445600', 'active'),
+(5671, 'error', 'Delivery Charges Deleted Successfully ...', '1753445604', 5, '2025-07-25', '1753445604', 'active'),
+(5672, 'success', 'Todays Gold Rate Added Successfully..', '1753445625', 5, '2025-07-25', '1753445625', 'active'),
+(5673, 'success', 'Todays Gold Rate Updated Successfully..', '1753445635', 5, '2025-07-25', '1753445635', 'active'),
+(5674, 'success', 'Todays Gold Rate Deleted Successfully..', '1753445641', 5, '2025-07-25', '1753445641', 'active'),
+(5675, 'success', 'Todays Gold Rate Deleted Successfully..', '1753445645', 5, '2025-07-25', '1753445645', 'active'),
+(5676, 'success', 'Todays Silver Rate Added Successfully..', '1753445672', 5, '2025-07-25', '1753445672', 'active'),
+(5677, 'error', 'Todays Silver Rate Deleted Successfully..', '1753445676', 5, '2025-07-25', '1753445676', 'active'),
+(5678, 'error', 'Gold product Already Exist...', '1753445815', 5, '2025-07-25', '1753445815', 'active'),
+(5679, 'error', 'Gold product Already Exist...', '1753445860', 5, '2025-07-25', '1753445860', 'active'),
+(5680, 'success', 'Admin Updated Successfully..', '1753446584', 5, '2025-07-25', '1753446584', 'active'),
+(5681, 'success', 'Successfully In Progress Order ...', '1753446913', 5, '2025-07-25', '1753446913', 'active'),
+(5682, 'success', 'Successfully In Confirm Order ...', '1753446926', 5, '2025-07-25', '1753446926', 'active');
 
 -- --------------------------------------------------------
 
@@ -8167,6 +8283,28 @@ CREATE TABLE `terms_of_use_tbl` (
 
 INSERT INTO `terms_of_use_tbl` (`terms_of_use_tbl_id`, `terms_of_use_name`, `terms_of_use_details`, `entry_by`, `entry_time`, `entry_date`, `status`) VALUES
 (1, 'Diamond Jewellery ', '90% of invoice value\r\n', '5', '1752319077', '2025-07-12', 'active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `thumbnail_tbl`
+--
+
+CREATE TABLE `thumbnail_tbl` (
+  `thumbnail_tbl_id` int(11) NOT NULL,
+  `thumbnail_image` text DEFAULT NULL,
+  `thumbnail_video` text DEFAULT NULL,
+  `entry_time` text DEFAULT NULL,
+  `entry_date` text DEFAULT NULL,
+  `status` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `thumbnail_tbl`
+--
+
+INSERT INTO `thumbnail_tbl` (`thumbnail_tbl_id`, `thumbnail_image`, `thumbnail_video`, `entry_time`, `entry_date`, `status`) VALUES
+(1, '17471274816063PXL_20250503_112352390.jpg', '17471274812672Untitled.mp4', '1747127481', '2025-05-13', 'active');
 
 -- --------------------------------------------------------
 
@@ -8938,6 +9076,12 @@ ALTER TABLE `rate_silver`
   ADD PRIMARY KEY (`rate_silver_id`);
 
 --
+-- Indexes for table `review_tbl`
+--
+ALTER TABLE `review_tbl`
+  ADD PRIMARY KEY (`review_tbl_id`);
+
+--
 -- Indexes for table `shipping_policy_tbl`
 --
 ALTER TABLE `shipping_policy_tbl`
@@ -8960,6 +9104,12 @@ ALTER TABLE `system_notification`
 --
 ALTER TABLE `terms_of_use_tbl`
   ADD PRIMARY KEY (`terms_of_use_tbl_id`);
+
+--
+-- Indexes for table `thumbnail_tbl`
+--
+ALTER TABLE `thumbnail_tbl`
+  ADD PRIMARY KEY (`thumbnail_tbl_id`);
 
 --
 -- Indexes for table `user_billing_details`
@@ -9155,7 +9305,7 @@ ALTER TABLE `order_tbl`
 -- AUTO_INCREMENT for table `otp_tbl`
 --
 ALTER TABLE `otp_tbl`
-  MODIFY `otp_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=496;
+  MODIFY `otp_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=497;
 
 --
 -- AUTO_INCREMENT for table `privacy_policy_tbl`
@@ -9185,13 +9335,19 @@ ALTER TABLE `rate_diamond`
 -- AUTO_INCREMENT for table `rate_gold`
 --
 ALTER TABLE `rate_gold`
-  MODIFY `rate_gold_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `rate_gold_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT for table `rate_silver`
 --
 ALTER TABLE `rate_silver`
-  MODIFY `rate_silver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `rate_silver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+
+--
+-- AUTO_INCREMENT for table `review_tbl`
+--
+ALTER TABLE `review_tbl`
+  MODIFY `review_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `shipping_policy_tbl`
@@ -9209,13 +9365,19 @@ ALTER TABLE `social_media_tbl`
 -- AUTO_INCREMENT for table `system_notification`
 --
 ALTER TABLE `system_notification`
-  MODIFY `system_notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5643;
+  MODIFY `system_notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5683;
 
 --
 -- AUTO_INCREMENT for table `terms_of_use_tbl`
 --
 ALTER TABLE `terms_of_use_tbl`
   MODIFY `terms_of_use_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `thumbnail_tbl`
+--
+ALTER TABLE `thumbnail_tbl`
+  MODIFY `thumbnail_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user_billing_details`
