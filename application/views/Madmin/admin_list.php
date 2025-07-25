@@ -39,7 +39,7 @@
 						<td><?=++$i?></td>
 						<td><?=$row['admin_name']?></td>
 						<td><?=$row['admin_email']?></td>
-						<td><?=$row['admin_mobile']?></td>
+						<td><?=$row['admin_mobile_no']?></td>
 						<td><?=$row['admin_password']?></td>
 						<td><?=date('d-M-Y',strtotime($row['entry_date']))?></td>
 					</tr>

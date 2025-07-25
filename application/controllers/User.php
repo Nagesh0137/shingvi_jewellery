@@ -3096,16 +3096,33 @@ class User extends CI_Controller
 
 	public function save_review()
 	{
-		if (isset($_FILES['review_img']) && $_FILES['review_img']['name'] != "") {
-			$imgname = $_FILES['review_img']['name'];
+		if (isset($_FILES['review_img']) && $_FILES['review_img']['error'] === UPLOAD_ERR_OK) {
 			$imgtemp = $_FILES['review_img']['tmp_name'];
+			$imgname = basename($_FILES['review_img']['name']); 
 			$path = "uploads/";
+		
 			$fileType = mime_content_type($imgtemp);
+		
 			if (strpos($fileType, 'image/') === 0) {
-				// Only save if file is an image
-				$_POST['review_img'] = $this->upload_img($imgname, $imgtemp, $path);
+				$allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+				$ext = strtolower(pathinfo($imgname, PATHINFO_EXTENSION));
+		
+				if (in_array($ext, $allowedExt)) {
+					$newFileName = uniqid("img_") . "." . $ext;
+		
+					if (move_uploaded_file($imgtemp, $path . $newFileName)) {
+						$_POST['review_img'] = $newFileName;
+					} else {
+						echo "Failed to upload image.";
+					}
+				} else {
+					echo "Invalid image extension.";
+				}
+			} else {
+				echo "Only image files are allowed.";
 			}
 		}
+		
 
 		$_POST['user_id'] = $_SESSION['user_id'];
 		$_POST['status'] = 'active';
@@ -3113,13 +3130,13 @@ class User extends CI_Controller
 		$_POST['entry_date'] = date("Y-m-d");
 
 		$reviews = $this->My_model->insert("review_tbl", $_POST);
-		$prod_gold_id = $_POST['prod_gold_id'];
+		$prod_gold_id = $_POST['prod_gold_id'];	
 
 		if ($reviews && $prod_gold_id) {
-			$this->session->set_flashdata("success", "Review submitted successfully");
+			$this->setToastMessage("Review submitted successfully", "success");
 			redirect(base_url("user/product_details/" . $prod_gold_id));
-		} else {
-			$this->session->set_flashdata("error", "Review submission failed");
+		} else {	
+			$this->setToastMessage("Review submission failed", "error");
 			redirect(base_url("user/product_details/" . $prod_gold_id));
 		}
 	}

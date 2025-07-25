@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Admin Mobile</label>
-                                <input type="text" name="admin_mobile" value="<?=$admin_det[0]['admin_mobile']?>" placeholder="Enter Admin Mobile" class="form-control" required>
+                                <input type="text" name="admin_mobile_no" value="<?=$admin_det[0]['admin_mobile_no']?>" placeholder="Enter Admin Mobile" class="form-control" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Admin Email</label>

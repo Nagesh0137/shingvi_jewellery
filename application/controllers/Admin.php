@@ -299,7 +299,7 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
-		phpinfo("index");
+		// phpinfo("index");
 		$data['dashboard']['today_visits'] = count($this->My_model->select_where('user_visits', array('entry_date' => date('Y-m-d'))));
 		// date('Y-m-d', strtotime("+1 day", date('Y-m-d')));
 		$data['dashboard']['last_thirty_days_visits'] = count($this->My_model->select_where('user_visits', array('entry_date>=' => date('Y-m-d', strtotime('-30 day')))));

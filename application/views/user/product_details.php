@@ -814,15 +814,18 @@
                                 </th>
                                 <td class="body-color ptb-10 plr-15 border-full">Aliceblue, Antiquewhite, Azure</td>
                             </tr> -->
-                            <tr>
+                            <!-- <tr>
                                 <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Sku</th>
                                 <td class="body-color ptb-10 plr-15 border-full">RT89GT</td>
-                            </tr>
+                            </tr> -->
+                            <?php if(!empty($products[0]['net_weight'])) { ?>
                             <tr>
                                 <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Weight
                                 </th>
                                 <td class="body-color ptb-10 plr-15 border-full"> <?= $products[0]['net_weight'] ?> KG </td>
                             </tr>
+                            <?php } ?>
+                            
                         </tbody>
                     </table>
                 </div>
@@ -991,20 +994,20 @@
                                     <label for="review-name" class="field-label">Name <span class="text-danger">*</span></label>
                                     <input type="text" id="review-name" name="review_name" class="w-100"
                                         placeholder="Enter your name" autocomplete="name" required>
-                                    <span class="text-danger d-block" id="review_name_error" style="display:none;">Name is required.</span>
+                                    <!-- <span class="text-danger d-block" id="review_name_error" style="display:none;">Name is required.</span> -->
                                 </div>
                                 
                                 <div class="col-6 field-col">
                                     <label for="review-message" class="field-label">Review message <span class="text-danger">*</span></label>
                                     <textarea rows="3" id="review-message" name="review_message" class="w-100"
                                         placeholder="Review message" autocomplete="off" required></textarea>
-                                    <span class="text-danger d-block" id="review_message_error" style="display:none;">Review message is required.</span>
+                                    <!-- <span class="text-danger d-block" id="review_message_error" style="display:none;">Review message is required.</span> -->
                                 </div>
                                 <div class="col-12 col-md-6 field-col">
                                     <label for="review-email" class="field-label">Email <span class="text-danger">*</span></label>
                                     <input type="email" id="review-email" name="review_email" class="w-100"
                                         placeholder="Email address" autocomplete="email" required>
-                                    <span class="text-danger d-block" id="review_email_error" style="display:none;">Email is required.</span>
+                                    <!-- <span class="text-danger d-block" id="review_email_error" style="display:none;">Email is required.</span> -->
                                 </div>
                               
                                     <div class="col-12 col-sm-6 col-xl-6 d-flex justify-content-end" style="margin-top: 57px;">
@@ -1019,7 +1022,7 @@
                             <div class="row row-mtm">
                                 
                             <?php foreach ($reviews as $row) { ?>
-                                <div class="product-review-detail">
+                                <div class="product-review-detail mt-5">
                                     <div class="product-reviewer-info d-flex flex-wrap align-items-center">
                                         <span
                                             class="width-48 height-48 secondary-color icon-16 d-flex align-items-center justify-content-center overflow-hidden rounded-circle"><i
@@ -1070,81 +1073,83 @@
                         </div>
                 </form>
                 <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            var reviewForm = document.querySelector('form[action*="save_review"]');
-                            if (reviewForm) {
-                                // Hide all errors on load
-                                document.getElementById('review_stars_error').style.display = 'none';
-                                document.getElementById('review_name_error').style.display = 'none';
-                                document.getElementById('review_message_error').style.display = 'none';
-                                document.getElementById('review_email_error').style.display = 'none';
+document.addEventListener('DOMContentLoaded', function() {
+    var reviewForm = document.querySelector('form[action*="save_review"]');
+    var hasTriedSubmit = false;
+    if (reviewForm) {
+        // Hide all errors on load
+        document.getElementById('review_stars_error').style.display = 'none';
+        document.getElementById('review_name_error').style.display = 'none';
+        document.getElementById('review_message_error').style.display = 'none';
+        document.getElementById('review_email_error').style.display = 'none';
 
-                                // Hide error when user selects a star
-                                var starRadios = reviewForm.querySelectorAll('input[name="review_stars"]');
-                                starRadios.forEach(function(radio) {
-                                    radio.addEventListener('change', function() {
-                                        document.getElementById('review_stars_error').style.display = 'none';
-                                    });
-                                });
-                                // Hide error when user types in name
-                                document.getElementById('review-name').addEventListener('input', function() {
-                                    document.getElementById('review_name_error').style.display = 'none';
-                                });
-                                // Hide error when user types in message
-                                document.getElementById('review-message').addEventListener('input', function() {
-                                    document.getElementById('review_message_error').style.display = 'none';
-                                });
-                                // Hide error when user types in email
-                                document.getElementById('review-email').addEventListener('input', function() {
-                                    document.getElementById('review_email_error').style.display = 'none';
-                                });
+        // Hide error when user selects a star
+        var starRadios = reviewForm.querySelectorAll('input[name="review_stars"]');
+        starRadios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                document.getElementById('review_stars_error').style.display = 'none';
+            });
+        });
+        // Hide error when user types in name
+        document.getElementById('review-name').addEventListener('input', function() {
+            if (hasTriedSubmit) document.getElementById('review_name_error').style.display = 'none';
+        });
+        // Hide error when user types in message
+        document.getElementById('review-message').addEventListener('input', function() {
+            if (hasTriedSubmit) document.getElementById('review_message_error').style.display = 'none';
+        });
+        // Hide error when user types in email
+        document.getElementById('review-email').addEventListener('input', function() {
+            if (hasTriedSubmit) document.getElementById('review_email_error').style.display = 'none';
+        });
 
-                                reviewForm.addEventListener('submit', function(e) {
-                                    var valid = true;
-                                    // Rating validation
-                                    var checked = reviewForm.querySelector('input[name="review_stars"]:checked');
-                                    var ratingError = document.getElementById('review_stars_error');
-                                    if (!checked) {
-                                        ratingError.style.display = 'block';
-                                        valid = false;
-                                    } else {
-                                        ratingError.style.display = 'none';
-                                    }
-                                    // Name validation
-                                    var nameInput = document.getElementById('review-name');
-                                    var nameError = document.getElementById('review_name_error');
-                                    if (!nameInput.value.trim()) {
-                                        nameError.style.display = 'block';
-                                        valid = false;
-                                    } else {
-                                        nameError.style.display = 'none';
-                                    }
-                                    // Message validation
-                                    var messageInput = document.getElementById('review-message');
-                                    var messageError = document.getElementById('review_message_error');
-                                    if (!messageInput.value.trim()) {
-                                        messageError.style.display = 'block';
-                                        valid = false;
-                                    } else {
-                                        messageError.style.display = 'none';
-                                    }
-                                    // Email validation
-                                    var emailInput = document.getElementById('review-email');
-                                    var emailError = document.getElementById('review_email_error');
-                                    if (!emailInput.value.trim()) {
-                                        emailError.style.display = 'block';
-                                        valid = false;
-                                    } else {
-                                        emailError.style.display = 'none';
-                                    }
-                                    if (!valid) {
-                                        e.preventDefault();
-                                        return false;
-                                    }
-                                });
-                            }
-                        });
-                        </script>
+        reviewForm.addEventListener('submit', function(e) {
+            hasTriedSubmit = true;
+            var valid = true;
+            // Rating validation
+            var checked = reviewForm.querySelector('input[name="review_stars"]:checked');
+            var ratingError = document.getElementById('review_stars_error');
+            if (!checked) {
+                ratingError.style.display = 'block';
+                valid = false;
+            } else {
+                ratingError.style.display = 'none';
+            }
+            // Name validation
+            var nameInput = document.getElementById('review-name');
+            var nameError = document.getElementById('review_name_error');
+            if (!nameInput.value.trim()) {
+                nameError.style.display = 'block';
+                valid = false;
+            } else {
+                nameError.style.display = 'none';
+            }
+            // Message validation
+            var messageInput = document.getElementById('review-message');
+            var messageError = document.getElementById('review_message_error');
+            if (!messageInput.value.trim()) {
+                messageError.style.display = 'block';
+                valid = false;
+            } else {
+                messageError.style.display = 'none';
+            }
+            // Email validation
+            var emailInput = document.getElementById('review-email');
+            var emailError = document.getElementById('review_email_error');
+            if (!emailInput.value.trim()) {
+                emailError.style.display = 'block';
+                valid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+            if (!valid) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
+});
+</script>
 
                     </div>
             </div>
