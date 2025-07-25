@@ -297,34 +297,36 @@ class Admin extends CI_Controller
 	// 	$this->ov("index", $data);
 	// }
 
-	public function index(){
-		$data['dashboard']['today_visits']=count($this->My_model->select_where('user_visits' ,array('entry_date'=>date('Y-m-d'))));
+	public function index()
+	{
+		phpinfo("index");
+		$data['dashboard']['today_visits'] = count($this->My_model->select_where('user_visits', array('entry_date' => date('Y-m-d'))));
 		// date('Y-m-d', strtotime("+1 day", date('Y-m-d')));
-		$data['dashboard']['last_thirty_days_visits']=count($this->My_model->select_where('user_visits' ,array('entry_date>='=>date('Y-m-d',strtotime('-30 day')))));
+		$data['dashboard']['last_thirty_days_visits'] = count($this->My_model->select_where('user_visits', array('entry_date>=' => date('Y-m-d', strtotime('-30 day')))));
 
-		$data['dashboard']['gold_products']=count($this->My_model->select_where("product_gold",['cat_id'=>5,'status'=>'active']));
-		$data['dashboard']['silver_products']=count($this->My_model->select_where("product_gold",['cat_id'=>6,'status'=>'active']));
-		$data['dashboard']['diamond_products']=count($this->My_model->select_where("product_gold",['cat_id'=>8,'status'=>'active']));
-		$data['dashboard']['pending_order']=count($this->My_model->select_where("user_billing_details",['status'=>'pending']));
-		$data['dashboard']['confirm_order']=count($this->My_model->select_where("user_billing_details",['status'=>'confirm']));
-		$data['dashboard']['processing_order']=count($this->My_model->select_where("user_billing_details",['status'=>'processing']));
-		$data['dashboard']['dispatch_order']=count($this->My_model->select_where("user_billing_details",['status'=>'dispatch']));
-		$data['dashboard']['delivered_order']=count($this->My_model->select_where("user_billing_details",['status'=>'delivered']));
-		$data['dashboard']['rejected_order']=count($this->My_model->select_where("user_billing_details",['status'=>'rejected']));
+		$data['dashboard']['gold_products'] = count($this->My_model->select_where("product_gold", ['cat_id' => 5, 'status' => 'active']));
+		$data['dashboard']['silver_products'] = count($this->My_model->select_where("product_gold", ['cat_id' => 6, 'status' => 'active']));
+		$data['dashboard']['diamond_products'] = count($this->My_model->select_where("product_gold", ['cat_id' => 8, 'status' => 'active']));
+		$data['dashboard']['pending_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'pending']));
+		$data['dashboard']['confirm_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'confirm']));
+		$data['dashboard']['processing_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'processing']));
+		$data['dashboard']['dispatch_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'dispatch']));
+		$data['dashboard']['delivered_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'delivered']));
+		$data['dashboard']['rejected_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'rejected']));
 
-		$data['dashboard']['pending_cj']=count($this->My_model->select_where("custom_jwellery",['status'=>'pending']));
+		$data['dashboard']['pending_cj'] = count($this->My_model->select_where("custom_jwellery", ['status' => 'pending']));
 
-		$data['dashboard']['progess_cj']=count($this->My_model->select_where("custom_jwellery",['status'=>'progress']));
+		$data['dashboard']['progess_cj'] = count($this->My_model->select_where("custom_jwellery", ['status' => 'progress']));
 
-		$data['dashboard']['confirm_cj']=count($this->My_model->select_where("custom_jwellery",['status'=>'confirm']));
+		$data['dashboard']['confirm_cj'] = count($this->My_model->select_where("custom_jwellery", ['status' => 'confirm']));
 
-		$data['dashboard']['cancel_cj']=count($this->My_model->select_where("custom_jwellery",['status'=>'cancel']));
+		$data['dashboard']['cancel_cj'] = count($this->My_model->select_where("custom_jwellery", ['status' => 'cancel']));
 		$data['gold_rate'] = $this->db->query("SELECT * FROM rate_gold WHERE status='active' ORDER BY rate_gold_id DESC LIMIT 1")->result_array();
 		$data['silver_rate'] = $this->db->query("SELECT * FROM rate_silver WHERE status='active' ORDER BY rate_silver_id DESC LIMIT 1")->result_array();
 		$data['diamond_rate'] = $this->db->query("SELECT * FROM rate_diamond WHERE status='active' ORDER BY rate_diamond_id DESC LIMIT 1")->result_array();
-		$data['dashboard']['act_customers']=count($this->My_model->select_where("customers",['status'=>'active']));
-		$data['dashboard']['block_customers']=count($this->My_model->select_where("customers",['status'=>'block']));
-		$this->ov("index",$data);
+		$data['dashboard']['act_customers'] = count($this->My_model->select_where("customers", ['status' => 'active']));
+		$data['dashboard']['block_customers'] = count($this->My_model->select_where("customers", ['status' => 'block']));
+		$this->ov("index", $data);
 	}
 	public function profile()
 	{
@@ -2619,7 +2621,6 @@ class Admin extends CI_Controller
 		$upd = $this->My_model->update("pages_details", ['page_details_id' => $_POST['page_details_id']], ['page_title' => $_POST['page_title'], 'page_title_description' => $_POST['page_title_description']]);
 		$this->ci_flashdata('success', 'Successfully Update Page Name ...', "yes");
 		redirect('admin/pages_name_view/' . $_POST['pages_name_id'], 'refresh');
-
 	}
 
 	public function pages_details_delete($id = "")
@@ -2808,7 +2809,6 @@ class Admin extends CI_Controller
 		$data['search'] = $_GET;
 		$data['rate'] = $this->My_model->select_where("rate_diamond", ['status' => 'active', 'ratedate>=' => $_GET['from_date'], 'ratedate<=' => $_GET['to_date']]);
 		$this->ov("rate_diamond", $data);
-
 	}
 	public function diamond_rate_delete($id, $from = "", $to = "")
 	{
@@ -2878,7 +2878,6 @@ class Admin extends CI_Controller
 			$data['status'] = "added";
 		}
 		echo json_encode($data);
-
 	}
 	// ajax
 	public function filte_title_fetch()
@@ -2946,6 +2945,7 @@ class Admin extends CI_Controller
 		$data['list'] = $this->My_model->select_where("social_media_tbl", ['status' => 'active'])[0];
 		$this->ov("social_media", $data);
 	}
+
 	public function save_social_media()
 	{
 		$_POST['added_by'] = 'admin';

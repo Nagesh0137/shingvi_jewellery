@@ -1,4 +1,3 @@
-
 <div class="bg-screen">
     <div class="bg-back filter-backdrop opacity-0 invisible"></div>
 </div>
@@ -9,144 +8,166 @@
     </div>
 </div>
 <main id="main">
-<section class="shop-content section-ptb">
-                <div class="container">
-                    <div class="row align-items-xl-start">
-                        <div class="col-12 col-xl-3 p-xl-sticky top-0 mt-4">
-                            <div class="shop-sidebar-wrap shop-filter-sidebar card bg-white p-4 border-0" data-animate="animate__fadeIn">
-                                <button type="button" class="shop-sidebar-close body-secondary-color icon-16 position-absolute" aria-label="Close"><i class="ri-close-large-line d-block lh-1"></i></button>
-                                <form class="shop-form" method="get" id="shopForm">
+    <section class="shop-content section-ptb">
+        <div class="container">
+            <div class="row align-items-xl-start">
+                <div class="col-12">
+                    <!-- product filter clear section start -->
+                    <div class="shop-filter-list d-flex align-items-start justify-content-between">
+                        <ul class="shop-filter-ul ul-mt5 align-items-center">
+                            <?php
+                            if (isset($_GET['g_id']) && $_GET['g_id'] != '') {
+                                $selectedGroups = explode(',', $_GET['g_id']);
+                                foreach ($product_group as $row1) {
+                                    if (in_array($row1['product_group_id'], $selectedGroups)) {
+                                        echo '<li class="shop-filter-li" data-group-id="' . htmlspecialchars($row1['product_group_id']) . '"><a href="javascript:void(0)" class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius remove-filter-group-btn" style="cursor:pointer;">'
+                                            . htmlspecialchars($row1['product_group_name']) .
+                                            '&nbsp;&nbsp;&nbsp;<i class="ri-close-large-line d-block lh-1 remove-filter-group" data-group-id="' . htmlspecialchars($row1['product_group_id']) . '" style="cursor:pointer;"></i></a></li>';
+                                    }
+                                }
+                                echo '<li class="shop-filter-li ps-3"><button id="clearAllBtn" class="shop-filter-active text-decoration-underline" type="button">Clear all</button></li>';
+                            }
+                            ?>
+                        </ul>
+                        <div class="shop-filter-loader"><svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                                <circle fill="none" stroke="var(--heading-font-color)" stroke-width="3" cx="33" cy="33" r="30"></circle>
+                            </svg></div>
+                    </div>
+                    <!-- product filter clear section end -->
 
-                                    <div class="shop-sidebar availability" >
-                                        <h2 style="font-size: 18px; font-weight: 600; color: #000;">
+                </div>
+
+                <div class="col-12 col-xl-3 ">
+                    <div class="shop-sidebar-wrap shop-filter-sidebar ps-4 pe-4 pb-4 border-0" data-animate="animate__fadeIn">
+                        <button type="button" class="shop-sidebar-close body-secondary-color icon-16 position-absolute" aria-label="Close"><i class="ri-close-large-line d-block lh-1"></i></button>
+                        <form class="shop-form" method="get" id="shopForm">
+                            <input type="hidden" name="cat_id" id="cat_id_hidden" value="<?= isset($_GET['cat_id']) ? htmlspecialchars($_GET['cat_id']) : '' ?>">
+                            <input type="hidden" name="g_id" id="g_id_hidden" value="<?= isset($_GET['g_id']) ? htmlspecialchars($_GET['g_id']) : '' ?>">
+
+                            <div class="shop-sidebar availability">
+                                <h2 style="font-size: 18px; font-weight: 600; color: #000;text-align: center;">
+                                    <?php
+
+                                    if (isset($category)) {
+                                        echo 'Search By Products';
+                                    }
+                                    ?>
+                                </h2>
+                                <style>
+                                    .widget__categories--menu {
+                                        height: 390px;
+                                        width: 100%;
+                                        overflow-y: scroll;
+                                    }
+
+                                    #widget__categories::-webkit-scrollbar-track {
+                                        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+                                        border-radius: 10px;
+                                        background-color: #F5F5F5;
+                                    }
+
+                                    #widget__categories::-webkit-scrollbar {
+                                        width: 7px;
+                                        background-color: #F5F5F5;
+                                    }
+
+                                    #widget__categories::-webkit-scrollbar-thumb {
+                                        border-radius: 10px;
+                                        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+                                        background-color: #D62929;
+                                    }
+                                </style>
+                                <ul class="widget__categories--menu mt-3"
+                                    id="widget__categories">
+
+
+                                    <?php if (isset($_GET['cat_id']) && $_GET['cat_id'] != ''): ?>
+                                        <?php if (!empty($product_group)) { ?>
                                             <?php
-
-                                            if (isset($category)) {
-                                                echo 'Search By Products';
+                                            // Prepare selected group ids array
+                                            $selectedGroups = [];
+                                            if (isset($_GET['g_id']) && $_GET['g_id'] !== '') {
+                                                $selectedGroups = explode(',', $_GET['g_id']);
                                             }
+                                            foreach ($product_group as $row1) {
+                                                $checked = in_array($row1['product_group_id'], $selectedGroups) ? 'checked' : '';
                                             ?>
-                                        </h2>
-                                       <style>
-                                        .widget__categories--menu{
-	height: 200px;
-	width: 100%;
-	background: #F5F5F5;
-	overflow-y: scroll;
-                                        }
-                                       #widget__categories::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
-}
+                                                <li class="widget__categories--menu__list" style="margin: 0px !important; padding: 0px !important;">
+                                                    <label class="d-flex align-items-center p-0 text-center justify-content-justify" style="margin:0;cursor: pointer;">
+                                                        <input type="checkbox" name="g_id[]" value="<?= $row1['product_group_id'] ?>" <?= $checked ?> class="group-checkbox" style="margin:0 0 0 8px !important;">
+                                                        <span class="widget__categories--menu__text ps-2" style="text-transform: uppercase;">
+                                                            <?= $row1['product_group_name'] ?>
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                            <?php } ?>
+                                        <?php } else { ?>
+                                            <li>No product groups found for this category.</li>
+                                        <?php } ?>
+                                    <?php else: ?>
+                                        <li>Please select a category from the menu above.</li>
+                                    <?php endif; ?>
+                                </ul>
+                                <input type="hidden" name="g_id" id="g_id_hidden" value="<?= isset($_GET['g_id']) ? htmlspecialchars($_GET['g_id']) : '' ?>">
+                                <!-- Search By Products section end -->
 
-#widget__categories::-webkit-scrollbar
-{
-	width: 7px;
-	background-color: #F5F5F5;
-}
-
-#widget__categories::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #D62929;
-}
-                                        .widget__categories--menu__list{
-
-                                        }
-                                       </style>
-                                        <ul class="widget__categories--menu mt-3 "
-                                            id="widget__categories">
-                                           
-
-                                            <?php if (isset($_GET['cat_id']) && $_GET['cat_id'] != ''): ?>
-                                                <?php if (!empty($product_group)) { ?>
-                                                    <?php foreach ($product_group as $row1) { ?>
-                                                        <li
-                                                            class="widget__categories--menu__list <?php if (isset($_GET['g_id']) && $_GET['g_id'] == $row1['product_group_id']) ?>">
-                                                            <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $_GET['cat_id'] ?>&g_id=<?= $row1['product_group_id'] ?>"
-                                                                style="cursor: pointer;">
-                                                                <label class="bg-white d-flex align-items-center p-2 text-center justify-content-justify <?php if (isset($_GET['g_id']) && $_GET['g_id'] == $row1['product_group_id'])
-                                                                    ?>"
-                                                                    style="margin-bottom: 10px;cursor: pointer;border:1px solid hsla(0, 92.70%, 52.00%, 0.2);">
-                                                                    <!-- <img style="width: 20px; height: 20px;cursor: pointer;" src="<?= base_url() ?>uploads/<?= $row1['product_group_image'] ?>" alt="categories-img"> -->
-                                                                    <span class="widget__categories--menu__text"
-                                                                        style="text-transform: uppercase;">
-                                                                        <?= $row1['product_group_name'] ?>
-                                                                    </span>
-                                                                </label>
-                                                            </a>
-
-                                                        </li>
-                                                    <?php } ?>
-                                                <?php } else { ?>
-                                                    <li>No product groups found for this category.</li>
-                                                <?php } ?>
-                                            <?php else: ?>
-                                                <li>Please select a category from the menu above.</li>
-                                            <?php endif; ?>
-                                        </ul>
-                                        <!-- Search By Products section end -->
-
-                                    </div>
-                                    <div class="row mt-4">
-                                        <h6>Jewellery For</h6>
-                                        <div class="col-md-12">
-                                            <select name="age_cat" style="font-size:14px;height:40px;"
-                                                class="form-select form-control mt-3" onchange="this.form.submit()">
-                                                <option <?= (isset($_GET['age_cat']) && ($_GET['age_cat'] == 'all')) ? 'selected' : ''; ?> value='all'>ALL</option>
-                                                <option <?= (isset($_GET['age_cat']) && ($_GET['age_cat'] == 'women')) ? 'selected' : ''; ?> value="women">Women</option>
-                                                <option <?= (isset($_GET['age_cat']) && ($_GET['age_cat'] == 'men')) ? 'selected' : ''; ?> value="men">Men</option>
-                                                <option <?= (isset($_GET['age_cat']) && ($_GET['age_cat'] == 'kids')) ? 'selected' : ''; ?> value="kids">Kid's</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="shop-sidebar price">
-                                        <h6 class="font-18 mb-3">Price</h6>
-                                        <div class="shop-header d-flex justify-content-between mb-2">
-                                            <span class="shop-selected">Refine Search</span>
-                                        </div>
-                                        <!-- <div class="shop-element mb-3 p-3 border rounded bg-light">
+                            </div>
+                            <div class="row mt-2">
+                                <h6 class="text-center">Jewellery For</h6>
+                                <div class="col-md-12">
+                                    <select name="age_cat" style="font-size:14px;height:40px;"
+                                        class="form-select form-control mt-1">
+                                        <option <?= (isset($_GET['age_cat']) && ($_GET['age_cat'] == 'all')) ? 'selected' : ''; ?> value='all'>ALL</option>
+                                        <option <?= (isset($_GET['age_cat']) && ($_GET['age_cat'] == 'women')) ? 'selected' : ''; ?> value="women">Women</option>
+                                        <option <?= (isset($_GET['age_cat']) && ($_GET['age_cat'] == 'men')) ? 'selected' : ''; ?> value="men">Men</option>
+                                        <option <?= (isset($_GET['age_cat']) && ($_GET['age_cat'] == 'kids')) ? 'selected' : ''; ?> value="kids">Kid's</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="shop-sidebar price">
+                                <h6 class="font-16 m-0 text-center">Price</h6>
+                                <div class="shop-header d-flex justify-content-between mb-2">
+                                    <span class="shop-selected">Refine Search</span>
+                                </div>
+                                <!-- <div class="shop-element mb-3 p-3 border rounded bg-light">
                                             <div class="d-flex flex-column align-items-stretch gap-2"> -->
-                                        <div class="d-flex align-items-center gap-2 mb-2">
-                                            <div class="flex-fill">
-                                                <label for="min-price" class="form-label mb-1 fw-bold">From
-                                                    (&#8377;)</label>
-                                                <input type="number" id="min-price" name="min_amt" class="" min="0"
-                                                    max="200000"
-                                                    value="<?= isset($_GET['min_amt']) ? htmlspecialchars($_GET['min_amt']) : '0' ?>">
-                                            </div>
-                                            <!-- <span class="mx-2 mt-4">-</span> -->
-                                            <div class="flex-fill">
-                                                <label for="max-price" class="form-label mb-1 fw-bold">To
-                                                    (&#8377;)</label>
-                                                <input type="number" id="max-price" name="max_amt" class="" min="0"
-                                                    max="200000"
-                                                    value="<?= isset($_GET['max_amt']) ? htmlspecialchars($_GET['max_amt']) : '200000' ?>">
-                                            </div>
-                                        </div>
-                                        <div class="range-slider-container">
-                                            <div class="range-values-above">
-                                            </div>
-                                            <div class="range-slider">
-                                                <div class="slider-track"></div>
-                                                <div class="slider-range" id="slider-range-bar"></div>
-                                                <input type="range" id="min-range" min="0" max="200000" step="1"
-                                                    value="<?= isset($_GET['min_amt']) ? htmlspecialchars($_GET['min_amt']) : '0' ?>">
-                                                <input type="range" id="max-range" min="0" max="200000" step="1"
-                                                    value="<?= isset($_GET['max_amt']) ? htmlspecialchars($_GET['max_amt']) : '200000' ?>">
-                                            </div>
-                                           
-                                        </div>
-                                        <button class="btn btn-danger btn-sm mt-3 w-100" type="submit">Filter</button>
+                                <div class="d-flex align-items-center gap-2 mb-0">
+                                    <div class="flex-fill">
+                                        <label for="min-price" class="form-label mb-1 fw-bold">From
+                                            (&#8377;)</label>
+                                        <input type="number" id="min-price" name="min_amt" class="" min="0"
+                                            max="200000"
+                                            value="<?= isset($_GET['min_amt']) ? htmlspecialchars($_GET['min_amt']) : '0' ?>">
                                     </div>
-                                    <!-- </div>
+                                    <div class="flex-fill">
+                                        <label for="max-price" class="form-label mb-1 fw-bold">To
+                                            (&#8377;)</label>
+                                        <input type="number" id="max-price" name="max_amt" class="" min="0"
+                                            max="200000"
+                                            value="<?= isset($_GET['max_amt']) ? htmlspecialchars($_GET['max_amt']) : '200000' ?>">
+                                    </div>
+                                </div>
+                                <div class="range-slider-container">
+                                    <div class="range-values-above">
+                                    </div>
+                                    <div class="range-slider">
+                                        <div class="slider-track"></div>
+                                        <div class="slider-range" id="slider-range-bar"></div>
+                                        <input type="range" id="min-range" min="0" max="200000" step="1"
+                                            value="<?= isset($_GET['min_amt']) ? htmlspecialchars($_GET['min_amt']) : '0' ?>">
+                                        <input type="range" id="max-range" min="0" max="200000" step="1"
+                                            value="<?= isset($_GET['max_amt']) ? htmlspecialchars($_GET['max_amt']) : '200000' ?>">
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-sm mt-3 w-100" type="submit" style="background-color: #9c1138; color: #fff; border: none; border-radius: 0px; padding: 10px 20px; font-size: 16px; font-weight: 600; text-transform: uppercase; cursor: pointer;">Apply Filters</button>
+                            </div>
+                            <!-- </div>
                                     </div> -->
 
-                                </form>
-                            </div>
-                            <!-- <div class="collection-product-list d-none d-xl-block pst-30 mst-30 bst">
+                        </form>
+                    </div>
+                    <!-- <div class="collection-product-list d-none d-xl-block pst-30 mst-30 bst">
                                 <div class="side-collection-category">
                                     <h6 class="font-18" data-animate="animate__fadeIn">Special products</h6>
                                     <div class="side-collection-wrap mst-25">
@@ -295,34 +316,34 @@
                                     </div>
                                 </div>
                             </div> -->
-                            <!-- <div class="sidebar-banner d-none d-xl-block banner-hover mst-30" data-animate="animate__fadeIn">
+                    <!-- <div class="sidebar-banner d-none d-xl-block banner-hover mst-30" data-animate="animate__fadeIn">
                                 <a href="collection.html" class="d-block banner-img position-relative br-hidden">
                                     <span class="banner-icon secondary-color font-20 position-absolute top-50 start-50 width-48 height-48 d-flex align-items-center justify-content-center extra-bg z-1 rounded-circle"><i class="ri-arrow-right-line d-block lh-1"></i></span>
                                     <img src="assets/image/collection/side-image.jpg" class="w-100 img-fluid" alt="side-image">
                                 </a>
                             </div> -->
-                            <!-- shop-sidebar banner end -->
-                        </div>
-                        <!-- shop-sidebar end -->
-                        <div class="col-12 col-xl-9 p-xl-sticky top-0">
-                            <div class="row row-mtm" data-animate="animate__fadeIn">
-                             <div class="shop-top-bar">
-                                    <div class="row row-mtm15 align-items-md-center">
-                                        <div class="col-12 col-sm-6 col-md-7 col-lg-8">
-                                            <div class="shop-filter-view ul-mt15 align-items-center">
-                                                <div class="shop-filter">
-                                                    <button type="button" class="shop-filter-btn secondary-color d-flex align-items-center"><i class="ri-filter-line icon-16 mer-5"></i>Filter</button>
-                                                </div>
-                                                <!-- <div class="shop-view-mode">
+                    <!-- shop-sidebar banner end -->
+                </div>
+                <!-- shop-sidebar end -->
+                <div class="col-12 col-xl-9 p-xl-sticky top-0">
+                    <div class="row row-mtm" data-animate="animate__fadeIn">
+                        <div class="shop-top-bar">
+                            <div class="row row-mtm15 align-items-md-center">
+                                <div class="col-12 col-sm-6 col-md-7 col-lg-8">
+                                    <div class="shop-filter-view ul-mt15 align-items-center">
+                                        <div class="shop-filter">
+                                            <button type="button" class="shop-filter-btn secondary-color d-flex align-items-center"><i class="ri-filter-line icon-16 mer-5"></i>Filter</button>
+                                        </div>
+                                        <!-- <div class="shop-view-mode">
                                                     <div class="ul-mt10">
                                                         <button type="button" class="shop-view-btn dominant-color icon-16 opacity-100 disabled" data-view="grid" aria-label="Grid view"><i class="ri-layout-grid-line"></i></button>
                                                         <button type="button" class="shop-view-btn body-color icon-16 opacity-100" data-view="list" aria-label="List view"><i class="ri-list-unordered"></i></button>
                                                     </div>
                                                 </div> -->
-                                               
-                                            </div>
-                                        </div>
-                                        <!-- <div class="col-12 col-sm-6 col-md-5 col-lg-4">
+
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 col-sm-6 col-md-5 col-lg-4">
                                             <div class="shop-short d-flex flex-wrap position-relative">
                                                 <label for="sortby" class="width-72 secondary-color heading-weight">Sort by:</label>
                                                 <select id="sortby" name="sortby" class="d-xl-none width-calc-72 h-auto ptb-0 bg-transparent border-0">
@@ -351,9 +372,9 @@
                                                 </ul>
                                             </div>
                                         </div> -->
-                                    </div>
-                                </div>
-                                <!-- <div class="shop-filter-list d-flex align-items-start justify-content-between">
+                            </div>
+                        </div>
+                        <!-- <div class="shop-filter-list d-flex align-items-start justify-content-between">
                                     <ul class="shop-filter-ul ul-mt5 align-items-center">
                                         <li class="shop-filter-li"><a href="javascript:void(0)" class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">Out of stock<i class="ri-close-large-line d-block lh-1"></i></a></li>
                                         <li class="shop-filter-li"><a href="javascript:void(0)" class="shop-filter-active text-white font-14 d-flex align-items-center secondary-bg ptb-6 plr-15 border-radius">In stock<i class="ri-close-large-line d-block lh-1"></i></a></li>
@@ -364,15 +385,15 @@
                                     </ul>
                                     <div class="shop-filter-loader"><svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="var(--heading-font-color)" stroke-width="3" cx="33" cy="33" r="30"></circle></svg></div>
                                 </div> -->
-                                <div class="shop-product-wrap data-grid">
-                                    <div class="row">
+                        <div class="shop-product-wrap data-grid">
+                            <div class="row">
                                 <?php
                                 if (!empty($products) && count($products) > 0) {
                                     if (count($products) > 0) {
                                         foreach ($products as $row) {
                                             $imgs = explode('||', $row['product_image']);
 
-                                            ?>
+                                ?>
                                             <div class="col-6 col-md-4 col-xl-4 d-flex shop-col mb-3" data-animate="animate__fadeIn">
                                                 <div class="single-product w-100">
                                                     <div class="row single-product-wrap">
@@ -383,16 +404,16 @@
                                                                     class="w-100 img-fluid img1" alt="p-1">
                                                                 <?php
                                                                 if (count($imgs) > 1) {
-                                                                    ?>
+                                                                ?>
                                                                     <img src="<?= base_url() ?>uploads/<?= $imgs[1] ?>"
                                                                         class="w-100 img-fluid img2" alt="p-2">
 
-                                                                    <?php
+                                                                <?php
                                                                 } else {
-                                                                    ?>
+                                                                ?>
                                                                     <img src="<?= base_url() ?>uploads/<?= $imgs[0] ?>"
                                                                         class="w-100 img-fluid img2" alt="p-2">
-                                                                    <?php
+                                                                <?php
                                                                 }
                                                                 ?>
 
@@ -405,33 +426,7 @@
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <script>
-                                                            function addToWishlist(prodId) {
 
-                                                                $.ajax({
-                                                                    url: '<?= base_url() ?>user/add_in_wishlist',
-                                                                    type: 'POST',
-                                                                    data: {
-                                                                        prod_id: prodId
-                                                                    },
-                                                                    dataType: 'json',
-                                                                    success: function (response) {
-                                                                        console.log('test', response);
-                                                                        return 1;
-                                                                        var icon = $('#add-to-wishlist' + prodId);
-
-                                                                        if (response.status === 'added') {
-                                                                            icon.removeClass('ri-heart-line').addClass('ri-heart-fill');
-                                                                        } else if (response.status === 'removed') {
-                                                                            icon.removeClass('ri-heart-fill').addClass('ri-heart-line');
-                                                                        }
-
-                                                                        $('#wishlistCount').html(response.cnt);
-                                                                        $('#wishlistCountmv').html(response.cnt);
-                                                                    }
-                                                                });
-                                                            }
-                                                        </script>
 
 
                                                         <div class="product-content">
@@ -459,7 +454,7 @@
                                                                             $discounted_price = $original_price - $discount_amount;
                                                                             $formatted_original_price = number_format1($original_price);
                                                                             $formatted_discounted_price = number_format1($discounted_price);
-                                                                            ?>
+                                                                        ?>
                                                                             <div class="price-box heading-weight">
                                                                                 <span class="new-price dominant-color">
                                                                                     <?= $formatted_discounted_price ?> &#8377;</span>
@@ -488,33 +483,21 @@
                                                                                 $inCart = isset($_SESSION['cart'][$row['prod_gold_id']]);
                                                                             }
                                                                             ?>
-                                                                            <a class="add-to-cart <?= $inCart ? 'in-cart' : '' ?>"
-                                                                                onclick="addToCart('<?= $row['prod_gold_id'] ?>')">
-                                                                                <span class="product-icon" style="cursor: pointer;">
-                                                                                    <span class="product-bag-icon icon-16" style="cursor: pointer;">
-                                                                                        <i
-                                                                                            class="<?= $inCart ? 'ri-shopping-bag-fill text-success' : 'ri-shopping-bag-3-line' ?> d-block lh-1"></i>
+                                                                            <a class="add-to-cart <?= $inCart ? 'in-cart' : '' ?>" id="add-to-cart-btn-1-<?= $row['prod_gold_id'] ?>" onclick="addToCart('<?= $row['prod_gold_id'] ?>', this)">
+                                                                                <span class="product-icon">
+                                                                                    <span class="product-bag-icon icon-16">
+                                                                                        <i class="<?= $inCart ? 'ri-shopping-bag-fill text-white' : 'ri-shopping-bag-3-line text-white' ?> d-block lh-1"></i>
                                                                                     </span>
-                                                                                    <span class="product-loader-icon icon-16" style="cursor: pointer;"><i
-                                                                                            class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                                    <span class="product-check-icon icon-16" style="cursor: pointer;"><i
-                                                                                            class="ri-check-line d-block lh-1"></i></span>
+                                                                                    <span class="product-loader-icon icon-16" style="display: none;"><i class="ri-loader-4-line d-block lh-1"></i></span>
+                                                                                    <span class="product-check-icon icon-16" style="display: none;"><i class="ri-check-line d-block lh-1"></i></span>
                                                                                 </span>
-                                                                                <span
-                                                                                    class="tooltip-text" style="cursor: pointer;"><?= $inCart ? 'Added to cart' : 'Add to cart' ?></span>
+                                                                                <span class="tooltip-text text-nowrap px-2"><?= $inCart ? 'Added to cart' : 'Add to cart' ?></span>
                                                                             </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="product-price">
-                                                                    <div class="price-box heading-weight">
-                                                                        <!-- <span class="new-price dominant-color"><?= $row['formatted_discounted_price'] ?></span> -->
-                                                                        <?php if ($row['total_discount_amt'] > 0) { ?>
-                                                                            <!-- <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through"><?= $row['formatted_original_price'] ?></span></span> -->
-                                                                        <?php } ?>
-                                                                    </div>
-                                                                </div>
+
 
                                                                 <div class="product-description">
                                                                     <p><?= $row['product_details'] ?></p>
@@ -533,24 +516,16 @@
                                                                         $inCart = isset($_SESSION['cart'][$row['prod_gold_id']]);
                                                                     }
                                                                     ?>
-                                                                    <a class="add-to-cart <?= $inCart ? 'in-cart' : '' ?>"
-                                                                        onclick="addToCart('<?= $row['prod_gold_id'] ?>')">
+                                                                    <a class="add-to-cart <?= $inCart ? 'in-cart' : '' ?>" id="add-to-cart-btn-2-<?= $row['prod_gold_id'] ?>" onclick="addToCart('<?= $row['prod_gold_id'] ?>', this)">
                                                                         <span class="product-icon">
-                                                                            <span class="product-bag-icon icon-16" style="cursor: pointer;">
-                                                                                <i
-                                                                                    class="<?= $inCart ? 'ri-shopping-bag-fill text-success' : 'ri-shopping-bag-3-line' ?> d-block lh-1"></i>
+                                                                            <span class="product-bag-icon icon-16">
+                                                                                <i class="<?= $inCart ? 'ri-shopping-bag-fill text-dark' : 'ri-shopping-bag-3-line' ?> d-block lh-1"></i>
                                                                             </span>
-                                                                            <span class="product-loader-icon icon-16" style="cursor: pointer;"><i
-                                                                                    class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                            <span class="product-check-icon icon-16" style="cursor: pointer;"><i
-                                                                                    class="ri-check-line d-block lh-1"></i></span>
+                                                                            <span class="product-loader-icon icon-16" style="display: none;"><i class="ri-loader-4-line d-block lh-1"></i></span>
+                                                                            <span class="product-check-icon icon-16" style="display: none;"><i class="ri-check-line d-block lh-1"></i></span>
                                                                         </span>
-                                                                        <span
-                                                                            class="tooltip-text" style="cursor: pointer;"><?= $inCart ? 'Added to cart' : 'Add to cart' ?></span>
+                                                                        <span class="tooltip-text"><?= $inCart ? 'Added_to_cart' : 'Add to cart' ?></span>
                                                                     </a>
-
-
-
                                                                     <a class="quick-view">
                                                                         <span class="product-icon">
                                                                             <i onclick="openModal('<?= $row['prod_gold_id'] ?>')"
@@ -580,23 +555,23 @@
                                                                         if (!empty($row['ring_size'])) {
                                                                             $sizes = explode(',', $row['ring_size']);
                                                                             $i = 0;
-                                                                            ?>
+                                                                        ?>
                                                                             <select id="gleam-band-size" name="gleam-band-size"
                                                                                 class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0 font-14">
                                                                                 <?php
                                                                                 foreach ($sizes as $sz) {
                                                                                     $i++;
-                                                                                    ?>
+                                                                                ?>
                                                                                     <option value="<?= $sz ?>" <?= ($i == 1) ? 'selected' : ''; ?>><?= $sz ?></option>
                                                                                 <?php } ?>
                                                                             </select>
                                                                         <?php } else {
-                                                                            ?>
+                                                                        ?>
                                                                             <select id="gleam-band-size" name="gleam-band-size"
                                                                                 class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0 font-14">
                                                                                 <option value="NA" selected>NA</option>
                                                                             </select>
-                                                                            <?php
+                                                                        <?php
                                                                         } ?>
                                                                     </div>
                                                                 </div>
@@ -605,12 +580,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <?php }
+                                <?php }
                                     }
-                                } ?>
+                                } else { ?>
+                                    <div class="col-12">
+                                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/3082/3082035.png" alt="No Jewellery Products" style="width: 120px; opacity: 0.8; margin-bottom: 20px;">
+                                            <h3 style="color: #dc3545; font-weight: bold; margin-bottom: 10px;">Product Not Found</h3>
+                                            <p style="color: #555; font-size: 1.1rem; text-align: center; max-width: 400px;">Sorry, we couldn't find any products matching your filter criteria. Please try adjusting your filters or browse other categories.</p>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
-                                   
-                                    <!-- <div class="paginatoin-area section-pt" data-animate="animate__fadeIn">
+
+                            <!-- <div class="paginatoin-area section-pt" data-animate="animate__fadeIn">
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination ul-mt5 align-items-center justify-content-center pagination-box">
                                                 <li class="page-item first">
@@ -637,13 +620,16 @@
                                             </ul>
                                         </nav>
                                     </div> -->
-                                </div>
-                            </div>
-                            <!-- collection-info end -->
                         </div>
                     </div>
+                    <!-- collection-info end -->
                 </div>
-            </section>
+            </div>
+            <div class="d-flex justify-content-center align-items-center text-center mt-5">
+                <?php pagination($ttl_pages, $page_no); ?>
+            </div>
+        </div>
+    </section>
 </main>
 
 
@@ -672,17 +658,17 @@
                 size: selectedSize
             },
             dataType: 'json',
-            success: function (res) {
+            success: function(res) {
                 console.log(res);
                 if (res.status == 'success') {
                     var $this = $(this);
                     $this.addClass("loading active disabled");
 
                     // Simulate button animation
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $this.removeClass("loading").addClass("done");
 
-                        setTimeout(function () {
+                        setTimeout(function() {
                             $this.removeClass("done active disabled");
 
                             // Call miniCart function
@@ -698,7 +684,7 @@
                     }, 500);
                 }
             },
-            error: function (err) {
+            error: function(err) {
                 console.log(err);
                 alert("Error occurred. Try again.");
             }
@@ -712,7 +698,7 @@
 </script>
 <script>
     // --- Dual range slider and input sync logic ---
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var minInput = document.getElementById('min-price');
         var maxInput = document.getElementById('max-price');
         var minRange = document.getElementById('min-range');
@@ -765,19 +751,19 @@
             }
         }
         if (minRange && maxRange && minInput && maxInput) {
-            minRange.addEventListener('input', function (e) {
+            minRange.addEventListener('input', function(e) {
                 enforceMinGap(e);
                 syncRangeToInput();
                 updateLabels();
                 updateSliderBar();
             });
-            maxRange.addEventListener('input', function (e) {
+            maxRange.addEventListener('input', function(e) {
                 enforceMinGap(e);
                 syncRangeToInput();
                 updateLabels();
                 updateSliderBar();
             });
-            minInput.addEventListener('input', function () {
+            minInput.addEventListener('input', function() {
                 if (parseInt(minInput.value) > parseInt(maxInput.value) - minGap) {
                     minInput.value = parseInt(maxInput.value) - minGap;
                 }
@@ -785,7 +771,7 @@
                 updateLabels();
                 updateSliderBar();
             });
-            maxInput.addEventListener('input', function () {
+            maxInput.addEventListener('input', function() {
                 if (parseInt(maxInput.value) < parseInt(minInput.value) + minGap) {
                     maxInput.value = parseInt(minInput.value) + minGap;
                 }
@@ -802,35 +788,67 @@
 </script>
 <script>
     // --- Form submit filtering logic ---
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var form = document.getElementById('shopForm');
         if (!form) return;
-        form.addEventListener('submit', function (e) {
-            // Get all form fields
+
+        // Remove specific group filter on close icon click
+        document.querySelectorAll('.remove-filter-group').forEach(function(icon) {
+            icon.addEventListener('click', function(e) {
+                e.preventDefault();
+                var groupId = this.getAttribute('data-group-id');
+                // Uncheck the corresponding checkbox
+                var checkbox = document.querySelector('input.group-checkbox[value="' + groupId + '"]');
+                if (checkbox) {
+                    checkbox.checked = false;
+                }
+                // Submit the form to refresh the page and apply remaining filters
+                form.dispatchEvent(new Event('submit'));
+            });
+        });
+
+        // Only submit on Apply Filters button
+        form.addEventListener('submit', function(e) {
             var formData = new FormData(form);
             var catId = formData.get('cat_id');
-            var gId = formData.get('g_id');
+            var gIds = [];
+            form.querySelectorAll('input[name="g_id[]"]:checked').forEach(function(cb) {
+                gIds.push(cb.value);
+            });
             var ageCat = formData.get('age_cat');
             var minAmt = formData.get('min_amt');
             var maxAmt = formData.get('max_amt');
 
-            // Build new URL
             var params = [];
-            if ((catId && catId !== '') || (gId && gId !== '')) {
-                // Product group/category search: only cat_id and g_id
-                if (catId && catId !== '') params.push('cat_id=' + encodeURIComponent(catId));
-                if (gId && gId !== '') params.push('g_id=' + encodeURIComponent(gId));
-            } else {
-                // Jewellery For/Price search: only age_cat, min_amt, max_amt
-                if (ageCat && ageCat !== '') params.push('age_cat=' + encodeURIComponent(ageCat));
-                if (minAmt && minAmt !== '') params.push('min_amt=' + encodeURIComponent(minAmt));
-                if (maxAmt && maxAmt !== '') params.push('max_amt=' + encodeURIComponent(maxAmt));
-            }
+            if (catId && catId !== '') params.push('cat_id=' + encodeURIComponent(catId));
+            if (gIds.length > 0) params.push('g_id=' + encodeURIComponent(gIds.join(',')));
+            if (ageCat && ageCat !== '') params.push('age_cat=' + encodeURIComponent(ageCat));
+            if (minAmt && minAmt !== '') params.push('min_amt=' + encodeURIComponent(minAmt));
+            if (maxAmt && maxAmt !== '') params.push('max_amt=' + encodeURIComponent(maxAmt));
+
             var baseUrl = window.location.pathname;
             var newUrl = baseUrl + (params.length ? ('?' + params.join('&')) : '');
             window.location = newUrl;
             e.preventDefault();
         });
+
+        // Clear all button logic
+        let clearBtn = document.getElementById('clearAllBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.group-checkbox').forEach(function(cb) {
+                    cb.checked = false;
+                });
+                var ageCatSelect = document.querySelector('select[name="age_cat"]');
+                if (ageCatSelect) ageCatSelect.value = 'all';
+                var minPrice = document.getElementById('min-price');
+                var maxPrice = document.getElementById('max-price');
+                if (minPrice) minPrice.value = 0;
+                if (maxPrice) maxPrice.value = 200000;
+                form.dispatchEvent(new Event('submit'));
+            });
+        }
     });
 </script>
 <style>
@@ -866,7 +884,7 @@
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        background: #dc3545;
+        background: #9c1138;
         border: 2px solid #fff;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         -webkit-appearance: none;
@@ -874,7 +892,7 @@
     }
 
     .range-slider input[type=range]::-webkit-slider-thumb:hover {
-        background: #b52a37;
+        background: #9c1138;
     }
 
     .range-slider input[type=range]::-moz-range-thumb {
@@ -889,7 +907,7 @@
     }
 
     .range-slider input[type=range]::-moz-range-thumb:hover {
-        background: #b52a37;
+        background: #9c1138;
     }
 
     .range-slider input[type=range]::-ms-thumb {
@@ -897,7 +915,7 @@
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        background: #dc3545;
+        background: #9c1138;
         border: 2px solid #fff;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         transition: background 0.2s;
@@ -923,7 +941,7 @@
         position: absolute;
         height: 8px;
         border-radius: 4px;
-        background: #dc3545;
+        background: #9c1138;
         top: 50%;
         z-index: 2;
         transform: translateY(-50%);
@@ -937,7 +955,7 @@
         top: -24px;
         left: 0;
         font-weight: bold;
-        color: #dc3545;
+        color: #9c1138;
         font-size: 1rem;
         pointer-events: none;
     }
@@ -986,5 +1004,18 @@
     .shop-filter-sidebar.active {
         z-index: 1050;
         /* add your open animation if needed */
+    }
+
+    #clearAllBtn {
+        cursor: pointer !important;
+    }
+
+    .remove-filter-group {
+        cursor: pointer !important;
+    }
+
+    .shop-filter-li {
+        /* Remove pointer from li */
+        cursor: default !important;
     }
 </style>

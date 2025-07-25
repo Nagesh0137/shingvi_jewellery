@@ -424,14 +424,47 @@ class Rohan extends CI_Controller
     $data['ttl_pages'] = ceil($total_rows / $per_page);
     $data['page_no'] = $page_no;
     // Get products
-    $products = $this->db->query("
-        SELECT * FROM category, product_gold
-        WHERE product_gold.cat_id = category.category_id
-        AND product_gold.status = 'active'
-        $show $ageQ $pgId
-        ORDER BY product_gold.prod_gold_id DESC
-        LIMIT " . $data['start'] . "," . $per_page
-    )->result_array();
+    // Custom group filter logic: show products for first group with products
+    $products = [];
+    if (isset($_GET['g_id']) && $_GET['g_id'] !== '') {
+        $groupIds = explode(',', $_GET['g_id']);
+        foreach ($groupIds as $gid) {
+            $groupProducts = $this->db->query("
+                SELECT * FROM category, product_gold
+                WHERE product_gold.cat_id = category.category_id
+                AND product_gold.status = 'active'
+                AND product_gold.group_id = ?
+                $show $ageQ
+                ORDER BY product_gold.prod_gold_id DESC
+                LIMIT " . $data['start'] . "," . $per_page,
+                [$gid]
+            )->result_array();
+            if (!empty($groupProducts)) {
+                $products = $groupProducts;
+                break;
+            }
+        }
+        // If no group has products, fallback to all products for category
+        if (empty($products)) {
+            $products = $this->db->query("
+                SELECT * FROM category, product_gold
+                WHERE product_gold.cat_id = category.category_id
+                AND product_gold.status = 'active'
+                $show $ageQ
+                ORDER BY product_gold.prod_gold_id DESC
+                LIMIT " . $data['start'] . "," . $per_page
+            )->result_array();
+        }
+    } else {
+        $products = $this->db->query("
+            SELECT * FROM category, product_gold
+            WHERE product_gold.cat_id = category.category_id
+            AND product_gold.status = 'active'
+            $show $ageQ
+            ORDER BY product_gold.prod_gold_id DESC
+            LIMIT " . $data['start'] . "," . $per_page
+        )->result_array();
+    }
     // Get categories and product groups
     $data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'],'status' => 'active']);
     // Only fetch product groups for the selected category

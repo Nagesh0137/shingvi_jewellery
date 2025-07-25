@@ -15,7 +15,6 @@ class User extends CI_Controller
 		parent::__construct();
 		$this->load->model('My_model');
 		// error_reporting(0);
-
 		// array_multisort(array_column($members, 'member_name'), SORT_ASC, $members);
 		$this->load->helper('form');
 		$this->load->helper('url');
@@ -122,8 +121,16 @@ class User extends CI_Controller
 		$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['status' => 'active']);
 		// $data['system_not'] = $this->db->query("SELECT * FROM system_notification ORDER BY system_notification_id DESC limit 20")->result_array();
 		$data['social_media'] = $this->My_model->select_where("social_media_tbl", ['status' => 'active'])[0];
+		$data['products'] = $this->My_model->select_where("product_gold", ['status' => 'active']);
 		$this->load->view("user/nav", $data);
 	}
+	public function search_products()
+	{
+		$query = $_POST['search_query'] ?? '';
+		$data['result'] = $this->db->query("SELECT * FROM product_gold,product_group WHERE product_gold.group_id = product_group.group_id AND product_gold.status='active' AND  product_group.status='active' AND (product_gold.product_name LIKE '%$query%' OR product_group.product_group_name LIKE '%$query%')")->result_array();
+		echo json_encode(['result' => $data['result']]);
+	}
+
 	public function topnav()
 	{
 		$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['status' => 'active']);
@@ -668,7 +675,7 @@ class User extends CI_Controller
 			}
 		}
 
-		$page_no = 1;
+		$page_no = isset($_GET['page_no']) ? intval($_GET['page_no']) : 1;
 		$per_page = 20;
 		$search = $_GET['q'] ?? '';
 
@@ -786,6 +793,7 @@ class User extends CI_Controller
 		// exit;
 
 		$data['products'] = $filtered_products;
+
 		$this->ov("products", $data);
 	}
 	// public function view_product_details($id){
@@ -865,22 +873,21 @@ class User extends CI_Controller
 		// 	// exit();
 
 		// } else {
-		if(isset($_SESSION['cart'][$_POST['prod_id']]))
-		{
+		if (isset($_SESSION['cart'][$_POST['prod_id']])) {
 			unset($_SESSION['cart'][$_POST['prod_id']]);
 			unset($_SESSION['Size'][$_POST['prod_id']]);
-		}else{
+		} else {
 			$_SESSION['cart'][$_POST['prod_id']] = 1;
 			$_SESSION['Size'][$_POST['prod_id']] = $_POST['size'];
 		}
-			echo json_encode(['status' => 'success', 'msg' => 'Added To Cart In session']);
+		echo json_encode(['status' => 'success', 'msg' => 'Added To Cart In session']);
 
-			// 👉 Print session cart
-			// echo "<pre>";
-			// print_r($_SESSION['cart']);
-			// print_r($_SESSION['Size']);
-			// exit();
-		
+		// 👉 Print session cart
+		// echo "<pre>";
+		// print_r($_SESSION['cart']);
+		// print_r($_SESSION['Size']);
+		// exit();
+
 	}
 
 
@@ -901,16 +908,16 @@ class User extends CI_Controller
 		// 		$msg = 'No';
 		// 	}
 		// } else {
-			if (isset($_SESSION['cart'])) {
-				$i = 0;
-				foreach ($_SESSION['cart'] as $key => $row) {
-					$products[$key] = getProductDetails($key);
-					$i++;
-				}
-				$msg = 'Yes';
-			} else {
-				$msg = 'No';
+		if (isset($_SESSION['cart'])) {
+			$i = 0;
+			foreach ($_SESSION['cart'] as $key => $row) {
+				$products[$key] = getProductDetails($key);
+				$i++;
 			}
+			$msg = 'Yes';
+		} else {
+			$msg = 'No';
+		}
 		// }
 
 		$data['order_charges'] = $this->My_model->select_where('order_charges', ['status' => 'active']);
@@ -919,7 +926,7 @@ class User extends CI_Controller
 		// print_r($products);
 		$this->load->view('user/add_to_cart_modal_form', $data);
 	}
-	
+
 
 
 	public function remove_cart_item()
@@ -928,12 +935,14 @@ class User extends CI_Controller
 		// 	$this->db->where(['user_id' => $_SESSION['user_id'], 'prod_id' => $_POST['prod_id']]);
 		// 	$this->db->delete('user_cart');
 		// } else {
-			unset($_SESSION['cart'][$_POST['prod_id']]);
-			unset($_SESSION['Size'][$_POST['prod_id']]);
+		unset($_SESSION['cart'][$_POST['prod_id']]);
+		unset($_SESSION['Size'][$_POST['prod_id']]);
 		// }
 
-		echo json_encode(['status' => 'success',
-		'id' => $_POST['prod_id']]);
+		echo json_encode([
+			'status' => 'success',
+			'id' => $_POST['prod_id']
+		]);
 	}
 
 
@@ -1079,6 +1088,7 @@ class User extends CI_Controller
 		$this->load->view("user/product_details", $data);
 		$this->footer();
 	}
+
 	public function product_details($id)
 	{
 		$this->head();
@@ -1105,7 +1115,7 @@ class User extends CI_Controller
 		// Get categories and product groups
 		$data['category'] = $this->My_model->select_where("category", ['category_id' => $products[0]['category_id'], 'status' => 'active']);
 
-
+		$data['reviews'] = $this->My_model->select_where("review_tbl", ['prod_gold_id' => $id, 'status' => 'active']);
 		// Filtered products result
 		$filtered_products = [];
 		$filtered_relatedProducts = [];
@@ -1212,7 +1222,7 @@ class User extends CI_Controller
 		$data['products'] = $filtered_products;
 		$data['relatedProducts'] = $filtered_relatedProducts;
 		// echo "<pre>";
-		// print_r($filtered_relatedProducts);
+		// print_r($data);
 		// echo "</pre>";
 		$this->load->view("user/product_details", $data);
 		$this->footer();
@@ -1624,7 +1634,7 @@ class User extends CI_Controller
 		$this->load->helper('text'); // Load helper for character_limiter
 
 		$data['blog_det'] = $this->My_model->select_where("web_blog", ['web_blog_id' => $blog_id]);
-		$data['blog_comments'] = $this->db->query("SELECT * FROM blog_comments WHERE blog_id = '".$blog_id."' AND  status ='active' ORDER BY blog_comments_id DESC LIMIT 10")->result_array();
+		$data['blog_comments'] = $this->db->query("SELECT * FROM blog_comments WHERE blog_id = '" . $blog_id . "' AND  status ='active' ORDER BY blog_comments_id DESC LIMIT 10")->result_array();
 		$data['other_blogs'] = array_reverse($this->My_model->select_where("web_blog", ['status' => 'active', 'web_blog_id!=' => $blog_id]));
 
 		$this->ov("view_blog", $data);
@@ -1974,22 +1984,22 @@ class User extends CI_Controller
 	public function checkout()
 	{
 		if (isset($_SESSION['cart'])) {
-				$i = 0;
-				foreach ($_SESSION['cart'] as $key => $row) {
-					$products[$key] = getProductDetails($key);
-					$i++;
-				}
-				$msg = 'Yes';
-			} else {
-				$msg = 'No';
+			$i = 0;
+			foreach ($_SESSION['cart'] as $key => $row) {
+				$products[$key] = getProductDetails($key);
+				$i++;
 			}
+			$msg = 'Yes';
+		} else {
+			$msg = 'No';
+		}
 		// }
 
 		$data['order_charges'] = $this->My_model->select_where('order_charges', ['status' => 'active']);
-			
+
 		$data['cart'] = $products;
 
-		$this->ov("checkout",$data);
+		$this->ov("checkout", $data);
 	}
 	// collection
 	public function collection()
@@ -2106,11 +2116,17 @@ class User extends CI_Controller
 		}
 	}
 
+	public function manageQty()
+	{
+		$_SESSION['cart'][$_POST['prod_id']] = $_POST['qty'];
+		echo json_encode(['status' => 'success', 'sessioncart' => $_SESSION['cart']]);
+	}
+
 	// New User Registration Method
 	public function register_new_user()
 	{
 		header('Content-Type: application/json');
-		
+
 		// Get POST data
 		$mobile = $_POST['mobile'];
 		$name = $_POST['name'];
@@ -2119,7 +2135,7 @@ class User extends CI_Controller
 		$city = $_POST['city'];
 		$address = $_POST['address'];
 		$product_id = $_POST['product_id'];
-		
+
 		// Validate required fields
 		if (empty($mobile) || empty($name) || empty($email) || empty($pincode) || empty($city) || empty($address)) {
 			echo json_encode([
@@ -2128,7 +2144,7 @@ class User extends CI_Controller
 			]);
 			return;
 		}
-		
+
 		// Validate mobile number format
 		if (!preg_match('/^[789]\d{9}$/', $mobile)) {
 			echo json_encode([
@@ -2137,7 +2153,7 @@ class User extends CI_Controller
 			]);
 			return;
 		}
-		
+
 		// Validate email format
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			echo json_encode([
@@ -2146,7 +2162,7 @@ class User extends CI_Controller
 			]);
 			return;
 		}
-		
+
 		// Validate pincode
 		if (strlen($pincode) != 6 || !is_numeric($pincode)) {
 			echo json_encode([
@@ -2155,16 +2171,16 @@ class User extends CI_Controller
 			]);
 			return;
 		}
-		
+
 		try {
 			// Check if user already exists
 			$existingUser = $this->My_model->select_where("customers", [
 				'mobile' => $mobile,
 				'status' => 'active'
 			]);
-			
+
 			$customer_id = null;
-			
+
 			if (empty($existingUser)) {
 				// Create new customer
 				$customerData = [
@@ -2174,9 +2190,9 @@ class User extends CI_Controller
 					'status' => 'active',
 					'reg_time' => time()
 				];
-				
+
 				$customer_id = $this->My_model->insert("customers", $customerData);
-				
+
 				if (!$customer_id) {
 					throw new Exception('Failed to create customer account');
 				}
@@ -2187,19 +2203,19 @@ class User extends CI_Controller
 					'name' => $name,
 					'email' => $email
 				];
-				
+
 				$this->My_model->update_where("customers", $updateData, ['customers_id' => $customer_id]);
 			}
-			
+
 			// Set user session
 			$_SESSION['user_id'] = $customer_id;
-			
+
 			// Create or update customer address
 			$existingAddress = $this->My_model->select_where("customer_address", [
 				'customers_id' => $customer_id,
 				'status' => 'active'
 			]);
-			
+
 			if (empty($existingAddress)) {
 				// Create new address
 				$addressData = [
@@ -2211,9 +2227,9 @@ class User extends CI_Controller
 					'status' => 'active',
 					'created_at' => date('Y-m-d H:i:s')
 				];
-				
+
 				$address_id = $this->My_model->insert("customer_address", $addressData);
-				
+
 				if (!$address_id) {
 					throw new Exception('Failed to save address');
 				}
@@ -2224,24 +2240,24 @@ class User extends CI_Controller
 					'pincode' => $pincode,
 					'city' => $city
 				];
-				
+
 				$this->My_model->update_where("customer_address", $updateAddressData, [
 					'customers_id' => $customer_id,
 					'status' => 'active'
 				]);
 			}
-			
+
 			// Get updated user data
 			$userData = $this->My_model->select_where("customers", [
 				'customers_id' => $customer_id,
 				'status' => 'active'
 			]);
-			
+
 			$addressData = $this->My_model->select_where("customer_address", [
 				'customers_id' => $customer_id,
 				'status' => 'active'
 			]);
-			
+
 			// Prepare user data for response
 			$userResponse = [
 				'customers_id' => $customer_id,
@@ -2252,14 +2268,13 @@ class User extends CI_Controller
 				'pincode' => $pincode,
 				'city' => $city
 			];
-			
+
 			echo json_encode([
 				'status' => 'success',
 				'message' => 'Registration completed successfully',
 				'user_data' => $userResponse,
 				'customer_id' => $customer_id
 			]);
-			
 		} catch (Exception $e) {
 			echo json_encode([
 				'status' => 'error',
@@ -2351,7 +2366,7 @@ class User extends CI_Controller
 			$data = $this->My_model->insert("customer_address", $_POST);
 		}
 
-		
+
 		if ($data) {
 			echo json_encode(['status' => 'success']);
 		} else {
@@ -2360,7 +2375,7 @@ class User extends CI_Controller
 	}
 	public function save_customer_details()
 	{
-		$user_details=[
+		$user_details = [
 			'name' => $_POST['name'],
 			'email' => $_POST['email'],
 			'address' => $_POST['address'],
@@ -2377,7 +2392,7 @@ class User extends CI_Controller
 			'entry_by' => 'user',
 			'default_address' => 'yes'
 		];
-			$data= $this->My_model->insert("customer_address",$default_address);
+		$data = $this->My_model->insert("customer_address", $default_address);
 		if ($data) {
 			echo json_encode(['status' => 'success']);
 		} else {
@@ -2385,14 +2400,13 @@ class User extends CI_Controller
 		}
 	}
 	public function unset_ses()
-{
-	unset($_SESSION['user_id']);
-	redirect(base_url() . 'user/', 'refresh');
-
-}
+	{
+		unset($_SESSION['user_id']);
+		redirect(base_url() . 'user/', 'refresh');
+	}
 	public function save_buy_now()
 	{
-		
+
 		// print_r($_POST);
 		// print_r($_SESSION);
 		// exit;
@@ -2492,7 +2506,7 @@ class User extends CI_Controller
 		if ($_POST['payment_type'] == 'Online') {
 			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)$total, 2, '.', ''), base_url());
 			$data['response'] = json_decode($response1, true);
-			
+
 			$orderId = $data['response']['order_id'];
 			// print_r($orderId);
 			// exit;
@@ -2677,38 +2691,40 @@ class User extends CI_Controller
 
 
 
-// Rohan Start
-	public function my_orders(){
+	// Rohan Start
+	public function my_orders()
+	{
 		// $user_details = $this->My_model->select_where("customers", ['status' => 'active','customers_id' => $_SESSION['user_id']]);
-		$data['user_details'] = $this->db->query("SELECT * FROM ordered_product,order_tbl,customers WHERE ordered_product.order_tbl_id = order_tbl.order_tbl_id AND order_tbl.customers_id = customers.customers_id AND order_tbl.status = 'active' AND customers.status = 'active' AND customers.customers_id = '".$_SESSION['user_id']."'")->result_array();
+		$data['user_details'] = $this->db->query("SELECT * FROM ordered_product,order_tbl,customers WHERE ordered_product.order_tbl_id = order_tbl.order_tbl_id AND order_tbl.customers_id = customers.customers_id AND order_tbl.status = 'active' AND customers.status = 'active' AND customers.customers_id = '" . $_SESSION['user_id'] . "'")->result_array();
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";
 		// exit;
-		$this->ov("my_orders",$data);
+		$this->ov("my_orders", $data);
 	}
 
 	// order_view
-	public function order_view($id){
-		$data['order_details'] = $this->db->query("SELECT * FROM order_tbl,product_gold,ordered_product WHERE ordered_product.order_tbl_id = order_tbl.order_tbl_id AND ordered_product.prod_gold_id = product_gold.prod_gold_id AND order_tbl.status = 'active' AND product_gold.status = 'active' AND ordered_product.status = 'active' AND ordered_product.order_tbl_id = '".$id."'")->result_array();
+	public function order_view($id)
+	{
+		$data['order_details'] = $this->db->query("SELECT * FROM order_tbl,product_gold,ordered_product WHERE ordered_product.order_tbl_id = order_tbl.order_tbl_id AND ordered_product.prod_gold_id = product_gold.prod_gold_id AND order_tbl.status = 'active' AND product_gold.status = 'active' AND ordered_product.status = 'active' AND ordered_product.order_tbl_id = '" . $id . "'")->result_array();
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";
 		// exit;
-		$this->ov("order_view",$data);
+		$this->ov("order_view", $data);
 	}
-	
+
 	// public function product_details_filter(){
 	// 		// Age Category Filter
 	// 	// 	$ageQ = '';
 	// 	// 	if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
 	// 	// 		$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
 	// 	// 	}
-	
+
 	// 	// 	if (isset($_GET['g_id'])) {
 	// 	// 		$ageQ .= "AND product_gold.group_id = '" . $_GET['g_id'] . "'";
 	// 	// 	}
-	
+
 	// 	// 	if (!isset($_GET['cat_id'])) {
 	// 	// 		if (isset($_GET['label'])) {
 	// 	// 			if ($_GET['label'] != 'Gift') {
@@ -2718,18 +2734,18 @@ class User extends CI_Controller
 	// 	// 			$_GET['cat_id'] = 5;
 	// 	// 		}
 	// 	// 	}
-	
+
 	// 	// 	$page_no = 1;
 	// 	// 	$per_page = 20;
 	// 	// 	$search = $_GET['q'] ?? '';
-	
+
 	// 	// 	// Search Conditions
 	// 	// 	$show = " AND (
 	// 	// 	product_gold.product_details LIKE '%" . $search . "%' OR
 	// 	// 	category.category_name LIKE '%" . $search . "%' OR
 	// 	// 	product_gold.product_name LIKE '%" . $search . "%'
 	// 	// )";
-	
+
 	// 	// 	if (isset($_GET['g_id'])) {
 	// 	// 		$gId = "AND product_group.product_group_id = '" . $_GET['g_id'] . "'";
 	// 	// 		$pgId = "AND product_gold.group_id = '" . $_GET['g_id'] . "'";
@@ -2745,12 +2761,12 @@ class User extends CI_Controller
 	// 	// 	AND product_gold.status = 'active'
 	// 	// 	$show $ageQ
 	// 	// ")->result_array()[0]['ttl_rows'];
-	
+
 	// 	// 	// Pagination
 	// 	// 	$data['start'] = $per_page * $page_no - $per_page;
 	// 	// 	$data['ttl_pages'] = ceil($total_rows / $per_page);
 	// 	// 	$data['page_no'] = $page_no;
-	
+
 	// 	// 	// Get products
 	// 	// 	$products = $this->db->query(
 	// 	// 		"
@@ -2761,11 +2777,11 @@ class User extends CI_Controller
 	// 	// 	ORDER BY product_gold.prod_gold_id DESC
 	// 	// 	LIMIT " . $data['start'] . "," . $per_page
 	// 	// 	)->result_array();
-	
+
 	// 	// 	// Get categories and product groups
 	// 	// 	$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'], 'status' => 'active']);
-	
-	
+
+
 	// 	// 	$data['product_group'] = $this->db->query("
 	// 	// 	SELECT category.*, product_group.*, product_group.product_group_id 
 	// 	// 	FROM category, product_gold, product_group 
@@ -2777,10 +2793,10 @@ class User extends CI_Controller
 	// 	// 	" . $gId . "
 	// 	// 	GROUP BY product_group.product_group_id
 	// 	// ")->result_array();
-	
+
 	// 	// 	// Filtered products result
 	// 	// 	$filtered_products = [];
-	
+
 	// 	// 	foreach ($products as $row) {
 	// 	// 		// Fetch filters
 	// 	// 		$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
@@ -2792,11 +2808,11 @@ class User extends CI_Controller
 	// 	// 			}
 	// 	// 			$ff .= "fname" . $frow['filter_name'] . " ";
 	// 	// 		}
-	
+
 	// 	// 		$row['ft'] = $ft;
 	// 	// 		$row['ff'] = $ff;
 	// 	// 		$row['cart'] = "No";
-	
+
 	// 	// 		// Calculate product price
 	// 	// 		$price = 0;
 	// 	// 		if ($row['cat_id'] == 5) {
@@ -2808,10 +2824,10 @@ class User extends CI_Controller
 	// 	// 		} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
 	// 	// 			$price = $this->silverdiamondprice($row['prod_gold_id']);
 	// 	// 		}
-	
+
 	// 	// 		$row['price'] = $price;
 	// 	// 		$row['rating'] = (int) $row['rating'];
-	
+
 	// 	// 		// $row['total_discount_amt'] = 2000;
 	// 	// 		if ($row['total_discount_amt'] > 0) {
 	// 	// 			$row['original_price'] = $row['price'];
@@ -2827,7 +2843,7 @@ class User extends CI_Controller
 	// 	// 			$row['formatted_original_price'] = '₹ ' . number_format1($row['price']);
 	// 	// 		}
 	// 	// 		$row['imgs'] = explode('||', $row['product_image']);
-	
+
 	// 	// 		// Apply min and max amount filter
 	// 	// 		$valid = true;
 	// 	// 		if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
@@ -2836,17 +2852,17 @@ class User extends CI_Controller
 	// 	// 		if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
 	// 	// 			$valid = false;
 	// 	// 		}
-	
+
 	// 	// 		if ($valid) {
 	// 	// 			$filtered_products[] = $row;
 	// 	// 		}
 	// 	// 	}
-	
+
 	// 	// 	// echo "<pre>";
 	// 	// 	// print_r($filtered_products);
 	// 	// 	// exit;
 	// 	// 	$data['categories'] = $this->My_model->select_where("category", ['status' => 'active']);
-		
+
 	// 	// 	$data['product_groupes'] = $this->My_model->select_where("product_group", ['status' => 'active']);
 	// 	// 	$data['products'] = $filtered_products;
 
@@ -2854,12 +2870,12 @@ class User extends CI_Controller
 	// 	if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
 	// 		$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
 	// 	}
-		
+
 	// 	if(isset($_GET['g_id']))
 	// 	{
 	// 		$ageQ .= "AND product_gold.group_id = '".$_GET['g_id']."'";
 	// 	}
-		
+
 	// 	if (!isset($_GET['cat_id'])) {
 	// 				if (isset($_GET['label'])) {
 	// 					if ($_GET['label'] != 'Gift') {
@@ -2869,18 +2885,18 @@ class User extends CI_Controller
 	// 					$_GET['cat_id'] = 5;
 	// 				}
 	// 			}
-			
+
 	// 	$page_no = 1;
 	// 	$per_page = 20;
 	// 	$search = $_GET['q'] ?? '';
-	
+
 	// 	// Search Conditions
 	// 	$show = " AND (
 	// 		product_gold.product_details LIKE '%" . $search . "%' OR
 	// 		category.category_name LIKE '%" . $search . "%' OR
 	// 		product_gold.product_name LIKE '%" . $search . "%'
 	// 	)";
-	
+
 	// 	if(isset($_GET['g_id']))
 	// 	{
 	// 		$gId = "AND product_group.product_group_id = '".$_GET['g_id']."'";
@@ -2897,12 +2913,12 @@ class User extends CI_Controller
 	// 		AND product_gold.status = 'active'
 	// 		$show $ageQ
 	// 	")->result_array()[0]['ttl_rows'];
-	
+
 	// 	// Pagination
 	// 	$data['start'] = $per_page * $page_no - $per_page;
 	// 	$data['ttl_pages'] = ceil($total_rows / $per_page);
 	// 	$data['page_no'] = $page_no;
-	
+
 	// 	// Get products
 	// 	$products = $this->db->query("
 	// 		SELECT * FROM category, product_gold
@@ -2912,15 +2928,15 @@ class User extends CI_Controller
 	// 		ORDER BY product_gold.prod_gold_id DESC
 	// 		LIMIT " . $data['start'] . "," . $per_page
 	// 	)->result_array();
-	 
+
 	// 	// Get categories and product groups
 	// 	$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'],'status' => 'active']);
-	   
-		
+
+
 	// 	$data['product_group'] = $this->My_model->select_where("product_group", ['status' => 'active']);
-	
+
 	// 	$filtered_products = [];
-	
+
 	// 	foreach ($products as $row) {
 	// 		$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
 	// 		$ft = '';
@@ -2931,11 +2947,11 @@ class User extends CI_Controller
 	// 			}
 	// 			$ff .= "fname" . $frow['filter_name'] . " ";
 	// 		}
-	
+
 	// 		$row['ft'] = $ft;
 	// 		$row['ff'] = $ff;
 	// 		$row['cart'] = "No";
-	
+
 	// 		// Calculate product price
 	// 		$price = 0;
 	// 		if ($row['cat_id'] == 5) {
@@ -2947,10 +2963,10 @@ class User extends CI_Controller
 	// 		} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
 	// 			$price = $this->silverdiamondprice($row['prod_gold_id']);
 	// 		}
-	
+
 	// 		$row['price'] = $price;
 	// 		$row['rating'] = (int) $row['rating'];
-	
+
 	// 		// Apply min and max amount filter
 	// 		$valid = true;
 	// 		if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
@@ -2959,12 +2975,12 @@ class User extends CI_Controller
 	// 		if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
 	// 			$valid = false;
 	// 		}
-	
+
 	// 		if ($valid) {
 	// 			$filtered_products[] = $row;
 	// 		}
 	// 	}
-	
+
 	// 	$data['products'] = $filtered_products;
 	// 	// echo "<pre>";
 	// 	// print_r($data);
@@ -2972,110 +2988,139 @@ class User extends CI_Controller
 	// 	$this->ov("product_details_filter",$data);
 	// }
 
-	public function product_details_filter(){
- 
-    $ageQ = '';
-    if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
-        $ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
-    }
-    // Restore group_id filter: if g_id is present, filter by group_id
-    if(isset($_GET['g_id']) && $_GET['g_id'] != '') {
-        $ageQ .= " AND product_gold.group_id = '".$_GET['g_id']."'";
-    }
-    if (!isset($_GET['cat_id'])) {
-        if (isset($_GET['label'])) {
-            if ($_GET['label'] != 'Gift') {
-                // $_GET['cat_id'] = 5;
-            }
-        } else {
-            $_GET['cat_id'] = 5;
-        }
-    }
-    $page_no = 1;
-    $per_page = 20;
-    $search = $_GET['q'] ?? '';
-    // Search Conditions
-    $show = " AND (
-        product_gold.product_details LIKE '%" . $search . "%' OR
-        category.category_name LIKE '%" . $search . "%' OR
-        product_gold.product_name LIKE '%" . $search . "%'
-    )";
-    $gId = " ";
-    $pgId = " ";
-    // Count total rows
-    $total_rows = $this->db->query("
-        SELECT COUNT(product_gold.prod_gold_id) AS ttl_rows
-        FROM category, product_gold
-        WHERE product_gold.cat_id = category.category_id
-        AND product_gold.status = 'active'
-        $show $ageQ
-    ")->result_array()[0]['ttl_rows'];
-    // Pagination
-    $data['start'] = $per_page * $page_no - $per_page;
-    $data['ttl_pages'] = ceil($total_rows / $per_page);
-    $data['page_no'] = $page_no;
-    // Get products
-    $products = $this->db->query("
-        SELECT * FROM category, product_gold
-        WHERE product_gold.cat_id = category.category_id
-        AND product_gold.status = 'active'
-        $show $ageQ $pgId
-        ORDER BY product_gold.prod_gold_id DESC
-        LIMIT " . $data['start'] . "," . $per_page
-    )->result_array();
-    // Get categories and product groups
-    $data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'],'status' => 'active']);
-    // Only fetch product groups for the selected category
-    $data['product_group'] = $this->My_model->select_where("product_group", [
-        'status' => 'active',
-        'group_category' => $_GET['cat_id']
-    ]);
-    $filtered_products = [];
-    foreach ($products as $row) {
-        $fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
-        $ft = '';
-        $ff = '';
-        foreach ($fil as $frow) {
-            if (strpos($ft, $frow['filter_title']) === false) {
-                $ft .= "ftitle" . $frow['filter_title'] . " ";
-            }
-            $ff .= "fname" . $frow['filter_name'] . " ";
-        }
-        $row['ft'] = $ft;
-        $row['ff'] = $ff;
-        $row['cart'] = "No";
-        // Calculate product price
-        $price = 0;
-        if ($row['cat_id'] == 5) {
-            $price = $this->goldprice($row['prod_gold_id']);
-        } elseif ($row['cat_id'] == 6) {
-            $price = $this->silverprice($row['prod_gold_id']);
-        } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
-            $price = $this->golddiamondprice($row['prod_gold_id']);
-        } elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
-            $price = $this->silverdiamondprice($row['prod_gold_id']);
-        }
-        $row['price'] = $price;
-        $row['rating'] = (int) $row['rating'];
-        // Apply min and max amount filter
-        $valid = true;
-        if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
-            $valid = false;
-        }
-        if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
-            $valid = false;
-        }
-        if ($valid) {
-            $filtered_products[] = $row;
-        }
-    }
-    $data['products'] = $filtered_products;
-    // Calculate min and max price for slider
-    $all_prices = array_column($filtered_products, 'price');
-    $data['min_amt'] = !empty($all_prices) ? min($all_prices) : 0;
-    $data['max_amt'] = !empty($all_prices) ? max($all_prices) : 2000;
-    $this->ov("product_details_filter",$data);
-}
+	public function product_details_filter()
+	{
+		$ageQ = '';
+		if (isset($_GET['age_cat']) && $_GET['age_cat'] != 'all') {
+			$ageQ = 'AND product_gold.age_category = "' . $_GET['age_cat'] . '"';
+		}
+		// Restore group_id filter: if g_id is present, filter by group_id
+		if (isset($_GET['g_id']) && $_GET['g_id'] != '') {
+			$g_id = $_GET['g_id'];
+			if (is_array($g_id)) {
+				$g_id_str = implode(',', $g_id);
+			} else {
+				$g_id_str = $g_id;
+			}
+			$ageQ .= " AND product_gold.group_id IN ('" . str_replace(',', "','", $g_id_str) . "')";
+			$_GET['g_id'] = $g_id_str; // Ensure view always gets string
+		}
+		// Remove default cat_id logic
+		// if (!isset($_GET['cat_id'])) {
+		//     if (isset($_GET['label'])) {
+		//         if ($_GET['label'] != 'Gift') {
+		//             // $_GET['cat_id'] = 5;
+		//         }
+		//     } else {
+		//         $_GET['cat_id'] = 5;
+		//     }
+		// }
+		$catQ = '';
+		if (isset($_GET['cat_id']) && $_GET['cat_id'] != '') {
+			$catQ = ' AND product_gold.cat_id = "' . $_GET['cat_id'] . '"';
+		}
+		$page_no = isset($_GET['page_no']) ? intval($_GET['page_no']) : 1;
+		$per_page = 21;
+		$search = $_GET['q'] ?? '';
+		// Search Conditions
+		$show = " AND ( product_gold.product_details LIKE '%" . $search . "%' OR category.category_name LIKE '%" . $search . "%' OR product_gold.product_name LIKE '%" . $search . "%')";
+		$gId = " ";
+		$pgId = " ";
+		// Count total rows
+		$total_rows = $this->db->query("SELECT COUNT(product_gold.prod_gold_id) AS ttl_rows FROM category, product_gold WHERE product_gold.cat_id = category.category_id AND product_gold.status = 'active' $catQ $show $ageQ")->result_array()[0]['ttl_rows'];
+		// Pagination
+		$data['start'] = $per_page * $page_no - $per_page;
+		$data['ttl_pages'] = ceil($total_rows / $per_page);
+		$data['page_no'] = $page_no;
+		// Get products
+		$products = $this->db->query(
+			"SELECT * FROM category, product_gold WHERE product_gold.cat_id = category.category_id AND product_gold.status = 'active' $catQ $show $ageQ $pgId ORDER BY product_gold.prod_gold_id DESC LIMIT " . $data['start'] . "," . $per_page
+		)->result_array();
+		// Get categories and product groups
+		$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'], 'status' => 'active']);
+		// Only fetch product groups for the selected category
+		$data['product_group'] = $this->My_model->select_where("product_group", [
+			'status' => 'active',
+			'group_category' => $_GET['cat_id']
+		]);
+		$filtered_products = [];
+		foreach ($products as $row) {
+			$fil = $this->db->query("SELECT * FROM product_filter WHERE status='active' AND prod='" . $row['prod_gold_id'] . "'")->result_array();
+			$ft = '';
+			$ff = '';
+			foreach ($fil as $frow) {
+				if (strpos($ft, $frow['filter_title']) === false) {
+					$ft .= "ftitle" . $frow['filter_title'] . " ";
+				}
+				$ff .= "fname" . $frow['filter_name'] . " ";
+			}
+			$row['ft'] = $ft;
+			$row['ff'] = $ff;
+			$row['cart'] = "No";
+			// Calculate product price
+			$price = 0;
+			if ($row['cat_id'] == 5) {
+				$price = $this->goldprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 6) {
+				$price = $this->silverprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+				$price = $this->golddiamondprice($row['prod_gold_id']);
+			} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+				$price = $this->silverdiamondprice($row['prod_gold_id']);
+			}
+			$row['price'] = $price;
+			$row['rating'] = (int) $row['rating'];
+			// Apply min and max amount filter
+			$valid = true;
+			if (isset($_GET['min_amt']) && $row['price'] < $_GET['min_amt']) {
+				$valid = false;
+			}
+			if (isset($_GET['max_amt']) && $row['price'] > $_GET['max_amt']) {
+				$valid = false;
+			}
+			if ($valid) {
+				$filtered_products[] = $row;
+			}
+		}
+		$data['products'] = $filtered_products;
+		// Calculate min and max price for slider
+		$all_prices = array_column($filtered_products, 'price');
+		$data['min_amt'] = !empty($all_prices) ? min($all_prices) : 0;
+		$data['max_amt'] = !empty($all_prices) ? max($all_prices) : 2000;
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+		// exit;
+		$this->ov("product_details_filter", $data);
+	}
 
-}
+	public function save_review()
+	{
+		if (isset($_FILES['review_img']) && $_FILES['review_img']['name'] != "") {
+			$imgname = $_FILES['review_img']['name'];
+			$imgtemp = $_FILES['review_img']['tmp_name'];
+			$path = "uploads/";
+			$fileType = mime_content_type($imgtemp);
+			if (strpos($fileType, 'image/') === 0) {
+				// Only save if file is an image
+				$_POST['review_img'] = $this->upload_img($imgname, $imgtemp, $path);
+			}
+		}
 
+		$_POST['user_id'] = $_SESSION['user_id'];
+		$_POST['status'] = 'active';
+		$_POST['entry_time'] = time();
+		$_POST['entry_date'] = date("Y-m-d");
+
+		$reviews = $this->My_model->insert("review_tbl", $_POST);
+		$prod_gold_id = $_POST['prod_gold_id'];
+
+		if ($reviews && $prod_gold_id) {
+			$this->session->set_flashdata("success", "Review submitted successfully");
+			redirect(base_url("user/product_details/" . $prod_gold_id));
+		} else {
+			$this->session->set_flashdata("error", "Review submission failed");
+			redirect(base_url("user/product_details/" . $prod_gold_id));
+		}
+	}
+}

@@ -671,7 +671,6 @@ function getCashfreeOrderDetails($orderId)
 }
 
 
-// end pagination helper 
 
 
 function compress_image()

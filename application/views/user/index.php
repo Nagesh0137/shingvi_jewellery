@@ -241,7 +241,7 @@
             }
         </style>
         <script>
-            $('#subscriptionForm').on('submit', function (e) {
+            $('#subscriptionForm').on('submit', function(e) {
                 e.preventDefault(); // stop default submission
 
                 // OPTIONAL: Ajax submission (if you want to actually submit to backend)
@@ -249,12 +249,12 @@
                     url: $(this).attr('action'),
                     type: 'POST',
                     data: $(this).serialize(),
-                    success: function (response) {
+                    success: function(response) {
                         // Show success modal
                         $('#successModal').fadeIn();
 
                         // Hide modal after 3 seconds
-                        setTimeout(function () {
+                        setTimeout(function() {
                             $('#successModal').fadeOut();
                             $('#subscriptionForm')[0].reset(); // reset the form
                         }, 3000);
@@ -320,7 +320,7 @@
                 }
             }
 
-            document.getElementById('subscriptionForm').addEventListener('submit', function (e) {
+            document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
                 const input = document.getElementById('subscriberInput');
                 const value = input.value.trim();
                 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -339,11 +339,11 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const closeBtn = document.getElementById("popupClose");
         const popupWrapper = document.getElementById("popupModal");
 
-        closeBtn.addEventListener("click", function () {
+        closeBtn.addEventListener("click", function() {
             popupWrapper.classList.add("hide");
             setTimeout(() => {
                 popupWrapper.style.display = "none";
@@ -1076,7 +1076,7 @@
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-7"><?= $group_name ?></span>
                                                                     <span class="d-block heading-weight">
-                                                                        <a href="<?= $product_link ?>"
+                                                                        <a href="<?= base_url() ?>user/product_details/<?= $row['prod_gold_id'] ?>"
                                                                             class="d-block w-100 dominant-link text-truncate">
                                                                             <?= htmlspecialchars($row['product_name']) ?>
                                                                         </a>
@@ -1101,28 +1101,28 @@
                                                             </div>
 
                                                             <div class="product-action">
-                                                                <?php if (isset($_SESSION['cart'][$row['prod_gold_id']])): ?>
-                                                                    <a href="javascript:void(0)" class="add-to-cart added">
-                                                                        <span class="product-icon">
-                                                                            <span class="product-check-icon icon-16"><i
-                                                                                    class="ri-check-line d-block lh-1"></i></span>
+                                                                <?php
+                                                                if (isset($_SESSION['user_id'])) {
+                                                                    $ucart = $this->My_model->select_where("user_cart", [
+                                                                        'user_id' => $_SESSION['user_id'],
+                                                                        'prod_id' => $row['prod_gold_id'],
+                                                                        'status' => 'active'
+                                                                    ]);
+                                                                    $inCart = isset($ucart[0]);
+                                                                } else {
+                                                                    $inCart = isset($_SESSION['cart'][$row['prod_gold_id']]);
+                                                                }
+                                                                ?>
+                                                                <a class="add-to-cart <?= $inCart ? 'in-cart' : '' ?>" id="add-to-cart-btn-1-<?= $row['prod_gold_id'] ?>" onclick="addToCart('<?= $row['prod_gold_id'] ?>', this)">
+                                                                    <span class="product-icon">
+                                                                        <span class="product-bag-icon icon-16">
+                                                                            <i class="<?= $inCart ? 'ri-shopping-bag-fill text-white' : 'ri-shopping-bag-3-line text-white' ?> d-block lh-1"></i>
                                                                         </span>
-                                                                        <span class="tooltip-text">added to cart</span>
-                                                                    </a>
-                                                                <?php else: ?>
-                                                                    <a href="javascript:void(0)" class="add-to-cart"
-                                                                        onclick="add_in_cart2('<?= $row['prod_gold_id'] ?>',this)">
-                                                                        <span class="product-icon">
-                                                                            <span class="product-bag-icon icon-16"><i
-                                                                                    class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                                                                            <span class="product-loader-icon icon-16"><i
-                                                                                    class="ri-loader-4-line d-block lh-1"></i></span>
-                                                                            <span class="product-check-icon icon-16"><i
-                                                                                    class="ri-check-line d-block lh-1"></i></span>
-                                                                        </span>
-                                                                        <span class="tooltip-text">add to cart</span>
-                                                                    </a>
-                                                                <?php endif; ?>
+                                                                        <span class="product-loader-icon icon-16" style="display: none;"><i class="ri-loader-4-line d-block lh-1"></i></span>
+                                                                        <span class="product-check-icon icon-16" style="display: none;"><i class="ri-check-line d-block lh-1"></i></span>
+                                                                    </span>
+                                                                    <span class="tooltip-text text-nowrap px-2"><?= $inCart ? 'Added to cart' : 'Add to cart' ?></span>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         <div class="product-description">
@@ -1131,16 +1131,19 @@
                                                         </div>
                                                         <div class="product-action">
                                                             <?php if (isset($_SESSION['cart'][$row['prod_gold_id']])): ?>
-                                                                <a href="javascript:void(0)" class="add-to-cart added">
+                                                                <a class="add-to-cart <?= $inCart ? 'in-cart' : '' ?>" id="add-to-cart-btn-2-<?= $row['prod_gold_id'] ?>" onclick="addToCart('<?= $row['prod_gold_id'] ?>', this)">
                                                                     <span class="product-icon">
-                                                                        <span class="product-check-icon icon-16"><i
-                                                                                class="ri-check-line d-block lh-1"></i></span>
+                                                                        <span class="product-bag-icon icon-16">
+                                                                            <i class="<?= $inCart ? 'ri-shopping-bag-fill text-success' : 'ri-shopping-bag-3-line' ?> d-block lh-1"></i>
+                                                                        </span>
+                                                                        <span class="product-loader-icon icon-16" style="display: none;"><i class="ri-loader-4-line d-block lh-1"></i></span>
+                                                                        <span class="product-check-icon icon-16" style="display: none;"><i class="ri-check-line d-block lh-1"></i></span>
                                                                     </span>
-                                                                    <span class="tooltip-text">added to cart</span>
+                                                                    <span class="tooltip-text"><?= $inCart ? 'Added_to_cart' : 'Add to cart' ?></span>
                                                                 </a>
                                                             <?php else: ?>
                                                                 <a href="javascript:void(0)" class="add-to-cart"
-                                                                    onclick="add_in_cart2('<?= $row['prod_gold_id'] ?>',this)">
+                                                                    onclick="addToCart('<?= $row['prod_gold_id'] ?>',this)">
                                                                     <span class="product-icon">
                                                                         <span class="product-bag-icon icon-16"><i
                                                                                 class="ri-shopping-bag-3-line d-block lh-1"></i></span>
@@ -1153,7 +1156,7 @@
                                                                 </a>
                                                             <?php endif; ?>
 
-                                                            <a href="<?= $product_link ?>" class="quick-view">
+                                                            <a href="<?= base_url('user/product_details/' . $row['prod_gold_id']) ?>" class="quick-view">
                                                                 <span class="product-icon"><i
                                                                         class="ri-eye-line d-block icon-16 lh-1"></i></span>
                                                                 <span class="tooltip-text">quickview</span>
@@ -1586,7 +1589,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <?php }
+                    <?php }
                     } ?>
                 </div>
             </div>

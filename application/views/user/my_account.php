@@ -15,11 +15,12 @@
                 <div class="col-12 col-lg-4 col-xl-3 p-lg-sticky top-0" data-animate="animate__fadeIn">
                     <div class="ap-info">
                         <div class="ap-author ptb-30 plr-15 extra-bg text-center border-radius">
-                            <?php if (!empty($customer_details[0]['profile_photo'])): ?>
+                            <!-- <?php if (!empty($customer_details[0]['profile_photo'])): ?>
                                 <img src="<?=base_url()?>uploads/<?=$customer_details[0]['profile_photo']?>" class="img-fluid" alt="customer Profile" style="height:70px; width:70px; border-radius:50%; object-fit:cover; margin-bottom:5px;">
-                            <?php else: ?>
+                            <?php else: ?> -->
                                 <img src="<?=base_url()?>uploads/dummy_profile.png" class="img-fluid" alt="customer Profile" style="height:70px; width:70px; border-radius:50%; object-fit:cover;">
-                            <?php endif; ?>
+                            <!-- <?php endif; ?> -->
+                             <img src="<?=base_url()?>uploads/dummy_profile.png" class="img-fluid" alt="customer Profile" style="height:70px; width:70px; border-radius:50%; object-fit:cover;">
                             <div class="ap-ac mst-26">
                                 <h6 class="font-18"><?=$customer_details[0]['firstname']?> <?=$customer_details[0]['lastname']?></h6>
                                 <h3 class="font-12"><?=$customer_details[0]['mobile']?></h3>
@@ -105,7 +106,7 @@
                       </div>
 
                       <!-- Upload Image -->
-                      <div class="col-12 field-col">
+                      <!-- <div class="col-12 field-col">
                         <label class="field-label">
                           Upload Image <span style="color: red;">*</span>
                       </label>
@@ -119,7 +120,7 @@
                           </div>
                       </div>
                   </div>
-              </div>
+              </div> -->
 
           </div>
       </div>

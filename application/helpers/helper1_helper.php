@@ -351,8 +351,8 @@ function pagination($ttl_pages, $c_page)
 
     .pag li {
       display: inline-block;
-      color: white;
-      font-weight: bold;
+      color: white !important;
+      font-weight: bold !important;
     }
 
     .not_active_pag {
@@ -374,11 +374,11 @@ function pagination($ttl_pages, $c_page)
     .active_pag {
       display: inline-block;
       border: 2px solid #55497C;
-      background-color: white;
+      background-color: white !important;
       padding: 3px;
       padding-left: 7px;
       padding-right: 7px;
-      color: #55497C;
+      color: #55497C !important;
     }
 
     ::-webkit-scrollbar {
@@ -485,13 +485,13 @@ function pagination_product($ttl_pages, $c_page)
 
     .not_active_pag {
       display: inline-block !important;
-      background-color: #2A3042;
+      background-color:rgb(255, 255, 255) !important;
       padding: 8px 12px !important;
-      color: white;
-      border: 2px solid white;
+      color: black !important;
+      border: 2px solid white !important;
       transition-duration: 0.2s;
       text-decoration: none !important;
-      border-radius: 4px;
+      border-radius: 4px !important;
     }
 
     .not_active_pag:hover {

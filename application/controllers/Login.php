@@ -44,6 +44,7 @@ class Login extends CI_Controller
                 // $data1=$this->db->query("SELECT * FROM business_admin_tbl WHERE email='".$_POST['admin_email']."' AND password='".$_POST['admin_password']."'")->result_array();
                 if (isset($data[0])) {
 
+                    $_SESSION['admin_position'] = 'master_admin';
 
                     $_SESSION['admin_id'] = $data[0]['admin_tbl_id'];
                     $_SESSION['admin_name'] = $data[0]['admin_name'];

@@ -92,7 +92,7 @@
 
                         $price = isset($item[0]['fixed_amount']) ? $item[0]['fixed_amount'] : 0;
                         $subtotal += $price;
-                        ?>
+                    ?>
                         <div class="cart-drawer-info ptb-15 bst">
                             <div class="cart-drawer-content d-flex flex-wrap">
                                 <div class="cart-drawer-image  width-88">
@@ -105,7 +105,7 @@
                                 <div class=" width-calc-88 psl-15">
                                     <div class="cart-drawer-detail">
                                         <?php if (!empty($item[0]['product_name'])) {
-                                            ?>
+                                        ?>
                                             <a href="<?= base_url() ?>user/product_detail/<?= $item[0]['product_id'] ?>"
                                                 class="dominant-link heading-weight"><?= $item[0]['product_name'] ?></a>
                                         <?php } ?>
@@ -114,7 +114,7 @@
                                     <?php endif; ?> -->
                                         <span class="d-block mst-7"></span>
                                     </div>
-                                    <div class="heading-color heading-weight mst-7">₹<?= number_format($price, 2) ?></div>
+                                    <div class="heading-color heading-weight mst-7">₹<?= number_format($price*$_SESSION['cart'][$item[0]['prod_gold_id']],2) ?></div>
 
                                     <div class="cart-drawer-qty-remove d-flex align-items-end justify-content-between mst-16">
                                         <div class="js-qty-wrapper">
@@ -124,7 +124,7 @@
                                                     aria-label="Remove item">
                                                     <i class="ri-subtract-line d-block lh-1"></i>
                                                 </button>
-                                                <input type="number" class="js-qty-num p-0 text-center border-0" value="1"
+                                                <input type="number" data-id="<?= $item[0]['prod_gold_id'] ?>" class="js-qty-num p-0 text-center border-0" value="<?=$_SESSION['cart'][$item[0]['prod_gold_id']]?>"
                                                     min="1">
                                                 <button type="button"
                                                     class="js-qty-adjust js-qty-adjust-plus body-color icon-16"
@@ -185,7 +185,7 @@
 </form>
 
 <script>
-    $(document).on('click', '.remove-cart-item', function (e) {
+    $(document).on('click', '.remove-cart-item', function(e) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -204,9 +204,11 @@
         $.ajax({
             url: "<?= base_url() ?>user/remove_cart_item",
             type: "POST",
-            data: { prod_id: prod_id },
+            data: {
+                prod_id: prod_id
+            },
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
                 console.log('Remove cart response:', response); // Debug log
 
                 if (response.status === 'success') {
@@ -214,8 +216,8 @@
                     $cartItem.addClass('removing');
 
                     // Remove the item from the cart display with animation
-                    setTimeout(function () {
-                        $cartItem.slideUp(400, function () {
+                    setTimeout(function() {
+                        $cartItem.slideUp(400, function() {
                             $(this).remove();
 
                             // Update subtotal immediately with animation
@@ -233,7 +235,7 @@
                             if (response.cartCount === 0) {
                                 console.log('Cart is empty, reloading drawer...'); // Debug log
                                 // Force reload from server to get the proper empty state
-                                setTimeout(function () {
+                                setTimeout(function() {
                                     reloadCartDrawer();
                                 }, 800);
                             }
@@ -244,7 +246,7 @@
                     $button.prop('disabled', false).removeClass('loading');
                 }
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error('AJAX Error:', error);
                 alert('Failed to remove item from cart. Please try again.');
                 $button.prop('disabled', false).removeClass('loading');
@@ -255,7 +257,7 @@
     // Function to update subtotal accounting for quantities
     function updateSubtotalWithQuantity() {
         let subtotal = 0;
-        $('.cart-drawer-info').each(function () {
+        $('.cart-drawer-info').each(function() {
             let priceText = $(this).find('.heading-color.heading-weight').text().replace('₹', '').replace(/,/g, '');
             let price = parseFloat(priceText) || 0;
             let quantity = parseInt($(this).find('.js-qty-num').val()) || 1;
@@ -266,10 +268,13 @@
         let $subtotalElement = $('.drawer-total .heading-color.heading-weight');
         $subtotalElement.addClass('updating');
 
-        setTimeout(function () {
-            $subtotalElement.text('₹' + subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        setTimeout(function() {
+            $subtotalElement.text('₹' + subtotal.toLocaleString('en-IN', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }));
 
-            setTimeout(function () {
+            setTimeout(function() {
                 $subtotalElement.removeClass('updating');
             }, 300);
         }, 100);
@@ -302,10 +307,36 @@
             $('.drawer-footer').hide();
 
             // Also trigger a reload of the cart drawer to ensure server state is synced
-            setTimeout(function () {
+            setTimeout(function() {
                 reloadCartDrawer();
             }, 500);
         }
+    }
+
+    function updateQtyViaAjax(prod_id, qty) {
+        $.ajax({
+            url: "<?= base_url('user/manageQty') ?>",
+            type: "POST",
+            data: {
+                prod_id: prod_id,
+                qty: qty
+            },
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                if (response.status === "success") {
+                    // Update subtotal and cart count
+                    updateSubtotalWithQuantity();
+                    updateCartCountFromResponse(response.cartCount || 0);
+                } else {
+                    alert("Failed to update quantity: " + (response.message || "Unknown error"));
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+                alert("An error occurred while updating quantity.");
+            }
+        });
     }
 
     // Function to reload cart drawer from server (useful when database changes)
@@ -313,7 +344,7 @@
         console.log('Reloading cart drawer from server...'); // Debug log
         let reloadUrl = "<?= base_url() ?>user/load_cart_drawer?pId=0&size=";
 
-        $.get(reloadUrl, function (data) {
+        $.get(reloadUrl, function(data) {
             console.log('Cart drawer reload response received'); // Debug log
 
             // Parse the returned HTML
@@ -332,35 +363,61 @@
                 $('.drawer-footer').show();
                 updateSubtotal();
             }
-        }).fail(function () {
+        }).fail(function() {
             console.log('Failed to reload cart drawer');
         });
     }
 
     // Handle quantity adjustments
-    $(document).off('click', '.js-qty-adjust').on('click', '.js-qty-adjust', function (e) {
+    // $(document).off('click', '.js-qty-adjust').on('click', '.js-qty-adjust', function (e) {
+    //     e.preventDefault();
+    //     e.stopPropagation();
+
+    //     let $this = $(this);
+    //     let $qtyInput = $this.siblings('.js-qty-num');
+    //     let currentQty = parseInt($qtyInput.val()) || 1;
+    //     let newQty = currentQty;
+
+    //     if ($this.hasClass('js-qty-adjust-plus')) {
+    //         newQty = currentQty++;
+    //     } else if ($this.hasClass('js-qty-adjust-minus')) {
+    //         newQty = Math.max(1, currentQty - 1);
+    //     }
+
+    //     if (newQty !== currentQty) {
+    //         $qtyInput.val(newQty);
+    //         updateSubtotalWithQuantity();
+    //     }
+    // });
+
+    // Handle quantity adjustments
+    $(document).off('click', '.js-qty-adjust').on('click', '.js-qty-adjust', function(e) {
         e.preventDefault();
         e.stopPropagation();
 
         let $this = $(this);
         let $qtyInput = $this.siblings('.js-qty-num');
+        let prod_id = $qtyInput.data('id'); // Get product ID
         let currentQty = parseInt($qtyInput.val()) || 1;
         let newQty = currentQty;
-
+        console.log(prod_id);
         if ($this.hasClass('js-qty-adjust-plus')) {
             newQty = currentQty++;
         } else if ($this.hasClass('js-qty-adjust-minus')) {
             newQty = Math.max(1, currentQty - 1);
+            updateQtyViaAjax(prod_id, newQty); // Call Ajax
+
         }
 
         if (newQty !== currentQty) {
             $qtyInput.val(newQty);
-            updateSubtotalWithQuantity();
+            updateQtyViaAjax(prod_id, newQty); // Call Ajax
         }
     });
 
+
     // Handle direct quantity input changes
-    $(document).off('change', '.js-qty-num').on('change', '.js-qty-num', function () {
+    $(document).off('change', '.js-qty-num').on('change', '.js-qty-num', function() {
         let newQty = Math.max(1, parseInt($(this).val()) || 1);
         $(this).val(newQty);
         updateSubtotalWithQuantity();

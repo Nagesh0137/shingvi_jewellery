@@ -64,7 +64,7 @@
                                             <li><a
                                                     href="<?= base_url(); ?>user/policies/<?= $row['pages_name_id'] ?>"><?= $row['pages_name'] ?></a>
                                             </li>
-                                        <?php }
+                                    <?php }
                                     } ?>
                                 </ul>
                             </div>
@@ -944,9 +944,11 @@
         $.ajax({
             url: '<?= base_url("user/quick_view") ?>',
             method: 'POST',
-            data: { product_id: pid },
+            data: {
+                product_id: pid
+            },
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 if (data && data.length > 0) {
                     const product = data[0];
@@ -957,7 +959,7 @@
                     let smallSliderHtml = '';
 
                     if (product.imgs && product.imgs.length > 0) {
-                        product.imgs.forEach(function (img) {
+                        product.imgs.forEach(function(img) {
                             const imgUrl = '<?= base_url("uploads/") ?>' + img;
 
                             bigSliderHtml += `
@@ -1014,7 +1016,7 @@
                     $('#quickview-modal').modal('show');
                 }
             },
-            error: function () {
+            error: function() {
                 alert('Something went wrong while fetching product info.');
             }
         });
@@ -1073,6 +1075,7 @@
         $("#cart-drawer").load("<?= base_url('user/load_cart_drawer') ?>");
 
     }
+
     function openAddressModal(pId) {
         const isQuickViewOpen = $('#quickview-modal').hasClass('show');
 
@@ -1086,13 +1089,15 @@
 
             console.log('pId -- ', pId);
 
-            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
+            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function() {
                 $.ajax({
                     url: '<?= base_url("user/getproductDetails") ?>',
                     type: 'POST',
-                    data: { pId: pId },
+                    data: {
+                        pId: pId
+                    },
                     dataType: 'json',
-                    success: function (res) {
+                    success: function(res) {
                         console.log(res);
                         if (res.status === 'success') {
                             const productDet = res.product_details[0];
@@ -1102,7 +1107,7 @@
                             alert("Something went wrong. Please try again.");
                         }
                     },
-                    error: function () {
+                    error: function() {
                         alert("Error occurred. Try again.");
                     }
                 });
@@ -1111,14 +1116,13 @@
 
         if (isQuickViewOpen) {
             $('#quickview-modal').modal('hide');
-            $('#quickview-modal').one('hidden.bs.modal', function () {
+            $('#quickview-modal').one('hidden.bs.modal', function() {
                 loadAddressModalContent(); // Load after modal is fully hidden
             });
         } else {
             loadAddressModalContent(); // No modal open, load directly
         }
     }
-
 </script>
 
 <script>
@@ -1133,11 +1137,19 @@
         // Get the clicked button element
         var $clickedBtn = $(clickedElement);
 
-        var selectedSize = document.getElementById("gleam-band-size-"+pId).value;
+        // Check if size selection element exists
+        var sizeElement = document.getElementById("gleam-band-size-" + pId);
+        var selectedSize = "";
 
-        if (selectedSize === "") {
-            alert("Please select a size before adding to cart.");
-            return;
+        if (sizeElement) {
+            selectedSize = sizeElement.value;
+            if (selectedSize === "") {
+                alert("Please select a size before adding to cart.");
+                return;
+            }
+        } else {
+            // If no size selection available, use default or empty value
+            selectedSize = "default";
         }
 
         // Show loading state immediately
@@ -1148,27 +1160,32 @@
         $.ajax({
             url: '<?= base_url("user/addToCart") ?>',
             type: 'POST',
-            data: { prod_id: pId, size: selectedSize },
+            data: {
+                prod_id: pId,
+                size: selectedSize
+            },
             dataType: 'json',
-            success: function (res) {
+            success: function(res) {
                 console.log(res);
                 if (res.status == 'success') {
                     // Show success state
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $clickedBtn.removeClass("loading").addClass("done");
                         $clickedBtn.find('.product-loader-icon').hide();
                         $clickedBtn.find('.product-check-icon').show();
 
-                        setTimeout(function () {
+                        setTimeout(function() {
                             $clickedBtn.removeClass("done active disabled");
                             $clickedBtn.find('.product-check-icon').hide();
                             $clickedBtn.find('.product-bag-icon').show();
 
+
+
                             // Update all add-to-cart buttons for this product
                             var allCartButtons = $('[id^="add-to-cart-btn-"][id$="-' + pId + '"]');
-                            allCartButtons.each(function () {
+                            allCartButtons.each(function() {
                                 $(this).addClass("in-cart");
-                                // $(this).find('.tooltip-text').text('Added to cart');
+                                $(this).find('.tooltip-text').text('Added to cart');
                                 $(this).find('.product-bag-icon i')
                                     .removeClass('ri-shopping-bag-3-line')
                                     .addClass('ri-shopping-bag-fill text-success');
@@ -1193,7 +1210,7 @@
                     alert("Failed to add to cart. Please try again.");
                 }
             },
-            error: function (err) {
+            error: function(err) {
                 console.log(err);
                 // Reset button state on error
                 $clickedBtn.removeClass("loading active disabled");
@@ -1214,7 +1231,7 @@
     let errorMsg = '';
     let userDet = '';
     let productDet = '';
-    $(document).on('click', '.question-form-submit-otp', function () {
+    $(document).on('click', '.question-form-submit-otp', function() {
         const mobile = $('#phone').val().trim();
 
         // Validate mobile: 10 digits and starts with 7, 8, or 9
@@ -1234,9 +1251,12 @@
         $.ajax({
             url: '<?= base_url("user/buy_product_otp") ?>',
             type: 'POST',
-            data: { mobile_number: mobile, pId: productId },
+            data: {
+                mobile_number: mobile,
+                pId: productId
+            },
             dataType: 'json',
-            success: function (res) {
+            success: function(res) {
                 console.log(res);
                 if (res.status === 'success') {
                     receivedOtp = res.otp;
@@ -1259,7 +1279,7 @@
 
                 }
             },
-            error: function () {
+            error: function() {
                 // alert("Failed to send OTP. Try again.");
                 document.getElementById('errMsg').innerHTML = 'Failed to send OTP. Try again.';
 
@@ -1268,7 +1288,7 @@
     });
 
     // Verify OTP
-    $(document).on('submit', '#otpForm', function (e) {
+    $(document).on('submit', '#otpForm', function(e) {
         e.preventDefault();
         const inputOtp = $('#otp').val().trim();
         console.log(inputOtp, receivedOtp);
@@ -1280,11 +1300,11 @@
                 '&size=' + encodeURIComponent(selected_Size_to_Buy) +
                 '&qty=' + encodeURIComponent(selected_qty);
 
-            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
+            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function() {
                 console.log('Modal content reloaded.');
             });
 
-            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function () {
+            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function() {
                 // alert('productId --- ' + productId);
                 $('.user_status').val(user_status);
                 $('#uname').val(userDet.name);
@@ -1348,7 +1368,7 @@
         }
     }
 
-    window.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('DOMContentLoaded', function() {
         let selected_Size_to_Buy = '';
         updateSelectedSize();
         // Add change listener to all radios
@@ -1357,11 +1377,6 @@
             radio.addEventListener('change', updateSelectedSize);
         });
     });
-
-
-
-
-
 </script>
 <div class="address-modal modal fade justify-content-center" id="address-modal" data-bs-backdrop="static"
     style="height: 100vh;top:0;overflow: hidden;margin: 0;padding: 0;border-radius: 0px !important;">
@@ -1624,7 +1639,6 @@
             radio.addEventListener('change', updateSelectedSize);
         });
     }
-
 </script>
 
 <!-- buy Now Modal -->

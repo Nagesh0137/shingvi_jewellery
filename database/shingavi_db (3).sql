@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2025 at 12:58 PM
+-- Generation Time: Jul 25, 2025 at 09:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -1345,9 +1345,9 @@ CREATE TABLE `customer_address` (
 
 INSERT INTO `customer_address` (`customer_address_id`, `address`, `pincode`, `city`, `status`, `entry_time`, `entry_by`, `customers_id`, `default_address`) VALUES
 (1, 'FLAT NO 111 Name of Premises/ Building GAGANGIRI DREAMLAND WAKAD Block -  KASPATE VASTI City PUNE CITY', '414003', 'Ahmednagar', 'active', '1752751876', 'user', '35', ' '),
-(2, 'FLAT NO 222 Name of Premises/ Building GAGANGIRI DREAMLAND WAKAD Block -  KASPATE VASTI City PUNE CITY', '414003', 'Pune City', 'active', '1752751876', 'user', '35', 'yes'),
+(2, 'FLAT NO 222 Name of Premises/ Building GAGANGIRI DREAMLAND WAKAD Block -  KASPATE VASTI City PUNE CITY', '414003', 'Pune City', 'active', '1752751876', 'user', '35', ' '),
 (3, 'FLAT NO 333 Name of Premises/ Building GAGANGIRI DREAMLAND WAKAD Block -  KASPATE VASTI City PUNE CITY', '414003', 'Nagar', 'active', '1752752056', 'user', '35', ' '),
-(4, 'Gulmohar Road Savedi', '414005', 'Ahmednagar', 'active', '1752753440', 'user', '35', ' '),
+(4, 'Gulmohar Road Savedi', '414005', 'Ahmednagar', 'active', '1752753440', 'user', '35', 'yes'),
 (5, 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '414203', 'Ashti', 'active', '1753254346', 'user', '43', 'yes'),
 (8, 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '414203', 'Ashti', 'active', '1753255092', 'user', '44', 'yes'),
 (11, 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '414203', 'Ashti', 'active', '1753255280', 'user', '45', 'yes'),
@@ -2609,7 +2609,8 @@ INSERT INTO `ordered_product` (`ordered_product_id`, `original_price`, `discount
 (31, '8199', '0', '', '', '92.5', '3556s37', 'fixed', '', '950', '0', '0', '0', '0', '0', '0', '0', '7960', '3', '239', '8199', '', 'Silver', '20', '100', '66', 'NA', '1', '8199', '31', 'active', '1753342116'),
 (32, '8199', '0', '', '', '92.5', '3556s37', 'fixed', '', '950', '0', '0', '0', '0', '0', '0', '0', '7960', '3', '239', '8199', '', 'Silver', '20', '100', '66', 'NA', '1', '8199', '32', 'active', '1753342137'),
 (33, '98726', '0', '98726.00', 'ct24', '92.5', '1212', 'fixed', '95850', '', '0', '0', '10', '0', '0', '0', '0', '95850', '3', '2876', '98726', '0', 'Gold', '10', '117', '67', '3', '2', '197452', '33', 'active', '1753342300'),
-(34, '4999', '0', '', '', '92.5', '4060s43', 'fixed', '', '965', '0', '0', '0', '0', '0', '0', '0', '4853', '3', '146', '4999', '', 'Silver', '20', '107', '67', 'NA', '1', '4999', '34', 'active', '1753342348');
+(34, '4999', '0', '', '', '92.5', '4060s43', 'fixed', '', '965', '0', '0', '0', '0', '0', '0', '0', '4853', '3', '146', '4999', '', 'Silver', '20', '107', '67', 'NA', '1', '4999', '34', 'active', '1753342348'),
+(35, '6499', '0', '', '', '92.5', '2743s830', 'fixed', '', '965', '0', '0', '0', '0', '0', '0', '0', '6309', '3', '190', '6499', '', 'Silver', '20', '110', '35', 'NA', '1', '6499', '35', 'active', '1753357104');
 
 -- --------------------------------------------------------
 
@@ -2725,7 +2726,9 @@ INSERT INTO `order_charges_det` (`order_charges_det_id`, `order_tbl_id`, `charge
 (65, '33', '2', 'shipping charges', '0', '0', 'active', '1753342300'),
 (66, '33', '3', 'Insurance Charges', '1.5', '2961.78', 'active', '1753342300'),
 (67, '34', '2', 'shipping charges', '0', '0', 'active', '1753342348'),
-(68, '34', '3', 'Insurance Charges', '1.5', '74.985', 'active', '1753342348');
+(68, '34', '3', 'Insurance Charges', '1.5', '74.985', 'active', '1753342348'),
+(69, '35', '2', 'shipping charges', '0', '0', 'active', '1753357104'),
+(70, '35', '3', 'Insurance Charges', '1.5', '97.485', 'active', '1753357104');
 
 -- --------------------------------------------------------
 
@@ -2795,7 +2798,8 @@ INSERT INTO `order_tbl` (`order_tbl_id`, `customers_id`, `orderId`, `c_name`, `c
 (31, '66', 'order_24376130JOGs99itw1kTjAcfHC5bciirn', 'SHREE HARI TRANSPORT SERVICES', '9658954585', 'SHREEHARIMARKETING7@GMAIL.COM', 'Online', 'BalikaAshram Road Ahmednagar', '414003', 'Ahmednagar', '122.985', '8199', '8322', '2025-07-24', '1753342116', 'pending', 'pending', '0', '', 'active', '1753342116'),
 (32, '66', '', 'SHREE HARI TRANSPORT SERVICES', '9658954585', 'SHREEHARIMARKETING7@GMAIL.COM', 'COD', 'VASUNDHRA 41 SECTOR 21SCEAM 11, YMUNANAGAR NAGAR NIGDI, NEAR SAI TEMPLE', '414005', 'Ahmednagar', '122.985', '8199', '8322', '2025-07-24', '1753342137', 'pending', 'pending', '0', '', 'active', '1753342137'),
 (33, '67', 'order_24376130JOe0SzivIS8S7jnAWUKl70Qki', 'Nagesh Balu Sonawane', '8888430165', 'nageshsonawane870@gmail.com', 'Online', 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '414203', 'Ashti', '2961.78', '197452', '200414', '2025-07-24', '1753342300', 'pending', 'pending', '0', '', 'active', '1753342300'),
-(34, '67', '', 'Nagesh Balu Sonawane', '8888430165', 'nageshsonawane870@gmail.com', 'COD', 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '414203', 'Ashti', '74.985', '4999', '5074', '2025-07-24', '1753342348', 'pending', 'pending', '0', '', 'active', '1753342348');
+(34, '67', '', 'Nagesh Balu Sonawane', '8888430165', 'nageshsonawane870@gmail.com', 'COD', 'At.Kapsi, Post-Doithan, Tal-Ashti, Dist-Beed, Maharashtra', '414203', 'Ashti', '74.985', '4999', '5074', '2025-07-24', '1753342348', 'pending', 'pending', '0', '', 'active', '1753342348'),
+(35, '35', 'order_24376130JseRcjhqOR2PBEmntc20AVLlf', 'Manali Dhongade', '9075461110', 'a2z.d.manali@gmail.com', 'Online', 'Gulmohar Road Savedi', '414005', 'Ahmednagar', '97.485', '6499', '6596', '2025-07-24', '1753357104', 'pending', 'pending', '0', '', 'active', '1753357104');
 
 -- --------------------------------------------------------
 
@@ -3099,7 +3103,11 @@ INSERT INTO `otp_tbl` (`otp_tbl_id`, `otp`, `mobile_number`, `status`, `otp_entr
 (488, '5347', '9658954585', 'active', '1753340543'),
 (489, '4626', '8888430165', 'active', '1753342202'),
 (490, '5918', '9075461110', 'active', '1753346770'),
-(491, '8709', '9075461110', 'active', '1753348004');
+(491, '8709', '9075461110', 'active', '1753348004'),
+(492, '8584', '9075461110', 'active', '1753355095'),
+(493, '8385', '8888430137', 'active', '1753356693'),
+(494, '3464', '9075461110', 'active', '1753416659'),
+(495, '7015', '9075461110', 'active', '1753416660');
 
 -- --------------------------------------------------------
 
@@ -3692,8 +3700,8 @@ INSERT INTO `product_group` (`product_group_id`, `product_group_name`, `product_
 (62, ' CUFFLINKS', 'product_group-1737529765-87090.avif', '\' Cufflinks  are used to put on shirts\'', '6', 'active', '4', '1686983529'),
 (63, 'Showpiece', 'product_group-1737529579-56980.avif', '\'Can  gift to someone  or to decorate house\'', '6', 'active', '4', '1686991793'),
 (64, 'Watches', 'product_group-1737529508-30453.avif', '\'Silver Watches \'', '6', 'active', '4', '1687154966'),
-(65, 'test', 'product_group-1737617799-63208.png', '\'test\'', '5', 'active', '4', '1737617799'),
-(66, 'ABCD', 'product_group-1739183901-7876.jpg', '\'Testing\'', '5', 'active', '4', '1739183901');
+(65, 'test', 'product_group-1737617799-63208.png', '\'test\'', '5', 'deleted', '4', '1737617799'),
+(66, 'ABCD', 'product_group-1739183901-7876.jpg', '\'Testing\'', '5', 'deleted', '4', '1739183901');
 
 -- --------------------------------------------------------
 
@@ -7821,7 +7829,11 @@ INSERT INTO `system_log` (`sl_id`, `slog_title`, `slog_desc`, `slog_admin_id`, `
 (0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-19', '1752905835'),
 (0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-19', '1752914123'),
 (0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-24', '1753330085'),
-(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-24', '1753340727');
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-24', '1753340727'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-24', '1753354990'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-24', '1753355172'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753416617'),
+(0, 'LogIn', 'Admin Master LogIn Success', '5', '2025-07-25', '1753427261');
 
 -- --------------------------------------------------------
 
@@ -8126,7 +8138,12 @@ INSERT INTO `system_notification` (`system_notification_id`, `type`, `msg`, `sn_
 (5634, 'success', 'Todays Silver Rate Added Successfully..', '1752905849', 5, '2025-07-19', '1752905849', 'active'),
 (5635, 'Success', 'LogIn Success', '1752914123', 5, NULL, NULL, NULL),
 (5636, 'Success', 'LogIn Success', '1753330085', 5, NULL, NULL, NULL),
-(5637, 'Success', 'LogIn Success', '1753340727', 5, NULL, NULL, NULL);
+(5637, 'Success', 'LogIn Success', '1753340727', 5, NULL, NULL, NULL),
+(5638, 'Success', 'LogIn Success', '1753354990', 5, NULL, NULL, NULL),
+(5639, 'Success', 'LogIn Success', '1753355172', 5, NULL, NULL, NULL),
+(5640, 'Success', 'LogIn Success', '1753416617', 5, NULL, NULL, NULL),
+(5641, 'error', 'Product Group Deleted Successfully..', '1753427344', 5, '2025-07-25', '1753427344', 'active'),
+(5642, 'error', 'Product Group Deleted Successfully..', '1753427349', 5, '2025-07-25', '1753427349', 'active');
 
 -- --------------------------------------------------------
 
@@ -8315,7 +8332,9 @@ INSERT INTO `user_cart` (`user_cart_id`, `prod_id`, `user_id`, `status`, `entry_
 (31, '109', '67', 'active', '1753347927'),
 (32, '105', '67', 'active', '1753347937'),
 (33, '117', '35', 'active', '1753348023'),
-(36, '110', '35', 'active', '1753349695');
+(38, '112', '35', 'active', '1753355973'),
+(40, '108', '35', 'active', '1753356086'),
+(41, '109', '35', 'active', '1753356110');
 
 -- --------------------------------------------------------
 
@@ -9112,7 +9131,7 @@ ALTER TABLE `gold_scheme_policy_tbl`
 -- AUTO_INCREMENT for table `ordered_product`
 --
 ALTER TABLE `ordered_product`
-  MODIFY `ordered_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `ordered_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `order_charges`
@@ -9124,19 +9143,19 @@ ALTER TABLE `order_charges`
 -- AUTO_INCREMENT for table `order_charges_det`
 --
 ALTER TABLE `order_charges_det`
-  MODIFY `order_charges_det_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `order_charges_det_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `order_tbl`
 --
 ALTER TABLE `order_tbl`
-  MODIFY `order_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `order_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `otp_tbl`
 --
 ALTER TABLE `otp_tbl`
-  MODIFY `otp_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=492;
+  MODIFY `otp_tbl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=496;
 
 --
 -- AUTO_INCREMENT for table `privacy_policy_tbl`
@@ -9190,7 +9209,7 @@ ALTER TABLE `social_media_tbl`
 -- AUTO_INCREMENT for table `system_notification`
 --
 ALTER TABLE `system_notification`
-  MODIFY `system_notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5638;
+  MODIFY `system_notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5643;
 
 --
 -- AUTO_INCREMENT for table `terms_of_use_tbl`
@@ -9208,7 +9227,7 @@ ALTER TABLE `user_billing_details`
 -- AUTO_INCREMENT for table `user_cart`
 --
 ALTER TABLE `user_cart`
-  MODIFY `user_cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `user_cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `user_wishlist`

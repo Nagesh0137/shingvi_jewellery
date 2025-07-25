@@ -95,7 +95,7 @@
                         </div>
                         <div class="product-info mst-5" data-animate="animate__fadeIn">
                             <div class="product-title">
-                                <h2 class="font-24"><?= $products[0]['product_name'] ?></h2>
+                                <h2 class="font-24 text-uppercase"><?= $products[0]['product_name'] ?></h2>
                             </div>
                         </div>
                         <div class="product-info mst-15" data-animate="animate__fadeIn">
@@ -227,8 +227,7 @@
                                                         <input type="radio" name="selected_size" id="selected_size"
                                                             class="cust-checkbox" value="NA" checked>
                                                         <span class="d-inline-block meb-11"><span
-                                                                class="heading-color heading-weight mer-10">Size:</span>Not
-                                                            Available
+                                                                class="heading-color heading-weight mer-10">Size:</span>Not Available
                                                         </span>
                                                     </label>
                                                 </li>
@@ -770,23 +769,7 @@
             <div class="product-tab-description" data-animate="animate__fadeIn">
                 <div class="product-description-info">
                     <h6>About this item</h6>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                        <li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-                        <li>As Cicero would put it, “Um, not so fast.”</li>
-                        <li>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-                            velit.</li>
-                        <li>Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                            voluptatem.</li>
-                        <li>Nor is there anyone who loves or pursues or desires to obtain pain of itself.</li>
-                        <li>Because it is pain, but occasionally circumstances occur in which toil and pain can procure
-                            him some great pleasure.</li>
-                    </ul>
+                    <p><?= $products[0]['product_details'] ?></p>
                 </div>
             </div>
         </div>
@@ -813,17 +796,24 @@
                             <tr>
                                 <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Type</th>
                                 <td class="ptb-10 plr-15 border-full"><a
-                                        class="body-dominant-color text-decoration-underline">Collection name</a></td>
+                                        class="body-dominant-color text-decoration-underline">
+                                    <?= $products[0]['category_name'] ?>
+                                    </a></td>
                             </tr>
+                            
+                            <?php if(!empty($products[0]['ring_size'])) { ?>
                             <tr>
                                 <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Size</th>
-                                <td class="body-color ptb-10 plr-15 border-full">16cm, 18cm, 20cm, 22cm</td>
+                                <td class="body-color ptb-10 plr-15 border-full">
+                                    <?= $products[0]['ring_size'] ?>
+                                </td>
                             </tr>
-                            <tr>
+                            <?php } ?>
+                            <!-- <tr>
                                 <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Color
                                 </th>
                                 <td class="body-color ptb-10 plr-15 border-full">Aliceblue, Antiquewhite, Azure</td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Sku</th>
                                 <td class="body-color ptb-10 plr-15 border-full">RT89GT</td>
@@ -831,7 +821,7 @@
                             <tr>
                                 <th class="heading-color ptb-10 plr-15 heading-weight border-full" scope="row">Weight
                                 </th>
-                                <td class="body-color ptb-10 plr-15 border-full">5.52kg</td>
+                                <td class="body-color ptb-10 plr-15 border-full"> <?= $products[0]['net_weight'] ?> KG </td>
                             </tr>
                         </tbody>
                     </table>
@@ -843,17 +833,16 @@
     <!-- product-detail-review start -->
     <section class="product-detail-review section-pt" id="reviews">
         <div class="container">
-            <div class="section-capture text-center" data-animate="animate__fadeIn">
+            <!-- <div class="section-capture text-center" data-animate="animate__fadeIn">
                 <div class="section-title">
                     <h2 class="section-heading">Customer love</h2>
                 </div>
-            </div>
+            </div> -->
             <div class="product-review" data-animate="animate__fadeIn">
-                <form method="post" action="javascript:void(0)">
                     <div class="row row-mtm">
                         <div class="product-review-info">
                             <div class="row row-mtm">
-                                <div class="col-12 col-sm-6 col-md-4">
+                                <!-- <div class="col-12 col-sm-6 col-md-4">
                                     <h6 class="font-18 meb-18">Customer reviews</h6>
                                     <div class="product-review-rating"><span class="heading-color fs-3"
                                             data-id>0</span>/<span data-score="5">0</span></div>
@@ -872,8 +861,8 @@
                                     </div>
                                     <div class="product-review-text mst-12">Based on <span data-base>0</span> reviews
                                     </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4">
+                                </div> -->
+                                <!-- <div class="col-12 col-sm-6 col-md-4">
                                     <div class="row row-mtm15">
                                         <div class="product-review-count d-flex align-items-center">
                                             <span
@@ -931,8 +920,8 @@
                                             <span class="product-review-number lh-1" data-number="0"></span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-4 text-md-end">
+                                </div> -->
+                                <div class="col-12 col-md-12 text-end ">
                                     <button type="button"
                                         class="d-none width-100 width-md-auto btn-style secondary-btn write-review-btn">Write
                                         a review</button>
@@ -942,45 +931,45 @@
                                 </div>
                             </div>
                         </div>
+                        <form action="<?= base_url('user/save_review') ?>" enctype="multipart/form-data" method="post">
                         <div class="product-review-form">
                             <div class="row field-row">
-                                <div class="col-12 col-md-6 field-col">
-                                    <label for="review-name" class="field-label">Name</label>
-                                    <input type="text" id="review-name" name="review-name" class="w-100"
-                                        placeholder="Demo name" autocomplete="name" required>
-                                </div>
-                                <div class="col-12 col-md-6 field-col">
-                                    <label for="review-email" class="field-label">Email</label>
-                                    <input type="email" id="review-email" name="review-email" class="w-100"
-                                        placeholder="Email address" autocomplete="email" required>
-                                </div>
-                                <div class="col-12 field-col">
-                                    <label class="field-label">Rating</label>
+                            <div class="col-6 field-col">
+                                    <label class="field-label">Rating <span class="text-danger">*</span></label>
                                     <div class="product-review-ratting">
                                         <div class="product-ratting">
                                             <span class="review-ratting">
-                                                <span class="review-star icon-16">
-                                                    <i class="ri-star-line"></i>
-                                                    <i class="ri-star-line"></i>
-                                                    <i class="ri-star-line"></i>
-                                                    <i class="ri-star-line"></i>
-                                                    <i class="ri-star-line"></i>
-                                                </span>
+                                                <style>
+                                                    .star-rating {
+                                                        direction: rtl;
+                                                        display: inline-flex;
+                                                    }
+                                                    .star-rating input[type="radio"] {
+                                                        display: none;
+                                                    }
+                                                    .star-rating label {
+                                                        font-size: 2em;
+                                                        color: #ccc;
+                                                        cursor: pointer;
+                                                    }
+                                                    .star-rating input[type="radio"]:checked ~ label,
+                                                    .star-rating label:hover,
+                                                    .star-rating label:hover ~ label {
+                                                        color: #ffc700;
+                                                    }
+                                                </style>
+                                                <div class="star-rating">
+                                                    <input type="radio" id="star5" name="review_stars" value="5" required><label for="star5">★</label>
+                                                    <input type="radio" id="star4" required name="review_stars" value="4"><label for="star4">★</label>
+                                                    <input type="radio" id="star3" required name="review_stars" value="3"><label for="star3">★</label>
+                                                    <input type="radio" id="star2" required name="review_stars" value="2"><label for="star2">★</label>
+                                                    <input type="radio" id="star1" required name="review_stars" value="1"><label for="star1">★</label>
+                                                </div>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 field-col">
-                                    <label for="review-title" class="field-label">Review title</label>
-                                    <input type="text" id="review-title" name="review-title" class="w-100"
-                                        placeholder="Review title" autocomplete="off" required>
-                                </div>
-                                <div class="col-12 field-col">
-                                    <label for="review-message" class="field-label">Review message</label>
-                                    <textarea rows="10" id="review-message" name="review-message" class="w-100"
-                                        placeholder="Review message" autocomplete="off" required></textarea>
-                                </div>
-                                <div class="col-12 field-col">
+                                <div class="col-6 field-col">
                                     <label class="field-label">Upload attachment</label>
                                     <div class="field-attachment ptb-30 plr-15 plr-sm-30 text-center">
                                         <div class="review-attachment-upload d-flex flex-column align-items-center">
@@ -989,106 +978,175 @@
                                                 here</label>
                                             <div class="review-attachment-count d-none mst-10 meb-26">0 attachments
                                             </div>
-                                            <input type="file" id="review-img" name="review-img"
-                                                class="w-100 review-attachment-file" multiple hidden>
+                                            <input type="file" id="review-img" name="review_img"
+                                                class="w-100 review-attachment-file"  hidden accept="image/*">
                                             <div class="field-attached">
                                                 <ul class="ul-mt15 review-attachment-uploaded"></ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product-review-button mst-20 mst-sm-30">
-                                <div class="row btn-row">
-                                    <div class="col-12 col-sm-6 col-xl-3">
-                                        <button type="submit"
-                                            class="w-100 btn-style quaternary-btn review-submit">Submit review</button>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-xl-3">
-                                        <button type="button" class="w-100 btn-style secondary-btn review-cancel">Cancel
-                                            review</button>
-                                    </div>
+                                <div class="col-12 col-md-6 field-col">
+                                    <input type="hidden" name="prod_gold_id" value="<?= $products[0]['prod_gold_id'] ?>" hidden>
+                                    <label for="review-name" class="field-label">Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="review-name" name="review_name" class="w-100"
+                                        placeholder="Enter your name" autocomplete="name" required>
+                                    <span class="text-danger d-block" id="review_name_error" style="display:none;">Name is required.</span>
                                 </div>
+                                
+                                <div class="col-6 field-col">
+                                    <label for="review-message" class="field-label">Review message <span class="text-danger">*</span></label>
+                                    <textarea rows="3" id="review-message" name="review_message" class="w-100"
+                                        placeholder="Review message" autocomplete="off" required></textarea>
+                                    <span class="text-danger d-block" id="review_message_error" style="display:none;">Review message is required.</span>
+                                </div>
+                                <div class="col-12 col-md-6 field-col">
+                                    <label for="review-email" class="field-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" id="review-email" name="review_email" class="w-100"
+                                        placeholder="Email address" autocomplete="email" required>
+                                    <span class="text-danger d-block" id="review_email_error" style="display:none;">Email is required.</span>
+                                </div>
+                              
+                                    <div class="col-12 col-sm-6 col-xl-6 d-flex justify-content-end" style="margin-top: 57px;">
+                                        <button type="submit" class="w-100 width-md-auto btn-style secondary-btn ">Submit review</button>
+                                </div>
+                                
+                                
                             </div>
+                           
                         </div>
-                        <div class="product-review-comment">
+                        <div class="product-review-comment mb-2 mt-4">
                             <div class="row row-mtm">
+                                
+                            <?php foreach ($reviews as $row) { ?>
                                 <div class="product-review-detail">
                                     <div class="product-reviewer-info d-flex flex-wrap align-items-center">
                                         <span
                                             class="width-48 height-48 secondary-color icon-16 d-flex align-items-center justify-content-center overflow-hidden rounded-circle"><i
                                                 class="ri-user-line d-block lh-1"></i></span>
-                                        <h6 class="product-reviewer-name width-calc-48 font-18 psl-15">Noah james</h6>
+                                        <h6 class="product-reviewer-name width-calc-48 font-18 psl-15"><?= $row['review_name'] ?></h6>
                                     </div>
-                                    <div class="product-reviewer-date mst-12">Reviwed on Oct 30, 2021</div>
+                                    <div class="product-reviewer-date mst-12">Reviwed on <?= date('d M Y', $row['entry_time']) ?></div>
                                     <div class="product-review-love mst-11">
                                         <div class="product-ratting">
                                             <span class="review-ratting">
                                                 <span class="review-star icon-16">
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
+                                                    <?php
+                                                    $stars = isset($row['review_stars']) ? (int)$row['review_stars'] : 0;
+                                                    for ($i = 1; $i <= 5; $i++) {
+                                                        if ($i <= $stars) {
+                                                            echo '<i class="ri-star-fill"></i>';
+                                                        } else {
+                                                            echo '<i class="ri-star-line"></i>';
+                                                        }
+                                                    }
+                                                    ?>
                                                 </span>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="product-reviewer-subject heading-color heading-weight mst-12">Very good
                                     </div>
-                                    <p class="product-reviewer-review mst-5">There are many variations of passages of
-                                        Lorem Ipsum available, but the majority have suffered alteration in some form,
-                                        by injected humour, or randomised words which don’t look even slightly
-                                        believable. If you are going to use a passage of Lorem Ipsum, you need to be
-                                        sure there isn’t anything embarrassing hidden in the middle of text. All the
-                                        Lorem Ipsum generators on the Internet tend to repeat predefined chunks as
-                                        necessary, making this the first true generator on the Internet.</p>
+                                        <p class="product-reviewer-review mst-5"><?= $row['review_message'] ?>.</p>
                                     <div class="product-reviewer-attachment mst-8">
                                         <ul class="ul-mt5">
-                                            <li><img src="<?= base_url() ?>u_assets/assets/image/product/review-product1.jpg"
+                                      
+                                               <li>
+                                                        <img src="<?= base_url() ?>uploads/<?= $row['review_img'] ?>"
+                                                            class="width-56 img-fluid ptb-4 plr-4 body-bg border-full br-hidden"  >
+                                                </li>
+
+                                            <?php } ?>
+                                            <!-- <li><img src="<?= base_url() ?>u_assets/assets/image/product/review-product1.jpg"
                                                     class="width-56 img-fluid ptb-4 plr-4 body-bg border-full br-hidden"
                                                     alt="review-product1"></li>
                                             <li><img src="<?= base_url() ?>u_assets/assets/image/product/review-product2.jpg"
                                                     class="width-56 img-fluid ptb-4 plr-4 body-bg border-full br-hidden"
-                                                    alt="review-product2"></li>
+                                                    alt="review-product2"></li> -->
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="product-review-detail">
-                                    <div class="product-reviewer-info d-flex flex-wrap align-items-center">
-                                        <span
-                                            class="width-48 height-48 secondary-color icon-16 d-flex align-items-center justify-content-center overflow-hidden rounded-circle"><i
-                                                class="ri-user-line d-block lh-1"></i></span>
-                                        <h6 class="product-reviewer-name width-calc-48 font-18 psl-15">Carla houston
-                                        </h6>
-                                    </div>
-                                    <div class="product-reviewer-date mst-12">Reviwed on Oct 30, 2021</div>
-                                    <div class="product-review-love mst-11">
-                                        <div class="product-ratting">
-                                            <span class="review-ratting">
-                                                <span class="review-star icon-16">
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-line"></i>
-                                                    <i class="ri-star-line"></i>
-                                                    <i class="ri-star-line"></i>
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="product-reviewer-subject heading-color heading-weight mst-12">Good</div>
-                                    <p class="product-reviewer-review mst-5">There are many variations of passages of
-                                        Lorem Ipsum available, but the majority have suffered alteration in some form,
-                                        by injected humour, or randomised words which don’t look even slightly
-                                        believable. If you are going to use a passage of Lorem Ipsum, you need to be
-                                        sure there isn’t anything embarrassing hidden in the middle of text. All the
-                                        Lorem Ipsum generators on the Internet tend to repeat predefined chunks as
-                                        necessary, making this the first true generator on the Internet.</p>
-                                </div>
                             </div>
                         </div>
-                    </div>
                 </form>
+                <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var reviewForm = document.querySelector('form[action*="save_review"]');
+                            if (reviewForm) {
+                                // Hide all errors on load
+                                document.getElementById('review_stars_error').style.display = 'none';
+                                document.getElementById('review_name_error').style.display = 'none';
+                                document.getElementById('review_message_error').style.display = 'none';
+                                document.getElementById('review_email_error').style.display = 'none';
+
+                                // Hide error when user selects a star
+                                var starRadios = reviewForm.querySelectorAll('input[name="review_stars"]');
+                                starRadios.forEach(function(radio) {
+                                    radio.addEventListener('change', function() {
+                                        document.getElementById('review_stars_error').style.display = 'none';
+                                    });
+                                });
+                                // Hide error when user types in name
+                                document.getElementById('review-name').addEventListener('input', function() {
+                                    document.getElementById('review_name_error').style.display = 'none';
+                                });
+                                // Hide error when user types in message
+                                document.getElementById('review-message').addEventListener('input', function() {
+                                    document.getElementById('review_message_error').style.display = 'none';
+                                });
+                                // Hide error when user types in email
+                                document.getElementById('review-email').addEventListener('input', function() {
+                                    document.getElementById('review_email_error').style.display = 'none';
+                                });
+
+                                reviewForm.addEventListener('submit', function(e) {
+                                    var valid = true;
+                                    // Rating validation
+                                    var checked = reviewForm.querySelector('input[name="review_stars"]:checked');
+                                    var ratingError = document.getElementById('review_stars_error');
+                                    if (!checked) {
+                                        ratingError.style.display = 'block';
+                                        valid = false;
+                                    } else {
+                                        ratingError.style.display = 'none';
+                                    }
+                                    // Name validation
+                                    var nameInput = document.getElementById('review-name');
+                                    var nameError = document.getElementById('review_name_error');
+                                    if (!nameInput.value.trim()) {
+                                        nameError.style.display = 'block';
+                                        valid = false;
+                                    } else {
+                                        nameError.style.display = 'none';
+                                    }
+                                    // Message validation
+                                    var messageInput = document.getElementById('review-message');
+                                    var messageError = document.getElementById('review_message_error');
+                                    if (!messageInput.value.trim()) {
+                                        messageError.style.display = 'block';
+                                        valid = false;
+                                    } else {
+                                        messageError.style.display = 'none';
+                                    }
+                                    // Email validation
+                                    var emailInput = document.getElementById('review-email');
+                                    var emailError = document.getElementById('review_email_error');
+                                    if (!emailInput.value.trim()) {
+                                        emailError.style.display = 'block';
+                                        valid = false;
+                                    } else {
+                                        emailError.style.display = 'none';
+                                    }
+                                    if (!valid) {
+                                        e.preventDefault();
+                                        return false;
+                                    }
+                                });
+                            }
+                        });
+                        </script>
+
+                    </div>
             </div>
         </div>
     </section>

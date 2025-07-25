@@ -98,150 +98,65 @@
                     </div>
                     <div class="col-3">
                         <div class="notification-search w-100">
-                            <form method="get" action="javascript:void(0)" class="search-form w-100">
                                 <div class="search-bar w-100 position-relative">
-                                    <div class="form-search w-100 d-flex flex-wrap">
-                                        <input type="search" name="search-input"
-                                            class="search-input width-calc-16 h-auto text-color bg-transparent ptb-0 plr-0 border-0 rounded-0"
-                                            value="" placeholder="Find our product" required>
-                                        <button type="submit" class="d-block width-16 body-secondary-color icon-16"
-                                            aria-label="Go to search" disabled><i
-                                                class="ri-search-line d-block lh-1"></i></button>
-                                    </div>
-                                    <div
+                                    <form onsubmit="searchProducts(event)">
+                                        <div class="form-search w-100 d-flex flex-wrap">
+                                            <input type="search" name="search-input"
+                                                class="search-input width-calc-16 h-auto text-color bg-transparent ptb-0 plr-0 border-0 rounded-0"
+                                                id="search-prod" placeholder="Find our product" required>
+                                            <button type="submit"
+                                                class="d-block width-16 body-secondary-color icon-16"
+                                                aria-label="Go to search">
+                                                <i class="ri-search-line d-block lh-1"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+
+<script>
+    function searchProducts(event) {
+        // alert('sdfghjk');
+        event.preventDefault(); // stop form from submitting normally
+
+        const query = document.getElementById('search-prod').value.trim();
+        console.log(query);
+        if (query) {
+            // Redirect to products page with GET parameter q
+            window.location.href = "<?= base_url('user/products') ?>?q=" + encodeURIComponent(query);
+        }
+        return false;
+    }
+</script>
+
+
+
+                                    <!-- <div
                                         class="d-none search-results position-absolute top-auto start-0 end-0 body-bg z-2 border-full border-radius box-shadow">
                                         <div class="search-for ptb-10 plr-15 beb">Search for <span
                                                 class="search-text">a</span></div>
                                         <ul class="search-ul">
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product1.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product1"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Gleam band</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product2.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product2"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Luxe loop</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product3.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product3"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Opal stud</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product4.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product4"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Ruby hoop</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product5.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product5"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Pearl link</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product6.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product6"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Gold bead</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product7.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product7"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Sway drop</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product8.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product8"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Star charm</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product9.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product9"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Glim cuff</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product10.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product10"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Jade bead</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product11.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product11"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Twist bangle</span>
-                                                </a>
-                                            </li>
-                                            <li class="search-li ptb-5 plr-15 bst">
-                                                <a href="<?= base_url() ?>user/products"
-                                                    class="body-dominant-color d-flex flex-wrap align-items-center">
-                                                    <span class="width-48"><img
-                                                            src="<?= base_url() ?>u_assets/assets/image/search/search-product12.jpg"
-                                                            class="w-100 img-fluid border-radius"
-                                                            alt="search-product12"></span>
-                                                    <span class="width-calc-48 psl-15 text-truncate">Shiny choke</span>
-                                                </a>
-                                            </li>
+                                            <?php foreach ($products as $key => $product) {
+                                                // Split the string if it contains multiple paths (like in your example)
+                                                $images = explode('||', $product['product_image']);
+                                                $firstImage = trim($images[0]);
+                                                // print_r($firstImage);
+                                            ?>
+                                                <li class="search-li ptb-5 plr-15 bst">
+                                                    <a href="<?= base_url() ?>user/products"
+                                                        class="body-dominant-color d-flex flex-wrap align-items-center">
+                                                        <span class="width-48"><img
+                                                                src="<?= base_url() ?>uploads/<?= $firstImage ?>"
+                                                                class="w-100 img-fluid border-radius"
+                                                                alt="search-product1"></span>
+                                                        <span class="width-calc-48 psl-15 text-truncate"><?= $product['product_name'] ?></span>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+
                                         </ul>
-                                        <div class="search-more ptb-10 plr-15 bst"><a
-                                                href="<?= base_url() ?>user/products"
-                                                class="body-secondary-color text-decoration-underline">See all results
-                                                (12)</a></div>
+
                                         <div class="search-fail ptb-10 plr-15">Search not found</div>
-                                    </div>
+                                    </div> -->
                                 </div>
-                            </form>
                         </div>
                     </div>
                     <div class="col">
@@ -337,21 +252,14 @@
                                     if (!empty($category) && count($category) > 0) {
                                         foreach ($category as $key => $row) {
                                             $subcatdetails = $this->db->query("SELECT * FROM product_group WHERE group_category = " . $row['category_id'] . " AND status = 'active'")->result_array();
-                                            $filtered_subcat = [];
-
-                                            if (!empty($category) && count($subcatdetails) > 0) {
+                                            // Fetch products for each group, but do not filter out empty groups
+                                            if (!empty($subcatdetails) && count($subcatdetails) > 0) {
                                                 foreach ($subcatdetails as $key1 => $row1) {
                                                     $details = $this->db->query("SELECT * FROM product_gold WHERE status='active' AND cat_id = " . $row['category_id'] . " AND group_id = " . $row1['product_group_id'] . " AND label != 'Out Of Stock'")->result_array();
-
-                                                    if (count($details) > 0) {
-                                                        $row1['details'] = $details;
-                                                        $filtered_subcat[] = $row1;
-                                                    }
+                                                    $row1['details'] = $details; // Always add details, even if empty
+                                                    $subcatdetails[$key1] = $row1;
                                                 }
-                                            }
-
-                                            if (count($filtered_subcat) > 0) {
-                                                $category[$key]['sub_category_details'] = $filtered_subcat;
+                                                $category[$key]['sub_category_details'] = $subcatdetails;
                                             } else {
                                                 unset($category[$key]['sub_category_details']);
                                             }
@@ -361,9 +269,17 @@
                                     $category = array_filter($category, function ($cat) {
                                         return isset($cat['sub_category_details']);
                                     });
+
+                                    // echo "<pre>";
+                                    // print_r($row['sub_category_details']);
+                                    // echo "</pre>";
+
                                     ?>
 
-                                    <!-- Categories displayed directly in navbar -->
+
+
+
+
                                     <?php if (!empty($category)) { ?>
                                         <?php foreach ($category as $key => $row) { ?>
                                             <li
@@ -379,30 +295,33 @@
                                                         <?php } ?>
                                                     </a>
                                                 <?php } else if ($row['category_name'] != 'Diamond' && strtolower($row['category_name']) != 'coin') { ?>
-                                                        <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>"
-                                                            class="menu-link font-16 d-flex align-items-center plr-15"
-                                                            style="font-weight: 600;text-transform: uppercase;">
+                                                    <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>"
+                                                        class="menu-link font-16 d-flex align-items-center plr-15"
+                                                        style="font-weight: 600;text-transform: uppercase;">
                                                         <?= $row['category_name'] ?>
                                                         <?php if (count($row['sub_category_details']) > 0) { ?>
-                                                                <span class="icon-16 fw-normal"><i
-                                                                        class="ri-arrow-down-s-line d-block lh-1"></i></span>
+                                                            <span class="icon-16 fw-normal"><i
+                                                                    class="ri-arrow-down-s-line d-block lh-1"></i></span>
                                                         <?php } ?>
-                                                        </a>
+                                                    </a>
                                                 <?php } ?>
 
-                                                <!-- Subcategories dropdown -->
                                                 <?php if (count($row['sub_category_details']) > 0) { ?>
-                                                    <ul class="dropdown-menu" style="width: 200px;">
+                                                    <ul class="dropdown-menu" style="width: 300px;border:none;border-radius:0px;padding:5px 30px;text-transform: uppercase;">
                                                         <?php foreach (
-                                                            $row['sub_category_details'] as $subCat) { ?>
+                                                            $row['sub_category_details'] as $subCat
+                                                        ) { ?>
                                                             <li class="position-relative">
                                                                 <a
                                                                     href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>&g_id=<?= $subCat['product_group_id'] ?>">
                                                                     <?= $subCat['product_group_name'] ?>
+                                                                    <?php if (!empty($subCat['details'])) { ?>
+                                                                        <span class="icon-16 fw-normal" style="float:right; margin-left:8px;"><i class="ri-arrow-right-s-line d-block lh-1"></i></span>
+                                                                    <?php } ?>
                                                                 </a>
                                                                 <?php if (!empty($subCat['details'])) { ?>
                                                                     <ul class="dropdown-menu"
-                                                                        style="left: 200px; top: 0; min-width: 220px;">
+                                                                        style="left: 200px; top: 0; min-width: 300px;border:none;">
                                                                         <?php foreach ($subCat['details'] as $product) { ?>
                                                                             <li>
                                                                                 <a
@@ -572,7 +491,7 @@
                                                 class="header-block-icon-wrap dominant-link ul-mt5 flex-nowrap align-items-center">
                                                 <span class="header-block-icon icon-16"><i
                                                         class="ri-shopping-bag-3-line"></i></span>
-                                                <span class="d-none d-xl-block header-text-content">Cart</span>
+                                                <span class="d-none d-xl-block header-text-content" style="cursor: pointer;">Cart</span>
                                                 <!-- <span class="header-block-counter cart-counter dominant-color"><?= isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0 ?></span> -->
                                             </span>
                                         </a>
