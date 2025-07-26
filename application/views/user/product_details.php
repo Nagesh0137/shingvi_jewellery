@@ -220,7 +220,7 @@
                                         </div>
                                     <?php } else {
                                         ?>
-                                        <div class="product-option-block size">
+                                        <!-- <div class="product-option-block size">
                                             <ul class="ul-mt5">
                                                 <li>
                                                     <label class="cust-checkbox-label">
@@ -232,7 +232,7 @@
                                                     </label>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div> -->
                                         <?php
                                     } ?>
                                 </div>
@@ -459,7 +459,7 @@
             <div style="overflow-y: auto;border-radius: 0px !important;"
                 class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered my-0 justify-content-center">
                 <div class="modal-content body-bg border-0 br-hidden"
-                    style=";height: 100vh; border-radius: 16px 16px 0 0; overflow-y: auto;border-radius: 0px !important;">
+                    style="height: 100vh; border-radius: 16px 16px 0 0; overflow-y: auto;border-radius: 0px !important;">
                     <div class="modal-body plr-15 plr-sm-30" id="address-modal-body"
                         style="border-radius: 0px !important;">
 
@@ -934,6 +934,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- review form start -->
                         <form action="<?= base_url('user/save_review') ?>" enctype="multipart/form-data" method="post">
                         <div class="product-review-form">
                             <div class="row field-row">
@@ -972,6 +974,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-6 field-col">
                                     <label class="field-label">Upload attachment</label>
                                     <div class="field-attachment ptb-30 plr-15 plr-sm-30 text-center">
@@ -1072,6 +1075,8 @@
                             </div>
                         </div>
                 </form>
+                        <!-- review form end -->
+
                 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var reviewForm = document.querySelector('form[action*="save_review"]');

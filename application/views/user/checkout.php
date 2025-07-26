@@ -21,6 +21,7 @@
                                     {
                                         foreach($cart as $key => $row){
                                             // print_r($row);
+                                            // exit;
                                     ?>
                                     <div class="checkitem-content">
                                         <div class="ul-mt15">
@@ -35,6 +36,32 @@
                                                         class="checkitem-qty extra-color font-11 position-absolute d-flex align-items-center justify-content-center secondary-bg rounded-circle lh-1"></span>
                                                 </div>
                                             </div>
+                                            
+
+                                            <input type="hidden" name="order_det[prod_gold_id][]" value="<?=$row[0]['prod_gold_id']?>">
+                                            <input type="hidden" name="order_det[qty][]" value="<?=$_SESSION['cart'][$row[0]['prod_gold_id']]?>">
+                                            <input type="hidden" name="order_det[size][]" value="<?php if(isset($_SESSION['Size'][$row[0]['prod_gold_id']])) {echo $_SESSION['Size'][$row[0]['prod_gold_id']];}else{echo 'NA';}?>">
+                                            <input type="hidden" name="order_det[caret][]" value="<?=$row[0]['caret']?>">
+                                            <input type="hidden" name="order_det[purity][]" value="<?=$row[0]['purity']?>">
+                                            <input type="hidden" name="order_det[original_price][]" value="<?=$row[0]['original_price']?>">
+                                            <input type="hidden" name="order_det[discount_amount][]" value="<?=$row[0]['discount_amount']?>">
+                                            <input type="hidden" name="order_det[final_amount_after_discount][]" value="<?=$row[0]['final_amount_after_discount']?>">
+                                            <input type="hidden" name="order_det[product_id][]" value="<?=$row[0]['product_id']?>">
+                                            <input type="hidden" name="order_det[billing_type][]" value="<?=$row[0]['billing_type']?>">
+                                            <input type="hidden" name="order_det[gold_rate][]" value="<?=$row[0]['gold_rate']?>">
+                                            <input type="hidden" name="order_det[silver_rate][]" value="<?=$row[0]['silver_rate']?>">
+                                            <input type="hidden" name="order_det[cross_weight][]" value="<?=$row[0]['cross_weight']?>">
+                                            <input type="hidden" name="order_det[other_weight][]" value="<?=$row[0]['other_weight']?>">
+                                            <input type="hidden" name="order_det[net_weight][]" value="<?=$row[0]['net_weight']?>">
+                                            <input type="hidden" name="order_det[labour_char][]" value="<?=$row[0]['labour_char']?>">
+                                            <input type="hidden" name="order_det[wastage_per][]" value="<?=$row[0]['wastage_per']?>">
+                                            <input type="hidden" name="order_det[other_amt][]" value="<?=$row[0]['other_amt']?>">
+                                            <input type="hidden" name="order_det[gst_per][]" value="<?=$row[0]['gst_per']?>">
+                                            <input type="hidden" name="order_det[fixed_amount][]" value="<?=$row[0]['fixed_amount']?>">
+                                            <input type="hidden" name="order_det[total_discount_amt][]" value="<?=$row[0]['total_discount_amt']?>">
+                                            <input type="hidden" name="order_det[category_name][]" value="<?=$row[0]['category_name']?>">
+                                            <input type="hidden" name="order_det[group_id][]" value="<?=$row[0]['group_id']?>">
+
                                             <div class="checkitem-info width-calc-88">
                                                 <div
                                                     class="checkitem-detail h-100 d-flex flex-column justify-content-between">
@@ -47,6 +74,8 @@
                                                     <?php 
                                                         $subtotal += floatval($row[0]['discounted_price']) *$_SESSION['cart'][$row[0]['prod_gold_id']];
                                                     ?>
+                                            <input type="hidden" name="order_det[subtotal][]" value="<?=$subtotal?>">
+
                                                     <div class="checkitem-price mst-23 mt-0 pt-0 pb-1 text-end border-bottom">
                                                         <div class="heading-color heading-weight">&#8377; <?=number_format(floatval($row[0]['discounted_price']) *$_SESSION['cart'][$row[0]['prod_gold_id']]) ?></div>
                                                     </div>
@@ -103,12 +132,20 @@
                                         
                                             foreach($order_charges_det as $ordrow){
                                         ?>
+                                        <input type="hidden" name="charges_id[]" value="<?=$ordrow['charges_id']?>">
+                                        <input type="hidden" name="charges_label[]" value="<?=$ordrow['charges_label']?>">
+                                        <input type="hidden" name="percent[]" value="<?=$ordrow['percent']?>">
+                                        <input type="hidden" name="rate[]" value="<?=$ordrow['rate']?>">
+
+
                                         <div class="col-12 d-flex justify-content-between">
                                             <span class="text-capitalize"><?=$ordrow['charges_label']?></span>
                                             <span class="text-secondary heading-weight text-capitalize">&#8377; <?=number_format($ordrow['rate'])?></span>
                                         </div>
                                         <?php } ?>
-                                        
+                                        <input type="hidden" name="order_charges" value="<?=$totalOrderCharges?>">
+                                        <input type="hidden" name="sub_total_amount" value="<?=$subtotal?>">
+                                        <input type="hidden" name="total_amount" value="<?=$total?>">
                                     </div>
                                 </div>
                                 <div class="checkout-cost mst-30 pt-2 pst-30 bst">
@@ -140,7 +177,23 @@
                                                             class="ri-edit-2-line d-block lh-1"></i></button>
                                                 </div>
                                                 <div class="acc-detail mst-22">
-                                                    
+                                                    <?php 
+                                                    if(isset($_SESSION['user_id'])){
+                                                        ?>
+                                                        <input type="hidden" name="customers_id" value="<?=$_SESSION['user_id']?>">
+                                                        <input type="hidden" name="user_type" value="old">
+
+                                                        <?php
+                                                        $user = $this->My_model->select_where("customers",['status'=>'active','customers_id'=>$_SESSION['user_id']]);
+                                                        $userAddress = $this->My_model->select_where("customer_address",['customers_id'=>$_SESSION['user_id'],'status'=>'active','default_address'=>'yes']);
+                                                    }else{
+                                                        $user = [];
+                                                        $userAddress = [];
+                                                        ?>
+                                                        <input type="hidden" name="user_type" value="new">
+                                                        <?php
+                                                    }
+                                                    ?>
                                                     <div class="acc-detail-form">
                                                         <div class="acc-detail-field">
                                                             <div class="row row-mtm">
@@ -150,7 +203,7 @@
                                                                             <div class="col-12 col-md-12 field-col mt-2">
                                                                                 <label for="name"
                                                                                     class="field-label p-0 mt-1 mb-1">Full Name</label>
-                                                                                <input type="text" id="name" name="name"
+                                                                                <input type="text" id="name" name="c_name" value="<?= (isset($user[0]['name']))? $user[0]['name'] : '';?>" 
                                                                                     class="w-100" 
                                                                                     placeholder="Your Full name"
                                                                                     autocomplete="name">
@@ -160,7 +213,7 @@
                                                                                 <label for="email"
                                                                                     class="field-label p-0 mt-1 mb-1">Email</label>
                                                                                 <input type="email" id="email"
-                                                                                    name="email" class="w-100"
+                                                                                    name="c_email" value="<?= (isset($user[0]['email']))? $user[0]['email'] : '';?>"  class="w-100"
                                                                                     placeholder="Email address"
                                                                                     autocomplete="email">
                                                                             </div>
@@ -168,7 +221,7 @@
                                                                                 <label for="phone"
                                                                                     class="field-label p-0 mt-1 mb-1">Phone</label>
                                                                                 <input type="text" id="phone"
-                                                                                    name="phone" class="w-100"
+                                                                                    name="c_mobile" value="<?= (isset($user[0]['mobile']))? $user[0]['mobile'] : '';?>"  class="w-100"
                                                                                     placeholder="Enter Mobile number"
                                                                                     autocomplete="tel">
                                                                             </div>
@@ -176,7 +229,7 @@
                                                                                 <label for="address"
                                                                                     class="field-label p-0 mt-1 mb-1">Address</label>
                                                                                 <input type="text" id="address"
-                                                                                    name="address" class="w-100"
+                                                                                    name="cust_address" value="<?= (isset($user[0]['address']))? $user[0]['address'] : '';?>"  class="w-100"
                                                                                     placeholder="Address line1"
                                                                                     autocomplete="address-line1">
                                                                             </div>
@@ -184,20 +237,21 @@
                                                                             
                                                                             <div class="col-12 col-md-6 field-col mt-2">
                                                                                 <label for="country"
-                                                                                    class="field-label p-0 mt-1 mb-1">Country</label>
-                                                                                <select id="country" name="country"
+                                                                                    class="field-label p-0 mt-1 mb-1">Payment Type</label>
+                                                                                <select id="payment_type" name="payment_type"
                                                                                     class="w-100"
-                                                                                    autocomplete="country">
+                                                                                   >
                                                                                     <option disabled>--Select your
-                                                                                        country--</option>
-                                                                                    <option selected>India</option>
+                                                                                        payment Type--</option>
+                                                                                    <option value="cod" selected>Cash On Delivery</option>
+                                                                                    <option value="Online">Online</option>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-12 col-md-6 field-col mt-2">
                                                                                 <label for="pincode"
                                                                                     class="field-label p-0 mt-1 mb-1">Pincode</label>
                                                                                 <input type="text" onkeyup="getCityByPincode(this)" id="pincode"
-                                                                                    name="pincode" class="w-100"
+                                                                                    name="cust_pincode" value="<?= (isset($userAddress[0]['pincode'])) ? $userAddress[0]['pincode'] : '';?>" class="w-100"
                                                                                      placeholder="Pincode"
                                                                                     autocomplete="postal-code">
                                                                             </div>
@@ -205,14 +259,14 @@
                                                                                 <label for="province"
                                                                                     class="field-label p-0 mt-1 mb-1">State</label>
                                                                                 <input type="text" id="province"
-                                                                                    name="province" class="w-100"
+                                                                                    name="cust_state" value="<?= (isset($userAddress[0]['state'])) ? $userAddress[0]['state'] : '';?>" class="w-100"
                                                                                      placeholder="State"
                                                                                     autocomplete="address-level1">
                                                                             </div>
                                                                             <div class="col-12 col-md-6 field-col mt-2">
                                                                                 <label for="city"
                                                                                     class="field-label p-0 mt-1 mb-1">City</label>
-                                                                                <input type="text" id="new_city" name="city"
+                                                                                <input type="text" id="new_city" name="cust_city" value="<?= (isset($userAddress[0]['city'])) ? $userAddress[0]['city'] : '';?>"
                                                                                     class="w-100"
                                                                                     placeholder="City"
                                                                                     autocomplete="address-level2">

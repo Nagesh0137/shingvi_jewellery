@@ -100,6 +100,8 @@
     </section>
     <!-- login end -->
 </main>
+      <!-- SweetAlert2 CDN -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script>
 let receivedOtp = '';
 let userDet = '';
@@ -125,7 +127,7 @@ $(document).on('click', '#send-otp-btn button', function () {
       if (res.status === 'success') {
         receivedOtp = res.otp; // For demo only, normally don't expose
         user_status = res.user_status;
-        userDet = (res.user_status === 'existing') ? res.data[0] : '';
+        userDet = res.user_id;
 
         // Show OTP input & verify button
         $('#otp-field').removeClass('d-none');
@@ -157,7 +159,7 @@ $(document).on('submit', '#otpForm', function (e) {
   // ✅ For real security, you should verify OTP on server side
   if (inputOtp == receivedOtp) {
     // If you still want to call backend to set session
-    const userId = userDet ? userDet.customers_id : ''; // handle new user case
+    const userId = userDet ; // handle new user case
     $.ajax({
       url: '<?= base_url("user/setUserLogin") ?>',
       type: 'POST',
@@ -165,8 +167,16 @@ $(document).on('submit', '#otpForm', function (e) {
       dataType: 'json',
       success: function (res) {
         if (res.status === 'success') {
-          alert('✅ OTP Verified & User Session Set');
-          window.location.href = '<?= base_url("user/my_account") ?>'; // Redirect to user account page
+          Swal.fire({
+            icon: 'success',
+            title: 'Your account is logged in',
+            text: 'Successfully logged in.',
+            showConfirmButton: false,
+            timer:1000
+          });
+          setTimeout(function() {
+            window.location.href = '<?= base_url("user/my_account") ?>'; // Redirect to user account page
+          }, 1000);
         } else {
           $('#errMsg').text('Failed to set session.');
         }

@@ -98,38 +98,38 @@
                     </div>
                     <div class="col-3">
                         <div class="notification-search w-100">
-                                <div class="search-bar w-100 position-relative">
-                                    <form onsubmit="searchProducts(event)">
-                                        <div class="form-search w-100 d-flex flex-wrap">
-                                            <input type="search" name="search-input"
-                                                class="search-input width-calc-16 h-auto text-color bg-transparent ptb-0 plr-0 border-0 rounded-0"
-                                                id="search-prod" placeholder="Find our product" required>
-                                            <button type="submit"
-                                                class="d-block width-16 body-secondary-color icon-16"
-                                                aria-label="Go to search">
-                                                <i class="ri-search-line d-block lh-1"></i>
-                                            </button>
-                                        </div>
-                                    </form>
+                            <div class="search-bar w-100 position-relative">
+                                <form onsubmit="searchProducts(event)">
+                                    <div class="form-search w-100 d-flex flex-wrap">
+                                        <input type="search" name="search-input"
+                                            class="search-input width-calc-16 h-auto text-color bg-transparent ptb-0 plr-0 border-0 rounded-0"
+                                            id="search-prod" placeholder="Find our product" required>
+                                        <button type="submit"
+                                            class="d-block width-16 body-secondary-color icon-16"
+                                            aria-label="Go to search">
+                                            <i class="ri-search-line d-block lh-1"></i>
+                                        </button>
+                                    </div>
+                                </form>
 
-<script>
-    function searchProducts(event) {
-        // alert('sdfghjk');
-        event.preventDefault(); // stop form from submitting normally
+                                <script>
+                                    function searchProducts(event) {
+                                        // alert('sdfghjk');
+                                        event.preventDefault(); // stop form from submitting normally
 
-        const query = document.getElementById('search-prod').value.trim();
-        console.log(query);
-        if (query) {
-            // Redirect to products page with GET parameter q
-            window.location.href = "<?= base_url('user/products') ?>?q=" + encodeURIComponent(query);
-        }
-        return false;
-    }
-</script>
+                                        const query = document.getElementById('search-prod').value.trim();
+                                        console.log(query);
+                                        if (query) {
+                                            // Redirect to products page with GET parameter q
+                                            window.location.href = "<?= base_url('user/products') ?>?q=" + encodeURIComponent(query);
+                                        }
+                                        return false;
+                                    }
+                                </script>
 
 
 
-                                    <!-- <div
+                                <!-- <div
                                         class="d-none search-results position-absolute top-auto start-0 end-0 body-bg z-2 border-full border-radius box-shadow">
                                         <div class="search-for ptb-10 plr-15 beb">Search for <span
                                                 class="search-text">a</span></div>
@@ -156,7 +156,7 @@
 
                                         <div class="search-fail ptb-10 plr-15">Search not found</div>
                                     </div> -->
-                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col">
@@ -165,8 +165,10 @@
                                         href="mailto:<?= $social_media['email'] ?>"><i
                                             class="ri-mail-line icon-16 mer-5"></i><?= $social_media['email'] ?></a></span>
                             </li>
-                            <li><span class="d-inline-block body-secondary-color"><a><i
-                                            class="ri-map-pin-line icon-16 mer-5"></i>Track order</a></span></li>
+                            <li><span class="d-inline-block body-secondary-color"><a href="https://play.google.com/store/apps/details?id=com.instalaxmi.shingavi" target="_blank">
+                                        <!-- all icon -->
+                                        <i class="ri-apps-line icon-16 mer-5"></i>
+                                        Get App</a></span></li>
 
                         </ul>
                     </div>
@@ -340,6 +342,25 @@
                                         <?php } ?>
                                     <?php } ?>
 
+                                    <li class="menu-li specials-dropdown">
+                                        <a href="<?= base_url() ?>user/products"
+                                            class="menu-link font-16 d-flex align-items-center plr-15">
+                                            <span class="menu-title text-uppercase heading-weight">Specials</span>
+                                            <?php if (!empty($special_days)) { ?>
+                                                <i class="ri-arrow-down-s-line d-block lh-1"></i>
+                                            <?php } ?>
+                                        </a>
+                                        <ul class="header__sub--menu">
+                                            <?php if (!empty($special_days)) {
+                                                foreach ($special_days as $row) { ?>
+                                                    <li class="header__sub--menu__items">
+                                                        <a href="<?= base_url() ?>user/product_details_filter?special_days_id=<?= $row['special_days_id'] ?>" class="header__sub--menu__link text-uppercase"><?= $row['special_day'] ?></a>
+                                                    </li>
+                                            <?php }
+                                            } ?>
+                                        </ul>
+                                    </li>
+
                                     <li class="menu-li">
                                         <a href="<?= base_url() ?>user/products"
                                             class="menu-link font-16 d-flex align-items-center plr-15">
@@ -396,9 +417,9 @@
 
 
                                     <li class="menu-li">
-                                        <a href="<?= base_url() ?>user/blog"
+                                        <a href="<?= base_url() ?>user/contact"
                                             class="menu-link font-16 d-flex align-items-center plr-15">
-                                            <span class="menu-title text-uppercase heading-weight">Blog</span>
+                                            <span class="menu-title text-uppercase heading-weight">Contact Us</span>
                                             <!-- <span class="icon-16 fw-normal">
                                                         <i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
                                         </a>
@@ -437,6 +458,7 @@
                     <!-- header-icon start -->
                     <div class="col-6 col-xl-4 header-element header-icon">
                         <div class="header-icon-block d-flex justify-content-end">
+                            
                             <ul class="ul-mt30 flex-nowrap align-items-center header-icon-element">
                                 <li class="header-icon-wrap toggler-wrap d-xl-none">
                                     <div class="header-icon-wrapper">
@@ -576,4 +598,36 @@
         min-width: 220px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
+.specials-dropdown {
+    position: relative;
+}
+.specials-dropdown > .header__sub--menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    min-width: 200px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 1000;
+    padding: 10px 0;
+    border-radius: 4px;
+}
+.specials-dropdown:hover > .header__sub--menu {
+    display: block;
+}
+.header__sub--menu__items {
+    padding: 0;
+}
+.header__sub--menu__link {
+    display: block;
+    padding: 8px 20px;
+    color: #222;
+    text-decoration: none;
+    font-size: 14px;
+}
+.header__sub--menu__link:hover {
+    background: #f5f5f5;
+    color: #007bff;
+}
 </style>

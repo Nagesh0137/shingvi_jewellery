@@ -233,9 +233,9 @@ function filter_name($cid)
     return '-';
   }
 }
-function cate_name($cid)
+function cat_name($cid)
 {
-  $data = $GLOBALS['CI']->My_model->select_where("category_tbl", ['category_tbl_id' => $cid]);
+  $data = $GLOBALS['CI']->My_model->select_where("category", ['category_id' => $cid]);
   if (isset($data[0])) {
     return $data[0]['category_name'];
   } else {

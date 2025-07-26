@@ -79,10 +79,9 @@ class User extends CI_Controller
 		return $fname;
 	}
 
-	protected function setToastMessage($message, $color)
+	protected function setToastMessage($message, $type)
 	{
-		$_SESSION['toast_message'] = $message;
-		$_SESSION['toast_color'] = $color;
+		$this->session->set_flashdata($type, $message);
 	}
 	function resize_image($path, $width, $height)
 	{
@@ -122,6 +121,7 @@ class User extends CI_Controller
 		// $data['system_not'] = $this->db->query("SELECT * FROM system_notification ORDER BY system_notification_id DESC limit 20")->result_array();
 		$data['social_media'] = $this->My_model->select_where("social_media_tbl", ['status' => 'active'])[0];
 		$data['products'] = $this->My_model->select_where("product_gold", ['status' => 'active']);
+		$data['special_days'] = $this->My_model->select_where("special_days", ['status' => 'active']);
 		$this->load->view("user/nav", $data);
 	}
 	public function search_products()
@@ -200,15 +200,15 @@ class User extends CI_Controller
 
 		// Fetch basic data
 		$data['category'] = $this->My_model->select_where("category", ['status' => 'active']);
-		$all_products = $this->db->query("SELECT * FROM product_gold WHERE status='active'")->result_array();
-		$all_filters = $this->db->query("SELECT * FROM product_filter WHERE status='active'")->result_array();
-		$all_offers = $this->db->query("SELECT * FROM gold_product_offer WHERE status='active' 
-                                    UNION 
-                                    SELECT * FROM silver_product_offer WHERE status='active'")->result_array();
+		// $all_products = $this->db->query("SELECT * FROM product_gold WHERE status='active'")->result_array();
+		// $all_filters = $this->db->query("SELECT * FROM product_filter WHERE status='active'")->result_array();
+		// $all_offers = $this->db->query("SELECT * FROM gold_product_offer WHERE status='active' 
+		//                             UNION 
+		//                             SELECT * FROM silver_product_offer WHERE status='active'")->result_array();
 
 		// Web content
 		$data['special_days_product'] = $this->db->query("SELECT * FROM special_days WHERE status='active' ORDER BY special_days_id DESC")->result_array();
-		$data['slider'] = $this->db->query("SELECT * FROM web_slider WHERE status='active' ORDER BY web_slider_id DESC")->result_array();
+		$data['slider'] = $this->db->query("SELECT * FROM web_slider WHERE status='active' ORDER BY web_slider_id ASC LIMIT 2")->result_array();
 		$data['web_banner_half'] = $this->My_model->select_where("web_banner", ['banner_size' => 'half', 'status' => 'active']);
 		$data['web_banner_full'] = $this->My_model->select_where("web_banner", ['banner_size' => 'full', 'status' => 'active']);
 		// $data['web_banner_gold'] = $this->My_model->select_where("web_banner", ['banner_size' => 'Gold', 'status' => 'active']);
@@ -220,14 +220,40 @@ class User extends CI_Controller
 		// $data['web_banner_for_exclusive_design'] = $this->db->query("SELECT * FROM web_banner WHERE status='active' AND banner_type='exclusive_collection' ORDER BY web_banner_id DESC LIMIT 2")->result_array();
 
 		// Categorize products
-		$data['new_products'] = array_filter($all_products, fn($p) => $p['label'] === 'New');
-		$data['trending_products'] = array_filter($all_products, fn($p) => $p['label'] === 'Trending');
-		$data['silver_special'] = array_filter($all_products, fn($p) => $p['label'] === 'Special' && $p['cat_id'] == 6);
-		$data['gold_special'] = array_filter($all_products, fn($p) => $p['label'] === 'Special' && $p['cat_id'] == 5);
-		$data['top_selling_products'] = array_filter($all_products, fn($p) => $p['label'] === 'Top Selling');
+		// $data['new_products'] = array_filter($all_products, fn($p) => $p['label'] === 'New');
+		// // $data['trending_products'] = array_filter($all_products, fn($p) => $p['label'] === 'Trending');
+		// $data['silver_special'] = array_filter($all_products, fn($p) => $p['label'] === 'Special' && $p['cat_id'] == 6);
+		// $data['gold_special'] = array_filter($all_products, fn($p) => $p['label'] === 'Special' && $p['cat_id'] == 5);
+		// // $data['top_selling_products'] = array_filter($all_products, fn($p) => $p['label'] === 'Top Selling');
+		$data['top_selling_products'] = $this->db->query("SELECT * FROM product_gold,category,product_group WHERE product_gold.group_id = product_group.product_group_id AND product_gold.cat_id = category.category_id AND product_gold.status='active' AND product_gold.label LIKE '%Top Selling%' ORDER BY product_gold.prod_gold_id DESC LIMIT 6")->result_array();
+		// $data['trending_products'] = $this->db->query("SELECT * FROM product_gold,category,product_group WHERE product_gold.group_id = product_group.product_group_id AND product_gold.cat_id = category.category_id AND product_gold.status='active' AND product_gold.label LIKE '%Trending%' ORDER BY product_gold.prod_gold_id DESC LIMIT 6")->result_array();
+		$trending_products = $this->db->query("SELECT prod_gold_id FROM product_gold WHERE status='active' AND label LIKE '%Trending%' ORDER BY prod_gold_id DESC LIMIT 3")->result_array();
+		$data['trending_products'] = [];
+		foreach ($trending_products as $key => $value) {
+			$d = getProductDetails($value['prod_gold_id']);
+			$data['trending_products'][$key] = $d[0];
+		}
+		$top_selling_products = $this->db->query("SELECT prod_gold_id FROM product_gold WHERE status='active' AND label LIKE '%Top Selling%' ORDER BY prod_gold_id DESC LIMIT 6")->result_array();
+		$data['top_selling_products'] = [];
+		foreach ($top_selling_products as $key => $value) {
+			$d = getProductDetails($value['prod_gold_id']);
+			$data['top_selling_products'][$key] = $d[0];
+		}
+		$new_products = $this->db->query("SELECT prod_gold_id FROM product_gold WHERE status='active' AND label LIKE '%New%' ORDER BY prod_gold_id DESC LIMIT 8")->result_array();
+		$data['new_products'] = [];
+		foreach ($new_products as $key => $value) {
+			$d = getProductDetails($value['prod_gold_id']);
+			$data['new_products'][$key] = $d[0];
+		}
+		$data['products_group'] = $this->db->query("SELECT * FROM product_group WHERE status='active' ORDER BY product_group_id DESC LIMIT 10")->result_array();
+		$data['blogs'] = array_reverse($this->My_model->select_where("web_blog", ['status' => 'active']));
 
-		$data['all_product_details'] = array_merge($data['silver_special'], $data['gold_special']);
-		$data['new_products_user'] = array_slice($data['new_products'], 0, 8);
+		// echo "<pre>";
+		// print_r($data['trending_products']);
+		// exit;
+
+		// $data['all_product_details'] = array_merge($data['silver_special'], $data['gold_special']);
+		// $data['new_products_user'] = array_slice($data['new_products'], 0, 8);
 
 		// Function to process each product with filters, offers, cart, price
 		$process_products = function (&$products, $filters, $offers) {
@@ -277,11 +303,11 @@ class User extends CI_Controller
 		};
 
 		// Process all product sets
-		$process_products($data['silver_special'], $all_filters, $all_offers);
-		$process_products($data['gold_special'], $all_filters, $all_offers);
-		$process_products($data['new_products'], $all_filters, $all_offers);
-		$process_products($data['trending_products'], $all_filters, $all_offers);
-		$process_products($data['top_selling_products'], $all_filters, $all_offers);
+		// $process_products($data['silver_special'], $all_filters, $all_offers);
+		// $process_products($data['gold_special'], $all_filters, $all_offers);
+		// $process_products($data['new_products'], $all_filters, $all_offers);
+		// $process_products($data['trending_products'], $all_filters, $all_offers);
+		// $process_products($data['top_selling_products'], $all_filters, $all_offers);
 
 		// Final view load
 		$this->ov("index", $data);
@@ -464,36 +490,16 @@ class User extends CI_Controller
 
 	public function update_user_details()
 	{
-		if (isset($_SESSION['user_id'])) {
-
-			// Handle profile image upload
-			if (isset($_FILES['profile_photo'])) {
-				if ($_FILES['profile_photo']['name'] != "") {
-					$imgname = $_FILES['profile_photo']['name'];
-					$imgtemp = $_FILES['profile_photo']['tmp_name'];
-					$path = "uploads/";
-
-					// Upload and resize the image
-					$_POST['profile_photo'] = $this->upload_img($imgname, $imgtemp, $path);
-
-					// Delete old image if exists
-					$path1 = "uploads/" . $_POST['profile_photo1'];
-					if (!empty($_POST['profile_photo1']) && file_exists($path1)) {
-						unlink($path1);
-					}
-				} else {
-					// Keep old image if no new image uploaded
-					$_POST['profile_photo'] = $_POST['profile_photo1'];
-				}
-			}
-			unset($_POST['profile_photo1']);
-
-
-			$this->My_model->update("customers", ['status' => 'active', 'customers_id' => $_SESSION['user_id']], $_POST);
-
-			redirect(base_url() . "user/my_account");
+		// echo "<pre>";
+		// print_r($_POST);
+		// exit;
+		$data = $this->My_model->update("customers", ['customers_id' => $_POST['customers_id']], $_POST);
+		if ($data) {
+			$this->setToastMessage('Profile Updated successfully...', 'success');
+			redirect(base_url() . 'user/my_account', 'refresh');
 		} else {
-			redirect(base_url() . "user/my_account");
+			$this->setToastMessage('Profile Not Updated...', 'danger');
+			redirect(base_url() . 'user/my_account', 'refresh');
 		}
 	}
 
@@ -1643,8 +1649,11 @@ class User extends CI_Controller
 
 	public function branch()
 	{
-		$data['category'] = $this->My_model->select_where("category", ['status' => 'active']);
+		// $data['category'] = $this->My_model->select_where("category", ['status' => 'active']);
 		$data['web_branch_details'] = $this->My_model->select_where("web_branch_details", ['status' => 'active']);
+		// echo "<pre>";
+		// print_r($data);
+		// exit;
 		$this->ov("branch", $data);
 	}
 	public function event()
@@ -2100,13 +2109,14 @@ class User extends CI_Controller
 			$this->My_model->insert("otp_tbl", $otpData);
 
 			// (Optional) set session if you want
-			$_SESSION['user_id'] = $user_id;
+			// $_SESSION['user_id'] = $user_id;
 
 			echo json_encode([
 				'status'      => 'success',
 				'otp'         => $otp, // 🔴 remove in production
 				'data'        => $existingUser,
-				'user_status' => $user_status
+				'user_status' => $user_status,
+				'user_id' 	  => $user_id
 			]);
 		} else {
 			echo json_encode([
@@ -2526,6 +2536,133 @@ class User extends CI_Controller
 			}
 		}
 	}
+
+	public function checkout_save()
+	{
+
+
+		$order['order_charges'] = $_POST['order_charges'];
+		$order['sub_total_amount'] = $_POST['sub_total_amount'];
+		$order['total_amount'] = $_POST['total_amount'];
+
+		if ($_POST['user_type'] == 'old') {
+			$_POST['customers_id'] = $_POST['customers_id'];
+			$order['customers_id'] = $_POST['customers_id'];
+			$oldUser = $this->My_model->select_where("customers",['customers_id'=>$_POST['customers_id']]);
+			if(empty($oldUser[0]['name']))
+			{
+				$this->My_model->update('customers',['customers_id'=>$_POST['customers_id']],['name'=>$_POST['c_name']]);
+			}
+			if(empty($oldUser[0]['email']))
+			{
+				$this->My_model->update('customers',['customers_id'=>$_POST['customers_id']],['email'=>$_POST['c_email']]);
+			}
+
+		} else {
+			$user['name'] = $_POST['c_name'];
+			$user['email'] = $_POST['c_email'];
+			$user['mobile'] = $_POST['c_mobile'];
+			$user['reg_time'] = time();
+			$user['status'] = 'active';
+			$user_id = $this->My_model->insert("customers", $user);
+			$_POST['customers_id'] = $user_id;
+
+			$userAddres['customers_id'] = $_POST['customers_id'];
+			$userAddres['address'] = $_POST['cust_address'];
+
+			$userAddres['pincode'] = $_POST['cust_pincode'];
+			$userAddres['city'] = $_POST['cust_city'];
+			$userAddres['state'] = $_POST['cust_state'];
+			$userAddres['status'] = 'active';
+			$userAddres['default_address'] = 'yes';
+			$userAddres['entry_time'] = time();
+			$this->My_model->insert("customer_address", $userAddres);
+		}
+
+
+
+		$order['c_name'] = $_POST['c_name'];
+		$order['c_email'] = $_POST['c_email'];
+		$order['c_mobile'] = $_POST['c_mobile'];
+		$order['cust_address'] = $_POST['cust_address'];
+		$order['payment_type'] = $_POST['payment_type'];
+		$order['cust_pincode'] = $_POST['cust_pincode'];
+		$order['cust_city'] = $_POST['cust_city'];
+		$order['order_date'] = date('Y-m-d');
+		$order['order_time'] = time();
+		$order['status'] = 'active';
+		$order['entry_time'] = time();
+		$order['order_status'] = 'pending';
+		$order['pay_status'] = 'pending';
+		$order['paid_amount'] = 0;
+		$ord = $this->My_model->insert("order_tbl", $order);
+
+		for ($o = 0; $o < count($_POST['charges_id']); $o++) {
+			$ordCharges['charges_id'] = $_POST['charges_id'][$o];
+			$ordCharges['charges_label'] = $_POST['charges_label'][$o];
+			$ordCharges['percent'] = $_POST['percent'][$o];
+			$ordCharges['rate'] = $_POST['rate'][$o];
+			$ordCharges['order_tbl_id'] = $ord;
+			$this->My_model->insert("order_charges_det", $ordCharges);
+		}
+
+		for ($i = 0; $i < count($_POST['order_det']['prod_gold_id']); $i++) {
+			$row['order_tbl_id'] = $ord;
+			$row['prod_gold_id'] = $_POST['order_det']['prod_gold_id'][$i];
+			$row['prod_gold_id'] = $_POST['order_det']['prod_gold_id'][$i];
+			$row['qty'] = $_POST['order_det']['qty'][$i];
+			$row['size'] = $_POST['order_det']['size'][$i];
+			$row['caret'] = $_POST['order_det']['caret'][$i];
+			$row['purity'] = $_POST['order_det']['purity'][$i];
+			$row['original_price'] = $_POST['order_det']['original_price'][$i];
+			$row['discount_amount'] = $_POST['order_det']['discount_amount'][$i];
+			$row['final_amount_after_discount'] = $_POST['order_det']['final_amount_after_discount'][$i];
+			$row['product_id'] = $_POST['order_det']['product_id'][$i];
+			$row['billing_type'] = $_POST['order_det']['billing_type'][$i];
+			$row['gold_rate'] = $_POST['order_det']['gold_rate'][$i];
+			$row['silver_rate'] = $_POST['order_det']['silver_rate'][$i];
+			$row['cross_weight'] = $_POST['order_det']['cross_weight'][$i];
+			$row['other_weight'] = $_POST['order_det']['other_weight'][$i];
+			$row['net_weight'] = $_POST['order_det']['net_weight'][$i];
+			$row['labour_char'] = $_POST['order_det']['labour_char'][$i];
+			$row['wastage_per'] = $_POST['order_det']['wastage_per'][$i];
+			$row['other_amt'] = $_POST['order_det']['other_amt'][$i];
+			$row['gst_per'] = $_POST['order_det']['gst_per'][$i];
+			$row['fixed_amount'] = $_POST['order_det']['fixed_amount'][$i];
+			$row['total_discount_amt'] = $_POST['order_det']['total_discount_amt'][$i];
+			$row['category_name'] = $_POST['order_det']['category_name'][$i];
+			$row['group_id'] = $_POST['order_det']['group_id'][$i];
+			$row['subtotal'] = $_POST['order_det']['subtotal'][$i];
+			$row['status'] = 'active';
+			$row['entry_time'] = time();
+			$ordDet = $this->My_model->insert("ordered_product", $row);
+		}
+		$data['user_det'] = $this->My_model->select_where("customers", ['customers_id' => $_POST['customers_id']]);
+		$_SESSION['user_id'] = $data['user_det'][0]['customers_id'];
+
+		if ($_POST['payment_type'] == 'Online') {
+			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)$order['total_amount'], 2, '.', ''), base_url());
+			$data['response'] = json_decode($response1, true);
+			// print_r($data['response']);
+			$orderId = $data['response']['order_id'];
+			
+			$this->My_model->update("order_tbl", ['order_tbl_id' => $ord], ['orderId' => $orderId]);
+			$response = getCashfreeOrderDetails($orderId);
+			$order_data['response'] = json_decode($response, true);
+			$order_data['bill_id'] = $ord;
+			$this->createOrder($ord);
+			redirect('user/createOrder/' . $ord, 'refresh');
+		} else {
+			if ($ord) {
+				$this->setToastMessage('Order Placed successfully...', 'success');
+				redirect(base_url() . 'user/my_account/', 'refresh');
+			} else {
+				$this->setToastMessage('Failed to Place Order...', 'danger');
+				redirect(base_url() . 'user/index/', 'refresh');
+			}
+		}
+	}
+
 	public function orderDetails()
 	{
 
@@ -2694,8 +2831,10 @@ class User extends CI_Controller
 	// Rohan Start
 	public function my_orders()
 	{
+		echo $_SESSION['user_id'];
 		// $user_details = $this->My_model->select_where("customers", ['status' => 'active','customers_id' => $_SESSION['user_id']]);
 		$data['user_details'] = $this->db->query("SELECT * FROM ordered_product,order_tbl,customers WHERE ordered_product.order_tbl_id = order_tbl.order_tbl_id AND order_tbl.customers_id = customers.customers_id AND order_tbl.status = 'active' AND customers.status = 'active' AND customers.customers_id = '" . $_SESSION['user_id'] . "'")->result_array();
+		// echo $this->db->last_query();
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";
@@ -3098,18 +3237,18 @@ class User extends CI_Controller
 	{
 		if (isset($_FILES['review_img']) && $_FILES['review_img']['error'] === UPLOAD_ERR_OK) {
 			$imgtemp = $_FILES['review_img']['tmp_name'];
-			$imgname = basename($_FILES['review_img']['name']); 
+			$imgname = basename($_FILES['review_img']['name']);
 			$path = "uploads/";
-		
+
 			$fileType = mime_content_type($imgtemp);
-		
+
 			if (strpos($fileType, 'image/') === 0) {
 				$allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 				$ext = strtolower(pathinfo($imgname, PATHINFO_EXTENSION));
-		
+
 				if (in_array($ext, $allowedExt)) {
 					$newFileName = uniqid("img_") . "." . $ext;
-		
+
 					if (move_uploaded_file($imgtemp, $path . $newFileName)) {
 						$_POST['review_img'] = $newFileName;
 					} else {
@@ -3122,22 +3261,128 @@ class User extends CI_Controller
 				echo "Only image files are allowed.";
 			}
 		}
-		
+
 
 		$_POST['user_id'] = $_SESSION['user_id'];
 		$_POST['status'] = 'active';
 		$_POST['entry_time'] = time();
 		$_POST['entry_date'] = date("Y-m-d");
 
-		$reviews = $this->My_model->insert("review_tbl", $_POST);
-		$prod_gold_id = $_POST['prod_gold_id'];	
+		if (!empty($_SESSION['user_id'])) {
 
-		if ($reviews && $prod_gold_id) {
-			$this->setToastMessage("Review submitted successfully", "success");
-			redirect(base_url("user/product_details/" . $prod_gold_id));
-		} else {	
-			$this->setToastMessage("Review submission failed", "error");
-			redirect(base_url("user/product_details/" . $prod_gold_id));
+			$reviews = $this->My_model->insert("review_tbl", $_POST);
+			$prod_gold_id = $_POST['prod_gold_id'];
+			if ($reviews && $prod_gold_id) {
+				$this->setToastMessage("Review submitted successfully", "success");
+				redirect(base_url("user/product_details/" . $prod_gold_id));
+			} else {
+				$this->setToastMessage("Review submission failed", "error");
+				redirect(base_url("user/product_details/" . $prod_gold_id));
+			}
+		} else {
+			$this->setToastMessage("Please login to submit review", "error");
+			redirect(base_url("user/login"));
+		}
+	}
+	// my_address
+	public function my_address()
+	{
+		// Check if user is logged in
+		if (!isset($_SESSION['user_id'])) {
+			redirect(base_url('user/login'));
+		}
+
+		$data['customer_details'] = $this->My_model->select_where("customers", ['status' => 'active', 'customers_id' => $_SESSION['user_id']]);
+		$data['address'] = $this->My_model->select_where("customer_address", ['status' => 'active', 'customers_id' => $_SESSION['user_id']]);
+
+		// Ensure customer_details is an array and has at least one element
+		if (empty($data['customer_details'])) {
+			$this->setToastMessage("Customer details not found", "error");
+			redirect(base_url('user/login'));
+		}
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+		// exit;
+
+		$this->ov("my_address", $data);
+	}
+
+	// Add new address via AJAX
+	public function add_new_address()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			$address = $this->input->post('address');
+			$city = $this->input->post('city');
+			$pincode = $this->input->post('pincode');
+
+			if (!empty($address) && !empty($city) && !empty($pincode)) {
+				$data = [
+					'customers_id' => $_SESSION['user_id'],
+					'address' => $address,
+					'city' => $city,
+					'pincode' => $pincode,
+					'default_address' => 'no',
+					'status' => 'active',
+					'entry_time' => time(),
+					'entry_date' => date('Y-m-d')
+				];
+
+				$result = $this->My_model->insert('customer_address', $data);
+
+				if ($result) {
+					echo json_encode(['status' => 'success', 'message' => 'Address added successfully']);
+				} else {
+					echo json_encode(['status' => 'error', 'message' => 'Failed to add address']);
+				}
+			} else {
+				echo json_encode(['status' => 'error', 'message' => 'Please fill all fields']);
+			}
+		}
+	}
+
+	// Set default address via AJAX
+	public function set_default_address()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			$address_id = $this->input->post('address_id');
+			$is_default = $this->input->post('is_default');
+
+			// First, set all addresses to non-default
+			$this->My_model->update(
+				'customer_address',
+				['default_address' => 'no'],
+				['customers_id' => $_SESSION['user_id']]
+			);
+
+			// Then set the selected address as default if checkbox is checked
+			if ($is_default == 'true' || $is_default === true) {
+				$this->My_model->update(
+					'customer_address',
+					['default_address' => 'yes'],
+					['customer_address_id' => $address_id, 'customers_id' => $_SESSION['user_id']]
+				);
+			}
+
+			echo json_encode(['status' => 'success']);
+		}
+	}
+
+	public function delete_address($id)
+	{
+
+		$this->db->where('customer_address_id', $id);
+		$this->db->set('status', 'deleted');
+		$result = $this->db->update('customer_address');
+		// $this->My_model->update("admin_tbl", ["admin_tbl_id" => $admin_id], ['status' => 'deleted']);
+
+		if ($result) {
+			// $this->session->setToastMessage('success', 'Address deleted successfully');
+			redirect(base_url('user/my_address'));
+		} else {
+			// $this->session->setToastMessage('error', 'Failed to delete address');
+			redirect(base_url('user/my_address'));
 		}
 	}
 }

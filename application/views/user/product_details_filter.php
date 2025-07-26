@@ -545,17 +545,18 @@
 
                                                                     <div class="pro-sku font-14">
                                                                         <span
-                                                                            class="heading-color text-uppercase heading-weight">SKU:<span
-                                                                                class="dominant-color msl-4">RT89GT</span></span>
+                                                                            class="heading-color text-uppercase heading-weight">Product ID:<span
+                                                                                class="dominant-color msl-4"><?= $row['product_id'] ?></span></span>
                                                                     </div>
                                                                     <div class="pro-select-variant font-14">
-                                                                        <span
-                                                                            class="heading-color text-uppercase heading-weight font-14">Size:</span>
+                                                                       
                                                                         <?php
                                                                         if (!empty($row['ring_size'])) {
                                                                             $sizes = explode(',', $row['ring_size']);
                                                                             $i = 0;
                                                                         ?>
+                                                                         <span
+                                                                         class="heading-color text-uppercase heading-weight font-14">Size:</span>
                                                                             <select id="gleam-band-size" name="gleam-band-size"
                                                                                 class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0 font-14">
                                                                                 <?php
@@ -567,7 +568,7 @@
                                                                             </select>
                                                                         <?php } else {
                                                                         ?>
-                                                                            <select id="gleam-band-size" name="gleam-band-size"
+                                                                            <select id="gleam-band-size" name="gleam-band-size " style="visibility: hidden;"
                                                                                 class="h-auto dominant-color bg-transparent text-uppercase heading-weight border-0 font-14">
                                                                                 <option value="NA" selected>NA</option>
                                                                             </select>

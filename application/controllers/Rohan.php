@@ -518,4 +518,96 @@ class Rohan extends CI_Controller
     $data['max_amt'] = !empty($all_prices) ? max($all_prices) : 2000;
     $this->ov("product_details_filter",$data);
 }
+
+	public function delete_address($id)
+	{
+	
+			$this->db->where('customer_address_id', $id);
+			$this->db->set('status', 'deleted');
+			$result = $this->db->update('customer_address');
+            // $this->My_model->update("admin_tbl", ["admin_tbl_id" => $admin_id], ['status' => 'deleted']);
+
+			if ($result) {
+				// $this->session->setToastMessage('success', 'Address deleted successfully');
+                redirect(base_url('user/my_address'));
+			} else {
+				// $this->session->setToastMessage('error', 'Failed to delete address');
+                redirect(base_url('user/my_address'));
+			
+            }
+		}
+
+        public function update_user_address()
+{
+    if (isset($_SESSION['user_id'])) {
+        // Handle address updates and insertions
+        if (isset($_POST['address']) && is_array($_POST['address'])) {
+            // Get the default address ID
+            $default_address_id = isset($_POST['default_address']) ? $_POST['default_address'] : null;
+            
+            // First, set all addresses to non-default
+            $this->db->where('customers_id', $_SESSION['user_id']);
+            $this->db->update('customer_address', ['default_address' => '']);
+            
+            foreach ($_POST['address'] as $index => $address) {
+                $city = isset($_POST['city'][$index]) ? $_POST['city'][$index] : '';
+                $pincode = isset($_POST['pincode'][$index]) ? $_POST['pincode'][$index] : '';
+                $address_id = isset($_POST['customer_address_id'][$index]) ? $_POST['customer_address_id'][$index] : null;
+                
+                $update_address_data = array(
+                    'address' => $address,
+                    'city' => $city,
+                    'pincode' => $pincode,
+                    'default_address' => ($address_id == $default_address_id) ? 'yes' : ''
+                );
+                
+                if ($address_id) {
+                    // Update existing address
+                    $this->db->where('customer_address_id', $address_id);
+                    $this->db->where('customers_id', $_SESSION['user_id']);
+                    $this->db->update('customer_address', $update_address_data);
+                } else {
+                    // Insert new address
+                    $insert_address_data = $update_address_data;
+                    $insert_address_data['customers_id'] = $_SESSION['user_id'];
+                    $insert_address_data['status'] = 'active';
+                    $insert_address_data['entry_time'] = time();
+                    $this->db->insert('customer_address', $insert_address_data);
+                    
+                    // If this is the default address, update the default_address_id
+                    if ($update_address_data['default_address'] == 'yes') {
+                        $default_address_id = $this->db->insert_id();
+                    }
+                }
+            }
+        }
+        
+        // Handle new address from the add address fields
+        if (isset($_POST['new_address']) && !empty($_POST['new_address'])) {
+            $is_default = empty($default_address_id) ? 'yes' : ''; // Set as default if no other default exists
+            
+            $new_address_data = array(
+                'customers_id' => $_SESSION['user_id'],
+                'address' => $_POST['new_address'],
+                'city' => $_POST['new_city'] ?? '',
+                'pincode' => $_POST['new_pincode'] ?? '',
+                'status' => 'active',
+                'entry_time' => time(),
+                'default_address' => $is_default
+            );
+            
+            $this->db->insert('customer_address', $new_address_data);
+            
+            // If this is the default address, update the default_address_id
+            if ($is_default == 'yes') {
+                $default_address_id = $this->db->insert_id();
+            }
+        }
+        
+        redirect(base_url() . "user/my_address");
+    } else {
+        redirect(base_url() . "user/my_address");
+    }
+}
+
 }

@@ -43,8 +43,10 @@ class My_model extends CI_model
 	}
 	public function update($tname, $cond, $data)
 	{
+		$this->db->reset_query();
 		$this->db->where($cond);
-		return $this->db->update($tname, $data);
+		$this->db->set($data);
+		return $this->db->update($tname);
 	}
 
 

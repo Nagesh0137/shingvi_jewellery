@@ -27,13 +27,13 @@ function br2nl2($text)
                 <div class="card-body border-bottom">
                     <form action="<?=base_url()?>Madmin/history_details_save" method="post" enctype="multipart/form-data" id="form1">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-xxl-12 col-lg-12 mb-2">
+                                    <div class="col-xxl-6 col-lg-6 mb-2">
                                         <label for="" class="form-label">History Title</label>
                                         <input type="text" placeholder="Enter History Title" name="history_title" class="form-control" required>
                                     </div>
-                                    <div class="col-xxl-12 col-lg-12">
+                                    <div class="col-xxl-6 col-lg-6">
                                         <label for="" class="form-label">History Image</label>
                                         <input type="file" name="history_image" class="form-control">
                                     </div>

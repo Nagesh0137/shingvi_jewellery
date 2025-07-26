@@ -249,8 +249,9 @@ class Madmin extends CI_controller
 	// }
 	public function watermark_image($target = null, $wtrmrk_file = "image/logo3.png")
 	{
-		phpinfo();
-		exit;
+		return;
+		// phpinfo();
+		// exit;
 		// Set default image path if not provided
 		if ($target === null) {
 			$target = 'uploads/about-1606974153-75741.jpg'; // Relative to project root

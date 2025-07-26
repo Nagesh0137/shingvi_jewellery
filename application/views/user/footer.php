@@ -1,3 +1,75 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function() {
+        <?php if ($this->session->flashdata('success')): ?>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "<?= $this->session->flashdata('success'); ?>",
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: '#4CAF50',
+                color: '#ffffff'
+            });
+            <?php $this->session->unset_userdata('success'); ?>
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('error')): ?>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "<?= $this->session->flashdata('error'); ?>",
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: '#F44336',
+                color: '#ffffff'
+            });
+            <?php $this->session->unset_userdata('error'); ?>
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('info')): ?>
+            Swal.fire({
+                icon: 'info',
+                title: 'Info',
+                text: "<?= $this->session->flashdata('info'); ?>",
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: '#2196F3',
+                color: '#ffffff'
+            });
+            <?php $this->session->unset_userdata('info'); ?>
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('warning')): ?>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                text: "<?= $this->session->flashdata('warning'); ?>",
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: '#FF9800',
+                color: '#ffffff'
+            });
+            <?php $this->session->unset_userdata('warning'); ?>
+        <?php endif; ?>
+    });
+</script>
+
+
 <footer id="footer" style="background-color: #f4ead6;">
     <div class="footer-area section-ptb py-4">
         <div class="container">
@@ -17,8 +89,24 @@
                                     Download The App</p>
                             </div>
                         </div>
+                        <style>
+                            .footer_download_app {
+                                padding-left: 39px;
+                            }
+
+                            @media(max-width:800px) {
+                                .footer_download_app {
+                                    padding-left: 0;
+                                    text-align: center;
+                                }
+                            }
+                        </style>
+                        <div class="mt-3 footer_download_app">
+                            <a href="https://play.google.com/store/apps/details?id=com.instalaxmi.shingavi" target="_blank" class="btn text-white " style="background-color: #9c1138;border-radius:0;">Download App</a>
+                        </div>
                     </div>
                 </div>
+
 
                 <!-- Footer Columns -->
                 <div class="col-12 col-lg-9">

@@ -96,7 +96,7 @@
                         <div class="cart-drawer-info ptb-15 bst">
                             <div class="cart-drawer-content d-flex flex-wrap">
                                 <div class="cart-drawer-image  width-88">
-                                    <a href="<?= base_url() ?>user/product_detail/<?= $item[0]['product_id'] ?>"
+                                    <a href="<?= base_url() ?>user/product_details/<?= $item[0]['prod_gold_id'] ?>"
                                         class="d-block br-hidden">
                                         <img src="<?= base_url() ?>uploads/<?= $item[0]['imgs'][0] ?>" class="w-100 img-fluid"
                                             alt="<?= $item[0]['product_name'] ?>">
@@ -106,7 +106,7 @@
                                     <div class="cart-drawer-detail">
                                         <?php if (!empty($item[0]['product_name'])) {
                                         ?>
-                                            <a href="<?= base_url() ?>user/product_detail/<?= $item[0]['product_id'] ?>"
+                                            <a href="<?= base_url() ?>user/product_details/<?= $item[0]['prod_gold_id'] ?>"
                                                 class="dominant-link heading-weight"><?= $item[0]['product_name'] ?></a>
                                         <?php } ?>
                                         <!-- <?php if (!empty($size)): ?>
@@ -114,7 +114,7 @@
                                     <?php endif; ?> -->
                                         <span class="d-block mst-7"></span>
                                     </div>
-                                    <div class="heading-color heading-weight mst-7">₹<?= number_format($price*$_SESSION['cart'][$item[0]['prod_gold_id']],2) ?></div>
+                                    <div class="heading-color heading-weight mst-7">₹<?= number_format($item[0]['discounted_price'] * $_SESSION['cart'][$item[0]['prod_gold_id']], 2) ?></div>
 
                                     <div class="cart-drawer-qty-remove d-flex align-items-end justify-content-between mst-16">
                                         <div class="js-qty-wrapper">
@@ -124,7 +124,7 @@
                                                     aria-label="Remove item">
                                                     <i class="ri-subtract-line d-block lh-1"></i>
                                                 </button>
-                                                <input type="number" data-id="<?= $item[0]['prod_gold_id'] ?>" class="js-qty-num p-0 text-center border-0" value="<?=$_SESSION['cart'][$item[0]['prod_gold_id']]?>"
+                                                <input type="number" data-id="<?= $item[0]['prod_gold_id'] ?>" class="js-qty-num p-0 text-center border-0" value="<?= $_SESSION['cart'][$item[0]['prod_gold_id']] ?>"
                                                     min="1">
                                                 <button type="button"
                                                     class="js-qty-adjust js-qty-adjust-plus body-color icon-16"
@@ -141,10 +141,10 @@
                                         </button>
                                     </div>
 
-                                    <div class="text-danger font-14 mst-6">
+                                    <!-- <div class="text-danger font-14 mst-6">
                                         <i class="ri-error-warning-line mer-4"></i>Only <span class="heading-weight">15</span>
                                         in stock.
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
