@@ -4659,27 +4659,55 @@ class Madmin extends CI_controller
 		if (isset($_GET['q']) && !empty($_GET['q'])) {
 			$search_term = $this->db->escape_like_str($_GET['q']);
 			$show .= "AND (
-				user_billing_details.name LIKE '%{$search_term}%'
-				OR user_billing_details.email LIKE '%{$search_term}%'
-				OR user_billing_details.phone_number LIKE '%{$search_term}%'
-				OR user_billing_details.addr_village_city LIKE '%{$search_term}%'
-				OR user_billing_details.addr_taluk LIKE '%{$search_term}%'
-				OR user_billing_details.addr_dist LIKE '%{$search_term}%'
-				OR user_billing_details.pay_amount LIKE '%{$search_term}%'
-				OR user_billing_details.paid_amount LIKE '%{$search_term}%'
-				OR user_billing_details.payment_mode LIKE '%{$search_term}%'
+				order_tbl.payment_type LIKE '%{$search_term}%'
+				OR order_tbl.cust_city LIKE '%{$search_term}%'
+				OR order_tbl.order_charges LIKE '%{$search_term}%'
+				OR order_tbl.sub_total_amount LIKE '%{$search_term}%'
+				OR order_tbl.order_date LIKE '%{$search_term}%'
+				OR order_tbl.pay_status LIKE '%{$search_term}%'
+				OR order_tbl.c_mobile LIKE '%{$search_term}%'
+				OR order_tbl.pay_date_time LIKE '%{$search_term}%'
+				OR order_tbl.cust_pincode LIKE '%{$search_term}%'
 			)";
 		}
-		$total_rows = $this->db->query("SELECT COUNT(user_billing_details.user_billing_details_id) AS ttl_rows FROM user_billing_details WHERE user_billing_details.status='pending' " . $show . "")->result_array()[0]['ttl_rows'];
+		$total_rows = $this->db->query("SELECT COUNT(order_tbl.order_tbl_id) AS ttl_rows FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='pending' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . "")->result_array()[0]['ttl_rows'];
 
-		$per_page = 10;
+		$per_page = 50;
 		$data['start'] = $per_page * $page_no - $per_page;
 		$data['ttl_pages'] = $total_rows / $per_page;
 		$data['page_no'] = $page_no;
 
-		$data['order'] = $this->db->query("SELECT * FROM user_billing_details WHERE user_billing_details.status='pending' " . $show . " ORDER BY user_billing_details.user_billing_details_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='pending' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . " ORDER BY order_tbl.order_tbl_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
+		foreach($data['order'] as $key => $row)
+		{
+		$ttlProducts = get_table_count('ordered_product', [
+			    'status' => 'active',
+			    'order_tbl_id' => $row['order_tbl_id']
+			]);
+
+			$data['order'][$key]['ttlProducts'] = $ttlProducts;
+
+		}
 
 		$this->ov("order_pending", $data);
+	}
+
+	public function order_info($id)
+	{
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='pending' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' AND order_tbl.order_tbl_id='".$id."' ")->result_array();
+		$data['order_det'] = $this->db->query("SELECT * FROM product_gold,ordered_product WHERE ordered_product.prod_gold_id = product_gold.prod_gold_id AND ordered_product.status='active' AND ordered_product.order_tbl_id='".$id."'  ")->result_array();
+		foreach($data['order'] as $key => $row)
+		{
+			$ttlProducts = get_table_count('ordered_product', [
+				    'status' => 'active',
+				    'order_tbl_id' => $row['order_tbl_id']
+				]);
+
+				$data['order'][$key]['ttlProducts'] = $ttlProducts;
+
+		}
+		$this->ov("order_info",$data);
+
 	}
 	public function order_pending_view()
 	{

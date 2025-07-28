@@ -40,6 +40,21 @@
 //     }
 //     return strrev($m);
 // }
+if (!function_exists('get_table_count')) {
+    function get_table_count($table, $where = [])
+    {
+        $CI =& get_instance();
+        $CI->db->from($table);
+
+        if (!empty($where)) {
+            $CI->db->where($where);
+        }
+
+        return $CI->db->count_all_results();
+    }
+}
+
+
 function print_rating($rating)
 {
     ?>

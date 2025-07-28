@@ -22,7 +22,7 @@ class Login extends CI_Controller
     {
 
         if (isset($_SESSION['admin_id'])) {
-            redirect(base_url() . "admin", 'refresh');
+            redirect(base_url() . "madmin", 'refresh');
         } elseif (isset($_SESSION['business_admin_id'])) {
             redirect(base_url() . "business", 'refresh');
         } else {
@@ -34,7 +34,7 @@ class Login extends CI_Controller
     public function login_process()
     {
         if (isset($_SESSION['admin_id'])) {
-            redirect(base_url() . "admin", 'refresh');
+            redirect(base_url() . "aadmin", 'refresh');
         } else {
             if (!isset($_POST['admin_email'])) {
                 $this->load->view('login');
@@ -51,7 +51,7 @@ class Login extends CI_Controller
                     $_SESSION['admin_position_id'] = $data[0]['admin_position'];
                     $this->insert_system_log("LogIn", $data[0]['admin_name'] . " LogIn Success");
                     $this->ci_flashdata('Success', 'LogIn Success');
-                    redirect(base_url() . "admin", 'refresh');
+                    redirect(base_url() . "madmin", 'refresh');
                 }
                 // elseif (isset($data1[0])) {
 

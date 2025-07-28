@@ -2566,7 +2566,7 @@ class User extends CI_Controller
 			$user['status'] = 'active';
 			$user_id = $this->My_model->insert("customers", $user);
 			$_POST['customers_id'] = $user_id;
-
+			$_SESSION['user_id'] = $user_id;
 			$userAddres['customers_id'] = $_POST['customers_id'];
 			$userAddres['address'] = $_POST['cust_address'];
 
@@ -2580,7 +2580,7 @@ class User extends CI_Controller
 		}
 
 
-
+		$order['customers_id'] = $_POST['customers_id'];
 		$order['c_name'] = $_POST['c_name'];
 		$order['c_email'] = $_POST['c_email'];
 		$order['c_mobile'] = $_POST['c_mobile'];
@@ -2640,6 +2640,7 @@ class User extends CI_Controller
 		$data['user_det'] = $this->My_model->select_where("customers", ['customers_id' => $_POST['customers_id']]);
 		$_SESSION['user_id'] = $data['user_det'][0]['customers_id'];
 
+		
 		if ($_POST['payment_type'] == 'Online') {
 			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)$order['total_amount'], 2, '.', ''), base_url());
 			$data['response'] = json_decode($response1, true);
@@ -2701,7 +2702,7 @@ class User extends CI_Controller
 		$res = getCashfreeOrderDetails($billDet['orderId']);
 		$data['response'] = json_decode($res, true);
 		$data['bill'] = $billDet;
-		$this->My_model->update("order_tbl", ['order_tbl_id' => $bill], ['order_status' => 'confirm', 'pay_status' => 'paid', 'paid_amount' => $data['response']['order_amount'], 'pay_date_time' => time()]);
+		$this->My_model->update("order_tbl", ['order_tbl_id' => $bill], ['order_status' => 'confirm', 'pay_status' => 'paid', '	' => $data['response']['order_amount'], 'pay_date_time' => time()]);
 		$this->ov("PaymentSuccess", $data);
 	}
 	public function PaymentFailed()

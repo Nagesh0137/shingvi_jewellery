@@ -73,8 +73,9 @@
                                                     </div>
                                                     <?php 
                                                         $subtotal += floatval($row[0]['discounted_price']) *$_SESSION['cart'][$row[0]['prod_gold_id']];
+                                                        $psubtotal = floatval($row[0]['discounted_price']) *$_SESSION['cart'][$row[0]['prod_gold_id']];
                                                     ?>
-                                            <input type="hidden" name="order_det[subtotal][]" value="<?=$subtotal?>">
+                                            <input type="text" name="order_det[subtotal][]" value="<?=$psubtotal?>">
 
                                                     <div class="checkitem-price mst-23 mt-0 pt-0 pb-1 text-end border-bottom">
                                                         <div class="heading-color heading-weight">&#8377; <?=number_format(floatval($row[0]['discounted_price']) *$_SESSION['cart'][$row[0]['prod_gold_id']]) ?></div>

@@ -34,6 +34,7 @@
                                 <th>Phone No</th>
                                 <th>Order&nbsp;Amount</th>
                                 <th>Order Date</th>
+                                <th>Total Items</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -45,12 +46,13 @@
                                 ?>
                                 <tr>
                                     <td><?=++$i;?></td>
-                                    <td><?=$row['name'];?></td>
-                                    <td><?=$row['email'];?></td>
-                                    <td><?=$row['phone_number'];?></td>
-                                    <td style="font-weight: bold;">&#8377;&nbsp;<?=number_format1($row['pay_amount'])?>/-</td>
-                                    <td><?= date('d M Y ',$row['date_time']);?></td>
-                                    <td><a href="<?=base_url();?>Madmin/order_pending_view?id=<?=$row['user_billing_details_id'];?>"><button class="btn btn-primary"><i class="fa fa-print"></i> VIEW</button></a></td>
+                                    <td><?=$row['c_name'];?></td>
+                                    <td><?=$row['c_email'];?></td>
+                                    <td><?=$row['c_mobile'];?></td>
+                                    <td style="font-weight: bold;">&#8377;&nbsp;<?=number_format1($row['sub_total_amount'])?>/-</td>
+                                    <td><?= date('d M Y ',$row['order_time']);?></td>
+                                    <td><?=$row['ttlProducts']?></td>
+                                    <td><a href="<?=base_url();?>Madmin/order_info/<?=$row['order_tbl_id'];?>"><button class="btn btn-primary"><i class="fa fa-print"></i> VIEW</button></a></td>
                                 </tr>
                                 <?php
                             }

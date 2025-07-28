@@ -175,9 +175,16 @@
                     <!-- <div class="col-sm-6 col-12">
                         <a href="<?= base_url() ?>user/cart_page" class="w-100 btn-style quaternary-btn">View cart</a>
                     </div> -->
+                     <?php if (!empty($cart)){ ?>
                     <div class="col-sm-12 col-12">
                         <a href="<?= base_url() ?>user/checkout" class="w-100 btn-style secondary-btn ">Checkout</a>
                     </div>
+                    <?php }else{?>
+                        <div class="col-sm-12 col-12">
+                        <a href="<?= base_url() ?>user/index" class="w-100 btn-style secondary-btn ">Explore Products</a>
+                    </div>
+                    <?php }?>
+
                 </div>
             </div>
         </div>
