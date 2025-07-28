@@ -29,6 +29,7 @@
                         <thead>
                             <tr>
                                 <th>Sr.No</th>
+                                <th>Action</th>
                                 <th>Name</th>
                                 <th>Mobile</th>
                                 <th>Phone No</th>
@@ -46,6 +47,11 @@
                                 ?>
                                 <tr>
                                     <td><?=++$i;?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#orderProcessModal" data-orderid="<?=$row['order_tbl_id']?>">
+                                            Process Order
+                                        </button>
+                                    </td>
                                     <td><?=$row['c_name'];?></td>
                                     <td><?=$row['c_email'];?></td>
                                     <td><?=$row['c_mobile'];?></td>
@@ -77,3 +83,40 @@
 		</div>
 	</div>
 </div>
+<!-- Order Process Modal -->
+<div class="modal fade" id="orderProcessModal" tabindex="-1" aria-labelledby="orderProcessModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="post" action="<?= base_url('Madmin/process_order') ?>">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="orderProcessModalLabel">Process Order</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" name="order_tbl_id" id="orderTblId">
+          <div class="mb-3">
+            <label for="remarks" class="form-label">Remarks</label>
+            <textarea name="remarks" id="remarks" rows="4" class="form-control" placeholder="Enter remarks here..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('orderProcessModal');
+    modal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var orderId = button.getAttribute('data-orderid');
+        var input = modal.querySelector('#orderTblId');
+        input.value = orderId;
+    });
+});
+</script>

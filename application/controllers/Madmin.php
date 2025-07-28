@@ -4722,7 +4722,25 @@ class Madmin extends CI_controller
 			redirect('Madmin/order_pending');
 		}
 	}
+	public function process_order()
+	{
+		if(isset($_POST['order_tbl_id']))
+		{
+			$data = $this->My_model->update("order_tbl",['order_tbl_id'=>$_POST['order_tbl_id']],['order_status'=>'processing','processing_time'=>time(),'processing_remark'=>$_POST['remarks']]);
+			if($data)
+			{		
+				$this->ci_flashdata('success', 'Order Successfully Shifted In Processing...');
+				redirect(base_url() . 'Madmin/order_pending', 'refresh');
+			}else{
+				$this->ci_flashdata('Danger', 'Failed To Process Order...');
+				redirect(base_url() . 'Madmin/order_pending', 'refresh');
+			}
+		}else{
+			$this->ci_flashdata('success', 'Failed To Shift Order In Processing...');
+			redirect('admin/order_pending','refresh');
+		}
 
+	}
 	public function order_shift_in_processing()
 	{
 		if (isset($_POST['billing_id'])) {
