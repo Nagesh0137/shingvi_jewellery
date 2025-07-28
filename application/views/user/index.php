@@ -1882,17 +1882,19 @@
                     <div class="blog-slider swiper" id="blog-slider">
                         <div class="swiper-wrapper">
                             <?php foreach ($blogs as $key => $row) {
+
+                                // print_r($row);
                                 if ($key >= 3) break;
                             ?>
                                 <div class="swiper-slide" data-animate="animate__fadeIn">
                                     <div class="blog-post banner-hover">
                                         <div class="blog-main-img">
-                                            <a href="<?= base_url() ?>view_blog/<?= $row['web_blog_id'] ?>"
+                                            <a href="<?= base_url() ?>user/view_blog/<?= $row['web_blog_id'] ?>"
                                                 class="d-block banner-img position-relative br-hidden">
                                                 <span
                                                     class="banner-icon icon-16 position-absolute top-50 start-50 translate-middle width-48 height-48 d-flex align-items-center justify-content-center extra-bg z-1"><i
                                                         class="ri-links-line d-block lh-1"></i></span>
-                                                <img src="<?= base_url() ?>u_assets/assets/image/index3/article/a-1.jpg"
+                                                <img src="<?= base_url() ?>uploads/<?= $row['blog_image'] ?>"
                                                     class="w-100 img-fluid" alt="a-1">
                                             </a>
                                         </div>
@@ -1900,7 +1902,7 @@
                                             class="blog-post-content position-relative z-1 body-bg pst-41 plr-15 plr-sm-30 peb-23 mlr-15 mlr-sm-30 text-center border-radius">
                                             <div class="blog-date position-absolute top-0 start-0 end-0 z-1"><span
                                                     class="extra-color font-12 height-32 dominant-bg d-inline-flex align-items-center justify-content-center ptb-5 plr-15 text-center lh-1"><?= date('d M', strtotime($row['entry_date'])) ?></span></div>
-                                            <h6 class="font-18"><a href="<?= base_url() ?>view_blog/<?= $row['web_blog_id'] ?>"
+                                            <h6 class="font-18"><a href="<?= base_url() ?>user/view_blog/<?= $row['web_blog_id'] ?>"
                                                     class="d-inline-block dominant-link"><?= $row['blog_label'] ?></a></h6>
                                             <!-- <p class="mst-19">The generators on the internet tend repeat preded chunks
                                                 necess</p> -->
