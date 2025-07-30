@@ -1882,6 +1882,8 @@
                     <div class="blog-slider swiper" id="blog-slider">
                         <div class="swiper-wrapper">
                             <?php foreach ($blogs as $key => $row) {
+
+                                // print_r($row);
                                 if ($key >= 3) break;
                             ?>
                                 <div class="swiper-slide" data-animate="animate__fadeIn">
@@ -1892,7 +1894,7 @@
                                                 <span
                                                     class="banner-icon icon-16 position-absolute top-50 start-50 translate-middle width-48 height-48 d-flex align-items-center justify-content-center extra-bg z-1"><i
                                                         class="ri-links-line d-block lh-1"></i></span>
-                                                <img src="<?= base_url() ?>u_assets/assets/image/index3/article/a-1.jpg"
+                                                <img src="<?= base_url() ?>uploads/<?= $row['blog_image'] ?>"
                                                     class="w-100 img-fluid" alt="a-1">
                                             </a>
                                         </div>
