@@ -17,7 +17,7 @@
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Exchange Policy
                                         Description</label>
-                                    <textarea name="exchange_policy_details" rows="3" placeholder="Enter Exchange Policy Description"
+                                    <textarea id="ckeditor" name="exchange_policy_details" rows="3" placeholder="Enter Exchange Policy Description"
                                         class="form-control"><?= $exchange_det[0]['exchange_policy_details'] ?></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">
@@ -47,7 +47,7 @@
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Exchange Policy
                                         Description</label>
-                                    <textarea name="exchange_policy_details" rows="3" placeholder="Enter Exchange Policy Description"
+                                    <textarea id="ckeditor" name="exchange_policy_details" rows="3" placeholder="Enter Exchange Policy Description"
                                         class="form-control"></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">

@@ -9,7 +9,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class User extends CI_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -81,6 +80,10 @@ class User extends CI_Controller
 
 	protected function setToastMessage($message, $type)
 	{
+		// Map 'danger' to 'error' to match the toast display logic in footer.php
+		if ($type === 'danger') {
+			$type = 'error';
+		}
 		$this->session->set_flashdata($type, $message);
 	}
 	function resize_image($path, $width, $height)
@@ -379,7 +382,6 @@ class User extends CI_Controller
 		$_POST['status'] = 'active';
 		$_POST['payment_status'] = 'pending';
 		$_POST['orderId'] = 'ORD' . date('YmdH') . mt_rand(1000, 9999);
-
 		$sold_date = date('Y-m-d');
 		$sold_time = time();
 		$this->My_model->update("numbers_tbl", ['numbers_tbl_id' => $_POST['numbers_tbl_id'], 'status' => 'active'], ['sold_date' => $sold_date, 'sold_time' => $sold_time, 'product_status' => 'Sold']);
@@ -617,7 +619,7 @@ class User extends CI_Controller
 		$data["faq_info"] = $this->My_model->select_where("faq_tbl", ["status" => "active"]);
 		$data['about'] = $this->My_model->select_where("web_about_details", ['status' => 'active']);
 		// $data['mission_vision'] = $this->My_model->select_where("mission_vision_tbl", ["status" => "active"]);
-		$this->load->view("User/about", $data);
+		$this->load->view("user/about", $data);
 		$this->footer();
 	}
 	// public function contact()
@@ -886,7 +888,9 @@ class User extends CI_Controller
 			$_SESSION['cart'][$_POST['prod_id']] = 1;
 			$_SESSION['Size'][$_POST['prod_id']] = $_POST['size'];
 		}
-		echo json_encode(['status' => 'success', 'msg' => 'Added To Cart In session']);
+		
+		$ttl = (isset($_SESSION['cart'])) ? count($_SESSION['cart']) : 0;
+		echo json_encode(['status' => 'success', 'msg' => 'Added To Cart In session','ttlCart'=>$ttl]);
 
 		// 👉 Print session cart
 		// echo "<pre>";
@@ -944,11 +948,10 @@ class User extends CI_Controller
 		unset($_SESSION['cart'][$_POST['prod_id']]);
 		unset($_SESSION['Size'][$_POST['prod_id']]);
 		// }
+		$ttl = (isset($_SESSION['cart'])) ? count($_SESSION['cart']) : 0;
+		echo json_encode(['status' => 'success','id' => $_POST['prod_id'],'ttlCart'=>$ttl]);
 
-		echo json_encode([
-			'status' => 'success',
-			'id' => $_POST['prod_id']
-		]);
+		;
 	}
 
 
@@ -1682,41 +1685,107 @@ class User extends CI_Controller
 		$data['web_contact_details'] = $this->My_model->select("web_contact_details");
 		$data['blogs'] = array_reverse($this->My_model->select_where("web_blog", ['status' => 'active']));
 
-		$this->ov("custome_jewellery", $data);
+		if (isset($_SESSION['user_id'])) {
+			$this->ov("custome_jewellery", $data);
+		} else {
+			redirect(base_url() . "user/login", 'refresh');
+		}
 	}
 
 	public function custom_jwellery_save()
 	{
 		if (isset($_POST)) {
-			$ext = explode(".", $_FILES['image']['name'])[count(explode(".", $_FILES['image']['name'])) - 1];
-			if (strtolower($ext) != "php" && strtolower($ext) != "xml" && strtolower($ext) != "txt" && strtolower($ext) != "") {
-				$img_name = "custom_jwellery-" . time() . "-" . rand(00000, 99999) . "." . $ext;
+			// Validate mobile number (Indian format)
+			$phone_number = trim($_POST['phone_number']);
+			if (!preg_match('/^[6-9]\d{9}$/', $phone_number)) {
+				$this->setToastMessage('Please enter a valid Indian mobile number (10 digits starting with 6-9)', 'danger');
+				redirect(base_url() . "user/custome_jewellery", 'refresh');
+				return;
+			}
+
+			// Check if image is uploaded
+			if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+				$this->setToastMessage('Please upload a valid image file', 'danger');
+				redirect(base_url() . "user/custome_jewellery", 'refresh');
+				return;
+			}
+
+			// Validate image type
+			$allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+			$file_type = $_FILES['image']['type'];
+			$file_info = finfo_open(FILEINFO_MIME_TYPE);
+			$detected_type = finfo_file($file_info, $_FILES['image']['tmp_name']);
+			finfo_close($file_info);
+
+			if (!in_array($detected_type, $allowed_types) || !in_array($file_type, $allowed_types)) {
+				$this->setToastMessage('Please upload only image files (JPEG, PNG, GIF, WebP)', 'danger');
+				redirect(base_url() . "user/custome_jewellery", 'refresh');
+				return;
+			}
+
+			// Validate file size (max 5MB)
+			if ($_FILES['image']['size'] > 5 * 1024 * 1024) {
+				$this->setToastMessage('Image size should not exceed 5MB', 'danger');
+				redirect(base_url() . "user/custome_jewellery", 'refresh');
+				return;
+			}
+
+			$ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+			$allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+			if (in_array(strtolower($ext), $allowed_extensions)) {
+				$img_name = "custom_jwellery-" . time() . "-" . rand(00000, 99999) . "." . strtolower($ext);
 				$path = "uploads/";
-				move_uploaded_file($_FILES['image']['tmp_name'], $path . $img_name);
-				$_POST['image'] = $img_name;
-				$data = array(
-					'gold_color'      => strip_tags($_POST['gold_color']),
-					'budget'          => strip_tags($_POST['budget']),
-					'name'            => strip_tags($_POST['name']),
-					'phone_number'    => strip_tags($_POST['phone_number']),
-					'diamond_clarity' => strip_tags($_POST['diamond_clarity']),
-					'gold_purity'     => strip_tags($_POST['gold_purity']),
-					'description'     => strip_tags($_POST['description']),
-					'address'         => strip_tags($_POST['address']),
-					'image'           => $_POST['image'],
-					'email'           => strip_tags($_POST['email']),
-					'status'          => 'pending',
-					'date_time'       => time(),
-				);
-				$bill = $this->My_model->insert("custom_jwellery", $data);
-				$this->session->set_flashdata('Success', 'Successfully Ordered Custom Jewellery');
-				redirect(base_url() . "user/", 'refresh');
+
+				if (move_uploaded_file($_FILES['image']['tmp_name'], $path . $img_name)) {
+					$_POST['image'] = $img_name;
+
+					$data = array(
+						'gold_color'      => strip_tags($_POST['gold_color']),
+						'budget'          => strip_tags($_POST['budget']),
+						'name'            => strip_tags($_POST['name']),
+						'phone_number'    => $phone_number,
+						'diamond_clarity' => strip_tags($_POST['diamond_clarity']),
+						'gold_purity'     => strip_tags($_POST['gold_purity']),
+						'description'     => strip_tags($_POST['description']),
+						'address'         => strip_tags($_POST['address']),
+						'image'           => $_POST['image'],
+						'email'           => strip_tags($_POST['email']),
+						'status'          => 'pending',
+						'date_time'       => time(),
+						'user_id'       => $_SESSION['user_id'],
+					);
+
+					$bill = $this->My_model->insert("custom_jwellery", $data);
+
+					if ($bill) {
+						$this->setToastMessage('Custom Jewellery order submitted successfully! We will contact you soon.', 'success');
+					} else {
+						$this->setToastMessage('Failed to submit custom jewellery order. Please try again.', 'danger');
+					}
+					redirect(base_url() . "user/customer_jewellery_list", 'refresh');
+				} else {
+					$this->setToastMessage('Failed to upload image. Please try again.', 'danger');
+					redirect(base_url() . "user/custome_jewellery", 'refresh');
+				}
 			} else {
-				redirect(base_url() . "user/", 'refresh');
+				$this->setToastMessage('Please upload only image files (JPEG, PNG, GIF, WebP)', 'danger');
+				redirect(base_url() . "user/custome_jewellery", 'refresh');
 			}
 		} else {
-			$this->session->set_flashdata('Danger1', 'Error Detected');
-			redirect('user/custome_jewellery', 'refresh');
+			$this->setToastMessage('Invalid request. Please try again.', 'danger');
+			redirect(base_url() . 'user/custome_jewellery', 'refresh');
+		}
+	}
+	public function customer_jewellery_list()
+	{
+		if (isset($_SESSION['user_id'])) {
+			$data['user_det'] = $this->My_model->select_where("customers", ['customers_id' => $_SESSION['user_id']])[0];
+			$data['custom_jwellery'] = $this->My_model->select_where("custom_jwellery", ['user_id' => $_SESSION['user_id']]);
+
+			$this->ov("customer_jewellery_list", $data);
+		} else {
+			redirect(base_url() . "user/login", 'refresh');
 		}
 	}
 	public function contact()
@@ -2033,20 +2102,22 @@ class User extends CI_Controller
 			$otp = rand(1000, 9999);
 			$msg = "OTP to login " . $otp . " is your Shingavi Jewellers code and is valid for 10 minutes. Do not share the OTP with anyone. @www.shingavijewellers.com";
 			// $msg = "Dear Customer, your OTP for completing your purchase is " . $otp . ". This code is valid for 10 minutes. Please do not share it with anyone. @www.shingavijewellers.com";
+			$this->sendotp($mobile_number,$otp);
 			// send_massage($mobile_number, $msg, '1707170030888899461');
 			$existingUser = $this->My_model->select_where("customers", ['status' => 'active', 'mobile' => $_POST['mobile_number']]);
 			if (isset($existingUser[0])) {
 				$user_status = 'existing';
-				$_SESSION['user_id'] = $existingUser[0]['customers_id'];
+				$Id = $existingUser[0]['customers_id'];
 			} else {
 				$user_status = 'new';
 				$user['mobile'] = $mobile_number;
 				$user['status'] = 'active';
 				$user['reg_time'] = time();
 				$userId = $this->My_model->insert("customers", $user);
-				$_SESSION['user_id'] = $userId;
+				$Id = $userId;
 				$existingUser = $this->My_model->select_where("customers", ['status' => 'active', 'mobile' => $_POST['mobile_number']]);
 			}
+			$this->My_model->update("customers", ['customers_id' => $Id], ['status' => 'active', 'otp' => $otp]);
 			$data['mobile_number'] = $mobile_number;
 			$data['otp'] = $otp;
 			$data['otp_entry_time'] = time();
@@ -2054,11 +2125,31 @@ class User extends CI_Controller
 			$this->My_model->insert("otp_tbl", $data);
 			$product_details = getProductDetails($_POST['pId']);
 
-			echo json_encode(['status' => 'success', 'otp' => $otp, 'data' => $existingUser, 'user_status' => $user_status, 'product_details' => $product_details]);
+			echo json_encode(['status' => 'success', 'data' => $existingUser, 'user_status' => $user_status, 'product_details' => $product_details]);
 		} else {
 			echo json_encode(['status' => 'failed', 'msg' => 'Mobile Number Not Found']);
 		}
 	}
+	public function sendotp($mobile, $otp)
+    {
+        $Phno = $mobile;
+        $Msg = "Hey, Use this OTP " . $otp . " to complete your verification process. A2Z INFOTECHS.";
+        $SenderID = 'AZSOFT';
+        $UserID = 'a2zinfo';
+        $Password = 'gvgp3117GV';
+        $EntityID = '1701160371643552190';
+        $TemplateID = '1707175100431339693';
+        $ch = '';
+        $url = 'http://nimbusit.biz/api/SmsApi/SendSingleApi?UserID=' . $UserID . '&Password=' . $Password . '&SenderID=' . $SenderID . '&Phno=' . $Phno . '&Msg=' . urlencode($Msg) . '&EntityID=' . $EntityID . '&TemplateID=' . $TemplateID;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $output = curl_exec($ch);
+        curl_close($ch);
+        // echo $output;
+        // echo send_message($Phno,$Msg,$Password,$SenderID,$UserID);
+    }
 	public function login_otp()
 	{
 		header('Content-Type: application/json');
@@ -2070,6 +2161,7 @@ class User extends CI_Controller
 
 			// Generate 4-digit OTP
 			$otp = rand(1000, 9999);
+			$this->sendotp($mobile_number,$otp);
 
 			// Message (for sending via SMS if needed)
 			$msg = "OTP to login " . $otp . " is your Shingavi Jewellers code and is valid for 10 minutes. Do not share it with anyone. @www.shingavijewellers.com";
@@ -2098,6 +2190,7 @@ class User extends CI_Controller
 					'mobile' => $mobile_number
 				]);
 			}
+			$this->My_model->update("customers", ['customers_id' => $user_id], ['status' => 'active', 'otp' => $otp]);
 
 			// Store OTP in table
 			$otpData = [
@@ -2113,7 +2206,6 @@ class User extends CI_Controller
 
 			echo json_encode([
 				'status'      => 'success',
-				'otp'         => $otp, // 🔴 remove in production
 				'data'        => $existingUser,
 				'user_status' => $user_status,
 				'user_id' 	  => $user_id
@@ -2502,19 +2594,23 @@ class User extends CI_Controller
 
 
 		$ord = $this->My_model->insert("order_tbl", $order);
+		$cOrderId = date('Ymd') . str_pad($ord, 5, '0', STR_PAD_LEFT);
+		$this->My_model->update("order_tbl", ['order_tbl_id' => $ord], ['cOrderId' => $cOrderId]);
 		$order_det['order_tbl_id'] = $ord;
 		$ordDet = $this->My_model->insert("ordered_product", $order_det);
-
+    
 		foreach ($order_charges_det as $row) {
 			$row['order_tbl_id'] = $ord;
 			$row['status'] = 'active';
 			$row['entry_time'] = time();
 			$this->My_model->insert("order_charges_det", $row);
 		}
-
+    
 
 		if ($_POST['payment_type'] == 'Online') {
-			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)$total, 2, '.', ''), base_url());
+// 			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)$total, 2, '.', ''), base_url());
+			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)1, 2, '.', ''), base_url());
+			
 			$data['response'] = json_decode($response1, true);
 
 			$orderId = $data['response']['order_id'];
@@ -2548,16 +2644,13 @@ class User extends CI_Controller
 		if ($_POST['user_type'] == 'old') {
 			$_POST['customers_id'] = $_POST['customers_id'];
 			$order['customers_id'] = $_POST['customers_id'];
-			$oldUser = $this->My_model->select_where("customers",['customers_id'=>$_POST['customers_id']]);
-			if(empty($oldUser[0]['name']))
-			{
-				$this->My_model->update('customers',['customers_id'=>$_POST['customers_id']],['name'=>$_POST['c_name']]);
+			$oldUser = $this->My_model->select_where("customers", ['customers_id' => $_POST['customers_id']]);
+			if (empty($oldUser[0]['name'])) {
+				$this->My_model->update('customers', ['customers_id' => $_POST['customers_id']], ['name' => $_POST['c_name']]);
 			}
-			if(empty($oldUser[0]['email']))
-			{
-				$this->My_model->update('customers',['customers_id'=>$_POST['customers_id']],['email'=>$_POST['c_email']]);
+			if (empty($oldUser[0]['email'])) {
+				$this->My_model->update('customers', ['customers_id' => $_POST['customers_id']], ['email' => $_POST['c_email']]);
 			}
-
 		} else {
 			$user['name'] = $_POST['c_name'];
 			$user['email'] = $_POST['c_email'];
@@ -2596,6 +2689,8 @@ class User extends CI_Controller
 		$order['pay_status'] = 'pending';
 		$order['paid_amount'] = 0;
 		$ord = $this->My_model->insert("order_tbl", $order);
+		$cOrderId = date('Ymd') . str_pad($ord, 5, '0', STR_PAD_LEFT);
+		$this->My_model->update("order_tbl", ['order_tbl_id' => $ord], ['cOrderId' => $cOrderId]);
 
 		for ($o = 0; $o < count($_POST['charges_id']); $o++) {
 			$ordCharges['charges_id'] = $_POST['charges_id'][$o];
@@ -2639,14 +2734,17 @@ class User extends CI_Controller
 		}
 		$data['user_det'] = $this->My_model->select_where("customers", ['customers_id' => $_POST['customers_id']]);
 		$_SESSION['user_id'] = $data['user_det'][0]['customers_id'];
+        unset($_SESSION['cart']);
+        unset($_SESSION['Size']);
 
-		
 		if ($_POST['payment_type'] == 'Online') {
-			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)$order['total_amount'], 2, '.', ''), base_url());
+// 			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)$order['total_amount'], 2, '.', ''), base_url());
+			$response1 = createCashfreeOrder('CUST_' . $ord, $data['user_det'][0]['name'], $data['user_det'][0]['email'], $data['user_det'][0]['mobile'], number_format((float)1, 2, '.', ''), base_url());
+			
 			$data['response'] = json_decode($response1, true);
 			// print_r($data['response']);
 			$orderId = $data['response']['order_id'];
-			
+
 			$this->My_model->update("order_tbl", ['order_tbl_id' => $ord], ['orderId' => $orderId]);
 			$response = getCashfreeOrderDetails($orderId);
 			$order_data['response'] = json_decode($response, true);
@@ -2702,8 +2800,22 @@ class User extends CI_Controller
 		$res = getCashfreeOrderDetails($billDet['orderId']);
 		$data['response'] = json_decode($res, true);
 		$data['bill'] = $billDet;
-		$this->My_model->update("order_tbl", ['order_tbl_id' => $bill], ['order_status' => 'confirm', 'pay_status' => 'paid', '	' => $data['response']['order_amount'], 'pay_date_time' => time()]);
+		$this->My_model->update("order_tbl", ['order_tbl_id' => $bill], ['order_status' => 'confirm', 'pay_status' => 'paid', 'paid_amount' => $data['response']['order_amount'], 'pay_date_time' => time()]);
 		$this->ov("PaymentSuccess", $data);
+	}
+	public function checkOtpMatched()
+	{
+		$data = $this->My_model->select_where("customers", ['mobile' => $_POST['mobile_number'], 'status' => 'active']);
+		if (isset($data[0])) {
+			if ($_POST['otp'] == $data[0]['otp']) {
+				$_SESSION['user_id'] = $data[0]['customers_id'];
+				echo json_encode(['status' => 'success', 'msg' => 'OTP Matched','session'=>$_SESSION]);
+			} else {
+				echo json_encode(['status' => 'failed', 'msg' => 'OTP Not Matched']);
+			}
+		} else {
+			echo json_encode(['status' => 'failed', 'msg' => 'Something Went Wrong, Please Try Again']);
+		}
 	}
 	public function PaymentFailed()
 	{
@@ -2727,8 +2839,9 @@ class User extends CI_Controller
 			$data['bill'] = $bill_id;
 			$this->load->view("user/cashfree", $data);
 		} else {
-
-			$response1 = createCashfreeOrder('CUST_' . $bill_id, $bill['c_name'], $bill['c_email'], '91' . $bill['c_mobile'], number_format((float)$bill['total_amount'], 2, '.', ''), base_url());
+$response1 = createCashfreeOrder('CUST_' . $bill_id, $bill['c_name'], $bill['c_email'], '91' . $bill['c_mobile'], number_format((float)1, 2, '.', ''), base_url());
+			
+// 			$response1 = createCashfreeOrder('CUST_' . $bill_id, $bill['c_name'], $bill['c_email'], '91' . $bill['c_mobile'], number_format((float)$bill['total_amount'], 2, '.', ''), base_url());
 			$data['response'] = json_decode($response1, true);
 			print_r($data['response']);
 			exit;
@@ -2744,8 +2857,8 @@ class User extends CI_Controller
 	{
 
 		$otp = rand(1111, 9999);
-		$_POST['mobile_number'] = '919075461110';
-		// $this->send_otp($_POST['mobile_number'],$otp);
+		$_POST['mobile_number'] = '9075461110';
+		$this->send_otp($_POST['mobile_number'],$otp);
 		$msg = "OTP to login '" . $otp . "' is your Shingavi Jewellers code and is valid for 10 minutes. Do not share the OTP with anyone. @www.shingavijewellers.com";
 		// OTP to login {#var#} is your Shingavi Jewellers code and is valid for 10 minutes. Do not share the OTP with anyone. @www.shingavijewellers.com
 		send_massage($_POST['mobile_number'], $msg, '1707170030888899461');
@@ -2757,7 +2870,7 @@ class User extends CI_Controller
 	public function test_send_otp()
 	{
 		// --- STEP 1: Set mobile number, OTP and template ID ---
-		$mobile2 = '9075461110'; // Test 10-digit mobile number
+		$mobile2 = '919075461110'; // Test 10-digit mobile number
 		$otp = rand(100000, 999999); // Generate OTP
 		$msg = "OTP to login '" . $otp . "' is your Shingavi Jewellers code and is valid for 10 minutes. Do not share the OTP with anyone. @www.shingavijewellers.com"; // Message to send
 		$template_id = '1707170030888899461'; // Replace with actual DLT template ID
@@ -2782,7 +2895,7 @@ class User extends CI_Controller
 			$api_url .= '&mobiles=' . $mobile;
 			$api_url .= '&message=' . $encoded_msg;
 			$api_url .= '&country=91&route=4&DLT_TE_ID=' . $template_id . '&response=json&sender=SHGJPL';
-
+			echo $api_url;
 			// Initialize cURL
 			$curl = curl_init();
 			curl_setopt_array($curl, array(
@@ -2819,9 +2932,13 @@ class User extends CI_Controller
 
 	public function login()
 	{
-		$this->ov("login");
+		if(!isset($_SESSION['user_id']))
+		{
+			$this->ov("login");
+		}else{
+			$this->my_account();
+		}
 	}
-
 
 
 
@@ -2832,17 +2949,74 @@ class User extends CI_Controller
 	// Rohan Start
 	public function my_orders()
 	{
-		echo $_SESSION['user_id'];
-		// $user_details = $this->My_model->select_where("customers", ['status' => 'active','customers_id' => $_SESSION['user_id']]);
-		$data['user_details'] = $this->db->query("SELECT * FROM ordered_product,order_tbl,customers WHERE ordered_product.order_tbl_id = order_tbl.order_tbl_id AND order_tbl.customers_id = customers.customers_id AND order_tbl.status = 'active' AND customers.status = 'active' AND customers.customers_id = '" . $_SESSION['user_id'] . "'")->result_array();
+		$page_no = 1;
+		$show = "";
+		extract($_GET);
+		if (isset($_GET['q']) && !empty($_GET['q'])) {
+			$search_term = $this->db->escape_like_str($_GET['q']);
+			$show .= "AND (
+				order_tbl.payment_type LIKE '%{$search_term}%'
+				OR order_tbl.cust_city LIKE '%{$search_term}%'
+				OR order_tbl.order_charges LIKE '%{$search_term}%'
+				OR order_tbl.sub_total_amount LIKE '%{$search_term}%'
+				OR order_tbl.order_date LIKE '%{$search_term}%'
+				OR order_tbl.pay_status LIKE '%{$search_term}%'
+				OR order_tbl.c_mobile LIKE '%{$search_term}%'
+				OR order_tbl.pay_date_time LIKE '%{$search_term}%'
+				OR order_tbl.cust_pincode LIKE '%{$search_term}%'
+			)";
+		}
+		$total_rows = $this->db->query("SELECT COUNT(order_tbl.order_tbl_id) AS ttl_rows FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' AND customers.customers_id='" . $_SESSION['user_id'] . "' " . $show . "")->result_array()[0]['ttl_rows'];
+
+		$per_page = 50;
+		$data['start'] = $per_page * $page_no - $per_page;
+		$data['ttl_pages'] = $total_rows / $per_page;
+		$data['page_no'] = $page_no;
+
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' AND customers.customers_id='" . $_SESSION['user_id'] . "' " . $show . " ORDER BY order_tbl.order_tbl_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
 		// echo $this->db->last_query();
-		// echo "<pre>";
-		// print_r($data);
-		// echo "</pre>";
-		// exit;
+		foreach ($data['order'] as $key => $row) {
+			$data['order'][$key]['order_det'] = $this->db->query("SELECT * FROM product_gold,ordered_product WHERE ordered_product.prod_gold_id = product_gold.prod_gold_id AND ordered_product.status='active' AND ordered_product.order_tbl_id='" . $row['order_tbl_id'] . "'  ")->result_array();
+			$ttlProducts = get_table_count('ordered_product', [
+				'status' => 'active',
+				'order_tbl_id' => $row['order_tbl_id']
+			]);
+
+			$data['order'][$key]['ttlProducts'] = $ttlProducts;
+		}
+
+
 		$this->ov("my_orders", $data);
 	}
 
+	public function order_info($id)
+	{
+		$data['company_det'] = $this->My_model->select_where("company_details_tbl", ['status' => 'active']);
+
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' AND order_tbl.order_tbl_id='" . $id . "' ")->result_array();
+		$data['order_det'] = $this->db->query("SELECT * FROM product_gold,ordered_product WHERE ordered_product.prod_gold_id = product_gold.prod_gold_id AND ordered_product.status='active' AND ordered_product.order_tbl_id='" . $id . "'  ")->result_array();
+		foreach ($data['order'] as $key => $row) {
+			$ttlProducts = get_table_count('ordered_product', [
+				'status' => 'active',
+				'order_tbl_id' => $row['order_tbl_id']
+			]);
+
+			$data['order'][$key]['ttlProducts'] = $ttlProducts;
+		}
+
+		$this->ov("order_info", $data);
+	}
+	public function update_invoiceId()
+	{
+		$data = $this->My_model->select_where("order_tbl", ['status' => 'active']);
+		foreach ($data as $row) {
+			$d =  date('Ymd', $row['order_time']);
+			$invoice_id = date('Ymd') . str_pad($row['order_tbl_id'], 5, '0', STR_PAD_LEFT);
+			echo $invoice_id . "<br>";
+			$this->My_model->update("order_tbl", ['order_tbl_id' => $row['order_tbl_id']], ['cOrderId' => $invoice_id]);
+		}
+		echo json_encode($data);
+	}
 	// order_view
 	public function order_view($id)
 	{
@@ -3176,6 +3350,8 @@ class User extends CI_Controller
 		$products = $this->db->query(
 			"SELECT * FROM category, product_gold WHERE product_gold.cat_id = category.category_id AND product_gold.status = 'active' $catQ $show $ageQ $pgId ORDER BY product_gold.prod_gold_id DESC LIMIT " . $data['start'] . "," . $per_page
 		)->result_array();
+		// print_r($_GET);
+		// exit;
 		// Get categories and product groups
 		$data['category'] = $this->My_model->select_where("category", ['category_id' => $_GET['cat_id'], 'status' => 'active']);
 		// Only fetch product groups for the selected category
@@ -3233,6 +3409,84 @@ class User extends CI_Controller
 		// exit;
 		$this->ov("product_details_filter", $data);
 	}
+	public function show_special_product()
+	{
+
+		$data['products'] = [];
+
+		if (isset($_GET['special_days_id'])) {
+			$data['products'] = $this->db->query("SELECT * FROM product_gold, special_days WHERE product_gold.special_days_id = special_days.special_days_id AND special_days.status = 'active' AND product_gold.special_days_id != '' AND product_gold.label != 'Out Of Stock' AND product_gold.special_days_id LIKE '%" . $_GET['special_days_id'] . "%'")->result_array();
+			if (!empty($data['products'])) {
+				foreach ($data['products'] as $key => $row) {
+					// Determine price based on category
+					if ($row['cat_id'] == 5) {
+						$price = $this->goldprice($row['prod_gold_id']);
+						$discount_price = $this->discountgoldprice($row['prod_gold_id']);
+					} elseif ($row['cat_id'] == 6) {
+						$price = $this->silverprice($row['prod_gold_id']);
+						$discount_price = $this->discountsilverprice($row['prod_gold_id']);
+					} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+						$price = $this->golddiamondprice($row['prod_gold_id']);
+					} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+						$price = $this->silverdiamondprice($row['prod_gold_id']);
+					}
+
+					// Assign price and discount values to products
+					$data['products'][$key]['price'] = $price;
+					$data['products'][$key]['discount_price'] = $discount_price;
+
+					// Convert rating to an integer
+					if (isset($data['products'][$key]['rating'])) {
+						$data['products'][$key]['rating'] = (int)$data['products'][$key]['rating'];
+					} else {
+						$data['products'][$key]['rating'] = 0;
+					}
+					$data['products'][$key]['cart'] = "No";
+					if (isset($_SESSION['user_id'])) {
+						if (isset($this->My_model->select_where('user_cart', ['user_id' => $_SESSION['user_id'], 'prod_id' => $row['prod_gold_id'], 'status' => 'pending'])[0]))
+							$data['products'][$key]['cart'] = "Yes";
+					}
+				}
+			}
+		} else {
+			$data['products'] = $this->db->query("SELECT * FROM product_gold, special_days WHERE product_gold.special_days_id = special_days.special_days_id AND special_days.status = 'active' AND product_gold.special_days_id != '' AND product_gold.label != 'Out Of Stock'")->result_array();
+			if (!empty($data['products'])) {
+				foreach ($data['products'] as $key => $row) {
+					// Determine price based on category
+					if ($row['cat_id'] == 5) {
+						$price = $this->goldprice($row['prod_gold_id']);
+						$discount_price = $this->discountgoldprice($row['prod_gold_id']);
+					} elseif ($row['cat_id'] == 6) {
+						$price = $this->silverprice($row['prod_gold_id']);
+						$discount_price = $this->discountsilverprice($row['prod_gold_id']);
+					} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dgold') {
+						$price = $this->golddiamondprice($row['prod_gold_id']);
+					} elseif ($row['cat_id'] == 8 && $row['entry_type'] == 'dsilver') {
+						$price = $this->silverdiamondprice($row['prod_gold_id']);
+					}
+
+					// Assign price and discount values to products
+					$data['products'][$key]['price'] = $price;
+					$data['products'][$key]['discount_price'] = $discount_price;
+
+					// Convert rating to an integer
+					if (isset($data['products'][$key]['rating'])) {
+						$data['products'][$key]['rating'] = (int)$data['products'][$key]['rating'];
+					} else {
+						$data['products'][$key]['rating'] = 0;
+					}
+					$data['products'][$key]['cart'] = "No";
+					if (isset($_SESSION['user_id'])) {
+						if (isset($this->My_model->select_where('user_cart', ['user_id' => $_SESSION['user_id'], 'prod_id' => $row['prod_gold_id'], 'status' => 'pending'])[0]))
+							$data['products'][$key]['cart'] = "Yes";
+					}
+				}
+			}
+		}
+
+		$this->ov("products", $data);
+	}
+
 
 	public function save_review()
 	{
@@ -3264,7 +3518,7 @@ class User extends CI_Controller
 		}
 
 
-		$_POST['user_id'] = $_SESSION['user_id'];
+		$_POST['user_id'] = $_SESSION['user_id'] ?? '';
 		$_POST['status'] = 'active';
 		$_POST['entry_time'] = time();
 		$_POST['entry_date'] = date("Y-m-d");
@@ -3386,4 +3640,67 @@ class User extends CI_Controller
 			redirect(base_url('user/my_address'));
 		}
 	}
+	public function save_blog_comment()
+	{
+		$data = $this->My_model->select("web_contact_details");
+		if (isset($_SESSION['user_id']))
+			$_POST['user_id'] = $_SESSION['user_id'];
+
+		unset($_POST['auto_approve']);
+		$_POST['status'] = 'active';
+		$_POST['entry_time'] = time();
+		$_POST['entry_date'] = date("Y-m-d");
+		$_POST['author'] = strip_tags($_POST['author']);
+		$_POST['email'] = strip_tags($_POST['email']);
+		$_POST['mobile'] = strip_tags($_POST['mobile']);
+		$_POST['comment'] = strip_tags($_POST['comment']);
+		// print_r($_POST);
+		// exit;
+
+		$data = $this->My_model->insert("blog_comments", $_POST);
+
+		// $a_hed = "New Comment On Your Blog";
+		// $a_msg = "New Comment On Blog For You<br> From : " . $_POST['author'] . " <br> Email : " . $_POST['email'] . " <br> Mobile : " . $_POST['mobile'] . "<br>Comment<br>" . $_POST['comment'] . "<br><br><br><h2>Blog Link</h2><br>" . base_url() . "/index/view_blog/" . $_POST['blog_id'];
+		// $this->send_mail($data[0]['email1'], $a_hed, $a_msg);
+
+		// $c_hed = "Shingavi Jewellers";
+
+		// $c_msg = "<h1>Thanks For Comment Us..</h1> We Will Stay Updated For You..";
+
+		// $this->send_mail($_POST['email'], $c_hed, $c_msg);
+		$this->session->set_flashdata('msg', 'Added successfully');
+		redirect(base_url() . 'user/view_blog/' . $_POST['blog_id'], 'refresh');
+	}
+	// public function send_mail($email, $subject, $message)
+	// {
+	// 	require_once("plugins/PHPMailerAutoload.php");
+	// 	$mail = new PHPMailer;
+	// 	$mail->SMTPOptions = array(
+	// 		'ssl' => array(
+	// 			'verify_peer' => false,
+	// 			'verify_peer_name' => false,
+	// 			'allow_self_signed' => true,
+	// 		),
+	// 	);
+	// 	$mail->isSMTP(); // Set mailer to use SMTP
+	// 	$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
+	// 	$mail->SMTPAuth = true;
+	// 	$mail->SMTDebug = 2;
+	// 	$from_label = "Shingavi Jewellers";
+	// 	$mail->Username = 'nilbor407@gmail.com'; // SMTP username
+	// 	$mail->Password = '95030771'; // SMTP password
+	// 	$mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
+	// 	$mail->Port = 465;
+	// 	$mail->setFrom('nilbor407@gmail.com', 'Shingavi Jewellers');
+	// 	$mail->addAddress($email);
+	// 	$mail->isHTML(true);
+	// 	$mail->Subject = $subject;
+	// 	$mail->Body = $message;
+	// 	$mail->AltBody = strip_tags($message);
+	// 	if ($mail->send()) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 }

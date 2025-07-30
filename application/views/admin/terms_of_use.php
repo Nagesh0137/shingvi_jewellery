@@ -16,7 +16,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Terms Of Use Description</label>
-                                    <textarea name="terms_of_use_details" rows="3" placeholder="Enter Terms Of Use Description"
+                                    <textarea id="ckeditor" name="terms_of_use_details" rows="3" placeholder="Enter Terms Of Use Description"
                                         class="form-control"><?= $terms_of_use_det[0]['terms_of_use_details'] ?></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">
@@ -45,7 +45,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Terms Of Use Description</label>
-                                    <textarea name="terms_of_use_details" rows="3" placeholder="Enter Terms Of Use Description"
+                                    <textarea id="ckeditor" name="terms_of_use_details" rows="3" placeholder="Enter Terms Of Use Description"
                                         class="form-control"></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">

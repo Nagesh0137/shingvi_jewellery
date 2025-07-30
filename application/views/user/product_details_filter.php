@@ -586,7 +586,7 @@
                                 } else { ?>
                                     <div class="col-12">
                                         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/3082/3082035.png" alt="No Jewellery Products" style="width: 120px; opacity: 0.8; margin-bottom: 20px;">
+                                            <img src="https://www.suprameds.in/assets/img/No_Product_Found.png" alt="No Jewellery Products" style="width: 260px; opacity: 0.9; margin-bottom: 20px;">
                                             <h3 style="color: #dc3545; font-weight: bold; margin-bottom: 10px;">Product Not Found</h3>
                                             <p style="color: #555; font-size: 1.1rem; text-align: center; max-width: 400px;">Sorry, we couldn't find any products matching your filter criteria. Please try adjusting your filters or browse other categories.</p>
                                         </div>

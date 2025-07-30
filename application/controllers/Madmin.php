@@ -450,12 +450,14 @@ class Madmin extends CI_controller
 		$data['dashboard']['gold_products'] = count($this->My_model->select_where("product_gold", ['cat_id' => 5, 'status' => 'active']));
 		$data['dashboard']['silver_products'] = count($this->My_model->select_where("product_gold", ['cat_id' => 6, 'status' => 'active']));
 		$data['dashboard']['diamond_products'] = count($this->My_model->select_where("product_gold", ['cat_id' => 8, 'status' => 'active']));
-		$data['dashboard']['pending_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'pending']));
-		$data['dashboard']['confirm_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'confirm']));
-		$data['dashboard']['processing_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'processing']));
-		$data['dashboard']['dispatch_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'dispatch']));
-		$data['dashboard']['delivered_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'delivered']));
-		$data['dashboard']['rejected_order'] = count($this->My_model->select_where("user_billing_details", ['status' => 'rejected']));
+	$data['dashboard']['pending_order'] = $this->db->query("SELECT COUNT(order_tbl_id) as ttl FROM order_tbl WHERE order_status = 'pending'")->row()->ttl;
+	$data['dashboard']['confirm_order'] = $this->db->query("SELECT COUNT(order_tbl_id) as ttl FROM order_tbl WHERE order_status = 'confirm'")->row()->ttl;
+	$data['dashboard']['processing_order'] = $this->db->query("SELECT COUNT(order_tbl_id) as ttl FROM order_tbl WHERE order_status = 'processing'")->row()->ttl;
+	$data['dashboard']['dispatch_order'] = $this->db->query("SELECT COUNT(order_tbl_id) as ttl FROM order_tbl WHERE order_status = 'dispatch'")->row()->ttl;
+	$data['dashboard']['delivered_order'] = $this->db->query("SELECT COUNT(order_tbl_id) as ttl FROM order_tbl WHERE order_status = 'delivered'")->row()->ttl;
+	$data['dashboard']['rejected_order'] = $this->db->query("SELECT COUNT(order_tbl_id) as ttl FROM order_tbl WHERE order_status = 'rejected'")->row()->ttl;
+	// print_r($data['dashboard']);
+	// exit;
 
 		$data['dashboard']['pending_cj'] = count($this->My_model->select_where("custom_jwellery", ['status' => 'pending']));
 
@@ -469,6 +471,10 @@ class Madmin extends CI_controller
 		$data['diamond_rate'] = $this->db->query("SELECT * FROM rate_diamond WHERE status='active' ORDER BY rate_diamond_id DESC LIMIT 1")->result_array();
 		$data['dashboard']['act_customers'] = count($this->My_model->select_where("customers", ['status' => 'active']));
 		$data['dashboard']['block_customers'] = count($this->My_model->select_where("customers", ['status' => 'block']));
+        $data['paid_amount'] = $this->db->query("SELECT SUM(paid_amount) as ttlPaid FROM order_tbl WHERE status='active' AND pay_status='paid' ")->result_array()[0]['ttlPaid'] ?? 0;
+        
+		$data['orderStatus'] = $this->db->query("SELECT COUNT(order_tbl_id) as ttlOrders, order_status FROM order_tbl WHERE status='active' GROUP BY order_status ")->result_array();
+		
 		$this->ov("index", $data);
 	}
 	public function ci_flashdata($type, $msg, $set = "yes")
@@ -507,7 +513,7 @@ class Madmin extends CI_controller
 				redirect('Madmin/edit_admin_details', 'refresh');
 			} else {
 				$this->session->set_flashdata('error', 'Enter Correct Old Password...', "yes");
-				redirect('Jadmin/edit_admin_details', 'refresh');
+				redirect('Madmin/edit_admin_details', 'refresh');
 			}
 		} else {
 			$da = array(
@@ -521,6 +527,9 @@ class Madmin extends CI_controller
 			redirect('Madmin/edit_admin_details', 'refresh');
 		}
 	}
+
+
+
 	public function all_system_notification()
 	{
 
@@ -2509,6 +2518,15 @@ class Madmin extends CI_controller
 				$_POST['sizeChart'] = $img_name;
 			}
 			$data['sizeChart'] = $_POST['sizeChart'];
+
+			if ($_FILES['size_guide']['name'] != "") {
+				$ext = explode(".", $_FILES['size_guide']['name'])[count(explode(".", $_FILES['size_guide']['name'])) - 1];
+				$img_name = "size_guide-" . time() . "-" . rand(00000, 99999) . "." . $ext;
+				$path = "uploads/";
+				move_uploaded_file($_FILES['size_guide']['tmp_name'], $path . $img_name);
+				$_POST['size_guide'] = $img_name;
+			}
+			$data['size_guide'] = $_POST['size_guide'];
 			$data['status'] = "active";
 			$data['entry_by'] = $_SESSION['admin_id'];
 			$data['entry_time'] = time();
@@ -3866,7 +3884,7 @@ class Madmin extends CI_controller
 		$data['ttl_pages'] = $total_rows / $per_page;
 		$data['total_pages'] = $data['ttl_pages'];
 		$data['page_no'] = $page_no;
-		$data['products'] = $this->db->query("SELECT * FROM product_gold as pg, category as c  WHERE  pg.cat_id = c.category_id and pg.status='active' and c.category_name = 'Silver' " . $show . "ORDER BY prod_gold_id ASC limit " . $data['start'] . "," . $per_page)->result_array();
+		$data['products'] = $this->db->query("SELECT * FROM product_gold as pg, category as c  WHERE  pg.cat_id = c.category_id and pg.status='active' and c.category_name = 'Silver' " . $show . "ORDER BY prod_gold_id DESC limit " . $data['start'] . "," . $per_page)->result_array();
 
 		foreach ($data['products'] as $key => $row) {
 			$check = $this->My_model->select_where("silver_product_offer", ['prod_silver_id' => $row['prod_gold_id'], 'status' => 'active']);
@@ -4182,7 +4200,12 @@ class Madmin extends CI_controller
 	}
 	public function silver_product_list_update_information()
 	{
-		$_POST['ring_size'] = implode(',', $_POST['ring_size']);
+		if (isset($_POST['ring_size']) && !empty($_POST['ring_size'])) {
+			// Ensure ring_size is an array and implode it into a string
+			$_POST['ring_size'] = implode(',', $_POST['ring_size']);
+		} else {
+			$_POST['ring_size'] = null;
+		}
 		$data = array(
 			'cat_id' => $_POST['cat_id'],
 			'group_id' => $_POST['group_id'],
@@ -4678,36 +4701,107 @@ class Madmin extends CI_controller
 		$data['page_no'] = $page_no;
 
 		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='pending' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . " ORDER BY order_tbl.order_tbl_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
-		foreach($data['order'] as $key => $row)
-		{
-		$ttlProducts = get_table_count('ordered_product', [
-			    'status' => 'active',
-			    'order_tbl_id' => $row['order_tbl_id']
+		foreach ($data['order'] as $key => $row) {
+			$ttlProducts = get_table_count('ordered_product', [
+				'status' => 'active',
+				'order_tbl_id' => $row['order_tbl_id']
 			]);
 
 			$data['order'][$key]['ttlProducts'] = $ttlProducts;
-
 		}
 
 		$this->ov("order_pending", $data);
 	}
+	public function order_processing()
+	{
+		$page_no = 1;
+		$show = "";
+		extract($_GET);
+		if (isset($_GET['q']) && !empty($_GET['q'])) {
+			$search_term = $this->db->escape_like_str($_GET['q']);
+			$show .= "AND (
+				order_tbl.payment_type LIKE '%{$search_term}%'
+				OR order_tbl.cust_city LIKE '%{$search_term}%'
+				OR order_tbl.order_charges LIKE '%{$search_term}%'
+				OR order_tbl.sub_total_amount LIKE '%{$search_term}%'
+				OR order_tbl.order_date LIKE '%{$search_term}%'
+				OR order_tbl.pay_status LIKE '%{$search_term}%'
+				OR order_tbl.c_mobile LIKE '%{$search_term}%'
+				OR order_tbl.pay_date_time LIKE '%{$search_term}%'
+				OR order_tbl.cust_pincode LIKE '%{$search_term}%'
+			)";
+		}
+		$total_rows = $this->db->query("SELECT COUNT(order_tbl.order_tbl_id) AS ttl_rows FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='processing' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . "")->result_array()[0]['ttl_rows'];
 
+		$per_page = 50;
+		$data['start'] = $per_page * $page_no - $per_page;
+		$data['ttl_pages'] = $total_rows / $per_page;
+		$data['page_no'] = $page_no;
+
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='processing' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . " ORDER BY order_tbl.order_tbl_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
+		foreach ($data['order'] as $key => $row) {
+			$ttlProducts = get_table_count('ordered_product', [
+				'status' => 'active',
+				'order_tbl_id' => $row['order_tbl_id']
+			]);
+
+			$data['order'][$key]['ttlProducts'] = $ttlProducts;
+		}
+
+		$this->ov("order_processing", $data);
+	}
+
+	public function order_rejected()
+	{
+		$page_no = 1;
+		$show = "";
+		extract($_GET);
+		if (isset($_GET['q']) && !empty($_GET['q'])) {
+			$search_term = $this->db->escape_like_str($_GET['q']);
+			$show .= "AND (
+				order_tbl.payment_type LIKE '%{$search_term}%'
+				OR order_tbl.cust_city LIKE '%{$search_term}%'
+				OR order_tbl.order_charges LIKE '%{$search_term}%'
+				OR order_tbl.sub_total_amount LIKE '%{$search_term}%'
+				OR order_tbl.order_date LIKE '%{$search_term}%'
+				OR order_tbl.pay_status LIKE '%{$search_term}%'
+				OR order_tbl.c_mobile LIKE '%{$search_term}%'
+				OR order_tbl.pay_date_time LIKE '%{$search_term}%'
+				OR order_tbl.cust_pincode LIKE '%{$search_term}%'
+			)";
+		}
+		$total_rows = $this->db->query("SELECT COUNT(order_tbl.order_tbl_id) AS ttl_rows FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='rejected' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . "")->result_array()[0]['ttl_rows'];
+
+		$per_page = 50;
+		$data['start'] = $per_page * $page_no - $per_page;
+		$data['ttl_pages'] = $total_rows / $per_page;
+		$data['page_no'] = $page_no;
+
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='rejected' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . " ORDER BY order_tbl.order_tbl_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
+		foreach ($data['order'] as $key => $row) {
+			$ttlProducts = get_table_count('ordered_product', [
+				'status' => 'active',
+				'order_tbl_id' => $row['order_tbl_id']
+			]);
+
+			$data['order'][$key]['ttlProducts'] = $ttlProducts;
+		}
+
+		$this->ov("order_rejected", $data);
+	}
 	public function order_info($id)
 	{
-		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='pending' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' AND order_tbl.order_tbl_id='".$id."' ")->result_array();
-		$data['order_det'] = $this->db->query("SELECT * FROM product_gold,ordered_product WHERE ordered_product.prod_gold_id = product_gold.prod_gold_id AND ordered_product.status='active' AND ordered_product.order_tbl_id='".$id."'  ")->result_array();
-		foreach($data['order'] as $key => $row)
-		{
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' AND order_tbl.order_tbl_id='" . $id . "' ")->result_array();
+		$data['order_det'] = $this->db->query("SELECT * FROM product_gold,ordered_product WHERE ordered_product.prod_gold_id = product_gold.prod_gold_id AND ordered_product.status='active' AND ordered_product.order_tbl_id='" . $id . "'  ")->result_array();
+		foreach ($data['order'] as $key => $row) {
 			$ttlProducts = get_table_count('ordered_product', [
-				    'status' => 'active',
-				    'order_tbl_id' => $row['order_tbl_id']
-				]);
+				'status' => 'active',
+				'order_tbl_id' => $row['order_tbl_id']
+			]);
 
-				$data['order'][$key]['ttlProducts'] = $ttlProducts;
-
+			$data['order'][$key]['ttlProducts'] = $ttlProducts;
 		}
-		$this->ov("order_info",$data);
-
+		$this->ov("order_info", $data);
 	}
 	public function order_pending_view()
 	{
@@ -4724,22 +4818,67 @@ class Madmin extends CI_controller
 	}
 	public function process_order()
 	{
-		if(isset($_POST['order_tbl_id']))
-		{
-			$data = $this->My_model->update("order_tbl",['order_tbl_id'=>$_POST['order_tbl_id']],['order_status'=>'processing','processing_time'=>time(),'processing_remark'=>$_POST['remarks']]);
-			if($data)
-			{		
+		if (isset($_POST['order_tbl_id'])) {
+			$data = $this->My_model->update("order_tbl", ['order_tbl_id' => $_POST['order_tbl_id']], ['order_status' => 'processing', 'processing_time' => time(), 'processing_remark' => $_POST['remarks']]);
+			if ($data) {
 				$this->ci_flashdata('success', 'Order Successfully Shifted In Processing...');
 				redirect(base_url() . 'Madmin/order_pending', 'refresh');
-			}else{
+			} else {
 				$this->ci_flashdata('Danger', 'Failed To Process Order...');
 				redirect(base_url() . 'Madmin/order_pending', 'refresh');
 			}
-		}else{
+		} else {
 			$this->ci_flashdata('success', 'Failed To Shift Order In Processing...');
-			redirect('admin/order_pending','refresh');
+			redirect('admin/order_pending', 'refresh');
 		}
-
+	}
+	public function dispatch_order()
+	{
+		if (isset($_POST['order_tbl_id'])) {
+			$data = $this->My_model->update("order_tbl", ['order_tbl_id' => $_POST['order_tbl_id']], ['order_status' => 'dispatch', 'dispatch_time' => time(), 'dispatch_remark' => $_POST['remarks']]);
+			if ($data) {
+				$this->ci_flashdata('success', 'Order Successfully Shifted In Dispatched...');
+				redirect(base_url() . 'Madmin/order_processing', 'refresh');
+			} else {
+				$this->ci_flashdata('Danger', 'Failed To Dispatched Order...');
+				redirect(base_url() . 'Madmin/order_processing', 'refresh');
+			}
+		} else {
+			$this->ci_flashdata('success', 'Failed To Shift Order In Processing...');
+			redirect('admin/order_processing', 'refresh');
+		}
+	}
+	public function delivered_order()
+	{
+		if (isset($_POST['order_tbl_id'])) {
+			$data = $this->My_model->update("order_tbl", ['order_tbl_id' => $_POST['order_tbl_id']], ['order_status' => 'delivered', 'delivered_time' => time(), 'delivered_remark' => $_POST['remarks']]);
+			if ($data) {
+				$this->ci_flashdata('success', 'Order Successfully Shifted In Delivered...');
+				redirect(base_url() . 'Madmin/order_dispatch', 'refresh');
+			} else {
+				$this->ci_flashdata('Danger', 'Failed To Delivered Order...');
+				redirect(base_url() . 'Madmin/order_dispatch', 'refresh');
+			}
+		} else {
+			$this->ci_flashdata('success', 'Failed To Shift Order In Processing...');
+			redirect('admin/order_dispatch', 'refresh');
+		}
+	}
+	public function reject_order()
+	{
+		if (isset($_POST['order_tbl_id'])) {
+			$data = $this->My_model->update("order_tbl", ['order_tbl_id' => $_POST['order_tbl_id']], ['order_status' => 'rejected', 'rejected_time' => time(), 'rejected_remark' => $_POST['remarks']]);
+			if ($data) {
+				$this->ci_flashdata('success', 'Order Rejected...');
+				redirect(base_url() . 'Madmin/order_rejected', 'refresh');
+			} else {
+				$this->ci_flashdata('Danger', 'Failed To Delivered Order...');
+				redirect(base_url() . 'Madmin/order_rejected', 'refresh');
+			}
+		} else {
+			$this->ci_flashdata('success', 'Failed To Shift Order In Processing...');
+			redirect('admin/order_rejected', 'refresh');
+		}
 	}
 	public function order_shift_in_processing()
 	{
@@ -4889,32 +5028,41 @@ class Madmin extends CI_controller
 	}
 	public function order_dispatch()
 	{
+
 		$page_no = 1;
 		$show = "";
 		extract($_GET);
 		if (isset($_GET['q']) && !empty($_GET['q'])) {
 			$search_term = $this->db->escape_like_str($_GET['q']);
 			$show .= "AND (
-				user_billing_details.name LIKE '%{$search_term}%'
-				OR user_billing_details.email LIKE '%{$search_term}%'
-				OR user_billing_details.phone_number LIKE '%{$search_term}%'
-				OR user_billing_details.addr_village_city LIKE '%{$search_term}%'
-				OR user_billing_details.addr_taluk LIKE '%{$search_term}%'
-				OR user_billing_details.addr_dist LIKE '%{$search_term}%'
-				OR user_billing_details.pay_amount LIKE '%{$search_term}%'
-				OR user_billing_details.paid_amount LIKE '%{$search_term}%'
-				OR user_billing_details.payment_mode LIKE '%{$search_term}%'
+				order_tbl.payment_type LIKE '%{$search_term}%'
+				OR order_tbl.cust_city LIKE '%{$search_term}%'
+				OR order_tbl.order_charges LIKE '%{$search_term}%'
+				OR order_tbl.sub_total_amount LIKE '%{$search_term}%'
+				OR order_tbl.order_date LIKE '%{$search_term}%'
+				OR order_tbl.pay_status LIKE '%{$search_term}%'
+				OR order_tbl.c_mobile LIKE '%{$search_term}%'
+				OR order_tbl.pay_date_time LIKE '%{$search_term}%'
+				OR order_tbl.cust_pincode LIKE '%{$search_term}%'
 			)";
 		}
-		$total_rows = $this->db->query("SELECT COUNT(user_billing_details.user_billing_details_id) AS ttl_rows FROM user_billing_details WHERE user_billing_details.status='dispatch' " . $show . "")->result_array()[0]['ttl_rows'];
-		$per_page = 10;
+		$total_rows = $this->db->query("SELECT COUNT(order_tbl.order_tbl_id) AS ttl_rows FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='dispatch' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . "")->result_array()[0]['ttl_rows'];
+
+		$per_page = 50;
 		$data['start'] = $per_page * $page_no - $per_page;
 		$data['ttl_pages'] = $total_rows / $per_page;
 		$data['page_no'] = $page_no;
 
-		$data['order'] = $this->db->query("SELECT * FROM user_billing_details WHERE user_billing_details.status='dispatch' " . $show . " ORDER BY user_billing_details.user_billing_details_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='dispatch' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . " ORDER BY order_tbl.order_tbl_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
+		foreach ($data['order'] as $key => $row) {
+			$ttlProducts = get_table_count('ordered_product', [
+				'status' => 'active',
+				'order_tbl_id' => $row['order_tbl_id']
+			]);
 
-		// $data['order']=$this->My_model->select_where("user_billing_details",['status'=>'dispatch']);
+			$data['order'][$key]['ttlProducts'] = $ttlProducts;
+		}
+
 		$this->ov("order_dispatch", $data);
 	}
 
@@ -4934,33 +5082,41 @@ class Madmin extends CI_controller
 
 	public function order_delivered()
 	{
+
 		$page_no = 1;
 		$show = "";
 		extract($_GET);
 		if (isset($_GET['q']) && !empty($_GET['q'])) {
 			$search_term = $this->db->escape_like_str($_GET['q']);
 			$show .= "AND (
-				user_billing_details.name LIKE '%{$search_term}%'
-				OR user_billing_details.email LIKE '%{$search_term}%'
-				OR user_billing_details.phone_number LIKE '%{$search_term}%'
-				OR user_billing_details.addr_village_city LIKE '%{$search_term}%'
-				OR user_billing_details.addr_taluk LIKE '%{$search_term}%'
-				OR user_billing_details.addr_dist LIKE '%{$search_term}%'
-				OR user_billing_details.pay_amount LIKE '%{$search_term}%'
-				OR user_billing_details.paid_amount LIKE '%{$search_term}%'
-				OR user_billing_details.payment_mode LIKE '%{$search_term}%'
+				order_tbl.payment_type LIKE '%{$search_term}%'
+				OR order_tbl.cust_city LIKE '%{$search_term}%'
+				OR order_tbl.order_charges LIKE '%{$search_term}%'
+				OR order_tbl.sub_total_amount LIKE '%{$search_term}%'
+				OR order_tbl.order_date LIKE '%{$search_term}%'
+				OR order_tbl.pay_status LIKE '%{$search_term}%'
+				OR order_tbl.c_mobile LIKE '%{$search_term}%'
+				OR order_tbl.pay_date_time LIKE '%{$search_term}%'
+				OR order_tbl.cust_pincode LIKE '%{$search_term}%'
 			)";
 		}
-		$total_rows = $this->db->query("SELECT COUNT(user_billing_details.user_billing_details_id) AS ttl_rows FROM user_billing_details WHERE user_billing_details.status='delivered' " . $show . "")->result_array()[0]['ttl_rows'];
+		$total_rows = $this->db->query("SELECT COUNT(order_tbl.order_tbl_id) AS ttl_rows FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='delivered' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . "")->result_array()[0]['ttl_rows'];
 
-		$per_page = 10;
+		$per_page = 50;
 		$data['start'] = $per_page * $page_no - $per_page;
 		$data['ttl_pages'] = $total_rows / $per_page;
 		$data['page_no'] = $page_no;
 
-		$data['order'] = $this->db->query("SELECT * FROM user_billing_details WHERE user_billing_details.status='delivered' " . $show . " ORDER BY user_billing_details.user_billing_details_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
+		$data['order'] = $this->db->query("SELECT * FROM customers,order_tbl WHERE order_tbl.status='active' AND order_tbl.order_status='delivered' AND order_tbl.customers_id=customers.customers_id AND customers.status='active' " . $show . " ORDER BY order_tbl.order_tbl_id DESC LIMIT " . $data['start'] . " , " . $per_page)->result_array();
+		foreach ($data['order'] as $key => $row) {
+			$ttlProducts = get_table_count('ordered_product', [
+				'status' => 'active',
+				'order_tbl_id' => $row['order_tbl_id']
+			]);
 
-		// $data['order']=$this->My_model->select_where("user_billing_details",['status'=>'delivered']);
+			$data['order'][$key]['ttlProducts'] = $ttlProducts;
+		}
+
 		$this->ov("order_delivered", $data);
 	}
 
@@ -5142,7 +5298,7 @@ class Madmin extends CI_controller
 	// custom order manage
 	public function custom_jwellery()
 	{
-		$data['custom_jwellery'] = $this->My_model->select_where("custom_jwellery", ['status' => 'pending']);
+		$data['custom_jwellery'] = $this->My_model->select_where_order("custom_jwellery", ['status' => 'pending'], 'custom_jwellery_id', 'DESC');
 		$this->ov("custom_jwellery", $data);
 	}
 	public function custom_jwellery_view($id = "")
@@ -5660,5 +5816,23 @@ class Madmin extends CI_controller
 		$this->My_model->update('gender_category', ['gender_category_id' => $id, 'status' => 'active'], ['status' => 'deleted']);
 		$this->session->set_flashdata('msg', 'Deleted successfully');
 		redirect('Madmin/gender_category');
+	}
+
+
+	public function social_media()
+	{
+		$data['list'] = $this->My_model->select_where("social_media_tbl", ['status' => 'active'])[0];
+		$this->ov("social_media", $data);
+	}
+
+	public function save_social_media()
+	{
+		$_POST['added_by'] = 'admin';
+		$_POST['entry_time'] = time();
+		$_POST['entry_by'] = $_SESSION['admin_id'];
+		$_POST['status'] = 'active';
+		$this->My_model->update("social_media_tbl", ['social_media_tbl_id' => $_POST['social_media_tbl_id']], $_POST);
+		$this->session->set_flashdata('msg', 'Updated successfully');
+		redirect('Madmin/social_media');
 	}
 }

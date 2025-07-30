@@ -16,7 +16,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Cancellation Description</label>
-                                    <textarea name="cancellation_details" rows="3" placeholder="Enter Cancellation Description"
+                                    <textarea id="ckeditor" name="cancellation_details" rows="3" placeholder="Enter Cancellation Description"
                                         class="form-control"><?= $cancellation_policy_det[0]['cancellation_details'] ?></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">
@@ -45,7 +45,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Cancellation Description</label>
-                                    <textarea name="cancellation_details" rows="3" placeholder="Enter Cancellation Description"
+                                    <textarea id="ckeditor" name="cancellation_details" rows="3" placeholder="Enter Cancellation Description"
                                         class="form-control"></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-           <div class="col-lg-12">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <form action="<?= base_url() ?>admin/manage_category" method="get">
@@ -130,7 +130,7 @@
 
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     <?php } ?>
 </div>

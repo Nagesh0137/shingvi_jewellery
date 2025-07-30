@@ -1,6 +1,81 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script>
+    // Disable Dev Tools Shortcuts
+    // Disable Right Click 
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
 
+    document.onkeydown = function (e) {
+        // F12
+        if (e.keyCode == 123) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 73) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 74) return false;
+        if (e.ctrlKey && e.keyCode == 85) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 67) return false;
+        if ((e.ctrlKey || e.metaKey) && e.keyCode == 83) return false;
+    };
+
+    // Detect DevTools Open via Debugger Timing Trick
+    setInterval(function () {
+        const before = new Date().getTime();
+        debugger;
+        const after = new Date().getTime();
+        if (after - before > 200) {
+            window.location.href = 'about:blank';
+        }
+    }, 1000);
+</script> -->
+<script>
+//     document.addEventListener('contextmenu', function(e) {
+//         e.preventDefault();
+//     });
+//     document.onkeydown = function(e) {
+//         if (
+//             e.keyCode == 123 |
+//             (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
+//             (e.ctrlKey && e.shiftKey && e.keyCode == 74) ||
+//             (e.ctrlKey && e.keyCode == 85)
+//         ) {
+//             return false;
+//         }
+//     };
+// </script>
+
+ <script>
+//     (function() {
+//         const devtools = {
+//             open: false,
+//             orientation: null
+//         };
+//         const threshold = 160;
+
+//         const emitEvent = (state) => {
+//             if (state !== devtools.open) {
+//                 devtools.open = state;
+//                 if (devtools.open) {
+//                     history.back();
+//                 }
+//             }
+//         };
+
+//         setInterval(() => {
+//             const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+//             const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+//             const orientation = widthThreshold ? 'vertical' : 'horizontal';
+
+//             if (
+//                 !(heightThreshold && widthThreshold) &&
+//                 ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)
+//             ) {
+//                 emitEvent(true);
+//             } else {
+//                 emitEvent(false);
+//             }
+//         }, 500);
+//    })();
+ </script>
 <script>
     $(document).ready(function() {
         <?php if ($this->session->flashdata('success')): ?>
@@ -66,6 +141,22 @@
             });
             <?php $this->session->unset_userdata('warning'); ?>
         <?php endif; ?>
+
+        <?php if ($this->session->flashdata('danger')): ?>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "<?= $this->session->flashdata('danger'); ?>",
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: '#F44336',
+                color: '#ffffff'
+            });
+            <?php $this->session->unset_userdata('danger'); ?>
+        <?php endif; ?>
     });
 </script>
 
@@ -119,6 +210,9 @@
                                 <hr class="footer-line">
                                 <ul class="ftlink-ul ul-ft">
                                     <li><a href="<?= base_url() ?>user/custome_jewellery">Custom Jewellery</a></li>
+                                       <li><a href="<?= base_url() ?>user/about">About us</a></li>
+                                    <li><a href="<?= base_url() ?>user/contact">Contact us</a></li>
+                                    <li><a href="<?= base_url() ?>user/faq">Faqs</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -129,9 +223,7 @@
                                 <h6 class="ft-title font-18">Information</h6>
                                 <hr class="footer-line">
                                 <ul class="ftlink-ul ul-ft">
-                                    <li><a href="<?= base_url() ?>user/about">About us</a></li>
-                                    <li><a href="<?= base_url() ?>user/contact">Contact us</a></li>
-                                    <li><a href="<?= base_url() ?>user/faq">Faqs</a></li>
+                                 
                                     <li><a href="<?= base_url() ?>user/blog">Blog</a></li>
                                     <li><a href="<?= base_url() ?>user/branch">Our Branches</a></li>
                                     <li><a href="<?= base_url() ?>user/event">Events</a></li>
@@ -268,519 +360,211 @@
         </div>
         <div class="mobilemenu-content h-100 d-flex flex-column justify-content-between overflow-hidden">
             <div class="main-wrap h-100 overflow-auto">
-                <ul class="menu-ul beb">
-                    <li class="menu-li bst">
+              <ul class="menu-ul beb fw-bold">
+                    <!-- Home Menu Item -->
+                    
+                <li class="menu-li bst">
                         <div class="menu-btn d-flex flex-row-reverse">
-                            <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse"
-                                data-bs-target="#menu-home" aria-expanded="false" aria-label="Menu accordion"><i
-                                    class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="<?= base_url() ?>"
-                                    class="d-inline-block body-color">Home</a></span>
+                           <button type="button" class="width-48 icon-16 ptb-10 bsl" >
+                                    <i class="ri-arrow-right-line d-block lh-1"></i>
+                                </button>
+                           
+                            <span class="width-calc-48 ptb-10 plr-15">
+                                <a href="<?= base_url() ?>user/index"
+                                    class="d-inline-block body-color mobile-menu-link text-uppercase <?= ($this->uri->segment(2) == 'index') ? 'active' : '' ?>">
+                                    Home
+                                </a>
+                            </span>
                         </div>
-                        <div class="menu-dropdown collapse" id="menu-home">
-                            <ul class="menudrop-ul">
-                                <li class="menudrop-li bst">
-                                    <span class="d-block ptb-10 psl-20 per-15"><a href="index.html"
-                                            class="d-inline-block body-color">01 Clean demo</a></span>
+
+                       
+                    </li>
+
+                    <!-- Dynamic Category Menu Items -->
+                    <?php
+                    $category = $this->db->query("SELECT * FROM category WHERE status='active'")->result_array();
+
+                    if (!empty($category) && count($category) > 0) {
+                        foreach ($category as $key => $row) {
+                            $subcatdetails = $this->db->query("SELECT * FROM product_group WHERE group_category = " . $row['category_id'] . " AND status = 'active'")->result_array();
+
+                            if (!empty($subcatdetails) && count($subcatdetails) > 0) {
+                                foreach ($subcatdetails as $key1 => $row1) {
+                                    $details = $this->db->query("SELECT * FROM product_gold WHERE status='active' AND cat_id = " . $row['category_id'] . " AND group_id = " . $row1['product_group_id'] . " AND label != 'Out Of Stock'")->result_array();
+                                    $row1['details'] = $details;
+                                    $subcatdetails[$key1] = $row1;
+                                }
+                                $category[$key]['sub_category_details'] = $subcatdetails;
+                            } else {
+                                unset($category[$key]['sub_category_details']);
+                            }
+                        }
+                    }
+
+                    $category = array_filter($category, function ($cat) {
+                        return isset($cat['sub_category_details']);
+                    });
+
+                    // Check current page for active state
+                    $current_cat_id = $this->input->get('cat_id');
+                    $current_g_id = $this->input->get('g_id');
+                    ?>
+
+                    <?php if (!empty($category)) { ?>
+                        <?php foreach ($category as $key => $row) { ?>
+                            <?php if ($row['category_name'] != 'Diamond' && strtolower($row['category_name']) != 'coin') { ?>
+                                <li class="menu-li bst <?= count($row['sub_category_details']) > 0 ? 'has-submenu' : '' ?>">
+                                    <div class="menu-btn d-flex flex-row-reverse">
+                                        <?php if (count($row['sub_category_details']) > 0) { ?>
+                                            <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse"
+                                                data-bs-target="#menu-category-<?= $row['category_id'] ?>" aria-expanded="false" aria-label="Menu accordion">
+                                                <i class="ri-add-line d-block lh-1"></i>
+                                            </button>
+                                        <?php } ?>
+                                        <span class="width-calc-48 ptb-10 plr-15">
+                                            <?php if (strtolower($row['category_name']) == 'gift') { ?>
+                                                <a href="javascript:void(0)"
+                                                    class="d-inline-block body-color mobile-menu-link text-uppercase">
+                                                    <?= $row['category_name'] ?>
+                                                </a>
+                                            <?php } else { ?>
+                                                <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>"
+                                                    class="d-inline-block body-color mobile-menu-link text-uppercase <?= ($current_cat_id == $row['category_id'] && empty($current_g_id)) ? 'active' : '' ?>">
+                                                    <?= $row['category_name'] ?>
+                                                </a>
+                                            <?php } ?>
+                                        </span>
+                                    </div>
+
+                                    <?php if (count($row['sub_category_details']) > 0) { ?>
+                                        <div class="menu-dropdown collapse" id="menu-category-<?= $row['category_id'] ?>">
+                                            <ul class="menudrop-ul">
+                                                <?php foreach ($row['sub_category_details'] as $subCat) { ?>
+                                                    <li class="menudrop-li bst <?= !empty($subCat['details']) ? 'has-sub-submenu' : '' ?>">
+                                                        <div class="menu-btn d-flex flex-row-reverse">
+                                                            <?php if (!empty($subCat['details'])) { ?>
+                                                                <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse"
+                                                                    data-bs-target="#menu-subcat-<?= $subCat['product_group_id'] ?>" aria-expanded="false" aria-label="Menu accordion">
+                                                                    <i class="ri-add-line d-block lh-1"></i>
+                                                                </button>
+                                                            <?php } ?>
+                                                            <span class="d-block ptb-10 psl-20 per-15">
+                                                                <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>&g_id=<?= $subCat['product_group_id'] ?>"
+                                                                    class="d-inline-block body-color mobile-menu-link text-uppercase <?= ($current_cat_id == $row['category_id'] && $current_g_id == $subCat['product_group_id']) ? 'active' : '' ?>">
+                                                                    <?= $subCat['product_group_name'] ?>
+                                                                </a>
+                                                            </span>
+                                                        </div>
+
+                                                        <?php if (!empty($subCat['details'])) { ?>
+                                                            <div class="menusub-dropdown collapse" id="menu-subcat-<?= $subCat['product_group_id'] ?>">
+                                                                <ul class="menusub-ul">
+                                                                    <?php foreach ($subCat['details'] as $product) { ?>
+                                                                        <li class="menusub-li bst">
+                                                                            <span class="d-block ptb-10 psl-25 per-15">
+                                                                                <a href="<?= base_url() ?>user/product_details_filter?cat_id=<?= $row['category_id'] ?>&g_id=<?= $subCat['product_group_id'] ?>&p_id=<?= $product['product_id'] ?>"
+                                                                                    class="d-inline-block body-color mobile-menu-link">
+                                                                                    <?= $product['product_name'] ?>
+                                                                                </a>
+                                                                            </span>
+                                                                        </li>
+                                                                    <?php } ?>
+                                                                </ul>
+                                                            </div>
+                                                        <?php } ?>
+                                                    </li>
+                                                <?php } ?>
+                                            </ul>
+                                        </div>
+                                    <?php } ?>
                                 </li>
-                            </ul>
+                            <?php } ?>
+                        <?php } ?>
+                    <?php } ?>
+
+                    <!-- Specials Menu Item -->
+                    <li class="menu-li bst <?= !empty($special_days) ? 'has-submenu' : '' ?>">
+                        <div class="menu-btn d-flex flex-row-reverse">
+                            <?php if (!empty($special_days)) { ?>
+                                <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse"
+                                    data-bs-target="#menu-specials" aria-expanded="false" aria-label="Menu accordion">
+                                    <i class="ri-add-line d-block lh-1"></i>
+                                </button>
+                            <?php } ?>
+                            <span class="width-calc-48 ptb-10 plr-15">
+                                <a href="<?= base_url() ?>user/products"
+                                    class="d-inline-block body-color mobile-menu-link text-uppercase <?= ($this->uri->segment(2) == 'products') ? 'active' : '' ?>">
+                                    Specials
+                                </a>
+                            </span>
                         </div>
+
+                        <?php if (!empty($special_days)) { ?>
+                            <div class="menu-dropdown collapse" id="menu-specials">
+                                <ul class="menudrop-ul">
+                                    <?php foreach ($special_days as $special) { ?>
+                                        <li class="menudrop-li bst">
+                                            <span class="d-block ptb-10 psl-20 per-15">
+                                                <a href="<?= base_url() ?>user/show_special_product?special_days_id=<?= $special['special_days_id'] ?>"
+                                                    class="d-inline-block body-color mobile-menu-link text-uppercase">
+                                                    <?= $special['special_day'] ?>
+                                                </a>
+                                            </span>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        <?php } ?>
+                    </li>
+
+                    <!-- Products Menu Item -->
+                    
+                        <li class="menu-li bst">
+                        <div class="menu-btn d-flex flex-row-reverse">
+                           <button type="button" class="width-48 icon-16 ptb-10 bsl" >
+                                    <i class="ri-arrow-right-line d-block lh-1"></i>
+                                </button>
+                           
+                            <span class="width-calc-48 ptb-10 plr-15">
+                                <a href="<?= base_url() ?>user/products"
+                                    class="d-inline-block body-color mobile-menu-link text-uppercase <?= ($this->uri->segment(2) == 'products') ? 'active' : '' ?>">
+                                    Products
+                                </a>
+                            </span>
+                        </div>
+
+                       
                     </li>
                     <li class="menu-li bst">
                         <div class="menu-btn d-flex flex-row-reverse">
-                            <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse"
-                                data-bs-target="#menu-product" aria-expanded="false" aria-label="Menu accordion"><i
-                                    class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="javascript:void(0)"
-                                    class="d-inline-block">Product</a></span>
+                           <button type="button" class="width-48 icon-16 ptb-10 bsl" >
+                                    <i class="ri-arrow-right-line d-block lh-1"></i>
+                                </button>
+                           
+                            <span class="width-calc-48 ptb-10 plr-15">
+                                <a href="<?= base_url() ?>user/contact"
+                                    class="d-inline-block body-color mobile-menu-link text-uppercase <?= ($this->uri->segment(2) == 'contact') ? 'active' : '' ?>">
+                                    contact
+                                </a>
+                            </span>
                         </div>
-                        <div class="menu-dropdown collapse" id="menu-product">
-                            <ul class="menudrop-ul">
-                                <li class="menudrop-li bst">
-                                    <span class="d-block ptb-10 psl-20 per-15"><a href="<?= base_url() ?>user/products"
-                                            class="d-inline-block body-color">Products Page</a></span>
-                                </li>
 
-
-
-                            </ul>
-                        </div>
+                       
                     </li>
-                    <li class="menu-li bst">
-                        <div class="menu-btn d-flex flex-row-reverse">
-                            <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse"
-                                data-bs-target="#menu-shop" aria-expanded="false" aria-label="Menu accordion"><i
-                                    class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="<?= base_url() ?>"
-                                    class="d-inline-block body-color">Shop</a></span>
-                        </div>
-                        <div class="menu-dropdown collapse" id="menu-shop">
-                            <ul class="menudrop-ul">
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-account"
-                                            aria-expanded="false" aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Account</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-account">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="login.html"
-                                                        class="d-inline-block body-color">Login</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="forgot-password.html"
-                                                        class="d-inline-block body-color">Forgot password</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="register.html"
-                                                        class="d-inline-block body-color">Register</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-other" aria-expanded="false"
-                                            aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Other</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-other">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="cancellation.html"
-                                                        class="d-inline-block body-color">404</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="cart-empty.html"
-                                                        class="d-inline-block body-color">Cart empty</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="cart-page.html"
-                                                        class="d-inline-block body-color">Cart</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="checkout.html"
-                                                        class="d-inline-block body-color">Checkout</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="coming-soon.html"
-                                                        class="d-inline-block body-color">Comingsoon</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="invoice.html"
-                                                        class="d-inline-block body-color">Invoice</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-order" aria-expanded="false"
-                                            aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Order</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-order">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="<?= base_url() ?>"
-                                                        class="d-inline-block body-color">Order complete</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="order.html"
-                                                        class="d-inline-block body-color">Order</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="order-info.html"
-                                                        class="d-inline-block body-color">Order info</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-default.html"
-                                                        class="d-inline-block body-color">Order default</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-unfulfilled.html"
-                                                        class="d-inline-block body-color">Order unfulfilled</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-fulfilled.html"
-                                                        class="d-inline-block body-color">Order fulfilled</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-inprogress.html"
-                                                        class="d-inline-block body-color">Order inprogress</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-intransit.html"
-                                                        class="d-inline-block body-color">Order intransit</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-indelivery.html"
-                                                        class="d-inline-block body-color">Order indelivery</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-delivered.html"
-                                                        class="d-inline-block body-color">Order delivered</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-pickup.html"
-                                                        class="d-inline-block body-color">Order pickup</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="order-info-cancel.html"
-                                                        class="d-inline-block body-color">Order cancel</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-profile"
-                                            aria-expanded="false" aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Profile</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-profile">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="profile.html"
-                                                        class="d-inline-block body-color">Profile</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="profile-address.html"
-                                                        class="d-inline-block body-color">Profile address</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="profile-notification.html"
-                                                        class="d-inline-block body-color">Profile
-                                                        notification</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="profile-order.html"
-                                                        class="d-inline-block body-color">Profile order</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="profile-order-empty.html"
-                                                        class="d-inline-block body-color">Profile order empty</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="profile-ticket.html"
-                                                        class="d-inline-block body-color">Profile ticket</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="profile-ticket-empty.html"
-                                                        class="d-inline-block body-color">Profile ticket
-                                                        empty</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="profile-wishlist.html"
-                                                        class="d-inline-block body-color">Profile wishlist</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="profile-wishlist-empty.html"
-                                                        class="d-inline-block body-color">Profile wishlist
-                                                        empty</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-ticket"
-                                            aria-expanded="false" aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Ticket</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-ticket">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="ticket.html"
-                                                        class="d-inline-block body-color">Ticket</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="ticket-create.html"
-                                                        class="d-inline-block body-color">Ticket create</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="ticket-edit.html"
-                                                        class="d-inline-block body-color">Ticket edit</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="ticket-info.html"
-                                                        class="d-inline-block body-color">Ticket info</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-features"
-                                            aria-expanded="false" aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Features</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-features">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="button.html"
-                                                        class="d-inline-block body-color">Button</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="cart-drawer-empty.html"
-                                                        class="d-inline-block body-color">Cart drawer empty</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-policies"
-                                            aria-expanded="false" aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Policies</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-policies">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="cancellation.html"
-                                                        class="d-inline-block body-color">Cancellation</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="cookie.html"
-                                                        class="d-inline-block body-color">Cookie</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="legal.html"
-                                                        class="d-inline-block body-color">Legal</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="payment-policy.html"
-                                                        class="d-inline-block body-color">Payment policy</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="privacy-policy.html"
-                                                        class="d-inline-block body-color">Privacy policy</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="return-policy.html"
-                                                        class="d-inline-block body-color">Return policy</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="shipping-policy.html"
-                                                        class="d-inline-block body-color">Shipping policy</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a
-                                                        href="<?= base_url() ?>rohan/terms_of_use"
-                                                        class="d-inline-block body-color">Terms & condition</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="menu-li bst">
-                        <div class="menu-btn d-flex flex-row-reverse">
-                            <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse"
-                                data-bs-target="#menu-blog" aria-expanded="false" aria-label="Menu accordion"><i
-                                    class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="javascript:void(0)"
-                                    class="d-inline-block">Blog</a></span>
-                        </div>
-                        <div class="menu-dropdown collapse" id="menu-blog">
-                            <ul class="menudrop-ul">
-                                <li class="menudrop-li bst">
-                                    <span class="d-block ptb-10 psl-20 per-15"><a href="<?= base_url() ?>user/blog"
-                                            class="d-inline-block body-color">Blog Page</a></span>
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="menu-li bst">
-                        <div class="menu-btn d-flex flex-row-reverse">
-                            <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse"
-                                data-bs-target="#menu-page" aria-expanded="false" aria-label="Menu accordion"><i
-                                    class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="javascript:void(0)"
-                                    class="d-inline-block">Page</a></span>
-                        </div>
-                        <div class="menu-dropdown collapse" id="menu-page">
-                            <ul class="menudrop-ul">
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-aboutus"
-                                            aria-expanded="false" aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">About us</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-aboutus">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="about-us.html"
-                                                        class="d-inline-block body-color">01 Clean aboutus</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="about-us2.html"
-                                                        class="d-inline-block body-color">02 Standard aboutus</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="about-us3.html"
-                                                        class="d-inline-block body-color">02 Classic aboutus</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-contactus"
-                                            aria-expanded="false" aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Contact us</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-contactus">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="contact-us.html"
-                                                        class="d-inline-block body-color">01 Simple contactus</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="contact-us2.html"
-                                                        class="d-inline-block body-color">02 Minimalist
-                                                        contactus</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <span class="d-block ptb-10 psl-20 per-15"><a href="<?= base_url() ?>user/faq"
-                                            class="d-inline-block body-color">Faqs</a></span>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <span class="d-block ptb-10 psl-20 per-15"><a href="sitemap.html"
-                                            class="d-inline-block body-color">Sitemap</a></span>
-                                </li>
-
-                                <li class="menudrop-li bst">
-                                    <span class="d-block ptb-10 psl-20 per-15"><a href="track-order.html"
-                                            class="d-inline-block body-color">Track order</a></span>
-                                </li>
-                                <li class="menudrop-li bst">
-                                    <div class="menu-btn d-flex flex-row-reverse">
-                                        <button type="button" class="width-48 icon-16 ptb-10 bsl"
-                                            data-bs-toggle="collapse" data-bs-target="#menu-wishlist"
-                                            aria-expanded="false" aria-label="Menu accordion"><i
-                                                class="ri-add-line d-block lh-1"></i></button>
-                                        <span class="width-calc-48 ptb-10 psl-20 per-15"><a href="javascript:void(0)"
-                                                class="d-inline-block">Wishlist</a></span>
-                                    </div>
-                                    <div class="menusub-dropdown collapse" id="menu-wishlist">
-                                        <ul class="menusub-ul">
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="wishlist.html"
-                                                        class="d-inline-block body-color">Wishlist</a></span>
-                                            </li>
-                                            <li class="menusub-li bst">
-                                                <span class="d-block ptb-10 psl-25 per-15"><a href="wishlist-empty.html"
-                                                        class="d-inline-block body-color">Wishlist empty</a></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    <!-- Contact Us Menu Item -->
+                    
                 </ul>
             </div>
             <div class="mobile-cl bst">
                 <div class="d-flex">
                     <div class="col-6">
                         <div class="local-cl">
-                            <form method="post" action="JavaScript:void(0)" class="localization-form"
-                                enctype="multipart/form-data">
-                                <button type="submit"
-                                    class="mobile-cl-btn w-100 body-color d-flex align-items-center justify-content-between ptb-10 plr-15 beb">English<i
-                                        class="ri-arrow-down-s-line d-block icon-16 lh-1"></i></button>
-                                <div
-                                    class="local-cl-drodown-menu position-absolute bottom-0 start-0 end-0 body-bg z-1 bst">
-                                    <button type="button"
-                                        class="mobile-cl-close-btn d-block w-100 heading-color ptb-10 plr-15"
-                                        aria-label="Currency / Language menu close">Close</button>
-                                    <ul>
-                                        <li class="active bst"><a href="javascript:void(0)"
-                                                class="d-block ptb-10 plr-15">English</a></li>
-                                        <li class="bst"><a href="javascript:void(0)"
-                                                class="d-block ptb-10 plr-15">Spanish</a></li>
-                                        <li class="bst"><a href="javascript:void(0)"
-                                                class="d-block ptb-10 plr-15">French</a></li>
-                                    </ul>
-                                </div>
-                            </form>
+                            <!-- Space for additional content if needed -->
                         </div>
                     </div>
                     <div class="col-6 bsl">
                         <div class="local-cl">
-                            <form method="post" action="JavaScript:void(0)" class="localization-form"
-                                enctype="multipart/form-data">
-                                <button type="submit"
-                                    class="mobile-cl-btn w-100 body-color d-flex align-items-center justify-content-between ptb-10 plr-15 beb">USD
-                                    $<i class="ri-arrow-down-s-line d-block icon-16 lh-1"></i></button>
-                                <div
-                                    class="local-cl-drodown-menu position-absolute bottom-0 start-0 end-0 body-bg z-1 bst">
-                                    <button type="button"
-                                        class="mobile-cl-close-btn d-block w-100 heading-color ptb-10 plr-15"
-                                        aria-label="Currency / Language menu close">Close</button>
-                                    <ul>
-                                        <li class="active bst"><a href="javascript:void(0)"
-                                                class="d-block ptb-10 plr-15">USD $</a></li>
-                                        <li class="bst"><a href="javascript:void(0)" class="d-block ptb-10 plr-15">EUR
-                                                €</a></li>
-                                        <li class="bst"><a href="javascript:void(0)" class="d-block ptb-10 plr-15">INR
-                                                ₹</a></li>
-                                    </ul>
-                                </div>
-                            </form>
+                            <!-- Space for additional content if needed -->
                         </div>
                     </div>
                 </div>
@@ -963,8 +747,8 @@
     <div class="bottom-menu-element d-flex flex-wrap align-items-center">
         <div class="col">
             <a href="<?= base_url() ?>user" class="d-flex flex-column align-items-center ptb-10 text-center">
-                <span class="bottom-menu-icon heading-color icon-16"><i class="ri-home-8-line d-block lh-1"></i></span>
-                <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Home</span>
+                <span class="bottom-menu-icon <?= ($this->uri->segment(2) == 'index') ? 'text-danger' : 'heading-color' ?>  icon-16"><i class="ri-home-8-line <?= ($this->uri->segment(2) == 'index') ? 'text-danger' : '' ?> d-block lh-1"></i></span>
+                <span class="bottom-menu-title <?= ($this->uri->segment(2) == 'index') ? 'text-danger' : 'body-color' ?> font-10 mst-4 text-uppercase lh-1">Home</span>
             </a>
         </div>
         <div class="col">
@@ -998,8 +782,8 @@
                 <span class="bottom-menu-icon-wrap position-relative per-7">
                     <span class="d-block bottom-menu-icon heading-color icon-16"><i
                             class="ri-shopping-bag-3-line d-block lh-1"></i></span>
-                    <!-- <span class="bottom-menu-counter cart-counter extra-color font-10 position-absolute end-0 dominant-bg d-flex align-items-center justify-content-center rounded-circle">4</span>
-                </span> -->
+                     <span class="bottom-menu-counter cart-counter extra-color font-10 position-absolute end-0 dominant-bg d-flex align-items-center justify-content-center rounded-circle" id="cart-counter_mb"><?= isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0 ?></span>
+               
                     <span class="bottom-menu-title body-color font-10 mst-4 text-uppercase lh-1">Cart</span>
             </a>
         </div>
@@ -1037,7 +821,7 @@
             },
             dataType: 'json',
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 if (data && data.length > 0) {
                     const product = data[0];
 
@@ -1175,7 +959,7 @@
                 '&size=' + encodeURIComponent(selected_Size_to_Buy) +
                 '&qty=' + encodeURIComponent(selected_qty);
 
-            console.log('pId -- ', pId);
+            // console.log('pId -- ', pId);
 
             $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function() {
                 $.ajax({
@@ -1186,10 +970,10 @@
                     },
                     dataType: 'json',
                     success: function(res) {
-                        console.log(res);
+                        // console.log(res);
                         if (res.status === 'success') {
                             const productDet = res.product_details[0];
-                            console.log("selected_Size_to_Buy", selected_Size_to_Buy, 'selected_qty', selected_qty);
+                            // console.log("selected_Size_to_Buy", selected_Size_to_Buy, 'selected_qty', selected_qty);
                             $('#address-modal').modal('show');
                         } else {
                             alert("Something went wrong. Please try again.");
@@ -1254,14 +1038,15 @@
             },
             dataType: 'json',
             success: function(res) {
-                console.log(res);
+                // console.log(res);
                 if (res.status == 'success') {
                     // Show success state
                     setTimeout(function() {
                         $clickedBtn.removeClass("loading").addClass("done");
                         $clickedBtn.find('.product-loader-icon').hide();
                         $clickedBtn.find('.product-check-icon').show();
-
+                        document.getElementById('cart-counter').innerHTML = res.ttlCart;
+                        document.getElementById('cart-counter_mb').innerHTML = res.ttlCart;
                         setTimeout(function() {
                             $clickedBtn.removeClass("done active disabled");
                             $clickedBtn.find('.product-check-icon').hide();
@@ -1299,7 +1084,7 @@
                 }
             },
             error: function(err) {
-                console.log(err);
+                // console.log(err);
                 // Reset button state on error
                 $clickedBtn.removeClass("loading active disabled");
                 $clickedBtn.find('.product-loader-icon').hide();
@@ -1308,8 +1093,8 @@
             }
         });
 
-        console.log("Product ID:", pId);
-        console.log("Selected Size:", selectedSize);
+        // console.log("Product ID:", pId);
+        // console.log("Selected Size:", selectedSize);
     }
 </script>
 <script>
@@ -1345,7 +1130,7 @@
             },
             dataType: 'json',
             success: function(res) {
-                console.log(res);
+                // console.log(res);
                 if (res.status === 'success') {
                     receivedOtp = res.otp;
                     productDet = res.product_details[0];
@@ -1379,32 +1164,45 @@
     $(document).on('submit', '#otpForm', function(e) {
         e.preventDefault();
         const inputOtp = $('#otp').val().trim();
-        console.log(inputOtp, receivedOtp);
+        // console.log(inputOtp, receivedOtp);
         var productId = document.getElementById('product_id').value;
+        $.ajax({
+            url: '<?= base_url("user/checkOtpMatched") ?>',
+            type: 'POST',
+            data: {
+                mobile_number: enteredMobile,
+                otp: inputOtp
+            },
+            dataType: 'json',
+            success: function(res) {
+                // console.log("checkOtpMatched -- ", res);
+                if (res.status === 'success') {
+                    var url = '?pId=' + encodeURIComponent(productId) +
+                        '&size=' + encodeURIComponent(selected_Size_to_Buy) +
+                        '&qty=' + encodeURIComponent(selected_qty);
 
-        if (inputOtp == receivedOtp) {
+                    $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function() {
+                        // console.log('Modal content reloaded.');
+                    });
 
-            var url = '?pId=' + encodeURIComponent(productId) +
-                '&size=' + encodeURIComponent(selected_Size_to_Buy) +
-                '&qty=' + encodeURIComponent(selected_qty);
 
-            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function() {
-                console.log('Modal content reloaded.');
-            });
+                    // OTP matched
+                    openAddressModal(productDet.prod_gold_id);
 
-            $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url, function() {
-                // alert('productId --- ' + productId);
-                $('.user_status').val(user_status);
-                $('#uname').val(userDet.name);
-                $('#uemail').val(userDet.email);
-                $('.customers_id').val(userDet.customers_id);
-                $('#uaddress').val(userDet.address);
-                $('#pincode').val(userDet.pincode);
-                console.log('productDet', productDet);
-            })
-            // OTP matched
-            openAddressModal(productDet.prod_gold_id);
-        }
+                } else {
+                    // alert(res.msg || "Something went wrong.");
+                    document.getElementById('errMsg').innerHTML = res.msg || "Something went wrong.";
+
+                }
+            },
+            error: function() {
+                // alert("Failed to send OTP. Try again.");
+                document.getElementById('errMsg').innerHTML = 'Failed to send OTP. Try again.';
+
+            }
+        });
+
+
 
     });
 
@@ -1451,7 +1249,7 @@
         if (selected) {
             const size = selected.value;
             selected_Size_to_Buy = selected.value;
-            console.log("Selected Size:", size);
+            // console.log("Selected Size:", size);
             document.getElementById('display-size').innerText = size;
         }
     }
@@ -1717,7 +1515,7 @@
         } else {
             selected_Size_to_Buy = 'NA';
         }
-        console.log("Selected Size:", selected_Size_to_Buy);
+        // console.log("Selected Size:", selected_Size_to_Buy);
     }
 
     function attachSizeListeners() {
@@ -1730,5 +1528,109 @@
 </script>
 
 <!-- buy Now Modal -->
+
+<!-- Mobile Menu Active States CSS -->
+<style>
+    /* Mobile Menu Active States */
+    .mobile-menu-link.active {
+        color: #9c1138 !important;
+        font-weight: bold;
+        position: relative;
+    }
+
+    .mobile-menu-link.active::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 2px;
+        background-color: #9c1138;
+        border-radius: 1px;
+    }
+
+    /* Mobile Menu Hover Effects */
+    .mobile-menu-link:hover {
+        color: #9c1138 !important;
+        transition: color 0.3s ease;
+    }
+
+    /* Mobile Menu Toggle Icons */
+    .mobile-menu .ri-add-line {
+        transition: transform 0.3s ease;
+    }
+
+    .mobile-menu [aria-expanded="true"] .ri-add-line {
+        transform: rotate(45deg);
+    }
+
+    /* Mobile Menu Dropdown Styling */
+    .mobile-menu .menu-dropdown {
+        background-color: rgba(0, 0, 0, 0.02);
+        border-left: 3px solid #9c1138;
+        margin-left: 15px;
+    }
+
+    .mobile-menu .menusub-dropdown {
+        background-color: rgba(0, 0, 0, 0.05);
+        border-left: 2px solid #9c1138;
+        margin-left: 20px;
+    }
+
+    /* Mobile Menu Text Styling */
+    .mobile-menu .menu-ul .menu-li .menu-btn span a {
+        text-decoration: none;
+        color: #2f2f48;
+        font-weight: 500;
+    }
+
+    .mobile-menu .menudrop-ul .menudrop-li span a {
+        text-decoration: none;
+        color: #2f2f48;
+        font-weight: 400;
+    }
+
+    .mobile-menu .menusub-ul .menusub-li span a {
+        text-decoration: none;
+        color: #2f2f48;
+        font-weight: 400;
+    }
+
+    /* Mobile Menu Container Styling */
+    .mobile-menu {
+        width: 300px;
+        left: -300px;
+        transition: left 0.3s ease;
+    }
+
+    .mobile-menu.visible {
+        left: 0;
+    }
+
+    .mobile-menu .mobile-contents {
+        background: #f8f9fa;
+    }
+
+    /* Mobile Menu Close Button */
+    .mobile-menu .menu-close-btn {
+        background: none;
+        border: none;
+        color: #6c757d;
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .mobile-menu .menu-close-btn:hover {
+        color: #9c1138;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+        .mobile-menu {
+            width: 280px;
+            left: -280px;
+        }
+    }
+</style>
 
 </html>

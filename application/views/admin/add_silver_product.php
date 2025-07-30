@@ -204,7 +204,7 @@
                                     </script>
                                     <div class="col-md-12 mt-4">
                                         <b class="form-label">Enter Product Details</b>
-                                        <textarea name="product_details" class="form-control" rows="5"></textarea>
+                                        <textarea id="ckeditor" name="product_details" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>

@@ -6,14 +6,14 @@
     <!-- product-detail start -->
     <section class="product-detail section-pt">
         <!-- product prev-next start -->
-        <a href="<?= base_url() ?>"
-            class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product prev">
-            <span class="d-block body-secondary-color msl-5 heading-weight text-uppercase lh-1">Prev</span>
-        </a>
-        <a href="<?= base_url() ?>"
-            class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product next">
-            <span class="d-block body-secondary-color mer-5 heading-weight text-uppercase lh-1">Next</span>
-        </a>
+        <!--<a href="<?= base_url() ?>"-->
+        <!--    class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product prev">-->
+        <!--    <span class="d-block body-secondary-color msl-5 heading-weight text-uppercase lh-1">Prev</span>-->
+        <!--</a>-->
+        <!--<a href="<?= base_url() ?>"-->
+        <!--    class="d-none d-xl-block position-fixed top-50 translate-middle-y z-2 np-product next">-->
+        <!--    <span class="d-block body-secondary-color mer-5 heading-weight text-uppercase lh-1">Next</span>-->
+        <!--</a>-->
         <!-- product prev-next end -->
         <div class="container">
             <div class="row row-mtm align-items-lg-start">
@@ -188,13 +188,13 @@
                                     if (!empty($products[0]['ring_size'])) {
                                         $sizes = explode(',', $products[0]['ring_size']);
                                         ?>
-                                        <span class="d-inline-block meb-11">
-                                            <span class="heading-color heading-weight mer-10">Size:</span>
-                                            <span id="display-size"> <?= $sizes[0] ?></span>
-                                            <a href="#size-modal" data-bs-toggle="modal"
-                                                class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size
-                                                guide</a>
-                                        </span>
+                                        <!--<span class="d-inline-block meb-11">-->
+                                        <!--    <span class="heading-color heading-weight mer-10">Size:</span>-->
+                                        <!--    <span id="display-size"> <?= $sizes[0] ?></span>-->
+                                        <!--    <a href="#size-modal" data-bs-toggle="modal"-->
+                                        <!--        class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size-->
+                                        <!--        guide</a>-->
+                                        <!--</span>-->
                                         <div class="product-option-block size">
                                             <ul class="ul-mt5">
                                                 <?php
@@ -220,19 +220,17 @@
                                         </div>
                                     <?php } else {
                                         ?>
-                                        <!-- <div class="product-option-block size">
+                                        <div class="product-option-block size">
                                             <ul class="ul-mt5">
                                                 <li>
                                                     <label class="cust-checkbox-label">
                                                         <input type="radio" name="selected_size" id="selected_size"
                                                             class="cust-checkbox" value="NA" checked>
-                                                        <span class="d-inline-block meb-11"><span
-                                                                class="heading-color heading-weight mer-10">Size:</span>Not Available
-                                                        </span>
+                                                        
                                                     </label>
                                                 </li>
                                             </ul>
-                                        </div> -->
+                                        </div> 
                                         <?php
                                     } ?>
                                 </div>
@@ -307,11 +305,11 @@
                                             class="ri-heart-line icon-16 mer-4"></i>Wishlist</a>
                                 </div> -->
 
-                                <div class="product-ask">
-                                    <a href="#buy-now-modal" data-bs-toggle="modal"
-                                        class="ask-question heading-color"><i
-                                            class="ri-edit-box-line icon-16 mer-4"></i>Ask a question</a>
-                                </div>
+                                <!--<div class="product-ask">-->
+                                <!--    <a href="#buy-now-modal" data-bs-toggle="modal"-->
+                                <!--        class="ask-question heading-color"><i-->
+                                <!--            class="ri-edit-box-line icon-16 mer-4"></i>Ask a question</a>-->
+                                <!--</div>-->
                                 <div class="product-share">
                                     <a href="#share-modal" data-bs-toggle="modal" class="share heading-color"><i
                                             class="ri-share-line icon-16 mer-4"></i>Share</a>
@@ -1199,9 +1197,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                                             </a>
                                             <div class="product-action">
-                                                <a class="wishlist">
-                                                    <span class="product-icon">Wishlist</span>
-                                                </a>
+                                                <!--<a class="wishlist">-->
+                                                <!--    <span class="product-icon">Wishlist</span>-->
+                                                <!--</a>-->
                                                 <a onclick="openModal('<?= $row['prod_gold_id'] ?>')"
                                                     class="quick-view">
                                                     <span class="product-icon">Quickview</span>
@@ -1272,11 +1270,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         </span>
                                                         <span class="tooltip-text">add to cart</span>
                                                     </a>
-                                                    <a href="javascript:void(0)" class="add-to-wishlist">
-                                                        <span class="product-icon"><i
-                                                                class="ri-heart-line d-block icon-16 lh-1"></i></span>
-                                                        <span class="tooltip-text">wishlist</span>
-                                                    </a>
+                                                    <!--<a href="javascript:void(0)" class="add-to-wishlist">-->
+                                                    <!--    <span class="product-icon"><i-->
+                                                    <!--            class="ri-heart-line d-block icon-16 lh-1"></i></span>-->
+                                                    <!--    <span class="tooltip-text">wishlist</span>-->
+                                                    <!--</a>-->
                                                     <a onclick="openModal('<?= $row['prod_gold_id'] ?>')"
                                                         class="quick-view">
                                                         <span class="product-icon"><i

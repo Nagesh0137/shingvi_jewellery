@@ -3,25 +3,120 @@
     <div class="card shadow-lg rounded-4 mb-5">
       <div class="card-body">
         <h4 class="mb-4">Order Details</h4>
+<?php 
+  // Initialize all status flags as false
+$pending = $processing = $dispatch = $delivered = $rejected = false;
 
+switch ($ord['order_status']) {
+    case 'pending':
+        $pending = true;
+        break;
+
+    case 'processing':
+        $processing = true;
+        break;
+
+    case 'dispatch':
+        $dispatch = true;
+        break;
+
+    case 'delivered':
+        $delivered = true;
+        break;
+
+    case 'rejected':
+        $rejected = true;
+        break;
+
+    default:
+        // Unknown status, do nothing or log
+        break;
+}
+
+?>
         <div class="row mb-3">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <p><strong>Name:</strong> <?= $ord['name'] ?></p>
             <p><strong>Email:</strong> <?= $ord['email'] ?></p>
             <p><strong>Mobile:</strong> <?= $ord['mobile'] ?></p>
             <p><strong>Address:</strong> <?= $ord['cust_address'] ?></p>
             <p><strong>City / Pincode:</strong> <?= $ord['cust_city'] ?> - <?= $ord['cust_pincode'] ?></p>
           </div>
-          <div class="col-md-6">
-            <p><strong>Order ID:</strong> <?= $ord['orderId'] ?></p>
+          <div class="col-md-4">
+            <?php if($ord['payment_type'] == 'Online'){ ?><p><strong>Order ID:</strong> <?= $ord['orderId'] ?></p> <?php } ?>
             <p><strong>Order Date:</strong> <?= $ord['order_date'] ?></p>
+            <?php 
+              if($pending){
+            ?> <p class="text-capitalize"><strong>Order Status:</strong><b class="text-warning"> <?= $ord['order_status'] ?></b></p>
+            <?php } ?>
+
+            <?php 
+              if($processing){
+            ?> <p class="text-capitalize"><strong>Order Status:</strong><b class="text-primary"> <?= $ord['order_status'] ?></b></p>
+            <p class="text-capitalize"><strong>Processing Date:</strong><b class="text-primary"> <?= date('d M Y h:i: A',$ord['processing_time']) ?></b></p>
+            <?php } ?>
+
+             <?php 
+              if($dispatch){
+            ?> <p class="text-capitalize"><strong>Order Status:</strong><b class="text-dark"> <?= $ord['order_status'] ?></b></p>
+            <p class="text-capitalize"><strong>Processing Date:</strong><b class="text-primary"> <?= date('d M Y h:i: A',$ord['processing_time']) ?></b></p>
+            <p class="text-capitalize"><strong>Dispatched Date:</strong><b class="text-primary"> <?= date('d M Y h:i: A',$ord['dispatch_time']) ?></b></p>
+
+            <?php } ?>
+
+             <?php 
+              if($delivered){
+            ?> <p class="text-capitalize"><strong>Order Status:</strong><b class="text-success"> <?= $ord['order_status'] ?></b></p>
+            <p class="text-capitalize"><strong>Processing Date:</strong><b class="text-primary"> <?= date('d M Y h:i: A',$ord['processing_time']) ?></b></p>
+            <p class="text-capitalize"><strong>Dispatched Date:</strong><b class="text-primary"> <?= date('d M Y h:i: A',$ord['dispatch_time']) ?></b></p>
+            <p class="text-capitalize"><strong>Delivered Date:</strong><b class="text-primary"> <?= date('d M Y h:i: A',$ord['delivered_time']) ?></b></p>
+            <?php } ?>
+
+             <?php 
+              if($rejected){
+            ?> <p class="text-capitalize"><strong>Order Status:</strong><b class="text-danger"> <?= $ord['order_status'] ?></b></p>
+            <p class="text-capitalize"><strong>Rejected Date:</strong><b class="text-primary"> <?= date('d M Y h:i: A',$ord['rejected_time']) ?></b></p>
+
+            <?php } ?>
             <p><strong>Payment Type:</strong> <?= $ord['payment_type'] ?></p>
-            <p><strong>Status:</strong> <?= ucfirst($ord['order_status']) ?></p>
-            <p><strong>Product Count:</strong> <?= $ord['ttlProducts'] ?></p>
+            <p><strong>Payment Status:</strong> <?= $ord['pay_status'] ?></p>
+          </div>
+          <div class="col-md-4">
+          
+            <?php 
+              if($processing){
+            ?> <p class="text-capitalize p-2 border"><strong>Processing Remark:</strong><br><b> <?= $ord['processing_remark'] ?></b></p>
+            <?php } ?>
+
+             <?php 
+              if($dispatch){
+            ?>
+            <p class="text-capitalize p-2 border"><strong>Processing Remark:</strong><br><b> <?= $ord['processing_remark'] ?></b></p>
+            <p class="text-capitalize p-2 border"><strong>Dispatch Remark:</strong><br><b> <?= $ord['dispatch_remark'] ?></b></p>
+
+
+            <?php } ?>
+
+             <?php 
+              if($delivered){
+            ?> 
+                        <p class="text-capitalize p-2 border"><strong>Processing Remark:</strong><br><b> <?= $ord['processing_remark'] ?></b></p>
+            <p class="text-capitalize p-2 border"><strong>Dispatch Remark:</strong><br><b> <?= $ord['dispatch_remark'] ?></b></p>
+            <p class="text-capitalize p-2 border"><strong>Delivered Remark:</strong><br><b> <?= $ord['delivered_remark'] ?></b></p>
+
+
+            <?php } ?>
+
+             <?php 
+              if($rejected){
+            ?>Rejected            <p class="text-capitalize p-2 border"><strong>Dispatch Remark:</strong><b class="text-primary"> <?= $ord['rejected_time'] ?></b></p>
+
+
+            <?php } ?>
           </div>
         </div>
 
-        <h5 class="mt-4 mb-3">Products</h5>
+        <h5 class="mt-4 mb-3">Products (<?= $ord['ttlProducts'] ?>)</h5>
         <div class="table-responsive">
           <table class="table table-bordered table-striped align-middle">
             <thead class="table-dark">

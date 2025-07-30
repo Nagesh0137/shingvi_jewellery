@@ -90,7 +90,7 @@
                     $subtotal = 0;
                     foreach ($cart as $item):
 
-                        $price = isset($item[0]['fixed_amount']) ? $item[0]['fixed_amount'] : 0;
+                        $price = isset($item[0]['discounted_price']) ? $item[0]['discounted_price'] : $item['fixed_amount'];
                         $subtotal += $price;
                     ?>
                         <div class="cart-drawer-info ptb-15 bst">
@@ -124,7 +124,7 @@
                                                     aria-label="Remove item">
                                                     <i class="ri-subtract-line d-block lh-1"></i>
                                                 </button>
-                                                <input type="number" data-id="<?= $item[0]['prod_gold_id'] ?>" class="js-qty-num p-0 text-center border-0" value="<?= $_SESSION['cart'][$item[0]['prod_gold_id']] ?>"
+                                                <input type="number" readonly data-id="<?= $item[0]['prod_gold_id'] ?>" class="js-qty-num p-0 text-center border-0" value="<?= $_SESSION['cart'][$item[0]['prod_gold_id']] ?>"
                                                     min="1">
                                                 <button type="button"
                                                     class="js-qty-adjust js-qty-adjust-plus body-color icon-16"
@@ -166,7 +166,7 @@
             <div class="drawer-total d-flex justify-content-between">
                 <span>Subtotal</span>
                 <span
-                    class="heading-color heading-weight">₹<?= isset($subtotal) ? number_format($subtotal, 2) : '0.00' ?></span>
+                    class="heading-color heading-weight">  ₹<?= isset($subtotal) ? number_format($subtotal, 2) : '0.00' ?></span>
             </div>
             <div class="font-12 mst-8">Shipping, taxes, and discount codes calculated at checkout</div>
             <div class="drawer-cart-checkout mst-12">

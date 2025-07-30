@@ -25,7 +25,7 @@
 
 
     <div class="row">
-        <div class="col-xl-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <form action="<?= base_url() ?>admin/add_new_category" method="post" enctype="multipart/form-data">
@@ -49,7 +49,7 @@
                                 <div class="col-md-12 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Category Details /
                                         Description</label>
-                                    <textarea name="category_details" rows="5" placeholder="Enter Category Description"
+                                    <textarea id="ckeditor" name="category_details" rows="5" placeholder="Enter Category Description"
                                         class="form-control"></textarea>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
         </div>
 
 
-        <div class="col-lg-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <form action="<?= base_url() ?>admin/manage_category" method="get">
@@ -101,7 +101,7 @@
                                 if (isset($category) && count($category) > 0) {
                                     $i = $start;
                                     foreach ($category as $key => $row) {
-                                        ?>
+                                ?>
                                         <tr>
                                             <td><?= ++$i ?></td>
                                             <td class="d-flex">
@@ -141,7 +141,7 @@
                                                                                         <label for="formrow-firstname-input"
                                                                                             class="form-label">Enter Category
                                                                                             Details / Description</label>
-                                                                                        <textarea name="category_details"
+                                                                                        <textarea id="ckeditor" name="category_details"
                                                                                             class="form-control"
                                                                                             rows="4"><?= br2nl2(nl2br2($row['category_details'])) ?></textarea>
                                                                                     </div>
@@ -201,7 +201,7 @@
                                                                                                     <?php
                                                                                                     $category_image = FCPATH . "uploads/" . $row['category_image'];
                                                                                                     if (file_exists($category_image)) {
-                                                                                                        ?>
+                                                                                                    ?>
 
                                                                                                         <img class="rounded me-2"
                                                                                                             alt="200x200"
@@ -209,11 +209,11 @@
                                                                                                             src="<?= base_url() ?>uploads/<?= $row['category_image'] ?>"
                                                                                                             data-holder-rendered="true"
                                                                                                             style="height:100px;width:100px;object-fit:cover">
-                                                                                                        <?php
+                                                                                                    <?php
                                                                                                     } else {
-                                                                                                        ?>
+                                                                                                    ?>
                                                                                                         N/A
-                                                                                                        <?php
+                                                                                                    <?php
                                                                                                     }
                                                                                                     ?>
                                                                                                 </div>
@@ -243,17 +243,17 @@
                                                 <?php
                                                 $category_image = FCPATH . "uploads/" . $row['category_image'];
                                                 if (file_exists($category_image)) {
-                                                    ?>
+                                                ?>
 
                                                     <img class="rounded me-2" alt="200x200" width="200"
                                                         src="<?= base_url() ?>uploads/<?= $row['category_image'] ?>"
                                                         data-holder-rendered="true"
                                                         style="height:100px;width:100px;object-fit:cover">
-                                                    <?php
+                                                <?php
                                                 } else {
-                                                    ?>
+                                                ?>
                                                     N/A
-                                                    <?php
+                                                <?php
                                                 }
                                                 ?>
                                             </td>
@@ -261,14 +261,14 @@
                                             <td><?= date('d M Y h:i A', $row['entry_time']) ?></td>
 
                                         </tr>
-                                        <?php
+                                    <?php
                                     }
                                 } else {
                                     ?>
                                     <tr>
                                         <td class="text-center" colspan="20">No Record Found</td>
                                     </tr>
-                                    <?php
+                                <?php
                                 }
                                 ?>
 
@@ -296,16 +296,18 @@
             let reader = new FileReader();
             reader.readAsDataURL(file);
 
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 let img = new Image();
                 img.src = e.target.result;
 
-                img.onload = function () {
+                img.onload = function() {
                     let canvas = document.createElement("canvas");
                     let ctx = canvas.getContext("2d");
 
-                    let maxWidth = 800, maxHeight = 800;
-                    let width = img.width, height = img.height;
+                    let maxWidth = 800,
+                        maxHeight = 800;
+                    let width = img.width,
+                        height = img.height;
 
                     if (width > maxWidth || height > maxHeight) {
                         let aspectRatio = width / height;
@@ -322,7 +324,7 @@
                     canvas.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    canvas.toBlob(function (blob) {
+                    canvas.toBlob(function(blob) {
                         let compressedFile = new File([blob], file.name, {
                             type: "image/jpeg",
                             lastModified: Date.now()
@@ -344,6 +346,7 @@
             alert("Please select a valid image file.");
         }
     }
+
     function compressEditImage(event) {
         let fileInput = event.target;
         let file = fileInput.files[0];
@@ -352,16 +355,18 @@
             let reader = new FileReader();
             reader.readAsDataURL(file);
 
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 let img = new Image();
                 img.src = e.target.result;
 
-                img.onload = function () {
+                img.onload = function() {
                     let canvas = document.createElement("canvas");
                     let ctx = canvas.getContext("2d");
 
-                    let maxWidth = 800, maxHeight = 800;
-                    let width = img.width, height = img.height;
+                    let maxWidth = 800,
+                        maxHeight = 800;
+                    let width = img.width,
+                        height = img.height;
 
                     if (width > maxWidth || height > maxHeight) {
                         let aspectRatio = width / height;
@@ -378,7 +383,7 @@
                     canvas.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    canvas.toBlob(function (blob) {
+                    canvas.toBlob(function(blob) {
                         let compressedFile = new File([blob], file.name, {
                             type: "image/jpeg",
                             lastModified: Date.now()

@@ -2,77 +2,123 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between form-heading p-2 mb-4" style="margin-top:-10px">
-                <h4 class="mb-sm-0 font-size-18">DISPATCHED ORDERS</h4>
+                <h4 class="mb-sm-0 font-size-18">Pending Orders</h4>
             </div>
         </div>
     </div>
-	<div class="row">
+    <div class="row">
         <div class="col-md-12">
-            
-        <div class="card">
-            <div class="card-body">
-                <form action="<?= base_url() ?>Madmin/order_dispatch" method="get">
-                    <div class="col-sm-12">
-                        <div class="search-box me-2 mb-2 d-inline-block d-flex align-items-center ">
-                            <div class="position-relative">
-                                <input type="text" class="form-control" id="searchTableList" value="<?= $this->input->get("q") ?>" placeholder="Search..." name="q">
-                                <i class="bx bx-search-alt search-icon"></i>
-                            </div>
-                            &nbsp;&nbsp;
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light">Search</button>
+            <div class="card">
+                <div class="card-body">
+                    <form action="<?= base_url() ?>Madmin/order_pending" method="get">
+                        <div class="col-sm-12">
+                            <div class="search-box me-2 mb-2 d-inline-block d-flex align-items-center ">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control" id="searchTableList" value="<?= $this->input->get('q') ?>" placeholder="Search..." name="q">
+                                    <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                                &nbsp;&nbsp;
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-rounded waves-effect waves-light">Search</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <div class="table-responsive">
-                <table class="table table-hover table-sm table-bordered ">
-                    <thead>
-                        <tr>
-                            <th>Sr.No</th>
-                            <th>Name</th>
-                            <th>Mobile</th>
-                            <th>Phone No</th>
-                            <th>Order&nbsp;Amount</th>
-                            <th>Order Date</th>
-                            <th>Dispatch Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                        <?php $i=$start; 
-                        if(count($order)>0){
-                        foreach ($order as  $value) { ?>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table text-center table-hover table-sm table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Sr.No</th>
+                                    <th>Action</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Phone No</th>
+                                    <th>Order&nbsp;Amount</th>
+                                    <th>Order Date</th>
+                                    <th>Total Items</th>
+                                    <th>Order Time</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr>
-                                    <td><?=++$i;?></td>
-                                    <td><?=$value['name'];?></td>
-                                    <td><?=$value['email'];?></td>
-                                    <td><?=$value['phone_number'];?></td>
-                                    <td style="font-weight: bold;">&#8377;&nbsp;<?=number_format1($value['pay_amount'])?>/-</td>
-                                    <td><?= date('d M Y ',strtotime($value['date_time']));?></td>
-                                    <td><?= date('d M Y ',strtotime($value['dispatch_date']));?></td>
-                                    <td><a href="<?=base_url();?>Madmin/order_dispatch_view?id=<?=$value['user_billing_details_id'];?>"><button class="btn btn-primary"><i class="fa fa-print"></i> View</button></a></td>
-                                </tr>
+                                <?php
+                                if (isset($order) && count($order) > 0) {
+                                    $i = $start;
+                                    foreach ($order as $key => $row) {
+                                ?>
+                                        <tr>
+                                            <td><?= ++$i; ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#orderProcessModal" data-orderid="<?= $row['order_tbl_id'] ?>">
+                                                    <b>Delivered Order</b>
+                                                </button>
+                                            </td>
+                                            <td><?= $row['c_name']; ?></td>
+                                            <td><?= $row['c_email']; ?></td>
+                                            <td><?= $row['c_mobile']; ?></td>
+                                            <td style="font-weight: bold;">&#8377;&nbsp;<?= number_format1($row['sub_total_amount']) ?>/-</td>
+                                            <td><?= date('d M Y ', $row['order_time']); ?></td>
+                                            <td><?= $row['ttlProducts'] ?></td>
+                                            <td><?= date('d M Y h:i a', $row['order_time']) ?></td>
+                                            <td><a href="<?= base_url(); ?>Madmin/order_info/<?= $row['order_tbl_id']; ?>"><button class="btn btn-primary"><i class="fa fa-print"></i> VIEW</button></a></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <tr>
+                                        <td class="text-center" colspan="20">No Record Found</td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
-                        <?php } 
-                    }else {
+                        </table>
+                        <br>
+                        <?php
+                        pagination($ttl_pages, $page_no);
                         ?>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="20" class="text-center"><h4 class="text-center text-danger pt-3 pb-2">Currently No Dispatched Orders</h4></td>
-                                </tr>
-                            </tfoot>
-                        <?php } ?>
-                </table>
-                <br>
-                <?php
-                pagination($ttl_pages,$page_no);
-                ?>
+                    </div>
                 </div>
             </div>
+
         </div>
-        
-        </div>
-	
-	</div>
+    </div>
 </div>
+<!-- Order Process Modal -->
+<div class="modal fade" id="orderProcessModal" tabindex="-1" aria-labelledby="orderProcessModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" action="<?= base_url('Madmin/delivered_order') ?>">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderProcessModalLabel">Process Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" name="order_tbl_id" id="orderTblId">
+                    <div class="mb-3">
+                        <label for="remarks" class="form-label">Remarks</label>
+                        <textarea id="ckeditor" name="remarks" id="remarks" rows="4" class="form-control" placeholder="Enter remarks here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var modal = document.getElementById('orderProcessModal');
+        modal.addEventListener('show.bs.modal', function(event) {
+            var button = event.relatedTarget;
+            var orderId = button.getAttribute('data-orderid');
+            var input = modal.querySelector('#orderTblId');
+            input.value = orderId;
+        });
+    });
+</script>

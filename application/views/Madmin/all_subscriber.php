@@ -35,30 +35,30 @@
                             </thead>
                             <tbody>
                                 <?php
-                                if(!empty($total_today_customer) && count($total_today_customer)>0){
-                                    $i=$start;
-                                    foreach($total_today_customer as $key=>$row){
-                                        ?>
+                                if (!empty($total_today_customer) && count($total_today_customer) > 0) {
+                                    $i = $start;
+                                    foreach ($total_today_customer as $key => $row) {
+                                ?>
                                         <tr>
                                             <td><?= ++$i ?></td>
                                             <td><?= $row['subcriber_details'] ?></td>
-                                            <td><?= date('d M Y',strtotime($row['entry_date'])) ?></td>
+                                            <td><?= date('d M Y', strtotime($row['entry_date'])) ?></td>
                                         </tr>
-                                        <?php
+                                    <?php
                                     }
-                                }else{
+                                } else {
                                     ?>
                                     <tr>
                                         <td class="text-center" colspan="20">No Record Found</td>
                                     </tr>
-                                    <?php
+                                <?php
                                 }
                                 ?>
                             </tbody>
                         </table>
                         <br>
                         <?php
-                        pagination($ttl_pages,$page_no)
+                        pagination($ttl_pages, $page_no)
                         ?>
                     </div>
 

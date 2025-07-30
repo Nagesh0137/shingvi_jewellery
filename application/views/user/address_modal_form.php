@@ -93,8 +93,8 @@
         border-color: #9c1137;
     }
 
-    . .payment-option input[type="radio"] {
-        /*display: none;*/
+    .payment-option input[type="radio"] {
+        /* cursor: pointer; */
     }
 
     .payment-label {
@@ -200,7 +200,7 @@
 <?php
 if (!isset($_SESSION['user_id'])) {
     // print_r($_SESSION);
-    ?>
+?>
     <form method="post" id="otpForm">
 
         <div class="buy-now-modal-form">
@@ -229,14 +229,14 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </div>
     </form>
-<?php } else {
+    <?php } else {
     $showAddressForm = true;
 
     if ($showAddressForm) {
         // echo $userStatus;
         // print_r($user);
-        if ($userStatus == 'Old' && !empty($user[0]['address'])) {
-            ?>
+        if ($userStatus == 'Old') {
+    ?>
             <!-- address_modal_form.php -->
 
             <form method="post" action="<?= base_url() ?>user/save_buy_now" id="AddressModalForm">
@@ -256,7 +256,7 @@ if (!isset($_SESSION['user_id'])) {
 
                                 <?php
                                 if ($size != 'NA') {
-                                    ?>
+                                ?>
                                     <p class="font-15"><b><span>Size : </span><span></span><?= $size ?></b></p>
                                 <?php } ?>
                                 <p class="font-15"><b><span>Qty : </span><span></span><?= $qty ?></b></p>
@@ -268,10 +268,11 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
                 <div
                     class="address-modal-header bg-white p-2 mt-2 mb-1 rounded d-flex align-items-center justify-content-between meb-30">
-                    <h6 class="font-15">Order Summary (1 Item)</h6>
-                    <h6 id="final_amount_after_discount">&#8377;
-
+                    <h6 class="font-15">Order Summary (<?=$qty?>)</h6>
+                    <h6>&#8377;
+    
                         <?= number_format(floatval($product_details[0]['discounted_price']) * floatval($qty)) ?>
+                        
                     </h6>
                     <input type="hidden" name="product_id" value="<?= $product_id ?>" id="product_id" class="product_id">
                     <input type="hidden" name="customers_id" value="<?= $user[0]['customers_id'] ?>" id="customers_id"
@@ -282,17 +283,17 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
                 <?php
                 if ($userAddressStatus == 'New') {
-                    ?>
+                ?>
                     <div class="card p-1 mt-2">
                         <div class="d-flex p-2 align-items-center justify-content-between" style="vertical-align:middle;">
                             <h6 style="font-size:13px;" class="card-title">No Address Details</h6>
-                            <button type="button" class="btn col-6 justify-content-end btn-sm text-white float-end"
+                            <button type="button" class="btn col-6 justify-content-end btn-sm text-white mb-1 float-end"
                                 style="background:#9c1137" onclick="openModal()">+ Add Address</button>
                         </div>
                     </div>
-                    <?php
+                <?php
                 } else {
-                    ?>
+                ?>
                     <div class="card p-1 mt-2">
                         <div class="d-flex p-2 align-items-center justify-content-between">
                             <h6 style="font-size:15px;" class="card-title">Delivery Details</h6>
@@ -310,7 +311,7 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="payment-option">
                         <input type="radio" checked name="payment_type" id="online" value="Online">
                         <label class="payment-label" for="online">
-                            <span>Online
+                            <span>&nbsp;Online
                                 Payment</span>
                         </label>
                     </div>
@@ -318,19 +319,23 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="payment-option">
                         <input type="radio" name="payment_type" id="cod" value="COD">
                         <label class="payment-label" for="cod">
-                            <span>Cash on
+                            <span>&nbsp;Cash on
                                 Delivery</span>
                         </label>
                     </div>
 
                 </div>
+                  <?php
+                if ($userAddressStatus != 'New') {
+                ?>
                 <div class="mt-3">
                     <button type="submit" class="w-100 btn-style secondary-btn">PURCHASE NOW</button>
                 </div>
+                <?php } ?>
             </form>
-            <?php
+        <?php
         } else {
-            ?>
+        ?>
             <form method="post" action="<?= base_url() ?>user/save_buy_now" id="customerdetails">
                 <div class="address-modal-header body-bg d-flex align-items-center justify-content-between meb-30">
                     <!-- <h6 class="font-18">We never ask for payments outside our website or apps</h6> -->
@@ -382,7 +387,7 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
             </form>
-            <?php
+<?php
         }
     }
 } ?>
@@ -417,13 +422,13 @@ if (!isset($_SESSION['user_id'])) {
                     <div class=" col-6">
 
                     </div>
-                    <button class="btn col-6 justify-content-end btn-sm text-white float-end" style="background:#9c1137"
+                    <button class="btn col-6 mb-2 justify-content-end btn-sm text-white float-end" style="background:#9c1137"
                         onclick="toggleForm()">+ Add address</button>
                 </div>
                 <?php
                 if (isset($user_all_address[0])) {
                     foreach ($user_all_address as $row) {
-                        ?>
+                ?>
                         <div class="address-box d-flex mb-1 p-1 border">
                             <input onchange="useThisAddress(this,'<?= $product_id ?>')"
                                 value="<?= $row['customer_address_id'] ?>" type="radio" name="address" id="address1"
@@ -433,13 +438,13 @@ if (!isset($_SESSION['user_id'])) {
                     <?php }
                     ?>
 
-                    <?php
+                <?php
                 } else {
-                    ?>
+                ?>
                     <div class="address-box">
                         <label>No Address Found, Add New Address</label>
                     </div>
-                    <?php
+                <?php
                 } ?>
             </div>
 
@@ -525,14 +530,12 @@ if (!isset($_SESSION['user_id'])) {
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
     }
 
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         const modal = document.getElementById('addressModal');
         if (event.target === modal) {
             modal.style.display = "none";
         }
     }
-
-
 </script>
 
 <script>
@@ -560,8 +563,8 @@ if (!isset($_SESSION['user_id'])) {
     }
 
 
-    $(document).ready(function () {
-        $('#newAddressForm').on('submit', function (e) {
+    $(document).ready(function() {
+        $('#newAddressForm').on('submit', function(e) {
             e.preventDefault(); // Prevent form default submit
 
             let formData = $(this).serialize();
@@ -576,7 +579,7 @@ if (!isset($_SESSION['user_id'])) {
                 method: 'POST',
                 data: formData,
                 dataType: 'json',
-                success: function (res) {
+                success: function(res) {
                     console.log(res); // Console the response
 
                     if (res.status === 'success') {
@@ -590,12 +593,12 @@ if (!isset($_SESSION['user_id'])) {
                         alert('Failed to add address. Please try again.');
                     }
                 },
-                error: function () {
+                error: function() {
                     alert('Something went wrong while submitting the form.');
                 }
             });
         });
-        $('#customerdetails').on('submit', function (e) {
+        $('#customerdetails').on('submit', function(e) {
             e.preventDefault(); // Prevent form default submit
 
             let formData = $(this).serialize();
@@ -610,7 +613,7 @@ if (!isset($_SESSION['user_id'])) {
                 method: 'POST',
                 data: formData,
                 dataType: 'json',
-                success: function (res) {
+                success: function(res) {
                     console.log(res); // Console the response
 
                     if (res.status === 'success') {
@@ -624,14 +627,12 @@ if (!isset($_SESSION['user_id'])) {
                         alert('Failed to add address. Please try again.');
                     }
                 },
-                error: function () {
+                error: function() {
                     alert('Something went wrong while submitting the form.');
                 }
             });
         });
     });
-
-
 </script>
 
 <script>
@@ -650,7 +651,7 @@ if (!isset($_SESSION['user_id'])) {
                 size: selected_size,
                 qty: selected_qty
             },
-            success: function (response) {
+            success: function(response) {
                 console.log(response);
                 // On success, reload the modal body with updated address form
                 let url = '?pId=' + encodeURIComponent(product_id) +
@@ -661,7 +662,7 @@ if (!isset($_SESSION['user_id'])) {
                     $('#address-modal-body').load('<?= base_url("user/load_address_form") ?>' + url);
                 }
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("AJAX error:", error);
             }
         });

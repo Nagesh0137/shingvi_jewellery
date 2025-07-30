@@ -16,7 +16,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Disclaimer Description</label>
-                                    <textarea name="disclaimer_details" rows="3" placeholder="Enter Disclaimer Description"
+                                    <textarea id="ckeditor" name="disclaimer_details" rows="3" placeholder="Enter Disclaimer Description"
                                         class="form-control"><?= $disclaimer_policy_det[0]['disclaimer_details'] ?></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">
@@ -45,7 +45,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Disclaimer Description</label>
-                                    <textarea name="disclaimer_details" rows="3" placeholder="Enter Disclaimer Description"
+                                    <textarea id="ckeditor" name="disclaimer_details" rows="3" placeholder="Enter Disclaimer Description"
                                         class="form-control"></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">

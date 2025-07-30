@@ -16,7 +16,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Buyback Description</label>
-                                    <textarea name="buyback_details" rows="3" placeholder="Enter Buyback Description"
+                                    <textarea id="ckeditor" name="buyback_details" rows="3" placeholder="Enter Buyback Description"
                                         class="form-control"><?= $buyback_det[0]['buyback_details'] ?></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">
@@ -45,7 +45,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Buyback Description</label>
-                                    <textarea name="buyback_details" rows="3" placeholder="Enter Buyback Description"
+                                    <textarea id="ckeditor" name="buyback_details" rows="3" placeholder="Enter Buyback Description"
                                         class="form-control"></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">

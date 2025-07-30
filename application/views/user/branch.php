@@ -18,7 +18,7 @@
                                 <div class="col-md-4 mb-4">
                                     <div class="branch__card bg-white p-4 h-100">
                                         <div class="branch__thumb mb-3">
-                                            <img src="<?= base_url() ?>uploads/<?= $row['branch_image'] ?>" 
+                                            <img style="width:100%;height:250px;object-fill:cover;" src="<?= base_url() ?>uploads/<?= $row['branch_image'] ?>" 
                                                  alt="<?= $row['branch_name'] ?>" 
                                                  class="img-fluid rounded">
                                         </div>
@@ -33,9 +33,9 @@
                                                 <li class="mb-3"><i class="ri-map-pin-fill text-gold me-2"></i><?= $row['branch_address'] ?></li>
                                             </ul>
                                             <div class="branch__actions">
-                                                <a href="<?= $row['branch_location'] ?>" target="_blank" class="btn btn-sm btn-outline-dark me-2">
-                                                    <i class="ri-map-pin-line"></i> Map
-                                                </a>
+                                                <!--<a href="<?= $row['branch_location'] ?>" target="_blank" class="btn btn-sm btn-outline-dark me-2">-->
+                                                <!--    <i class="ri-map-pin-line"></i> Map-->
+                                                <!--</a>-->
                                                 <a href="tel:<?= $row['branch_mobile_no'] ?>" class="btn btn-sm btn-dark">
                                                     <i class="ri-phone-line"></i> Call
                                                 </a>

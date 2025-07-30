@@ -23,9 +23,10 @@
 <style type="text/css">
     .bgImg {
         background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
-        url(https://img.freepik.com/premium-vector/business-sketches-white-backdrop-presentations-design-projects_906149-79752.jpg);
-        background-size: cover;
+        url(https://media.istockphoto.com/id/1477849527/vector/premium-letter-s-logo-icon-design-luxury-jewelry-frame-gem-edge-logotype-beauty-fashion-spa.jpg?s=612x612&w=0&k=20&c=cB_I3DpvhKnewAm7hbbORsnV8guY75LGi19ORqM5O88=);
+        background-size: fill;
         background-position: center;
+        background-repeat: repeat;
     }
 </style>
     </head>
@@ -39,7 +40,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4 mx-auto">
-                            <div class="card">
+                            <div class="card" style="box-shadow: rgba(255, 255, 255, 0.09) 0px 4px 16px, rgba(255, 255, 255, 0.09) 0px 8px 24px, rgba(255, 255, 255, 0.09) 0px 16px 56px;">
                                 <div class="card-body p-0 bg-black auth-header-box rounded-top">
                                     <div class="text-center p-3">
                                         <a href="index.html" class="logo logo-admin">

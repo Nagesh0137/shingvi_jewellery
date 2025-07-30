@@ -60,7 +60,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <!-- Success Card -->
-      <div class="col-md-12 d-flex justify-content-center mb-4">
+      <div class="col-md-12 d-flex justify-content-center mt-4 mb-4">
         <div class="card notification-card shadow-sm">
           <div class="icon-circle success-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
@@ -73,7 +73,7 @@
             A receipt for this purchase has been<br>
             sent to your email.
           </p>
-          <a class="btn btn-success-custom text-white rounded-pill" href="<?=base_url()?>">KEEP SHOPPING</a>
+          <a class="btn btn-outline-success rounded-pill" href="<?=base_url()?>">KEEP SHOPPING</a>
         </div>
       </div>
     </div>

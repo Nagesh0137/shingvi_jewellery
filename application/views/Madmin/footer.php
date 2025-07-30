@@ -6,11 +6,11 @@
                             <div class="col-sm-6 text-dark fw-bold">
                                 <script>
                                     document.write(new Date().getFullYear())
-                                </script> © .
+                                </script> © <a href="https://jewelnagar.com" target="_blank">Jewelnagar</a>
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-end d-none d-sm-block text-dark fw-bold">
-                                    Developed by a2zinfotechs.com
+                                    Developed by <a href="https://www.a2zithub.org" target="_blank">a2zithub.org</a>
                                 </div>
                             </div>
                         </div>
@@ -176,6 +176,14 @@
                 <script src="<?= base_url() ?>sj_admin_assets/js/pages/datatables.init.js"></script>
 
                 <script src="<?= base_url() ?>sj_admin_assets/js/app.js"></script>
+
+
+                <!-- CKEditor -->
+                <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+                <script>
+                    ClassicEditor.create(document.querySelector('#ckeditor'));
+                </script>
+
 
 
                 </body>

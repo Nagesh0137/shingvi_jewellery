@@ -16,7 +16,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Gold Scheme Description</label>
-                                    <textarea name="gold_scheme_details" rows="3" placeholder="Enter Gold Scheme Description"
+                                    <textarea id="ckeditor" name="gold_scheme_details" rows="3" placeholder="Enter Gold Scheme Description"
                                         class="form-control"><?= $gold_scheme_policy_det[0]['gold_scheme_details'] ?></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">
@@ -45,7 +45,7 @@
 
                                 <div class="col-md-8 mb-3">
                                     <label for="formrow-email-input" class="form-label">Enter Gold Scheme Description</label>
-                                    <textarea name="gold_scheme_details" rows="3" placeholder="Enter Gold Scheme Description"
+                                    <textarea id="ckeditor" name="gold_scheme_details" rows="3" placeholder="Enter Gold Scheme Description"
                                         class="form-control"></textarea>
                                 </div>
                                 <div class="text-center col-md-12 mb-3">
@@ -58,7 +58,7 @@
             </div>
 
 
-             <div class="col-lg-12">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <form action="<?= base_url() ?>admin/manage_category" method="get">
@@ -131,7 +131,7 @@
 
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     <?php } ?>
 </div>

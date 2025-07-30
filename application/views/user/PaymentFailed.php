@@ -62,7 +62,7 @@
 
       
       <!-- Error Card -->
-      <div class="col-md-12 d-flex justify-content-center  mb-4">
+      <div class="col-md-12 d-flex justify-content-center mt-4  mb-4">
         <div class="card notification-card shadow-sm">
           <div class="icon-circle error-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -74,7 +74,7 @@
             An error occurred during your<br>
             payment. Please try again.
           </p>
-          <a class="btn btn-error-custom text-white rounded-pill" href="<?=base_url()?>user/createOrder/<?=$bill_id?>">Try again</a>
+          <a class="btn btn-outline-danger rounded-pill" href="<?=base_url()?>user/createOrder/<?=$bill_id?>">Try again</a>
         </div>
       </div>
     </div>

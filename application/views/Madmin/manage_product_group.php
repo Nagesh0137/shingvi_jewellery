@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="mb-3 col-lg-4">
                                     <label class="form-label">Enter Product Group Details / Description</label>
-                                    <textarea name="product_group_details" placeholder="Enter Product Group Details" class="form-control"><?= br2nl2(nl2br2($product_group1[0]['product_group_details'])) ?></textarea>
+                                    <textarea id="ckeditor" name="product_group_details" placeholder="Enter Product Group Details" class="form-control"><?= br2nl2(nl2br2($product_group1[0]['product_group_details'])) ?></textarea>
                                 </div>
                                 <div class="col-lg-3">
                                     <img src="<?= base_url() ?>uploads/<?= $product_group1[0]['product_group_image'] ?>" width="200px">
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="mb-3 col-lg-4">
                                     <label class="form-label">Enter Product Group Details / Description</label>
-                                    <textarea name="product_group_details" placeholder="Enter Product Group Details" class="form-control"></textarea>
+                                    <textarea id="ckeditor" name="product_group_details" placeholder="Enter Product Group Details" class="form-control"></textarea>
                                 </div>
                                 <div class="col-md-12 text-center">
                                     <button class="btn btn-primary btn-sm" id="submitButtonAdd" type="submit">Add Product Group</button>

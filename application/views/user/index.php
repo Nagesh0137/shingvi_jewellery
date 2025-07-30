@@ -380,7 +380,7 @@
                                 class="slider-info-content d-none d-xl-block position-absolute bottom-0 start-0 end-0 z-1 section-pb plr-15 plr-sm-30 plr-xxl-50 text-center">
                                 <h2
                                     class="extra-color font-32 font-sm-40 font-xl-48 font-xxl-64 section-heading-family section-heading-text section-heading-weight section-heading-lh">
-                                    Majestic necklace</h2>
+                                    Majestic Bracelet</h2>
                                 <div class="slider-btn mst-22 mst-sm-31 mst-xl-35"><a href="<?= base_url() ?>user/products"
                                         class="btn-style dominant-btn">Shop now</a></div>
                             </div>
@@ -388,7 +388,7 @@
                                 class="d-xl-none position-absolute bottom-0 start-0 end-0 z-1 section-pb plr-15 plr-sm-30 plr-xxl-50 text-center">
                                 <h2
                                     class="extra-color font-32 font-sm-40 font-xl-48 font-xxl-64 section-heading-family section-heading-text section-heading-weight section-heading-lh">
-                                    Majestic necklace</h2>
+                                    Majestic Bracelet</h2>
                                 <div class="slider-btn mst-22 mst-sm-31 mst-xl-35"><a href="<?= base_url() ?>user/products"
                                         class="btn-style dominant-btn">Shop now</a></div>
                             </div>
@@ -1033,7 +1033,7 @@
                                                 <span class="d-block dominant-color meb-6"><?= $cat['product_count'] ?>+
                                                     Item</span>
                                                 <h6 class="font-18"><?= $cat['category_name'] ?></h6>
-                                                <a href="<?= base_url('user/product_details_filter/' . $cat['category_id']) ?>"
+                                                <a href="<?= base_url('user/product_details_filter?cat_id=' . $cat['category_id']) ?>"
                                                     class="btn-style secondary-btn mst-15">Shop now</a>
                                             </div>
                                         </div>
@@ -1171,7 +1171,7 @@
                             <?php foreach ($products_group as $key => $row) { ?>
                                 <div class="swiper-slide h-auto d-flex" data-animate="animate__fadeIn">
                                     <div class="cat-block w-100 peb-30 plr-15 plr-sm-30 text-center">
-                                        <span class="d-inline-block cat-img"><img src="<?= base_url('uploads/' . $row['product_group_image']) ?>" class="width-160 img-fluid" alt="cat-1"></span>
+                                        <span class="d-inline-block cat-img"><img style="width:150px;height:150px:" src="<?= base_url('uploads/' . $row['product_group_image']) ?>" class="width-160 img-fluid" alt="cat-1"></span>
                                         <div class="cat-content mst-26">
                                             <!-- <span class="d-block dominant-color meb-6">8+ Item</span> -->
                                             <h6 class="font-18"><?= $row['product_group_name'] ?></h6>
@@ -1568,7 +1568,7 @@
                                                                 <div class="product-title">
                                                                     <span class="d-block meb-7"><?= cat_name($row['cat_id']) ?></span>
                                                                     <span class="d-block heading-weight"><a
-                                                                            href="<?= base_url() ?>user/products"
+                                                                            href="<?= base_url() ?>user/product_details/<?= $row['prod_gold_id'] ?>"
                                                                             class="d-block w-100 dominant-link text-truncate"><?= $row['product_name'] ?></a></span>
                                                                 </div>
                                                                 <div class="product-price">
@@ -1887,7 +1887,7 @@
                                 <div class="swiper-slide" data-animate="animate__fadeIn">
                                     <div class="blog-post banner-hover">
                                         <div class="blog-main-img">
-                                            <a href="<?= base_url() ?>view_blog/<?= $row['web_blog_id'] ?>"
+                                            <a href="<?= base_url() ?>user/view_blog/<?= $row['web_blog_id'] ?>"
                                                 class="d-block banner-img position-relative br-hidden">
                                                 <span
                                                     class="banner-icon icon-16 position-absolute top-50 start-50 translate-middle width-48 height-48 d-flex align-items-center justify-content-center extra-bg z-1"><i
@@ -1900,7 +1900,7 @@
                                             class="blog-post-content position-relative z-1 body-bg pst-41 plr-15 plr-sm-30 peb-23 mlr-15 mlr-sm-30 text-center border-radius">
                                             <div class="blog-date position-absolute top-0 start-0 end-0 z-1"><span
                                                     class="extra-color font-12 height-32 dominant-bg d-inline-flex align-items-center justify-content-center ptb-5 plr-15 text-center lh-1"><?= date('d M', strtotime($row['entry_date'])) ?></span></div>
-                                            <h6 class="font-18"><a href="<?= base_url() ?>view_blog/<?= $row['web_blog_id'] ?>"
+                                            <h6 class="font-18"><a href="<?= base_url() ?>user/view_blog/<?= $row['web_blog_id'] ?>"
                                                     class="d-inline-block dominant-link"><?= $row['blog_label'] ?></a></h6>
                                             <!-- <p class="mst-19">The generators on the internet tend repeat preded chunks
                                                 necess</p> -->

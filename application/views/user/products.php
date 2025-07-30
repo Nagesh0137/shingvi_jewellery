@@ -99,7 +99,7 @@
                                                     <div class="pro-content">
                                                         <div class="pro-content-action">
                                                             <div class="product-title">
-                                                                <span class="d-block meb-8"><?= $row['category_name'] ?></span>
+                                                                <span class="d-block meb-8"><?= isset($row['category_name']) ? $row['category_name'] : cat_name($row['cat_id']) ?></span>
                                                                 <span class="d-block heading-weight">
                                                                     <a href="<?= base_url() ?>user/product_details/<?= $row['prod_gold_id'] ?>" class="d-block w-100 dominant-link text-truncate text-capitalize">
                                                                         <?= $row['product_name'] ?>
@@ -155,7 +155,7 @@
 
                                                         <div class="product-price">
                                                             <div class="price-box heading-weight">
-                                                                <span class="new-price dominant-color"><?= $row['formatted_discounted_price'] ?></span>
+                                                                <span class="new-price dominant-color"><?= isset($row['formatted_discounted_price']) ? $row['formatted_discounted_price'] : '' ?></span>
                                                                 <?php if ($row['total_discount_amt'] > 0) { ?>
                                                                     <span class="old-price"><span class="mer-3">~</span><span class="text-decoration-line-through"><?= $row['formatted_original_price'] ?></span></span>
                                                                 <?php } ?>
@@ -212,7 +212,7 @@
                                                             </a> -->
                                                         <?php } ?>
 
-                                                        <a class="quick-view">
+                                                        <a class="quick-view d-none">
                                                             <span class="product-icon">
                                                                 <i onclick="openModal('<?= $row['prod_gold_id'] ?>')" class="ri-eye-line d-block icon-16 lh-1"></i>
                                                             </span>
@@ -266,14 +266,27 @@
                                             </div>
                                         </div>
                                     </div>
-                        <?php }
+                                    
+                            <?php }
+                            ?>
+                            <div class="d-flex justify-content-center align-items-center text-center mt-5">
+                <?php if(isset($ttl_pages)){ pagination($ttl_pages, $page_no); } ?>
+            </div>
+                            <?php
                             }
-                        } ?>
+                        } else { ?>
+                            <div class="col-12">
+                                <div class="text-center">
+                                    <h3 class="text-muted">No products found</h3>
+                                    <a href="<?= base_url() ?>user/products" class="btn btn-mute">View All Products</a>
+                                </div>
 
-                    </div>
-                    <!-- shop-grid end -->
-                    <!-- paginatoin start -->
-                    <!-- <div class="paginatoin-area section-pt" data-animate="animate__fadeIn">
+                            <?php } ?>
+
+                            </div>
+                            <!-- shop-grid end -->
+                            <!-- paginatoin start -->
+                            <!-- <div class="paginatoin-area section-pt" data-animate="animate__fadeIn">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination ul-mt5 align-items-center justify-content-center pagination-box">
                                     <li class="page-item first">
@@ -300,11 +313,11 @@
                                 </ul>
                             </nav>
                         </div> -->
-                    <!-- paginatoin end -->
+                            <!-- paginatoin end -->
+                    </div>
                 </div>
+                <!-- collection-info end -->
             </div>
-            <!-- collection-info end -->
-        </div>
     </section>
     <!-- shop-content start -->
 </main>

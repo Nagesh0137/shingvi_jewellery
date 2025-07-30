@@ -384,6 +384,21 @@
                                             <h5 class="mb-0"><?=$dashboard['diamond_products'];?></h5>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <h5 class="font-size-14 mb-1">Total Paid </h5>
+                                            <p class="text-muted mb-0">Amount</p>
+                                        </td>
+
+                                        <td>
+                                            <div id="radialchart-3" data-colors='["--bs-danger"]' class="apex-charts"></div>
+                                        </td>
+                                        <td>
+                                            <p class="text-muted mb-1">Amt</p>
+                                            <h5 class="mb-0">&#8377; <?=$paid_amount;?></h5>
+                                        </td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -511,7 +526,7 @@
 
         <div class="row">
             <div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-3">
-                <a href="<?=base_url()?>Madmin/order_Confirm">
+                <a href="<?=base_url()?>Madmin/order_processing">
                     <div class="card">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
@@ -568,7 +583,7 @@
                 </a>
             </div>
             <div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-3">
-                <a href="<?=base_url()?>Madmin/order_reject">
+                <a href="<?=base_url()?>Madmin/order_rejected">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">

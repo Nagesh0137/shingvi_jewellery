@@ -101,13 +101,13 @@
                             <div class="search-bar w-100 position-relative">
                                 <form onsubmit="searchProducts(event)">
                                     <div class="form-search w-100 d-flex flex-wrap">
-                                        <input type="search" name="search-input"
-                                            class="search-input width-calc-16 h-auto text-color bg-transparent ptb-0 plr-0 border-0 rounded-0"
+                                        <input type="search" style="border-bottom:2px solid #CD081B !important;box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;" name="search-input"
+                                            class="search-input  pb-2 width-calc-16 h-auto text-color bg-transparent ptb-0 plr-0 border-0 rounded-0"
                                             id="search-prod" placeholder="Find our product" required>
                                         <button type="submit"
                                             class="d-block width-16 body-secondary-color icon-16"
                                             aria-label="Go to search">
-                                            <i class="ri-search-line d-block lh-1"></i>
+                                            <i class="ri-search-line d-block lh-1" style="color:#CD081B"></i>
                                         </button>
                                     </div>
                                 </form>
@@ -216,38 +216,15 @@
                                             <span class="menu-title text-uppercase heading-weight">Home</span>
                                         </a>
 
-                                        <!-- <div class="menu-dropdown collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
-                                                    <div class="container ptb-30 text-center">
-                                                        <div class="row">
-                                                            <div class="col-xl-4">
-                                                                <div class="banner-hover">
-                                                                    <a href="<?= base_url() ?>user/index" class="d-block banner-img br-hidden">
-                                                                        <img src="<?= base_url() ?>u_assets/assets/image/menu/menu-banner1.jpg" class="w-100 img-fluid" alt="menu-banner1">
-                                                                    </a>
-                                                                </div>
-                                                                <a href="<?= base_url() ?>user/index" class="d-inline-block dominant-link mst-15 heading-weight">01 Clean demo</a>
-                                                            </div>
-                                                            <div class="col-xl-4">
-                                                                <div class="banner-hover">
-                                                                    <a href="index2.html" class="d-block banner-img br-hidden">
-                                                                        <img src="<?= base_url() ?>u_assets/assets/image/menu/menu-banner2.jpg" class="w-100 img-fluid" alt="menu-banner2">
-                                                                    </a>
-                                                                </div>
-                                                                <a href="index2.html" class="d-inline-block dominant-link mst-15 heading-weight">02 Classic demo</a>
-                                                            </div>
-                                                            <div class="col-xl-4">
-                                                                <div class="banner-hover">
-                                                                    <a href="index3.html" class="d-block banner-img br-hidden">
-                                                                        <img src="<?= base_url() ?>u_assets/assets/image/menu/menu-banner3.jpg" class="w-100 img-fluid" alt="menu-banner3">
-                                                                    </a>
-                                                                </div>
-                                                                <a href="index3.html" class="d-inline-block dominant-link mst-15 heading-weight">03 Modern demo</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                       
                                     </li>
-
+                                    <li class="menu-li">
+                                        <a href="<?= base_url() ?>user/products"
+                                            class="menu-link font-16 d-flex align-items-center plr-15">
+                                            <span class="menu-title text-uppercase heading-weight">Products</span>
+                                            <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
+                                        </a>
+                                    </li>
                                     <?php
                                     $category = $this->db->query("SELECT * FROM category WHERE status='active'")->result_array();
 
@@ -272,9 +249,6 @@
                                         return isset($cat['sub_category_details']);
                                     });
 
-                                    // echo "<pre>";
-                                    // print_r($row['sub_category_details']);
-                                    // echo "</pre>";
 
                                     ?>
 
@@ -343,8 +317,8 @@
                                     <?php } ?>
 
                                     <li class="menu-li specials-dropdown">
-                                        <a href="<?= base_url() ?>user/products"
-                                            class="menu-link font-16 d-flex align-items-center plr-15">
+                                        <a style="text-decoration:none;" href="<?= base_url() ?>user/products"
+                                            class="menu-link d-flex align-items-center plr-15">
                                             <span class="menu-title text-uppercase heading-weight">Specials</span>
                                             <?php if (!empty($special_days)) { ?>
                                                 <i class="ri-arrow-down-s-line d-block lh-1"></i>
@@ -353,102 +327,26 @@
                                         <ul class="header__sub--menu">
                                             <?php if (!empty($special_days)) {
                                                 foreach ($special_days as $row) { ?>
-                                                    <li class="header__sub--menu__items">
-                                                        <a href="<?= base_url() ?>user/product_details_filter?special_days_id=<?= $row['special_days_id'] ?>" class="header__sub--menu__link text-uppercase"><?= $row['special_day'] ?></a>
+                                                    <li style="text-decoration:none;" class="header__sub--menu__items">
+                                                        <a href="<?= base_url() ?>user/show_special_product?special_days_id=<?= $row['special_days_id'] ?>" class="header__sub--menu__link text-uppercase"><?= $row['special_day'] ?></a>
                                                     </li>
                                             <?php }
                                             } ?>
                                         </ul>
                                     </li>
 
-                                    <li class="menu-li">
-                                        <a href="<?= base_url() ?>user/products"
-                                            class="menu-link font-16 d-flex align-items-center plr-15">
-                                            <span class="menu-title text-uppercase heading-weight">Product</span>
-                                            <!-- <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
-                                        </a>
-                                        <!-- <div class="menu-dropdown collapse position-absolute top-auto start-0 end-0 extra-bg z-2 DropDownSlide box-shadow">
-                                                    <div class="container ptb-25">
-                                                        <div class="row row-cols-xl-4"> -->
-                                        <!--  <div class="col">
-                                                                <div class="shop-title">
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collections.html" class="d-inline-block dominant-link">Collections</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-category.html" class="d-inline-block dominant-link">Collection category</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-without.html" class="d-inline-block dominant-link">Collection full</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="<?= base_url() ?>user/products" class="d-inline-block dominant-link">Collection left</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-right.html" class="d-inline-block dominant-link">Collection right</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-list-without.html" class="d-inline-block dominant-link">Collection list full</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-list.html" class="d-inline-block dominant-link">Collection list left</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="collection-list-right.html" class="d-inline-block dominant-link">Collection list right</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="search-empty.html" class="d-inline-block dominant-link">Search empty</a></span>
-                                                                    <span class="d-block ptb-5 text-uppercase heading-weight"><a href="search-product.html" class="d-inline-block dominant-link">Search product</a></span>
-                                                                </div>
-                                                            </div> -->
-                                        <!-- <div class="col">
-                                                                <div class="d-block heading-color ptb-5 text-uppercase heading-weight">Product layout</div>
-                                                                <div class="mst-5">
-                                                                    <span class="d-block ptb-5"><a href="<?= base_url() ?>user/products" class="d-inline-block body-dominant-color">01 Bottom thumbnail frequently together</a></span>
-                                                                    <span class="d-block ptb-5"><a href="product2.html" class="d-inline-block body-dominant-color">02 Right thumbnail tab details</a></span>
-                                                                    <span class="d-block ptb-5"><a href="product3.html" class="d-inline-block body-dominant-color">03 Left thumbnail simple layout</a></span>
-                                                                    <span class="d-block ptb-5"><a href="product4.html" class="d-inline-block body-dominant-color">04 Solo modern vertical-tab full layout</a></span>
-                                                                    <span class="d-block ptb-5"><a href="product5.html" class="d-inline-block body-dominant-color">05 Full thumbnail creative layout</a></span>
-                                                                    <span class="d-block ptb-5"><a href="product6.html" class="d-inline-block body-dominant-color">06 Advance accordion-tab layout</a></span>
-                                                                    <span class="d-block ptb-5"><a href="product-comparison.html" class="d-inline-block body-dominant-color">Product comparision</a></span>
-                                                                </div>
-                                                            </div> -->
-                                        <!--  <div class="col">
-                                                                <div class="banner-hover">
-                                                                    <a href="<?= base_url() ?>user/products" class="d-block banner-img br-hidden">
-                                                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/menu/menu-banner-product1.jpg" class="w-100 img-fluid" alt="menu-banner-product1">
-                                                                    </a>
-                                                                </div>
-                                                            </div> -->
-                                        <!-- <div class="col">
-                                                                <div class="banner-hover">
-                                                                    <a href="<?= base_url() ?>user/products" class="d-block banner-img br-hidden">
-                                                                        <img src="<?= base_url() ?>u_assets/assets/image/index3/menu/menu-banner-product2.jpg" class="w-100 img-fluid" alt="menu-banner-product2">
-                                                                    </a>
-                                                                </div>
-                                                            </div> -->
-                                        <!--  </div>
-                                                    </div>
-                                                </div> -->
-                                    </li>
 
 
-                                    <li class="menu-li">
-                                        <a href="<?= base_url() ?>user/contact"
-                                            class="menu-link font-16 d-flex align-items-center plr-15">
-                                            <span class="menu-title text-uppercase heading-weight">Contact Us</span>
-                                            <!-- <span class="icon-16 fw-normal">
-                                                        <i class="ri-arrow-down-s-line d-block lh-1"></i></span> -->
-                                        </a>
-                                        <!-- <div class="menu-dropdown menu-sub collapse position-absolute top-auto extra-bg z-2 DropDownSlide box-shadow"> -->
-                                        <!-- <ul class="menudrop-ul ptb-25"> -->
-                                        <!-- <li class="menudrop-li">
-                                                            <div class="ptb-5 plr-30"><a href="blog-without.html" class="d-inline-block body-dominant-color">About</a></div>
-                                                        </li> -->
-                                        <!-- <li class="menudrop-li">
-                                                            <div class="ptb-5 plr-30"><a href="<?= base_url() ?>user/about" class="d-inline-block body-dominant-color">Blog left</a></div>
-                                                        </li>
-                                                        <li class="menudrop-li">
-                                                            <div class="ptb-5 plr-30"><a href="blog-right.html" class="d-inline-block body-dominant-color">Blog right</a></div>
-                                                        </li> -->
-                                        <!-- <li class="menudrop-li">
-                                                            <div class="ptb-5 plr-30"><a href="article-without.html" class="d-inline-block body-dominant-color">Article</a></div>
-                                                        </li> -->
-                                        <!-- <li class="menudrop-li">
-                                                            <div class="ptb-5 plr-30"><a href="article.html" class="d-inline-block body-dominant-color">Article left</a></div>
-                                                        </li> -->
-                                        <!-- <li class="menudrop-li">
-                                                            <div class="ptb-5 plr-30"><a href="article-right.html" class="d-inline-block body-dominant-color">Article right</a></div>
-                                                        </li> -->
-                                        <!-- <li class="menudrop-li">
-                                                            <div class="ptb-5 plr-30"><a href="search-blog.html" class="d-inline-block body-dominant-color">Search blog</a></div>
-                                                        </li> -->
-                                        <!--  </ul>
-                                                </div> -->
-                                    </li>
+                                    
+
+
+                                    <!--<li class="menu-li">-->
+                                    <!--    <a href="<?= base_url() ?>user/contact"-->
+                                    <!--        class="menu-link font-16 d-flex align-items-center plr-15">-->
+                                    <!--        <span class="menu-title text-uppercase heading-weight">Contact Us</span>-->
+                                    <!--    </a>-->
+                                     
+                                    <!--</li>-->
 
                                 </ul>
                             </div>
@@ -458,7 +356,7 @@
                     <!-- header-icon start -->
                     <div class="col-6 col-xl-4 header-element header-icon">
                         <div class="header-icon-block d-flex justify-content-end">
-                            
+
                             <ul class="ul-mt30 flex-nowrap align-items-center header-icon-element">
                                 <li class="header-icon-wrap toggler-wrap d-xl-none">
                                     <div class="header-icon-wrapper">
@@ -514,7 +412,7 @@
                                                 <span class="header-block-icon icon-16"><i
                                                         class="ri-shopping-bag-3-line"></i></span>
                                                 <span class="d-none d-xl-block header-text-content" style="cursor: pointer;">Cart</span>
-                                                <!-- <span class="header-block-counter cart-counter dominant-color"><?= isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0 ?></span> -->
+                                                <span id="cart-counter" class="header-block-counter cart-counter dominant-color"><?= isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0 ?></span> 
                                             </span>
                                         </a>
                                     </div>
@@ -535,7 +433,7 @@
                                                 <span class="header-block-icon icon-16"><i
                                                         class="ri-user-line"></i></span>
                                                 <span class="d-none d-xl-block header-text-content">Account</span>
-                                                <!-- <span class="header-block-counter cart-counter dominant-color"><?= isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0 ?></span> -->
+                                                 <!--<span class="header-block-counter cart-counter dominant-color"><?= isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0 ?></span> -->
                                             </span>
                                         </a>
                                     </div>
@@ -598,36 +496,42 @@
         min-width: 220px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
-.specials-dropdown {
-    position: relative;
-}
-.specials-dropdown > .header__sub--menu {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 100%;
-    min-width: 200px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    z-index: 1000;
-    padding: 10px 0;
-    border-radius: 4px;
-}
-.specials-dropdown:hover > .header__sub--menu {
-    display: block;
-}
-.header__sub--menu__items {
-    padding: 0;
-}
-.header__sub--menu__link {
-    display: block;
-    padding: 8px 20px;
-    color: #222;
-    text-decoration: none;
-    font-size: 14px;
-}
-.header__sub--menu__link:hover {
-    background: #f5f5f5;
-    color: #007bff;
-}
+
+    .specials-dropdown {
+        position: relative;
+    }
+
+    .specials-dropdown>.header__sub--menu {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        min-width: 200px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        z-index: 1000;
+        padding: 10px 0;
+        border-radius: 4px;
+    }
+
+    .specials-dropdown:hover>.header__sub--menu {
+        display: block;
+    }
+
+    .header__sub--menu__items {
+        padding: 0;
+    }
+
+    .header__sub--menu__link {
+        display: block;
+        padding: 8px 20px;
+        color: #222;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .header__sub--menu__link:hover {
+        background: #f5f5f5;
+        color: #007bff;
+    }
 </style>

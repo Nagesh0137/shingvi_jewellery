@@ -14,13 +14,21 @@
                 <div class="col-12 col-lg-4 col-xl-3 p-lg-sticky top-0" data-animate="animate__fadeIn">
                     <div class="ap-info">
                         <div class="ap-author ptb-30 plr-15 extra-bg text-center border-radius">
-                           
+
                             <img src="<?= base_url() ?>uploads/dummy_profile.png" class="img-fluid" alt="customer Profile" style="height:70px; width:70px; border-radius:50%; object-fit:cover;">
-                           
+
                             <div class="ap-ac mst-26">
-                                <h6 class="font-18"><?php if (!empty($customer_details) && isset($customer_details[0]['firstname'])) { echo $customer_details[0]['firstname']; } ?> <?php if (!empty($customer_details) && isset($customer_details[0]['lastname'])) { echo $customer_details[0]['lastname']; } ?></h6>
-                                <h3 class="font-12"><?php if (!empty($customer_details) && isset($customer_details[0]['mobile'])) { echo $customer_details[0]['mobile']; } ?></h3>
-                                <h3 class="font-12"><?php if (!empty($customer_details) && isset($customer_details[0]['email'])) { echo $customer_details[0]['email']; } ?></h3>
+                                <h6 class="font-18"><?php if (!empty($customer_details) && isset($customer_details[0]['firstname'])) {
+                                                        echo $customer_details[0]['firstname'];
+                                                    } ?> <?php if (!empty($customer_details) && isset($customer_details[0]['lastname'])) {
+                                                                echo $customer_details[0]['lastname'];
+                                                            } ?></h6>
+                                <h3 class="font-12"><?php if (!empty($customer_details) && isset($customer_details[0]['mobile'])) {
+                                                        echo $customer_details[0]['mobile'];
+                                                    } ?></h3>
+                                <h3 class="font-12"><?php if (!empty($customer_details) && isset($customer_details[0]['email'])) {
+                                                        echo $customer_details[0]['email'];
+                                                    } ?></h3>
 
                             </div>
                         </div>
@@ -50,6 +58,12 @@
                                 </span>
                                 <span class="ap-name me-auto">My Orders</span>
                             </a>
+                            <a href="<?= base_url() ?>user/customer_jewellery_list" class="body-dominant-color d-flex align-items-center justify-content-between ptb-15 plr-15">
+                                <span class="ap-icon body-color icon-16 mer-5">
+                                    <i class="ri-gemini-line"></i>
+                                </span>
+                                <span class="ap-name me-auto">Custom Jeweller</span>
+                            </a>
 
                             <a href="<?= base_url('user/logout') ?>" class="body-dominant-color d-flex align-items-center justify-content-between ptb-15 plr-15" onclick="return confirm('Are you sure you want to logout?')">
                                 <span class="ap-icon body-color icon-16 mer-5"><i class="ri-logout-box-line"></i></span>
@@ -75,15 +89,30 @@
                                         <div class="acc-detail-form">
                                             <div class="acc-detail-field">
                                                 <div class="row field-row">
-                                                    <!-- <input type="hidden" name="profile_photo1" value="<?php if (!empty($customer_details) && isset($customer_details[0]['profile_photo'])) { echo $customer_details[0]['profile_photo']; } ?>"> -->
+                                                    <!-- <input type="hidden" name="profile_photo1" value="<?php if (!empty($customer_details) && isset($customer_details[0]['profile_photo'])) {
+                                                                                                                echo $customer_details[0]['profile_photo'];
+                                                                                                            } ?>"> -->
                                                     <input type="hidden" name="customers_id" value="<?= $_SESSION['user_id'] ?>">
 
                                                     <!-- First Name -->
                                                     <div class="col-12 col-md-6 field-col">
                                                         <label for="fname" class="field-label">
-                                                             Name <span style="color: red;">*</span>
+                                                            Name <span style="color: red;">*</span>
                                                         </label>
-                                                        <input type="text" id="fname" name="name" class="w-100" placeholder="name" autocomplete="given-name" value="<?php if (!empty($customer_details) && isset($customer_details[0]['name'])) { echo $customer_details[0]['name']; } ?>">
+                                                        <input type="text" 
+                                                               id="fname" 
+                                                               name="name" 
+                                                               class="w-100" 
+                                                               placeholder="name" 
+                                                               autocomplete="given-name" 
+                                                               required 
+                                                               minlength="2" 
+                                                               maxlength="50" 
+                                                               pattern="[A-Za-z\s]+" 
+                                                               title="Name must contain only letters and spaces, minimum 2 characters"
+                                                               value="<?php if (!empty($customer_details) && isset($customer_details[0]['name'])) {
+                                                                           echo $customer_details[0]['name'];
+                                                                       } ?>">
                                                     </div>
 
                                                     <!-- Last Name -->
@@ -91,7 +120,9 @@
                                                         <label for="lname" class="field-label">
                                                             Last Name <span style="color: red;">*</span>
                                                         </label>
-                                                        <input type="text" id="lname" name="lastname" class="w-100" placeholder="Last name" autocomplete="family-name" value="<?php if (!empty($customer_details) && isset($customer_details[0]['lastname'])) { echo $customer_details[0]['lastname']; } ?>">
+                                                        <input type="text" id="lname" name="lastname" class="w-100" placeholder="Last name" autocomplete="family-name" value="<?php if (!empty($customer_details) && isset($customer_details[0]['lastname'])) {
+                                                                                                                                                                                    echo $customer_details[0]['lastname'];
+                                                                                                                                                                                } ?>">
                                                     </div> -->
 
                                                     <!-- Mobile -->
@@ -99,7 +130,20 @@
                                                         <label for="mobile" class="field-label">
                                                             Mobile <span style="color: red;">*</span>
                                                         </label>
-                                                        <input type="tel" id="mobile" name="mobile" class="w-100" placeholder="Mobile number" autocomplete="tel" value="<?php if (!empty($customer_details) && isset($customer_details[0]['mobile'])) { echo $customer_details[0]['mobile']; } ?>">
+                                                        <input type="tel" 
+       id="mobile" 
+       name="mobile" 
+       class="w-100" 
+       maxlength="10"
+       placeholder="Mobile number" 
+       autocomplete="tel" 
+       required 
+       pattern="[7-9][0-9]{9}" 
+       title="Mobile number must start with 7, 8, or 9 and be 10 digits"
+       value="<?php if (!empty($customer_details) && isset($customer_details[0]['mobile'])) {
+                   echo $customer_details[0]['mobile'];
+               } ?>">
+
                                                     </div>
 
                                                     <!-- Email -->
@@ -107,7 +151,18 @@
                                                         <label for="email" class="field-label">
                                                             Email <span style="color: red;">*</span>
                                                         </label>
-                                                        <input type="email" id="email" name="email" class="w-100" placeholder="Email address" autocomplete="email" value="<?php if (!empty($customer_details) && isset($customer_details[0]['email'])) { echo $customer_details[0]['email']; } ?>">
+                                                        <input type="email" 
+                                                               id="email" 
+                                                               name="email" 
+                                                               class="w-100" 
+                                                               placeholder="Email address" 
+                                                               autocomplete="email" 
+                                                               required 
+                                                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                                                               title="Please enter a valid email address"
+                                                               value="<?php if (!empty($customer_details) && isset($customer_details[0]['email'])) {
+                                                                           echo $customer_details[0]['email'];
+                                                                       } ?>">
                                                     </div>
 
                                                     <!-- Upload Image -->
@@ -212,6 +267,141 @@
     <!-- account-page end -->
 </main>
 <!-- main end -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[action*="update_user_details"]');
+    const nameInput = document.getElementById('fname');
+    const mobileInput = document.getElementById('mobile');
+    const emailInput = document.getElementById('email');
+
+    // Function to show validation message
+    function showValidationMessage(input, message) {
+        // Remove existing error message
+        const existingError = input.parentNode.querySelector('.validation-error');
+        if (existingError) {
+            existingError.remove();
+        }
+
+        // Create and show new error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'validation-error';
+        errorDiv.style.color = 'red';
+        errorDiv.style.fontSize = '12px';
+        errorDiv.style.marginTop = '5px';
+        errorDiv.textContent = message;
+        input.parentNode.appendChild(errorDiv);
+    }
+
+    // Function to remove validation message
+    function removeValidationMessage(input) {
+        const existingError = input.parentNode.querySelector('.validation-error');
+        if (existingError) {
+            existingError.remove();
+        }
+    }
+
+    // Real-time validation for name field
+    nameInput.addEventListener('input', function() {
+        const value = this.value.trim();
+        removeValidationMessage(this);
+        
+        if (value.length < 2) {
+            showValidationMessage(this, 'Name must be at least 2 characters long');
+        } else if (!/^[A-Za-z\s]+$/.test(value)) {
+            showValidationMessage(this, 'Name can only contain letters and spaces');
+        }
+    });
+
+    // Real-time validation for mobile field
+    mobileInput.addEventListener('input', function() {
+        const value = this.value.trim();
+        removeValidationMessage(this);
+        
+        if (value.length > 0 && value.length !== 10) {
+            showValidationMessage(this, 'Mobile number must be exactly 10 digits');
+        } else if (value.length === 10 && !/^[7-9][0-9]{9}$/.test(value)) {
+            showValidationMessage(this, 'Mobile number must start with 7, 8, or 9');
+        }
+    });
+
+    // Real-time validation for email field
+    emailInput.addEventListener('input', function() {
+        const value = this.value.trim();
+        removeValidationMessage(this);
+        
+        if (value.length > 0) {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(value)) {
+                showValidationMessage(this, 'Please enter a valid email address');
+            }
+        }
+    });
+
+    // Form submission validation
+    form.addEventListener('submit', function(e) {
+        const name = nameInput.value.trim();
+        const mobile = mobileInput.value.trim();
+        const email = emailInput.value.trim();
+
+        let isValid = true;
+        let errorMessages = [];
+
+        // Validate name
+        if (!name) {
+            errorMessages.push('Name is required');
+            isValid = false;
+        } else if (name.length < 2) {
+            errorMessages.push('Name must be at least 2 characters long');
+            isValid = false;
+        } else if (!/^[A-Za-z\s]+$/.test(name)) {
+            errorMessages.push('Name can only contain letters and spaces');
+            isValid = false;
+        }
+
+        // Validate mobile
+        if (!mobile) {
+            errorMessages.push('Mobile number is required');
+            isValid = false;
+        } else if (mobile.length !== 10) {
+            errorMessages.push('Mobile number must be exactly 10 digits');
+            isValid = false;
+        } else if (!/^[7-9][0-9]{9}$/.test(mobile)) {
+            errorMessages.push('Mobile number must start with 7, 8, or 9');
+            isValid = false;
+        }
+
+        // Validate email
+        if (!email) {
+            errorMessages.push('Email is required');
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+            errorMessages.push('Please enter a valid email address');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+            
+            // Show error messages inline
+            if (!name) {
+                showValidationMessage(nameInput, 'Name is required');
+            }
+            if (!mobile) {
+                showValidationMessage(mobileInput, 'Mobile number is required');
+            }
+            if (!email) {
+                showValidationMessage(emailInput, 'Email is required');
+            }
+            
+            // Also show alert for better visibility
+            alert('Please fix the following errors:\n\n' + errorMessages.join('\n'));
+            return false;
+        }
+    });
+});
+</script>
+
 <!-- footer start -->
 
 
